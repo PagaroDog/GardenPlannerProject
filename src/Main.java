@@ -17,6 +17,10 @@ public class Main extends Application{
 		scenes.put(StageName.TUTORIAL, new TutorialView(stage).getScene());
 		scenes.put(StageName.DRAW, new DrawYardView(stage).getScene());
 		scenes.put(StageName.CONDITIONS, new ConditionsView(stage).getScene());
+		scenes.put(StageName.STATS, new StatisticsView(stage).getScene());
+		scenes.put(StageName.DESIGN, new GardenView(stage).getScene());
+		scenes.put(StageName.SAVE, new SaveView(stage).getScene());
+		scenes.put(StageName.PREFERENCES, new PreferencesView(stage).getScene());
 		
 		// Start with the main scene
 		stage.setScene(scenes.get(StageName.WELCOME));
