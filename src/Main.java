@@ -1,6 +1,14 @@
 import java.util.HashMap;
 import java.util.Map;
 
+import Views.ConditionsView;
+import Views.DrawYardView;
+import Views.GardenView;
+import Views.PreferencesView;
+import Views.SaveView;
+import Views.StartupView;
+import Views.StatisticsView;
+import Views.TutorialView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -21,6 +29,7 @@ public class Main extends Application{
 		scenes.put(StageName.DESIGN, new GardenView(stage).getScene());
 		scenes.put(StageName.SAVE, new SaveView(stage).getScene());
 		scenes.put(StageName.PREFERENCES, new PreferencesView(stage).getScene());
+		
 		
 		// Start with the main scene
 		stage.setScene(scenes.get(StageName.WELCOME));

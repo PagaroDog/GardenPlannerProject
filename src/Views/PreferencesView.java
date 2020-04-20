@@ -1,9 +1,10 @@
+package Views;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class GardenView extends View{
+public class PreferencesView extends View{
 
-	public GardenView(Stage stage) {
+	public PreferencesView(Stage stage) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -12,5 +13,4 @@ public class GardenView extends View{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

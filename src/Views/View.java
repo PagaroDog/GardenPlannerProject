@@ -1,3 +1,4 @@
+package Views;
 import javafx.scene.Scene;
 public abstract class View {
 	int canvasWidth = 2000 ;

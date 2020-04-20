@@ -1,9 +1,10 @@
+package Views;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class ConditionsView extends View{
+public class TutorialView extends View{
 	private Stage stage;
-	public ConditionsView(Stage stage) {
+	public TutorialView(Stage stage) {
 		this.stage = stage;
 	}
 	@Override
