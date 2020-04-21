@@ -76,7 +76,7 @@ public class GardenController {
 	* code is triggered by dragging an image
 	* @return EventHandler object for this action
 	*/
-	public EventHandler handleOnImgButton() {
+	public EventHandler handleOnImgDrag() {
 		return null;		
 	}
 	
