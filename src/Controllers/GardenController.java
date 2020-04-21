@@ -1,5 +1,6 @@
 package Controllers;
 
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -9,72 +10,82 @@ public class GardenController {
 	
 	/**
 	* code is triggered by a press of SpringButton
+	* @return EventHandler object for this action
 	*/
-	public void handleOnSpringButton(MouseEvent event) {
-		
+	public EventHandler handleOnSpringButton() {
+		return null;
 	}
 	
 	/**
 	* code is triggered by a press of SummerButton
+	* @return EventHandler object for this action
 	*/
-	public void handleOnSummerButton(MouseEvent event) {
-		
+	public EventHandler handleOnSummerButton() {
+		return null;
 	}
 	
 	/**
 	* code is triggered by a press of fallButton
+	* @return EventHandler object for this action
 	*/
-	public void handleOnFallButton(MouseEvent event) {
-		
+	public EventHandler handleOnFallButton() {
+		return null;
 	}
 	
 	/**
 	* code is triggered by a press of WinterButton
+	* @return EventHandler object for this action
 	*/
-	public void handleOnWinterButton(MouseEvent event) {
-		
+	public EventHandler handleOnWinterButton() {
+		return null;
 	}
 	
 	/**
 	* code is triggered by a press of StatsButton
+	* @return EventHandler object for this action
 	*/
-	public void handleOnStatsButton(MouseEvent event) {
-		
+	public EventHandler handleOnStatsButton() {
+		return null;
 	}
 	
 	/**
 	* code is triggered by a press of Year1Button
+	* @return EventHandler object for this action
 	*/
-	public void handleOnYear1Button(MouseEvent event) {
-		
+	public EventHandler handleOnYear1Button() {
+		return null;
 	}
 	
 	/**
 	* code is triggered by a press of Year2Button
+	* @return EventHandler object for this action
 	*/
-	public void handleOnYear2Button(MouseEvent event) {
-		
+	public EventHandler handleOnYear2Button() {
+		return null;
 	}
 	
 	/**
 	* code is triggered by a press of Year3Button
+	* @return EventHandler object for this action
 	*/
-	public void handleOnYear3Button(MouseEvent event) {
-		
+	public EventHandler handleOnYear3Button() {
+		return null;
 	}
 	
 	/**
 	* code is triggered by dragging an image
+	* @return EventHandler object for this action
 	*/
-	public void handleOnImgButton(MouseEvent event) {
-		
+	public EventHandler handleOnImgButton() {
+		return null;		
 	}
 	
 	/**
 	* code is triggered by a press of PrefButton
+	* @return EventHandler object for this action
 	*/
-	public void handleOnPrefButton(MouseEvent event) {
-		
+	public EventHandler handleOnPrefButton() {
+		return null;
 	}
 
 }
