@@ -5,8 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import Controllers.ConditionsController;
+import Model.CondMode;
 import Model.Model;
+import Views.ConditionsView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class ConditionsControllerTests {
 	MouseEvent emptyMouseEvent = new MouseEvent(null, null, null, 0, 0, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null);
@@ -26,7 +29,8 @@ public class ConditionsControllerTests {
 	@Test
 	public void testSelectButton() {
 		Model model = new Model();
-		ConditionsController cc = new ConditionsController();
+		ConditionsView cv = new ConditionsView(new Stage());
+		ConditionsController cc = new ConditionsController(model, cv);
 		
 		model.setCondMode(CondMode.LABEL);
 		cc.selectButton(emptyMouseEvent);
@@ -42,7 +46,8 @@ public class ConditionsControllerTests {
 	@Test
 	public void testLabelButton() {
 		Model model = new Model();
-		ConditionsController cc = new ConditionsController();
+		ConditionsView cv = new ConditionsView(new Stage());
+		ConditionsController cc = new ConditionsController(model, cv);
 		
 		model.setCondMode(CondMode.SELECT);
 		cc.labelButton(emptyMouseEvent);
@@ -58,7 +63,8 @@ public class ConditionsControllerTests {
 	@Test
 	public void testRectButton() {
 		Model model = new Model();
-		ConditionsController cc = new ConditionsController();
+		ConditionsView cv = new ConditionsView(new Stage());
+		ConditionsController cc = new ConditionsController(model, cv);
 		
 		model.setCondMode(CondMode.SELECT);
 		cc.rectButton(emptyMouseEvent);
@@ -74,7 +80,8 @@ public class ConditionsControllerTests {
 	@Test
 	public void testCircleButton() {
 		Model model = new Model();
-		ConditionsController cc = new ConditionsController();
+		ConditionsView cv = new ConditionsView(new Stage());
+		ConditionsController cc = new ConditionsController(model, cv);
 		
 		model.setCondMode(CondMode.SELECT);
 		cc.circleButton(emptyMouseEvent);
@@ -90,7 +97,8 @@ public class ConditionsControllerTests {
 	@Test
 	public void testDragPressAndDelete() {
 		Model model = new Model();
-		ConditionsController cc = new ConditionsController();
+		ConditionsView cv = new ConditionsView(new Stage());
+		ConditionsController cc = new ConditionsController(model, cv);
 		
 		cc.rectButton(emptyMouseEvent);
 		create50x50rect(cc);
@@ -112,7 +120,8 @@ public class ConditionsControllerTests {
 	@Test
 	public void testDeleteWithNoSelection() {
 		Model model = new Model();
-		ConditionsController cc = new ConditionsController();
+		ConditionsView cv = new ConditionsView(new Stage());
+		ConditionsController cc = new ConditionsController(model, cv);
 		
 		cc.rectButton(emptyMouseEvent);
 		create50x50rect(cc);

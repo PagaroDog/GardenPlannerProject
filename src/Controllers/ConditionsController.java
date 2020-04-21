@@ -1,9 +1,22 @@
 package Controllers;
+import Model.Model;
+import Views.ConditionsView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 
 public class ConditionsController {
+	
+	Model model;
+	ConditionsView view;
+	
+	public ConditionsController(Model model, ConditionsView cv) {
+//		this.model = model;
+//		view = cv;
+//		
+//		view.setController(this);
+//		model.setCC(this);
+	}
 	
 	/**
 	 * Handles event when user presses select button,
@@ -12,15 +25,6 @@ public class ConditionsController {
 	 */
 	public EventHandler getHandleOnSelectButton() {
 		return null; 
-	}
-	
-	/**
-	 * Handles event when user presses label button,
-	 * invoking labelButton()
-	 * @return EventHandler object for this action
-	 */
-	public EventHandler getHandleOnLabelButton() {
-		return null;
 	}
 	
 	/**
@@ -38,6 +42,15 @@ public class ConditionsController {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnCircleButton() {
+		return null;
+	}
+	
+	/**
+	 * Handles event when user presses label button,
+	 * invoking labelButton()
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandleOnLabelButton() {
 		return null;
 	}
 	
@@ -79,7 +92,6 @@ public class ConditionsController {
 	
 	/**
 	 * Sets condition area editing mode to select
-	 * @return EventHandler object for this action
 	 */
 	public void selectButton(MouseEvent event) {
 		 
@@ -87,7 +99,6 @@ public class ConditionsController {
 	
 	/**
 	 * Sets condition area editing mode to label
-	 * @return EventHandler object for this action
 	 */
 	public void labelButton(MouseEvent event) {
 		
@@ -95,7 +106,6 @@ public class ConditionsController {
 	
 	/**
 	 * Sets condition area editing mode to rectangle
-	 * @return EventHandler object for this action
 	 */
 	public void rectButton(MouseEvent event) {
 		
@@ -103,7 +113,6 @@ public class ConditionsController {
 	
 	/**
 	 * Sets condition area editing mode to circle
-	 * @return EventHandler object for this action
 	 */
 	public void circleButton(MouseEvent event) {
 		
@@ -111,7 +120,6 @@ public class ConditionsController {
 	
 	/**
 	 * Deletes currently selected object, if any
-	 * @return EventHandler object for this action
 	 */
 	public void deleteButton(MouseEvent event){
 		 
@@ -119,7 +127,6 @@ public class ConditionsController {
 	
 	/**
 	 * Creates new objects, or moves already made objects
-	 * @return EventHandler object for this action
 	 */
 	public void dragPane(MouseEvent event) {
 		
@@ -128,7 +135,6 @@ public class ConditionsController {
 	/**
 	 * In select mode, selects object pressed, if any.
 	 * In either shape mode, stores initial coordinates.
-	 * @return EventHandler object for this action
 	 */
 	public void pressPane(MouseEvent event) {
 		
@@ -137,7 +143,6 @@ public class ConditionsController {
 	/**
 	 * In either shape mode, stores final coordinates,
 	 * creating new shape.
-	 * @return EventHandler object for this action
 	 */
 	public void releasePane(MouseEvent event) {
 		

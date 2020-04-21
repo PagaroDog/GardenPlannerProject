@@ -1,6 +1,7 @@
 package Views;
 import java.awt.Button;
 
+import Controllers.DrawYardController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -11,6 +12,7 @@ public class DrawYardView extends View{
 	private Button circleButton;
 	private Button importButton;
 	private Pane drawing;
+	private DrawYardController control;
 	
 	public DrawYardView(Stage stage) {
 		this.stage = stage;
@@ -22,5 +24,12 @@ public class DrawYardView extends View{
 	@Override
 	public Scene getScene() {
 		return null;
+	}
+	
+	/**
+	 * Sets control to dyc
+	 */
+	public void setController(DrawYardController dyc) {
+		
 	}
 }

@@ -1,4 +1,6 @@
 package Views;
+import Controllers.ConditionsController;
+import Controllers.DrawYardController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -12,6 +14,7 @@ public class ConditionsView extends View{
 	private Button rectButton;
 	private Button circleButton;
 	private Pane drawing;
+	private ConditionsController control;
 	
 	public ConditionsView(Stage stage) {
 		this.stage = stage;
@@ -26,4 +29,10 @@ public class ConditionsView extends View{
 		return null;
 	}
 
+	/**
+	 * Sets control to cc
+	 */
+	public void setController(DrawYardController cc) {
+		
+	}
 }
