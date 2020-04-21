@@ -11,6 +11,8 @@ public class Plant {
 	private int pollinator; //is this whether or not the plant pollinates or
 	//how many things it pollinates 
 	
+	
+	
 	public String getName() {
 		return name;
 	}
