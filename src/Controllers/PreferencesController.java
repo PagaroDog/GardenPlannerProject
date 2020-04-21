@@ -14,7 +14,7 @@ public class PreferencesController {
  * @return EventHandler
  */
 	
-	public EventHandler handleOnBackButton(MouseEvent event) {
+	public EventHandler gethandleOnBackButton() {
 		return null;
 	}
 /**
@@ -31,7 +31,7 @@ public class PreferencesController {
  * @param event
  * @return EventHandler
  */
-	public EventHandler handleOnNextButton(MouseEvent event) {
+	public EventHandler gethandleOnNextButton() {
 		return null;
 	}
 /**

@@ -1,6 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
+import Model.StageName;
 import Views.ConditionsView;
 import Views.DrawYardView;
 import Views.GardenView;
