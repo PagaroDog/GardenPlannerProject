@@ -7,6 +7,7 @@ public class ConditionsView extends View{
 	public ConditionsView(Stage stage) {
 		this.stage = stage;
 	}
+	
 	@Override
 	public Scene getScene() {
 		// TODO Auto-generated method stub
