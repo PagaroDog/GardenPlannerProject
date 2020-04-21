@@ -12,10 +12,10 @@ import javafx.stage.Stage;
 public class DrawYardControllerTests {
 
 	@Test
-	public void test() {
+	public void testRectangleButton() {
 		Model model = new Model();
 		DrawYardView dyv = new DrawYardView(new Stage());
-		DrawYardController dyc = new DrawYardController();
+		DrawYardController dyc = new DrawYardController(model, dyv);
 		
 		model.setDrawMode(DrawMode.CIRCLE);
 		dyc.handleOnRectButton();
@@ -26,6 +26,12 @@ public class DrawYardControllerTests {
 		model.setDrawMode(DrawMode.RECTANGLE);
 		dyc.handleOnRectButton();
 		assertEquals(DrawMode.RECTANGLE, model.getDrawMode());
+	}
+	
+	public void testCircleButton() {
+		Model model = new Model();
+		DrawYardView dyv = new DrawYardView(new Stage());
+		DrawYardController dyc = new DrawYardController(model, dyv);
 		
 		model.setDrawMode(DrawMode.RECTANGLE);
 		dyc.handleOnRectButton();
@@ -36,7 +42,14 @@ public class DrawYardControllerTests {
 		model.setDrawMode(DrawMode.CIRCLE);
 		dyc.handleOnRectButton();
 		assertEquals(DrawMode.CIRCLE, model.getDrawMode());
+	}
+	
+	public void testDragPane() {
+		Model model = new Model();
+		DrawYardView dyv = new DrawYardView(new Stage());
+		DrawYardController dyc = new DrawYardController(model, dyv);
 		
+		model.setDrawMode(DrawMode.RECTANGLE);
 		dyc.handleOnDragPane();
 		assertEquals(1, model.getGardenObjectArr().size());
 	}

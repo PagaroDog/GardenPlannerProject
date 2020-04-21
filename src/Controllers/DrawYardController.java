@@ -1,9 +1,22 @@
 package Controllers;
 
+import Model.Model;
+import Views.DrawYardView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 public class DrawYardController {
+	
+	Model model;
+	DrawYardView view;
+	
+	public DrawYardController(Model model, DrawYardView dyv) {
+//		this.model = model;
+//		view = dyv;
+//		
+//		view.setController(this);
+//		model.setDYC(this);
+	}
 	
 	/**
 	 * Handles event when user presses rectangle button,
