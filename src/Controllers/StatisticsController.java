@@ -1,5 +1,9 @@
 package Controllers;
 
-public class StatisticsController {
+import javafx.event.EventHandler;
 
+public class StatisticsController {
+	public EventHandler handleOnBackButton() {
+		return null;
+	}
 }
