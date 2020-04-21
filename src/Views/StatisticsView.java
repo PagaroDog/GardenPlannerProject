@@ -11,6 +11,9 @@ public class StatisticsView extends View{
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * @return Scene object for the Draw Yard screen
+	 */
 	@Override
 	public Scene getScene() {
 		// TODO Auto-generated method stub

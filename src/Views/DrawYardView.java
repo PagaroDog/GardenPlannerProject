@@ -15,8 +15,8 @@ public class DrawYardView extends View{
 	public DrawYardView(Stage stage) {
 		this.stage = stage;
 	}
+	
 	/**
-	 * Gets the Draw Yard screen's Scene object
 	 * @return Scene object for the Draw Yard screen
 	 */
 	@Override

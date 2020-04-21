@@ -15,7 +15,7 @@ public class StatisticsControllerTests {
 		StatisticsController sc = new StatisticsController();
 		
 		sc.handleOnBackButton();
-		ssertEquals(StageName.DESIGN, model.getStageName());
+		assertEquals(StageName.DESIGN, model.getStageName());
 	}
 
 }
