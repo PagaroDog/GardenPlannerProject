@@ -19,8 +19,8 @@ public class TutorialController {
 	}
 	
 	/**
-	 * Handles event when user presses select button,
-	 * invoking selectButton()
+	 * Handles event when user presses Next button,
+	 * invoking nextButton()
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnNextButton() {
@@ -28,15 +28,15 @@ public class TutorialController {
 	}
 	
 	/**
-	 * Handles event when user presses rectangle button,
-	 * invoking rectButton()
+	 * Handles event when user presses Prev button,
+	 * invoking prevButton()
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnPrevButton() {
 		return null;
 	}
 	/**
-	 * Sets condition area editing mode to select
+	 * Goes to the next screen
 	 */
 	public void nextButton(MouseEvent event) {
 		 
