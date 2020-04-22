@@ -2,7 +2,11 @@ package Controllers;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-
+/**
+ * Controller for the PreferencesView. Contains EventHandlers for button presses.
+ * @author Brandon Wu
+ *
+ */
 public class PreferencesController {
 
 	

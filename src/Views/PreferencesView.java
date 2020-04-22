@@ -3,7 +3,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
-
+/**
+ * Creates the scene for the preferences view. 
+ * @author Brandon Wu
+ *
+ */
 public class PreferencesView extends View{
 	private Button nextButton;
 	private Button backButton;
@@ -17,19 +21,17 @@ public class PreferencesView extends View{
 	public PreferencesView(Stage stage) {
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	@Override
+	/**
+	 * Creates the PreferencesView scene the user will see
+	 */
 	public Scene getScene() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Button getNextButton() {
-		return nextButton;
-	}
-	public Button getBackButton() {
-		return backButton;
-	}
+
 
 	public ComboBox<String> getSoil() {
 		return soil;

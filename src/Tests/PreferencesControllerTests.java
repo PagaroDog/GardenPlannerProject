@@ -21,13 +21,12 @@ public class PreferencesControllerTests {
 		Model Mod = new Model();
 		PreferencesController pc = new PreferencesController();
 		PreferencesView pv = new PreferencesView(new Stage());
-		MouseEvent me = new MouseEvent(null, 0, 0, 0, 0, 0, 0, false);
-		//Mod.createGardenPref("Name",pv.getSun(),pv.getBloom(),pv.getSoil(),pv.getColor(),null,null,null);
+		//MouseEvent me = new MouseEvent(null, 0, 0, 0, 0, 0, 0, false);
 		
 		Mod.setStageName(StageName.PREFERENCES);
 		pc.gethandleOnNextButton();
 		assertEquals(StageName.DESIGN, Mod.getStageName());
-		GardenPref test = new GardenPref("Name",pv.getSun().getValue(),pv.getBloom().getValue(),pv.getSoil().getValue(),pv.getColor().getValue(),null,null,null));
+		GardenPref test = new GardenPref(pv.getSun().getValue(),pv.getBloom().getValue(),pv.getSoil().getValue(),pv.getColor().getValue(),0,0,12,12));
 		assertEquals(test,Mod.getGardenPref());
 		
 	}
@@ -36,7 +35,7 @@ public class PreferencesControllerTests {
 		Model Mod = new Model();
 		PreferencesController pc = new PreferencesController();
 		PreferencesView pv = new PreferencesView(new Stage());
-		MouseEvent me = new MouseEvent(null, 0, 0, 0, 0, 0, 0, false);
+		//MouseEvent me = new MouseEvent(null, 0, 0, 0, 0, 0, 0, false);
 		
 		
 		Mod.setStageName(StageName.PREFERENCES);
