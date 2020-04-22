@@ -14,7 +14,11 @@ import Model.Model;
 import Model.StageName;
 import Views.PreferencesView;
 import javafx.stage.Stage;
-
+/**
+ * 
+ * @author Brandon Wu
+ *
+ */
 public class PreferencesControllerTests {
 
 	@Test
