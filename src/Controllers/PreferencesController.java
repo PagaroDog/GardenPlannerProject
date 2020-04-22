@@ -2,7 +2,11 @@ package Controllers;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-
+/**
+ * Controller for the PreferencesView. Contains EventHandlers for button presses.
+ * @author Brandon Wu
+ *
+ */
 public class PreferencesController {
 
 	
@@ -14,7 +18,7 @@ public class PreferencesController {
  * @return EventHandler
  */
 	
-	public EventHandler handleOnBackButton(MouseEvent event) {
+	public EventHandler gethandleOnBackButton() {
 		return null;
 	}
 /**
@@ -31,7 +35,7 @@ public class PreferencesController {
  * @param event
  * @return EventHandler
  */
-	public EventHandler handleOnNextButton(MouseEvent event) {
+	public EventHandler gethandleOnNextButton() {
 		return null;
 	}
 /**
