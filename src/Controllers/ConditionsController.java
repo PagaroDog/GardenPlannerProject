@@ -4,7 +4,9 @@ import Views.ConditionsView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-
+/**
+ * @author Tommy White
+ */
 public class ConditionsController {
 	
 	Model model;

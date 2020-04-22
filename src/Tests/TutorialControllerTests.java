@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import Controllers.TutorialController;
 import Model.Model;
-
+import Model.StageName;
 import Views.TutorialView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -24,10 +24,10 @@ public class TutorialControllerTests {
 	    
 	    tc.nextButton(emptyMouseEvent);
 	    
-	    assertEquals(model.StageName, StageName.PREFERENCES);
+	    assertEquals(StageName.PREFERENCES, model.getStageName());
 	    
 	    tc.prevButton(emptyMouseEvent);
-	    assertEquals(model.StageName, StageName.DRAW);
+	    assertEquals(StageName.DRAW, model.getStageName());
 	}
 
 

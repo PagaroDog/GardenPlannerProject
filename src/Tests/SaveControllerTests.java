@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import Controllers.SaveController;
 import Model.Model;
+import Model.StageName;
 import Views.SaveView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -19,14 +20,10 @@ public class SaveControllerTests {
             SaveView sv = new SaveView(new Stage());
             SaveController sc = new SaveController(model, sv);
             
-            model.saveGarden();
-            
             sc.fileButton(emptyMouseEvent);
-            assertEquals(model.StageName, StageName.PREFERENCES);
+            assertEquals(StageName.PREFERENCES, model.getStageName());
             
             sc.PNGButton(emptyMouseEvent);
-            assertEquals(model.StageName, StageName.DRAW);
+            assertEquals(StageName.DRAW, model.getStageName());
     }
-
-
 }

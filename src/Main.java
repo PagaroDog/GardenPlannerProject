@@ -16,7 +16,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-
+/**
+ * @author Brandon Wu
+ */
 public class Main extends Application{
 	private static Map<StageName, Scene> scenes = new HashMap<>();
 	
