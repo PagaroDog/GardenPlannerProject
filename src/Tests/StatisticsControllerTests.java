@@ -7,6 +7,8 @@ import org.junit.Test;
 import Controllers.StatisticsController;
 import Model.Model;
 import Model.StageName;
+import Views.StatisticsView;
+import javafx.stage.Stage;
 
 /**
  * 
@@ -18,7 +20,8 @@ public class StatisticsControllerTests {
 	@Test
 	public void test() {
 		Model model = new Model();
-		StatisticsController sc = new StatisticsController();
+		StatisticsView sv = new StatisticsView(new Stage());
+		StatisticsController sc = new StatisticsController(model, sv);
 		
 		sc.handleOnBackButton();
 		assertEquals(StageName.DESIGN, model.getStageName());

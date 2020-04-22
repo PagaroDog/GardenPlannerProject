@@ -1,5 +1,6 @@
 package Views;
 import Controllers.Controller;
+import Controllers.PreferencesController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -17,7 +18,7 @@ public class PreferencesView extends View{
 	private ComboBox<String> sun;
 	private ComboBox<String> color;
 	private ComboBox<String> bloom;
-	private PreferencesControl control;
+	private PreferencesController control;
 	
 	
 	public PreferencesView(Stage stage) {
@@ -57,6 +58,12 @@ public class PreferencesView extends View{
 
 	@Override
 	public void setController(Controller c) {
-		control = c;
+		control = (PreferencesController) c;
+	}
+
+	@Override
+	public Stage getStage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

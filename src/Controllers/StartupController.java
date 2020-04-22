@@ -1,5 +1,5 @@
 package Controllers;
-import Model.Main;
+import Controllers.Main;
 import Model.Model;
 import Model.StageName;
 import Views.StartupView;
@@ -17,17 +17,13 @@ import javafx.stage.Stage;
 public class StartupController extends Controller{
 	
 	private StartupView StartUpView;
-	
+	private Stage stage;
 	public StartupController(Model model, View view) {
 		super(model, view);
-		// TODO Auto-generated constructor stub
+		this.stage = view.getStage();
 	}
-	
-	private Stage stage;
-	
-	public StartupController(Stage stage){
-		this.stage = stage;
-	}
+
+
 	
 	/**
 	* code is triggered by a press of NewButton
@@ -38,6 +34,7 @@ public class StartupController extends Controller{
 	}
 	
 	public void newButton(MouseEvent event) {
+	
 		stage.setScene(Main.getScenes().get(StageName.DRAW));
 	}
 

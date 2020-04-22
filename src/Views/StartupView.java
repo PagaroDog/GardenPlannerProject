@@ -1,4 +1,5 @@
 package Views;
+import Controllers.Controller;
 import Controllers.StartupController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,7 +24,6 @@ public class StartupView extends View{
 	private StartupController suc;
 	public StartupView(Stage stage) {
 		this.stage = stage;
-		suc = new StartupController(stage);
 	}
 	@Override
 	public Scene getScene() {
@@ -43,5 +43,9 @@ public class StartupView extends View{
 	}
 	public Stage getStage() {
 		return stage;
+	}
+	@Override
+	public void setController(Controller controller) {
+		this.suc = (StartupController) controller;
 	}
 }

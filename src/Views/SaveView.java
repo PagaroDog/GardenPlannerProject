@@ -2,6 +2,7 @@ package Views;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import Controllers.Controller;
 import Controllers.SaveController;
 
 /**
@@ -31,6 +32,16 @@ public class SaveView extends View{
 	 */
 	public void setController(SaveController sc) {
 		
+	}
+	@Override
+	public void setController(Controller controller) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Stage getStage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

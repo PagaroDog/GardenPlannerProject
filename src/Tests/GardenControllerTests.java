@@ -30,7 +30,7 @@ public class GardenControllerTests {
 	public void test() {
 		Model model = new Model();
 		GardenView gv = new GardenView(new Stage());
-		GardenController gc = new GardenController();
+		GardenController gc = new GardenController(model, gv);
 		
 		gc.handleOnFallButton();
 		assertEquals(model.getSeason(), Season.FALL);

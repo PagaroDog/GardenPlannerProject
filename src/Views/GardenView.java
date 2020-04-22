@@ -34,4 +34,10 @@ public class GardenView extends View{
 		
 	}
 
+	@Override
+	public Stage getStage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

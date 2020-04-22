@@ -41,4 +41,10 @@ public class ConditionsView extends View{
 	public void setController(Controller c) {
 		control = (ConditionsController) c;
 	}
+
+	@Override
+	public Stage getStage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

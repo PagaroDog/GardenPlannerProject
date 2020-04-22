@@ -24,8 +24,9 @@ public class PreferencesControllerTests {
 	@Test
 	public void nextButtonTest() {
 		Model Mod = new Model();
-		PreferencesController pc = new PreferencesController();
+
 		PreferencesView pv = new PreferencesView(new Stage());
+		PreferencesController pc = new PreferencesController(Mod, pv);
 		//MouseEvent me = new MouseEvent(null, 0, 0, 0, 0, 0, 0, false);
 		
 		Mod.setStageName(StageName.PREFERENCES);
@@ -38,8 +39,9 @@ public class PreferencesControllerTests {
 	@Test
 	public void backButtonTest() {
 		Model Mod = new Model();
-		PreferencesController pc = new PreferencesController();
+
 		PreferencesView pv = new PreferencesView(new Stage());
+		PreferencesController pc = new PreferencesController(Mod, pv);
 		//MouseEvent me = new MouseEvent(null, 0, 0, 0, 0, 0, 0, false);
 		
 		

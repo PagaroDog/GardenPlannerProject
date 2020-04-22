@@ -1,6 +1,7 @@
 package Views;
 import java.awt.Button;
 
+import Controllers.Controller;
 import Controllers.TutorialController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -30,6 +31,16 @@ public class TutorialView extends View{
 	 */
 	public void setController(TutorialController tc) {
 		
+	}
+	@Override
+	public void setController(Controller controller) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Stage getStage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
