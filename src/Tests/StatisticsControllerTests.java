@@ -8,6 +8,11 @@ import Controllers.StatisticsController;
 import Model.Model;
 import Model.StageName;
 
+/**
+ * 
+ * @author Tommy White
+ *
+ */
 public class StatisticsControllerTests {
 
 	@Test

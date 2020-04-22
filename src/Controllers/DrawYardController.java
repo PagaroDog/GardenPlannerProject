@@ -1,5 +1,8 @@
 package Controllers;
 
+/**
+ * @author Tommy White
+ */
 import Model.Model;
 import Views.DrawYardView;
 import javafx.event.EventHandler;

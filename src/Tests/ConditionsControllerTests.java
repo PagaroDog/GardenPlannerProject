@@ -11,6 +11,11 @@ import Views.ConditionsView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author Tommy White
+ *
+ */
 public class ConditionsControllerTests {
 	MouseEvent emptyMouseEvent = new MouseEvent(null, null, null, 0, 0, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null);
 
