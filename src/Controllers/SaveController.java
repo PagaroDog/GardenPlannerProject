@@ -1,6 +1,7 @@
 package Controllers;
 import Model.Model;
 import Views.SaveView;
+import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -8,17 +9,12 @@ import javafx.scene.input.MouseEvent;
  * @author Josh Stone
 * this class is the controller for the Save screen
 */
-public class SaveController {
-		
-		Model model;
+public class SaveController extends Controller{
+	
 		SaveView view;
 		
-		public SaveController(Model model, SaveView sv) {
-//			this.model = model;
-//			view = sv;
-//			
-//			view.setController(this);
-//			model.setSC(this);
+		public SaveController(Model model, View view) {
+			super(model, view);
 		}
 		
 		/**

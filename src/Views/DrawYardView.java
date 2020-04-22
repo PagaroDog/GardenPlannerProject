@@ -1,6 +1,7 @@
 package Views;
 import java.awt.Button;
 
+import Controllers.Controller;
 import Controllers.DrawYardController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -34,7 +35,7 @@ public class DrawYardView extends View{
 	/**
 	 * Sets control to dyc
 	 */
-	public void setController(DrawYardController dyc) {
-		
+	public void setController(Controller c) {
+		control = (DrawYardController) c;
 	}
 }

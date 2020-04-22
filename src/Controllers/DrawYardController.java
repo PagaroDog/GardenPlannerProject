@@ -5,20 +5,16 @@ package Controllers;
  */
 import Model.Model;
 import Views.DrawYardView;
+import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public class DrawYardController {
+public class DrawYardController extends Controller{
 	
-	Model model;
 	DrawYardView view;
 	
-	public DrawYardController(Model model, DrawYardView dyv) {
-//		this.model = model;
-//		view = dyv;
-//		
-//		view.setController(this);
-//		model.setDYC(this);
+	public DrawYardController(Model model, View dyv) {
+		super(model, dyv);
 	}
 	
 	/**

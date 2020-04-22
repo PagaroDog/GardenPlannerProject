@@ -2,6 +2,7 @@ package Controllers;
 
 import Model.Model;
 import Views.TutorialView;
+import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -9,17 +10,12 @@ import javafx.scene.input.MouseEvent;
  * @author Josh Stone
 * this class is the controller for the Tutorial screen
 */
-public class TutorialController {
+public class TutorialController extends Controller{
 	
-	Model model;
 	TutorialView view;
 	
-	public TutorialController(Model model, TutorialView tv) {
-//		this.model = model;
-//		view = tv;
-//		
-//		view.setController(this);
-//		model.setTC(this);
+	public TutorialController(Model model, View view) {
+		super(model, view);
 	}
 	
 	/**

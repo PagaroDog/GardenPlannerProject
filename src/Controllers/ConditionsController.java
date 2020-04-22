@@ -1,25 +1,21 @@
 package Controllers;
 import Model.Model;
 import Views.ConditionsView;
+import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 /**
  * @author Tommy White
  */
-public class ConditionsController {
+public class ConditionsController extends Controller {
 	
-	Model model;
 	ConditionsView view;
 	
-	public ConditionsController(Model model, ConditionsView cv) {
-//		this.model = model;
-//		view = cv;
-//		
-//		view.setController(this);
-//		model.setCC(this);
+	public ConditionsController(Model model, View view) {
+		super(model, view);
 	}
-	
+
 	/**
 	 * @return the model of the class
 	 */

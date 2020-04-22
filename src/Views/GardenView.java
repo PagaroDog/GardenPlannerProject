@@ -1,6 +1,7 @@
 package Views;
 import java.util.Collection;
 
+import Controllers.Controller;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
@@ -25,6 +26,12 @@ public class GardenView extends View{
 	public Scene getScene() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void setController(Controller controller) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
