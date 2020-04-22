@@ -1,6 +1,10 @@
 
 package Model;
-
+/**
+ * 
+ * @author IanMcCabe
+ *
+ */
 public class Plant {
 	private String name; 
 	private int light; 

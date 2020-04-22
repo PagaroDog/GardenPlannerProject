@@ -8,6 +8,11 @@ import Model.GardenObj;
 import Model.GardenPref;
 import Model.Model;
 
+/**
+ * 
+ * @author IanMcCabe
+ *
+ */
 public class ModelTests {
 
 	@Test
