@@ -1,5 +1,51 @@
 package Controllers;
 
-public class TutorialController {
+import Model.Model;
+import Views.TutorialView;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
+public class TutorialController {
+	
+	Model model;
+	TutorialView view;
+	
+	public TutorialController(Model model, TutorialView tv) {
+//		this.model = model;
+//		view = tv;
+//		
+//		view.setController(this);
+//		model.setTC(this);
+	}
+	
+	/**
+	 * Handles event when user presses select button,
+	 * invoking selectButton()
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandleOnNextButton() {
+		return null; 
+	}
+	
+	/**
+	 * Handles event when user presses rectangle button,
+	 * invoking rectButton()
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandleOnPrevButton() {
+		return null;
+	}
+	/**
+	 * Sets condition area editing mode to select
+	 */
+	public void nextButton(MouseEvent event) {
+		 
+	}
+	
+	/**
+	 * Sets condition area editing mode to label
+	 */
+	public void prevButton(MouseEvent event) {
+		
+	}
 }
