@@ -102,19 +102,19 @@ public class ConditionsControllerTests {
 		
 		cc.rectButton(emptyMouseEvent);
 		create50x50rect(cc);
-		assertEquals(1, model.getGardenObjArr().size());
+		assertEquals(1, model.getGardenObjects().size());
 		create100x90rect(cc);
-		assertEquals(2, model.getGardenObjArr().size());
+		assertEquals(2, model.getGardenObjects().size());
 		
 		//Select and delete 50x50 rectangle
 		cc.selectButton(emptyMouseEvent);
 		cc.pressPane(new MouseEvent(null, null, null, 35, 35, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
 		cc.deleteButton(emptyMouseEvent);
-		assertEquals(1, model.getGardenObjArr().size());
+		assertEquals(1, model.getGardenObjects().size());
 		//Select and delete 100x90 rectangle
 		cc.pressPane(new MouseEvent(null, null, null, 120, 85, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
 		cc.deleteButton(emptyMouseEvent);
-		assertEquals(0, model.getGardenObjArr().size());
+		assertEquals(0, model.getGardenObjects().size());
 	}
 	
 	@Test
@@ -125,15 +125,15 @@ public class ConditionsControllerTests {
 		
 		cc.rectButton(emptyMouseEvent);
 		create50x50rect(cc);
-		assertEquals(1, model.getGardenObjArr().size());
+		assertEquals(1, model.getGardenObjects().size());
 		create100x90rect(cc);
-		assertEquals(2, model.getGardenObjArr().size());
+		assertEquals(2, model.getGardenObjects().size());
 		
 		//Select nothing and confirm delete has no effect
 		cc.selectButton(emptyMouseEvent);
 		cc.deleteButton(emptyMouseEvent);
-		assertEquals(2, model.getGardenObjArr().size());
+		assertEquals(2, model.getGardenObjects().size());
 		cc.deleteButton(emptyMouseEvent);
-		assertEquals(2, model.getGardenObjArr().size());
+		assertEquals(2, model.getGardenObjects().size());
 	}
 }

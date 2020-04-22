@@ -66,17 +66,17 @@ public class DrawYardControllerTests {
 		
 		model.setDrawMode(DrawMode.RECTANGLE);
 		create50x50rect(dyc);
-		assertEquals(1, model.getGardenObjectArr().size());
+		assertEquals(1, model.getGardenObjects().size());
 		
 		//Select and delete 50x50 rectangle
 		dyc.selectButton(emptyMouseEvent);
 		dyc.pressPane(new MouseEvent(null, null, null, 35, 35, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
 		dyc.deleteButton(emptyMouseEvent);
-		assertEquals(1, model.getGardenObjArr().size());
+		assertEquals(1, model.getGardenObjects().size());
 		//Select and delete 100x90 rectangle
 		dyc.pressPane(new MouseEvent(null, null, null, 120, 85, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
 		dyc.deleteButton(emptyMouseEvent);
-		assertEquals(0, model.getGardenObjArr().size());
+		assertEquals(0, model.getGardenObjects().size());
 	}
 	
 	@Test
@@ -87,16 +87,16 @@ public class DrawYardControllerTests {
 		
 		dyc.rectButton(emptyMouseEvent);
 		create50x50rect(dyc);
-		assertEquals(1, model.getGardenObjArr().size());
+		assertEquals(1, model.getGardenObjects().size());
 		create100x90rect(dyc);
-		assertEquals(2, model.getGardenObjArr().size());
+		assertEquals(2, model.getGardenObjects().size());
 		
 		//Select nothing and confirm delete has no effect
 		dyc.selectButton(emptyMouseEvent);
 		dyc.deleteButton(emptyMouseEvent);
-		assertEquals(2, model.getGardenObjArr().size());
+		assertEquals(2, model.getGardenObjects().size());
 		dyc.deleteButton(emptyMouseEvent);
-		assertEquals(2, model.getGardenObjArr().size());
+		assertEquals(2, model.getGardenObjects().size());
 	}
 
 }

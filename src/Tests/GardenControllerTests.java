@@ -11,6 +11,8 @@ import Controllers.GardenController;
 import Controllers.StartupController;
 import Model.GardenObj;
 import Model.Model;
+import Model.Season;
+import Model.StageName;
 import Views.GardenView;
 import Views.StartupView;
 import javafx.scene.input.MouseEvent;
@@ -25,16 +27,16 @@ public class GardenControllerTests {
 		GardenController gc = new GardenController();
 		
 		gc.handleOnFallButton();
-		assertEquals(model.getSEASON(), SEASON.FALL);
+		assertEquals(model.getSeason(), Season.FALL);
 		
 		gc.handleOnWinterButton();
-		assertEquals(model.getSEASON(), SEASON.WINTER);
+		assertEquals(model.getSeason(), Season.WINTER);
 		
 		gc.handleOnSpringButton();
-		assertEquals(model.getSEASON(), SEASON.SPRING);
+		assertEquals(model.getSeason(), Season.SPRING);
 		
 		gc.handleOnSummerButton();
-		assertEquals(model.getSEASON(), SEASON.SUMMER);
+		assertEquals(model.getSeason(), Season.SUMMER);
 		
 		gc.handleOnStatsButton();
 		assertEquals(model.getStageName(), StageName.STATS);
@@ -53,9 +55,9 @@ public class GardenControllerTests {
 		
 		
 		MouseEvent dragEvent = new MouseEvent(null, null, null, 10, 10, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null);
-		model.getGardenObj().add(new GardenObj());
-		ArrayList <GardenObj> gardenobj = new ArrayList <GardenObj>(); 
-		gardenobj = model.getGardenObj();
+		model.getGardenObjects().add(new GardenObj());
+		HashMap <GardenObj> gardenobj = new ArrayList <GardenObj>(); 
+		gardenobj = model.getGardenObjects();
 		double initxLoc = gardenobj.get(0).getxLoc();
 		double inityLoc = gardenobj.get(0).getyLoc();
 		gc.ImgDrag(dragEvent);
@@ -67,7 +69,7 @@ public class GardenControllerTests {
 		assertEquals(secyLoc,10);
 		
 		
-		assertEquals(model.getSEASON(), SEASON.FALL);
+		assertEquals(model.getSeason(), Season.FALL);
 		
 		gc.handleOnPrefButton();
 		assertEquals(model.getStageName(), StageName.STATS);

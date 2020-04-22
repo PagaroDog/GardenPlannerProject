@@ -10,14 +10,15 @@ import java.util.HashSet;
 
 
 public class Model {
-    private Season season = new Season(); 
-    private Season season; 
+    private Season season;
+    private StageName stageName;
+    private CondMode condMode;
 
-    private StageName stageName; 
+	private DrawMode drawMode;
     private HashMap<GardenPref, Integer> gardenPreferences; 
     private HashMap<GardenObj, Integer> gardenObjects;  
-    private ArrayList<Actions> undoActions; 
-    private ArrayList<Actions> redoActions; 
+    private ArrayList<Actions> undoActions;
+    private ArrayList<Actions> redoActions;
     private int year; 
  
     
@@ -118,6 +119,25 @@ public class Model {
 
 	public void setCanvasHeight(int canvasHeight) {
 		this.canvasHeight = canvasHeight;
+	}
+	
+	public CondMode getCondMode() {
+		return condMode;
+	}
+
+
+	public void setCondMode(CondMode condMode) {
+		this.condMode = condMode;
+	}
+
+
+	public DrawMode getDrawMode() {
+		return drawMode;
+	}
+
+
+	public void setDrawMode(DrawMode drawMode) {
+		this.drawMode = drawMode;
 	}
 
 	
