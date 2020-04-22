@@ -5,6 +5,10 @@ import Views.TutorialView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * @author Josh Stone
+* this class is the controller for the Tutorial screen
+*/
 public class TutorialController {
 	
 	Model model;

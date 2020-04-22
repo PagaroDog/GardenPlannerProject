@@ -3,6 +3,11 @@ import Model.Model;
 import Views.SaveView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+
+/**
+ * @author Josh Stone
+* this class is the controller for the Save screen
+*/
 public class SaveController {
 		
 		Model model;
@@ -17,8 +22,8 @@ public class SaveController {
 		}
 		
 		/**
-		 * Handles event when user presses select button,
-		 * invoking selectButton()
+		 * Handles event when user presses File button,
+		 * invoking fileButton()
 		 * @return EventHandler object for this action
 		 */
 		public EventHandler getHandleOnFileButton() {
@@ -26,22 +31,22 @@ public class SaveController {
 		}
 		
 		/**
-		 * Handles event when user presses rectangle button,
-		 * invoking rectButton()
+		 * Handles event when user presses PNG button,
+		 * invoking PNGButton()
 		 * @return EventHandler object for this action
 		 */
 		public EventHandler getHandleOnPNGButton() {
 			return null;
 		}
 		/**
-		 * Sets condition area editing mode to select
+		 * saves the garden as a .garden file
 		 */
 		public void fileButton(MouseEvent event) {
 			 
 		}
 		
 		/**
-		 * Sets condition area editing mode to label
+		 * saves the garden as a .png file
 		 */
 		public void PNGButton(MouseEvent event) {
 			

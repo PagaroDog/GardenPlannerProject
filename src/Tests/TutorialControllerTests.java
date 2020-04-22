@@ -12,6 +12,10 @@ import Views.TutorialView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ * @author Josh Stone
+* this class is the test for the TutorialController
+*/
 public class TutorialControllerTests {
 	MouseEvent emptyMouseEvent = new MouseEvent(null, null, null, 0, 0, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null);
 

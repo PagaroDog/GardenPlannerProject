@@ -4,6 +4,10 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import Controllers.SaveController;
 
+/**
+ * @author Josh Stone
+* this class is the view for the Save screen
+*/
 public class SaveView extends View{
 
 	private Stage stage;

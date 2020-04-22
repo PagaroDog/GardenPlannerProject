@@ -4,7 +4,10 @@ import java.awt.Button;
 import Controllers.TutorialController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+/**
+ * @author Josh Stone
+* this class is the view for the Tutorial screen
+*/
 public class TutorialView extends View{
 	private Stage stage;
 	private Button prevButton;
