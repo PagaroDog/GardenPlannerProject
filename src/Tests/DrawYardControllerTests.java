@@ -11,6 +11,11 @@ import Views.DrawYardView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author Tommy White
+ *
+ */
 public class DrawYardControllerTests {
 	MouseEvent emptyMouseEvent = new MouseEvent(null, null, null, 0, 0, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null);
 
