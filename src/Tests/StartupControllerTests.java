@@ -18,7 +18,7 @@ public class StartupControllerTests {
 	public void test() {
 		Model model = new Model();
 		StartupView suv = new StartupView(new Stage());
-		StartupController suc = new StartupController();
+		StartupController suc = new StartupController(suv.getStage());
 		
 		
 		suc.handleOnNewButton();

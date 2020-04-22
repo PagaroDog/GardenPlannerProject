@@ -1,8 +1,8 @@
+package Model;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import Model.StageName;
 import Views.ConditionsView;
 import Views.DrawYardView;
 import Views.GardenView;
@@ -38,9 +38,12 @@ public class Main extends Application{
 		// Start with the main scene
 		stage.setScene(scenes.get(StageName.WELCOME));
 		stage.setTitle("Garden Simulator");
-		stage.show();	}
+		stage.show();	
+		}
 	
-	
+	public static Map<StageName,Scene> getScenes(){
+		return scenes;
+	}
 	public static void main(String[] args) {
 		launch(args);
 	}
