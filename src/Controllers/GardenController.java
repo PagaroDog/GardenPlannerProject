@@ -87,5 +87,9 @@ public class GardenController {
 	public EventHandler handleOnPrefButton() {
 		return null;
 	}
+	
+	public void ImgDrag(MouseEvent e) {
+		
+	}
 
 }

@@ -2,13 +2,18 @@ package Tests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
+import Controllers.ConditionsController;
 import Controllers.GardenController;
 import Controllers.StartupController;
+import Model.GardenObj;
 import Model.Model;
 import Views.GardenView;
 import Views.StartupView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class GardenControllerTests {
@@ -31,30 +36,42 @@ public class GardenControllerTests {
 		gc.handleOnSummerButton();
 		assertEquals(model.getSEASON(), SEASON.SUMMER);
 		
-		//TODO: figure out what this should do
 		gc.handleOnStatsButton();
-		assertEquals(model.getSEASON(), SEASON.FALL);
+		assertEquals(model.getStageName(), StageName.STATS);
 		
-		//TODO: figure out what this should effect.
+		
 		gc.handleOnYear1Button();
-		assertEquals(model.getSEASON(), SEASON.FALL);
+		assertEquals(model.getYear(), 1);
 		
-		//TODO: figure out what this should effect.
+		
 		gc.handleOnYear2Button();
-		assertEquals(model.getSEASON(), SEASON.FALL);
+		assertEquals(model.getYear(), 2);
 				
-		//TODO: figure out what this should effect.
+		
 		gc.handleOnYear3Button();
+		assertEquals(model.getYear(), 3);
+		
+		
+		MouseEvent dragEvent = new MouseEvent(null, null, null, 10, 10, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null);
+		model.getGardenObj().add(new GardenObj());
+		ArrayList <GardenObj> gardenobj = new ArrayList <GardenObj>(); 
+		gardenobj = model.getGardenObj();
+		double initxLoc = gardenobj.get(0).getxLoc();
+		double inityLoc = gardenobj.get(0).getyLoc();
+		gc.ImgDrag(dragEvent);
+		double secxLoc = gardenobj.get(0).getxLoc();
+		double secyLoc = gardenobj.get(0).getyLoc();
+		assertEquals(initxLoc,0);
+		assertEquals(inityLoc,0);
+		assertEquals(secxLoc,10);
+		assertEquals(secyLoc,10);
+		
+		
 		assertEquals(model.getSEASON(), SEASON.FALL);
 		
-		
-		//TODO: figure out what this should effect.
-		gc.handleOnImgDrag();
-		assertEquals(model.getSEASON(), SEASON.FALL);
-		
-		//TODO: figure out what this should effect.
 		gc.handleOnPrefButton();
-		assertEquals(model.getSEASON(), SEASON.FALL);
+		assertEquals(model.getStageName(), StageName.STATS);
 	}
+	
 
 }
