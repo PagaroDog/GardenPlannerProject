@@ -7,7 +7,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
-
+/**
+ * 
+ * @author IanMcCabe
+ *
+ */
 
 public class Model {
     private Season season;
