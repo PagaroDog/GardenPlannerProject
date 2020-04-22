@@ -10,8 +10,9 @@ import javafx.event.EventHandler;
  */
 public class StatisticsController extends Controller{
 	
+
 	StatisticsView view;
-	
+
 	public StatisticsController(Model model, View view) {
 		super(model, view);
 	}

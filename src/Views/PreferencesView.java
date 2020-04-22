@@ -58,7 +58,7 @@ public class PreferencesView extends View{
 
 	@Override
 	public void setController(Controller c) {
-		control = (PreferencesController) c;
+		control =  (PreferencesController)c;
 	}
 
 	@Override

@@ -11,13 +11,13 @@ import javafx.scene.input.MouseEvent;
  *
  */
 public class PreferencesController extends Controller {
-
 	PreferencesView view;
 	
 	public PreferencesController(Model model, View view) {
 		super(model, view);
-		// TODO Auto-generated constructor stub
 	}
+
+
 /**
  * Returns an EventHandler for when the Back Button is pressed on the Preferences scene.
  * 

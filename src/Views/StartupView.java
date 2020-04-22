@@ -46,6 +46,6 @@ public class StartupView extends View{
 	}
 	@Override
 	public void setController(Controller controller) {
-		this.suc = (StartupController) controller;
+		this.suc = (StartupController)controller;
 	}
 }
