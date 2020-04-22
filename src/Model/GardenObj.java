@@ -1,6 +1,10 @@
 
 package Model;
-
+/**
+ * 
+ * @author IanMcCabe
+ *
+ */
 public class GardenObj {
 	private int ID;
 	private int xLoc;
