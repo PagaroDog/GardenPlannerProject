@@ -19,6 +19,34 @@ public class ConditionsController {
 	}
 	
 	/**
+	 * @return the model of the class
+	 */
+	public Model getModel() {
+		return model;
+	}
+
+	/**
+	 * Sets the model of the class to parameter model
+	 */
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	/**
+	 * @return the view of the class
+	 */
+	public ConditionsView getView() {
+		return view;
+	}
+
+	/**
+	 * Sets the view of the class to parameter view
+	 */
+	public void setView(ConditionsView view) {
+		this.view = view;
+	}
+	
+	/**
 	 * Handles event when user presses select button,
 	 * invoking selectButton()
 	 * @return EventHandler object for this action
@@ -62,7 +90,7 @@ public class ConditionsController {
 	public EventHandler getHandleOnDeleteButton(){
 		return null; 
 	}
-	
+
 	/**
 	 * Handles event when user drags on Pane,
 	 * invoking dragPane()
