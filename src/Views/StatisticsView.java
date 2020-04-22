@@ -4,6 +4,11 @@ import java.awt.Button;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author Tommy White
+ *
+ */
 public class StatisticsView extends View{
 	private Button backButton;
 

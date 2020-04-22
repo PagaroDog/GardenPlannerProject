@@ -2,6 +2,9 @@ package Controllers;
 
 import javafx.event.EventHandler;
 
+/**
+ * @author Tommy White
+ */
 public class StatisticsController {
 	/**
 	 * Handles event when user presses rectangle button,

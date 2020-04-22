@@ -6,6 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author Tommy White
+ *
+ */
 public class DrawYardView extends View{
 	private Stage stage;
 	private Button rectButton;
