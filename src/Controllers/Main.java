@@ -77,6 +77,9 @@ public class Main extends Application{
 		stage.setTitle("Garden Simulator");
 		stage.show();	}
 	
+	public static Map<StageName,Scene> getScenes(){
+		return scenes;
+	}
 	
 	public static void main(String[] args) {
 		launch(args);
