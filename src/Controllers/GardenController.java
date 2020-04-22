@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 /**
+ * @author matt cohen
 * this class is the controller for the Garden screen
 */
 public class GardenController {

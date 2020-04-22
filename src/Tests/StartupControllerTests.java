@@ -1,6 +1,9 @@
 package Tests;
 
 import static org.junit.Assert.*;
+/**
+ * @author matt cohen
+ */
 import org.junit.Test;
 
 import Controllers.StartupController;

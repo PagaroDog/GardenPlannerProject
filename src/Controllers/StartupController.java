@@ -5,7 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
-/**
+/**@author matt cohen
 * this class is the controller for the startup screen.
 */
 public class StartupController {

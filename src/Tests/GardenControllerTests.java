@@ -18,6 +18,11 @@ import Views.GardenView;
 import Views.StartupView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+/**
+ * 
+ * @author matt cohen
+ *
+ */
 
 public class GardenControllerTests {
 
