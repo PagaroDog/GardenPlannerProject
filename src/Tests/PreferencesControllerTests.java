@@ -1,5 +1,6 @@
 package Tests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.awt.event.MouseEvent;
@@ -26,8 +27,8 @@ public class PreferencesControllerTests {
 		Mod.setStageName(StageName.PREFERENCES);
 		pc.gethandleOnNextButton();
 		assertEquals(StageName.DESIGN, Mod.getStageName());
-		GardenPref test = new GardenPref(pv.getSun().getValue(),pv.getBloom().getValue(),pv.getSoil().getValue(),pv.getColor().getValue(),0,0,12,12));
-		assertEquals(test,Mod.getGardenPref());
+		GardenPref test = new GardenPref();
+		assertEquals(test,Mod.getGardenPreferences());
 		
 	}
 	@Test

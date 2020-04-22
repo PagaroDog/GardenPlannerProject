@@ -15,8 +15,8 @@ public class Model {
     private CondMode condMode;
 
 	private DrawMode drawMode;
-    private HashMap<GardenPref, Integer> gardenPreferences; 
-    private HashMap<GardenObj, Integer> gardenObjects;  
+    private HashMap<Integer, GardenPref> gardenPreferences; 
+    private HashMap<Integer, GardenObj> gardenObjects;  
     private ArrayList<Actions> undoActions;
     private ArrayList<Actions> redoActions;
     private int year; 
@@ -52,22 +52,22 @@ public class Model {
 	}
 
 
-	public HashMap<GardenPref, Integer> getGardenPreferences() {
+	public HashMap<Integer, GardenPref> getGardenPreferences() {
 		return gardenPreferences;
 	}
 
 
-	public void setGardenPreferences(HashMap<GardenPref, Integer> gardenPreferences) {
+	public void setGardenPreferences(HashMap<Integer, GardenPref> gardenPreferences) {
 		this.gardenPreferences = gardenPreferences;
 	}
 
 
-	public HashMap<GardenObj, Integer> getGardenObjects() {
+	public HashMap<Integer, GardenObj> getGardenObjects() {
 		return gardenObjects;
 	}
 
 
-	public void setGardenObjects(HashMap<GardenObj, Integer> gardenObjects) {
+	public void setGardenObjects(HashMap<Integer, GardenObj> gardenObjects) {
 		this.gardenObjects = gardenObjects;
 	}
 

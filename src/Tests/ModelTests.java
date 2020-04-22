@@ -20,7 +20,7 @@ public class ModelTests {
 		Model test = new Model(); 
 		GardenObj j = new GardenObj(); 
 		
-		test.getGardenObjects().put(j, 1); 
+		test.getGardenObjects().put(1, j); 
 		
 		test.copy(j, j.getID()); 
 		
@@ -33,7 +33,7 @@ public class ModelTests {
 		Model test = new Model(); 
 		GardenObj j = new GardenObj(); 
 		
-		test.getGardenObjects().put(j, 1); 
+		test.getGardenObjects().put(1, j); 
 		
 		test.undo();
 		
@@ -44,7 +44,7 @@ public class ModelTests {
 		Model test = new Model(); 
 		GardenObj j = new GardenObj(); 
 		
-		test.getGardenObjects().put(j, 1); 
+		test.getGardenObjects().put(1, j); 
 		
 		test.undo();
 		test.redo(); 

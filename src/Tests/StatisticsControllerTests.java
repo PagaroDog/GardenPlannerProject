@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import Controllers.StatisticsController;
 import Model.Model;
+import Model.StageName;
 
 public class StatisticsControllerTests {
 

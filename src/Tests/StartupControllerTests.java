@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import Controllers.StartupController;
 import Model.Model;
+import Model.StageName;
 import Views.StartupView;
 import javafx.stage.Stage;
 
@@ -18,13 +19,13 @@ public class StartupControllerTests {
 		
 		
 		suc.handleOnNewButton();
-		assertEquals(model.StageName, StageName.PREFERENCES);
+		assertEquals(model.getStageName(), StageName.PREFERENCES);
 		
 		suc.handleOnLoadButton();
-		assertEquals(model.StageName, StageName.DESIGN);
+		assertEquals(model.getStageName(), StageName.DESIGN);
 		
 		suc.handleOnTutorialButton();
-		assertEquals(model.StageName, StageName.TUTORIAL);
+		assertEquals(model.getStageName(), StageName.TUTORIAL);
 		
 		
 	}
