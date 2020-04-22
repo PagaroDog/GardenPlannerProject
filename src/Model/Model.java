@@ -7,6 +7,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import Controllers.ConditionsController;
+import Controllers.Controller;
+import Controllers.DrawYardController;
+import Controllers.GardenController;
+import Controllers.PreferencesController;
+import Controllers.SaveController;
+import Controllers.StartupController;
+import Controllers.StatisticsController;
+import Controllers.TutorialController;
+
 /**
  * 
  * @author IanMcCabe
@@ -29,10 +39,16 @@ public class Model {
     private int canvasWidth; 
     private int canvasHeight; 
     
-    
-    
-    
- 
+    private StartupController startControl;
+	
+
+	private TutorialController tutControl;
+	private DrawYardController dyControl;
+	private ConditionsController condControl;
+	private StatisticsController statControl;
+	private GardenController gardenControl;
+	private SaveController saveControl;
+	private PreferencesController prefControl;
     
     
     
@@ -142,6 +158,89 @@ public class Model {
 
 	public void setDrawMode(DrawMode drawMode) {
 		this.drawMode = drawMode;
+	}
+	
+	public StartupController getStartControl() {
+		return startControl;
+	}
+
+
+	public void setController(Controller controller) {
+		
+	}
+	
+	public void setStartControl(StartupController startControl) {
+		this.startControl = startControl;
+	}
+
+
+	public TutorialController getTutControl() {
+		return tutControl;
+	}
+
+
+	public void setTutControl(TutorialController tutControl) {
+		this.tutControl = tutControl;
+	}
+
+
+	public DrawYardController getDyControl() {
+		return dyControl;
+	}
+
+
+	public void setDyControl(DrawYardController dyControl) {
+		this.dyControl = dyControl;
+	}
+
+
+	public ConditionsController getCondControl() {
+		return condControl;
+	}
+
+
+	public void setCondControl(ConditionsController condControl) {
+		this.condControl = condControl;
+	}
+
+
+	public StatisticsController getStatControl() {
+		return statControl;
+	}
+
+
+	public void setStatControl(StatisticsController statControl) {
+		this.statControl = statControl;
+	}
+
+
+	public GardenController getGardenControl() {
+		return gardenControl;
+	}
+
+
+	public void setGardenControl(GardenController gardenControl) {
+		this.gardenControl = gardenControl;
+	}
+
+
+	public SaveController getSaveControl() {
+		return saveControl;
+	}
+
+
+	public void setSaveControl(SaveController saveControl) {
+		this.saveControl = saveControl;
+	}
+
+
+	public PreferencesController getPrefControl() {
+		return prefControl;
+	}
+
+
+	public void setPrefControl(PreferencesController prefControl) {
+		this.prefControl = prefControl;
 	}
 
 	

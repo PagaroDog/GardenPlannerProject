@@ -1,5 +1,8 @@
 package Controllers;
 
+import Model.Model;
+import Views.GardenView;
+import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -7,8 +10,15 @@ import javafx.scene.input.MouseEvent;
  * @author matt cohen
 * this class is the controller for the Garden screen
 */
-public class GardenController {
+public class GardenController extends Controller{
 	
+	GardenView view;
+	
+	public GardenController(Model model, View view) {
+		super(model, view);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	* code is triggered by a press of SpringButton
 	* @return EventHandler object for this action

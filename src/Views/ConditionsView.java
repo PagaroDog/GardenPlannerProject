@@ -1,5 +1,6 @@
 package Views;
 import Controllers.ConditionsController;
+import Controllers.Controller;
 import Controllers.DrawYardController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -37,7 +38,7 @@ public class ConditionsView extends View{
 	/**
 	 * Sets control to cc
 	 */
-	public void setController(DrawYardController cc) {
-		
+	public void setController(Controller c) {
+		control = (ConditionsController) c;
 	}
 }

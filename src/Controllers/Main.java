@@ -52,6 +52,7 @@ public class Main extends Application{
 		statView = new StatisticsView(stage);
 		gardenView = new GardenView(stage);
 		saveView = new SaveView(stage);
+		prefView = new PreferencesView(stage);
 		startControl = new StartupController(model, startView);
 		tutControl = new TutorialController(model, tutView);
 		dyControl = new DrawYardController(model, dyView);
