@@ -1,9 +1,10 @@
 package Views;
-import java.awt.Button;
+import javafx.scene.control.Button;
 
 import Controllers.Controller;
 import Controllers.DrawYardController;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
@@ -32,7 +33,15 @@ public class DrawYardView extends View{
 	 */
 	@Override
 	public Scene getScene() {
-		return null;
+		TilePane tp = new TilePane();
+		Label txt = new Label("DrawPhase");
+		next = new Button("Next");
+		next.setOnMouseClicked(control.getHandleNextButton());
+		prev = new Button("Prev");
+		prev.setOnMouseClicked(control.getHandlePrevButton());
+		
+		tp.getChildren().addAll(txt,prev,next);
+		return new Scene(tp,canvasHeight,canvasWidth);
 	}
 	
 	/**

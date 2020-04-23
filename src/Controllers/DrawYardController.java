@@ -4,17 +4,20 @@ package Controllers;
  * @author Tommy White
  */
 import Model.Model;
+import Model.StageName;
 import Views.DrawYardView;
 import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class DrawYardController extends Controller{
 	
 	DrawYardView view;
-	
+	private Stage stage;
 	public DrawYardController(Model model, View dyv) {
 		super(model, dyv);
+		this.stage = dyv.getStage();
 	}
 	
 	/**
@@ -90,6 +93,21 @@ public class DrawYardController extends Controller{
 	}
 	
 	/**
+	 * Handles event when the user presses the next button.
+	 * Invokes nextButtion()
+	 * @return
+	 */
+	public EventHandler getHandleNextButton() {
+		return event -> nextButton((MouseEvent)event);
+	}
+	
+	/**
+	 * 
+	 */
+	public EventHandler getHandlePrevButton() {
+		return event -> prevButton((MouseEvent)event);
+	}
+	/**
 	 * Sets condition area editing mode to select
 	 */
 	public void selectButton(MouseEvent event) {
@@ -146,4 +164,18 @@ public class DrawYardController extends Controller{
 	public void releasePane(MouseEvent event) {
 		
 	}
+	/**
+	 * Sets the scene to PreferencesView, and model StageName to StageName.PREFERENCES
+	 * @param event
+	 */
+	public void nextButton(MouseEvent event) {
+		stage.setScene(Main.getScenes().get(StageName.PREFERENCES));
+		model.setStageName(StageName.PREFERENCES);
+	}
+	
+	public void prevButton(MouseEvent event) {
+		stage.setScene(Main.getScenes().get(StageName.WELCOME));
+		model.setStageName(StageName.WELCOME);
+	}
+	
 }
