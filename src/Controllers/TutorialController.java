@@ -1,10 +1,12 @@
 package Controllers;
 
 import Model.Model;
+import Model.StageName;
 import Views.TutorialView;
 import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * @author Josh Stone
@@ -12,10 +14,11 @@ import javafx.scene.input.MouseEvent;
 */
 public class TutorialController extends Controller{
 	
-	TutorialView view;
-	
-	public TutorialController(Model model, View view) {
-		super(model, view);
+
+	private Stage stage;
+	public TutorialController(Model model, View tutView) {
+		super(model, tutView);
+		stage = tutView.getStage();
 	}
 	
 	/**
@@ -24,7 +27,7 @@ public class TutorialController extends Controller{
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnNextButton() {
-		return null; 
+		return event -> nextButton((MouseEvent) event);
 	}
 	
 	/**
@@ -33,19 +36,23 @@ public class TutorialController extends Controller{
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnPrevButton() {
-		return null;
+		return event -> prevButton((MouseEvent)event);
 	}
 	/**
 	 * Goes to the next screen
 	 */
 	public void nextButton(MouseEvent event) {
-		 
+		 stage.setScene(Main.getScenes().get(StageName.DRAW));
+		 model.setStageName(StageName.DRAW);
 	}
 	
 	/**
 	 * Sets condition area editing mode to label
 	 */
 	public void prevButton(MouseEvent event) {
-		
+		 stage.setScene(Main.getScenes().get(StageName.WELCOME));
+		 model.setStageName(StageName.WELCOME);
 	}
+
+
 }

@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 * this class is the controller for the startup screen.
 */
 public class StartupController extends Controller{
-	private Model model;
-	private View StartUpView;
+	
+
 	private Button newButton;
 	private Button loadButton;
 	private Button tutorialButton;
@@ -27,6 +27,7 @@ public class StartupController extends Controller{
 	
 	public StartupController(Model model, View startView) {
 		super(model,startView);
+		this.stage = startView.getStage();
 	}
 
 	/**
@@ -39,6 +40,7 @@ public class StartupController extends Controller{
 	
 	public void newButton(MouseEvent event) {
 		stage.setScene(Main.getScenes().get(StageName.DRAW));
+		model.setStageName(StageName.DRAW);
 	}
 
 	/**
@@ -51,6 +53,7 @@ public class StartupController extends Controller{
 	
 	public void loadButton(MouseEvent event) {
 		stage.setScene(Main.getScenes().get(StageName.DESIGN));
+		model.setStageName(StageName.DESIGN);
 	}
 
 	/**
@@ -63,6 +66,7 @@ public class StartupController extends Controller{
 
 	public void tutorialButton(MouseEvent event) {
 		stage.setScene(Main.getScenes().get(StageName.TUTORIAL));
+		model.setStageName(StageName.TUTORIAL);
 	}
 	
 	

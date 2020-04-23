@@ -25,7 +25,7 @@ import Controllers.TutorialController;
 
 public class Model {
     private Season season;
-    private StageName stageName;
+    private StageName stageName = StageName.WELCOME;
     private CondMode condMode;
 
 	private DrawMode drawMode;

@@ -5,6 +5,7 @@ import Controllers.Controller;
 import Controllers.DrawYardController;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 /**
@@ -18,6 +19,8 @@ public class DrawYardView extends View{
 	private Button circleButton;
 	private Button importButton;
 	private Pane drawing;
+	private Button next;
+	private Button prev;
 	private DrawYardController control;
 	
 	public DrawYardView(Stage stage) {
@@ -41,7 +44,6 @@ public class DrawYardView extends View{
 
 	@Override
 	public Stage getStage() {
-		// TODO Auto-generated method stub
-		return null;
+		return stage;
 	}
 }
