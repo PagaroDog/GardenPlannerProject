@@ -1,22 +1,23 @@
 package Controllers;
 
 import Model.Model;
+import Model.StageName;
 import Views.GardenView;
 import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * @author matt cohen
 * this class is the controller for the Garden screen
 */
 public class GardenController extends Controller{
-	GardenView view;
-	
-	
-	
-	public GardenController(Model model, View view) {
-		super(model, view);
+
+	private Stage stage;
+	public GardenController(Model model, View Gview) {
+		super(model, Gview);
+		this.stage = Gview.getStage();
 	
 	}
 
@@ -58,9 +59,18 @@ public class GardenController extends Controller{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnStatsButton() {
-		return null;
+		return event -> statsButton((MouseEvent)event);
 	}
-	
+	/**
+	 * Sets the scene to StatisticsView and model StageName to StageName.STATS
+	 * @param event
+	 */
+	public void  statsButton(MouseEvent event) {
+		stage.setScene(Main.getScenes().get(StageName.STATS));
+		model.setStageName(StageName.STATS);
+	}
+
+
 	/**
 	* code is triggered by a press of Year1Button
 	* @return EventHandler object for this action
@@ -98,11 +108,37 @@ public class GardenController extends Controller{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnPrefButton() {
-		return null;
+		return event -> prefButton((MouseEvent)event);
 	}
-	
+	/**
+	 * Sets the scene to PreferencesView and model StageName to StageName.PREFERENCES
+	 * @param event
+	 */
+	public void prefButton(MouseEvent event) {
+		stage.setScene(Main.getScenes().get(StageName.PREFERENCES));
+		model.setStageName(StageName.PREFERENCES);
+	}
+
+
 	public void ImgDrag(MouseEvent e) {
 		
+	}
+
+	/**
+	* code is triggered by a press of SaveButton
+	* @return EventHandler object for this action
+	*/
+	public EventHandler handleOnSaveButton() {
+		return event -> saveButton();
+	}
+
+	/**
+	 * Sets the scene to SaveView and model StageName to StageName.SAVE
+	 * @param event
+	 */
+	public void saveButton() {
+		stage.setScene(Main.getScenes().get(StageName.SAVE));
+		model.setStageName(StageName.SAVE);
 	}
 
 }
