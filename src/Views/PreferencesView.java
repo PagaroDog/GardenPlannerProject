@@ -38,15 +38,21 @@ public class PreferencesView extends View{
 	}
 	
 	public void setup() {
-		BorderPane border = new BorderPane();
+		StackPane border = new StackPane();
 		HBox hbox = addHBox();
 		VBox vbox = addVBox();
-		border.setTop(hbox);
-		border.setRight(vbox);
+//		border.setBottom(hbox);
+//		border.setRight(vbox);
 		ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/imgs/emptygarden.jpg"),800,400,true,false));
 		iv.setPreserveRatio(true);
 		iv.setFitHeight(800);
-		border.setLeft(iv);
+//		border.setLeft(iv);
+		border.getChildren().addAll(hbox, vbox, iv);
+		vbox.setMaxWidth(300);
+		hbox.setMaxHeight(1000);
+		StackPane.setAlignment(iv, Pos.CENTER_LEFT);
+		StackPane.setAlignment(vbox, Pos.CENTER_RIGHT);
+		StackPane.setAlignment(hbox, Pos.BOTTOM_CENTER);
 		TilePane tp = new TilePane();
 		Label txt = new Label("Pref");
 		
