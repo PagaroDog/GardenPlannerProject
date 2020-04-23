@@ -29,6 +29,9 @@ public class Model {
     private CondMode condMode;
 
 	private DrawMode drawMode;
+	private double drawPressX;
+	private double drawPressY;
+	
     private HashMap<Integer, GardenPref> gardenPreferences; 
     private HashMap<Integer, GardenObj> gardenObjects;  
     private ArrayList<Actions> undoActions;
@@ -155,11 +158,26 @@ public class Model {
 		return drawMode;
 	}
 
-
 	public void setDrawMode(DrawMode drawMode) {
 		this.drawMode = drawMode;
 	}
 	
+	public double getDrawPressX() {
+		return drawPressX;
+	}
+
+	public void setDrawPressX(double drawPressX) {
+		this.drawPressX = drawPressX;
+	}
+
+	public double getDrawPressY() {
+		return drawPressY;
+	}
+
+	public void setDrawPressY(double drawPressY) {
+		this.drawPressY = drawPressY;
+	}
+
 	public StartupController getStartControl() {
 		return startControl;
 	}

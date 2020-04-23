@@ -6,5 +6,5 @@ package Model;
  *
  */
 public enum DrawMode {
-	SELECT, RECTANGLE, CIRCLE
+	SELECT, RECTANGLE, CIRCLE, LABEL
 }

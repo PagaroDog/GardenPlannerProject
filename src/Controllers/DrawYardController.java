@@ -1,5 +1,6 @@
 package Controllers;
 
+import Model.DrawMode;
 /**
  * @author Tommy White
  */
@@ -13,7 +14,7 @@ import javafx.stage.Stage;
 
 public class DrawYardController extends Controller{
 	
-	DrawYardView view;
+	private DrawYardView view;
 	private Stage stage;
 	public DrawYardController(Model model, View dyv) {
 		super(model, dyv);
@@ -26,7 +27,7 @@ public class DrawYardController extends Controller{
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnSelectButton() {
-		return null; 
+		return event -> selectButton((MouseEvent) event); 
 	}
 	
 	/**
@@ -35,7 +36,7 @@ public class DrawYardController extends Controller{
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnRectButton() {
-		return null;
+		return event -> rectButton((MouseEvent) event);
 	}
 	
 	/**
@@ -44,7 +45,16 @@ public class DrawYardController extends Controller{
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnCircleButton() {
-		return null;
+		return event -> circleButton((MouseEvent) event);
+	}
+	
+	/**
+	 * Handles event when user presses label button,
+	 * invoking circleButton()
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandleOnLabelButton() {
+		return event -> labelButton((MouseEvent) event);
 	}
 	
 	/**
@@ -53,7 +63,7 @@ public class DrawYardController extends Controller{
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnDeleteButton(){
-		return null; 
+		return event -> deleteButton((MouseEvent) event); 
 	}
 	
 	/**
@@ -62,7 +72,7 @@ public class DrawYardController extends Controller{
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnImportButton() {
-		return null;
+		return event -> importButton((MouseEvent) event);
 	}
 	
 	/**
@@ -71,7 +81,7 @@ public class DrawYardController extends Controller{
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnDragPane() {
-		return null;
+		return event -> dragPane((MouseEvent)event);
 	}
 	
 	/**
@@ -80,7 +90,7 @@ public class DrawYardController extends Controller{
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnPressPane() {
-		return null;
+		return event -> pressPane((MouseEvent)event);
 	}
 	
 	/**
@@ -89,7 +99,7 @@ public class DrawYardController extends Controller{
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnReleasePane() {
-		return null;
+		return event -> releasePane((MouseEvent)event);
 	}
 	
 	/**
@@ -108,37 +118,41 @@ public class DrawYardController extends Controller{
 		return event -> prevButton((MouseEvent)event);
 	}
 	/**
-	 * Sets condition area editing mode to select
+	 * Sets drawing mode to select
 	 */
 	public void selectButton(MouseEvent event) {
-		 
+		 model.setDrawMode(DrawMode.SELECT);
 	}
 	
 	/**
-	 * Sets condition area editing mode to label
-	 */
-	public void labelButton(MouseEvent event) {
-		
-	}
-	
-	/**
-	 * Sets condition area editing mode to rectangle
+	 * Sets drawing mode to rectangle
 	 */
 	public void rectButton(MouseEvent event) {
-		
+		model.setDrawMode(DrawMode.RECTANGLE);
 	}
 	
 	/**
-	 * Sets condition area editing mode to circle
+	 * Sets drawing mode to circle
 	 */
 	public void circleButton(MouseEvent event) {
-		
+		model.setDrawMode(DrawMode.CIRCLE);
+	}
+	
+	/**
+	 * Sets drawing mode to label
+	 */
+	public void labelButton(MouseEvent event) {
+		model.setDrawMode(DrawMode.LABEL);
 	}
 	
 	/**
 	 * Deletes currently selected object, if any
 	 */
 	public void deleteButton(MouseEvent event){
+		 
+	}
+	
+	public void importButton(MouseEvent event){
 		 
 	}
 	
@@ -154,7 +168,9 @@ public class DrawYardController extends Controller{
 	 * In either shape mode, stores initial coordinates.
 	 */
 	public void pressPane(MouseEvent event) {
-		
+		System.out.println("press");
+		model.setDrawPressX(event.getX());
+		model.setDrawPressY(event.getY());
 	}
 	
 	/**
@@ -162,7 +178,9 @@ public class DrawYardController extends Controller{
 	 * creating new shape.
 	 */
 	public void releasePane(MouseEvent event) {
-		
+		if (model.getDrawMode() == DrawMode.RECTANGLE) {
+			view.addRectangle(model.getDrawPressX(), model.getDrawPressY(), event.getX(), event.getY());
+		}
 	}
 	/**
 	 * Sets the scene to ConditionsView, and model StageName to StageName.CONDITIONS
