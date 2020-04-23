@@ -13,14 +13,10 @@ import javafx.stage.Stage;
 /**
  * @author Tommy White
  */
-public class StatisticsController extends Controller{
-	
+public class StatisticsController extends Controller<StatisticsView>{
 
-	private Stage stage;
-
-	public StatisticsController(Model model, View Sview) {
-		super(model, Sview);
-		this.stage = Sview.getStage();
+	public StatisticsController(Model model, StatisticsView view) {
+		super(model, view);
 	}
 
 	/**
@@ -33,7 +29,7 @@ public class StatisticsController extends Controller{
 	}
 
 	public void backButton(MouseEvent event) {
-		stage.setScene(Main.getScenes().get(StageName.DESIGN));
+		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 		model.setStageName(StageName.DESIGN);
 	}
 }

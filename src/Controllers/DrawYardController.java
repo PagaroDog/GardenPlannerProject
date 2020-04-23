@@ -12,13 +12,10 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class DrawYardController extends Controller{
+public class DrawYardController extends Controller<DrawYardView>{
 	
-	private DrawYardView view;
-	private Stage stage;
-	public DrawYardController(Model model, View dyv) {
+	public DrawYardController(Model model, DrawYardView dyv) {
 		super(model, dyv);
-		this.stage = dyv.getStage();
 	}
 	
 	/**
@@ -179,7 +176,8 @@ public class DrawYardController extends Controller{
 	 */
 	public void releasePane(MouseEvent event) {
 		if (model.getDrawMode() == DrawMode.RECTANGLE) {
-			view.addRectangle(model.getDrawPressX(), model.getDrawPressY(), event.getX(), event.getY());
+//			view.addRectangle(model.getDrawPressX(), model.getDrawPressY(), event.getX(), event.getY());
+			view.addRectangle();
 		}
 	}
 	/**
@@ -187,12 +185,12 @@ public class DrawYardController extends Controller{
 	 * @param event
 	 */
 	public void nextButton(MouseEvent event) {
-		stage.setScene(Main.getScenes().get(StageName.CONDITIONS));
+		view.getStage().setScene(Main.getScenes().get(StageName.CONDITIONS));
 		model.setStageName(StageName.CONDITIONS);
 	}
 	
 	public void prevButton(MouseEvent event) {
-		stage.setScene(Main.getScenes().get(StageName.WELCOME));
+		view.getStage().setScene(Main.getScenes().get(StageName.WELCOME));
 		model.setStageName(StageName.WELCOME);
 	}
 	

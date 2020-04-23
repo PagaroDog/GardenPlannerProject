@@ -11,14 +11,10 @@ import javafx.stage.Stage;
  * @author Josh Stone
 * this class is the controller for the Save screen
 */
-public class SaveController extends Controller{
-	
-
-		private Stage stage;
+public class SaveController extends Controller<SaveView>{
 		
-		public SaveController(Model model, View Sview) {
-			super(model, Sview);
-			this.stage = Sview.getStage();
+		public SaveController(Model model, SaveView view) {
+			super(model, view);
 			
 		}
 		
@@ -59,7 +55,7 @@ public class SaveController extends Controller{
 		}
 
 		public void prevButton(MouseEvent event) {
-			stage.setScene(Main.getScenes().get(StageName.DESIGN));
+			view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 			model.setStageName(StageName.DESIGN);
 		}
 	

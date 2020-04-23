@@ -12,13 +12,10 @@ import javafx.stage.Stage;
  * @author Josh Stone
 * this class is the controller for the Tutorial screen
 */
-public class TutorialController extends Controller{
+public class TutorialController extends Controller<TutorialView>{
 	
-
-	private Stage stage;
-	public TutorialController(Model model, View tutView) {
-		super(model, tutView);
-		stage = tutView.getStage();
+	public TutorialController(Model model, TutorialView view) {
+		super(model, view);
 	}
 	
 	/**
@@ -42,7 +39,7 @@ public class TutorialController extends Controller{
 	 * Goes to the next screen
 	 */
 	public void nextButton(MouseEvent event) {
-		 stage.setScene(Main.getScenes().get(StageName.DRAW));
+		 view.getStage().setScene(Main.getScenes().get(StageName.DRAW));
 		 model.setStageName(StageName.DRAW);
 	}
 	
@@ -50,7 +47,7 @@ public class TutorialController extends Controller{
 	 * Sets condition area editing mode to label
 	 */
 	public void prevButton(MouseEvent event) {
-		 stage.setScene(Main.getScenes().get(StageName.WELCOME));
+		 view.getStage().setScene(Main.getScenes().get(StageName.WELCOME));
 		 model.setStageName(StageName.WELCOME);
 	}
 

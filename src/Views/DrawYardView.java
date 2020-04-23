@@ -84,13 +84,14 @@ public class DrawYardView extends View{
 		return stage;
 	}
 	
-	public void addRectangle(double x0, double y0, double x1, double y1) {
-		System.out.println("1");
-		double topLeftX = Math.min(x0, x1);
-		double topLeftY = Math.min(y0, y1);
-		double width = topLeftX + Math.max(x0, x1);
-		double height = topLeftX + Math.max(y0, y1);
-		Rectangle rect = new Rectangle(topLeftX, topLeftY, width, height);
-		drawing.getChildren().add(rect);
+	public void addRectangle() {
+		System.out.println("here");
+//		double topLeftX = Math.min(x0, x1);
+//		double topLeftY = Math.min(y0, y1);
+//		double width = topLeftX + Math.max(x0, x1);
+//		double height = topLeftX + Math.max(y0, y1);
+//		Rectangle rect = new Rectangle(topLeftX, topLeftY, width, height);
+//		Rectangle rect = new Rectangle(10, 10, 30, 30);
+//		drawing.getChildren().add(rect);
 	}
 }

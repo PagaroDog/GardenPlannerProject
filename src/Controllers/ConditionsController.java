@@ -10,14 +10,10 @@ import javafx.stage.Stage;
 /**
  * @author Tommy White
  */
-public class ConditionsController extends Controller {
+public class ConditionsController extends Controller<ConditionsView> {
 	
-	private ConditionsView view;
-	private Stage stage;
-	
-	public ConditionsController(Model model, View view) {
+	public ConditionsController(Model model, ConditionsView view) {
 		super(model, view);
-		stage = view.getStage();
 	}
 
 	/**
@@ -201,7 +197,7 @@ public class ConditionsController extends Controller {
 	 * @param event
 	 */
 	public void nextButton(MouseEvent event) {
-		stage.setScene(Main.getScenes().get(StageName.PREFERENCES));
+		view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
 		model.setStageName(StageName.PREFERENCES);
 	}
 	
@@ -210,7 +206,7 @@ public class ConditionsController extends Controller {
 	 * @param event
 	 */
 	public void prevButton(MouseEvent event) {
-		stage.setScene(Main.getScenes().get(StageName.DRAW));
+		view.getStage().setScene(Main.getScenes().get(StageName.DRAW));
 		model.setStageName(StageName.DRAW);
 	}
 }

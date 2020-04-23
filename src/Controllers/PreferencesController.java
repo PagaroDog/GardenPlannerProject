@@ -12,12 +12,10 @@ import javafx.stage.Stage;
  * @author Brandon Wu
  *
  */
-public class PreferencesController extends Controller {
+public class PreferencesController extends Controller<PreferencesView> {
 
-	private Stage stage;
-	public PreferencesController(Model model, View Pview) {
-		super(model, Pview);
-		this.stage = Pview.getStage();
+	public PreferencesController(Model model, PreferencesView view) {
+		super(model, view);
 	}
 
 
@@ -37,7 +35,7 @@ public class PreferencesController extends Controller {
  * @param event
  */
 	public void BackButton(MouseEvent event) {
-		stage.setScene(Main.getScenes().get(StageName.CONDITIONS));
+		view.getStage().setScene(Main.getScenes().get(StageName.CONDITIONS));
 		model.setStageName(StageName.CONDITIONS);
 	}
 	
@@ -56,7 +54,7 @@ public class PreferencesController extends Controller {
  * @param event
  */
 	public void NextButton(MouseEvent event) {
-		stage.setScene(Main.getScenes().get(StageName.DESIGN));
+		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 		model.setStageName(StageName.DESIGN);
 	}
 	

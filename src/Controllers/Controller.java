@@ -3,11 +3,11 @@ package Controllers;
 import Model.Model;
 import Views.View;
 
-public class Controller {
+public class Controller<T extends View> {
 	Model model;
-	View view;
+	T view;
 
-	public Controller(Model model, View view) {
+	public Controller(Model model, T view) {
 		this.model = model;
 		this.view = view;
 		

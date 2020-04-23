@@ -12,13 +12,10 @@ import javafx.stage.Stage;
  * @author matt cohen
 * this class is the controller for the Garden screen
 */
-public class GardenController extends Controller{
-
-	private Stage stage;
-	public GardenController(Model model, View Gview) {
-		super(model, Gview);
-		this.stage = Gview.getStage();
+public class GardenController extends Controller<GardenView>{
 	
+	public GardenController(Model model, GardenView view) {
+		super(model, view);
 	}
 
 
@@ -66,7 +63,7 @@ public class GardenController extends Controller{
 	 * @param event
 	 */
 	public void  statsButton(MouseEvent event) {
-		stage.setScene(Main.getScenes().get(StageName.STATS));
+		view.getStage().setScene(Main.getScenes().get(StageName.STATS));
 		model.setStageName(StageName.STATS);
 	}
 
@@ -115,7 +112,7 @@ public class GardenController extends Controller{
 	 * @param event
 	 */
 	public void prefButton(MouseEvent event) {
-		stage.setScene(Main.getScenes().get(StageName.PREFERENCES));
+		view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
 		model.setStageName(StageName.PREFERENCES);
 	}
 
@@ -137,7 +134,7 @@ public class GardenController extends Controller{
 	 * @param event
 	 */
 	public void saveButton() {
-		stage.setScene(Main.getScenes().get(StageName.SAVE));
+		view.getStage().setScene(Main.getScenes().get(StageName.SAVE));
 		model.setStageName(StageName.SAVE);
 	}
 
