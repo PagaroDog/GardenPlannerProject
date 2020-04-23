@@ -1,5 +1,6 @@
 package Controllers;
 import Model.Model;
+import Model.StageName;
 import Views.ConditionsView;
 import Views.View;
 import javafx.event.EventHandler;
@@ -117,6 +118,24 @@ public class ConditionsController extends Controller {
 	}
 	
 	/**
+	 * Handles event when user presses next button,
+	 * invoking nextButton()
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandleNextButton() {
+		return event -> nextButton((MouseEvent) event);
+	}
+	
+	/**
+	 * Handles event when user presses next button,
+	 * invoking prevButton()
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandlePrevButton() {
+		return event -> prevButton((MouseEvent) event);
+	}
+	
+	/**
 	 * Sets condition area editing mode to select
 	 */
 	public void selectButton(MouseEvent event) {
@@ -172,5 +191,23 @@ public class ConditionsController extends Controller {
 	 */
 	public void releasePane(MouseEvent event) {
 		
+	}
+	
+	/**
+	 * Sets the scene to PreferencesView, and model StageName to StageName.PREFERENCES
+	 * @param event
+	 */
+	public void nextButton(MouseEvent event) {
+		view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
+		model.setStageName(StageName.PREFERENCES);
+	}
+	
+	/**
+	 * Sets the scene to DrawYardView, and model StageName to StageName.DRAW
+	 * @param event
+	 */
+	public void prevButton(MouseEvent event) {
+		view.getStage().setScene(Main.getScenes().get(StageName.DRAW));
+		model.setStageName(StageName.DRAW);
 	}
 }

@@ -37,8 +37,8 @@ public class PreferencesController extends Controller {
  * @param event
  */
 	public void BackButton(MouseEvent event) {
-		stage.setScene(Main.getScenes().get(StageName.DRAW));
-		model.setStageName(StageName.DRAW);
+		stage.setScene(Main.getScenes().get(StageName.CONDITIONS));
+		model.setStageName(StageName.CONDITIONS);
 	}
 	
 /**

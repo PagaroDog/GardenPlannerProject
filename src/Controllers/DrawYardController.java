@@ -165,12 +165,12 @@ public class DrawYardController extends Controller{
 		
 	}
 	/**
-	 * Sets the scene to PreferencesView, and model StageName to StageName.PREFERENCES
+	 * Sets the scene to ConditionsView, and model StageName to StageName.CONDITIONS
 	 * @param event
 	 */
 	public void nextButton(MouseEvent event) {
-		stage.setScene(Main.getScenes().get(StageName.PREFERENCES));
-		model.setStageName(StageName.PREFERENCES);
+		stage.setScene(Main.getScenes().get(StageName.CONDITIONS));
+		model.setStageName(StageName.CONDITIONS);
 	}
 	
 	public void prevButton(MouseEvent event) {

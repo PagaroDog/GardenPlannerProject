@@ -4,7 +4,9 @@ import Controllers.Controller;
 import Controllers.DrawYardController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 /**
@@ -14,15 +16,27 @@ import javafx.stage.Stage;
  */
 public class ConditionsView extends View{
 	private Stage stage;
+	private Scene scene;
 	private Button selectButton;
 	private Button deleteButton;
 	private Button labelButton;
 	private Button rectButton;
 	private Button circleButton;
 	private Pane drawing;
+	private Button next;
+	private Button prev;
 	private ConditionsController control;
 	
 	public ConditionsView(Stage stage) {
+		TilePane tp = new TilePane();
+		Label txt = new Label("DrawPhase");
+		next = new Button("Next");
+		next.setOnMouseClicked(control.getHandleNextButton());
+		prev = new Button("Prev");
+		prev.setOnMouseClicked(control.getHandlePrevButton());
+		
+		tp.getChildren().addAll(txt,prev,next);
+		scene = new Scene(tp, canvasHeight,canvasWidth);
 		this.stage = stage;
 	}
 	
@@ -31,8 +45,8 @@ public class ConditionsView extends View{
 	 */
 	@Override
 	public Scene getScene() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return scene;
 	}
 
 	/**
