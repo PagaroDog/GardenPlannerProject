@@ -1,9 +1,14 @@
 package Controllers;
 
+
+
 import Model.Model;
+import Model.StageName;
 import Views.StatisticsView;
 import Views.View;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * @author Tommy White
@@ -11,10 +16,11 @@ import javafx.event.EventHandler;
 public class StatisticsController extends Controller{
 	
 
-	StatisticsView view;
+	private Stage stage;
 
-	public StatisticsController(Model model, View view) {
-		super(model, view);
+	public StatisticsController(Model model, View Sview) {
+		super(model, Sview);
+		this.stage = Sview.getStage();
 	}
 
 	/**
@@ -23,6 +29,11 @@ public class StatisticsController extends Controller{
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler handleOnBackButton() {
-		return null;
+		return event -> backButton((MouseEvent)event);
+	}
+
+	public void backButton(MouseEvent event) {
+		stage.setScene(Main.getScenes().get(StageName.DESIGN));
+		model.setStageName(StageName.DESIGN);
 	}
 }

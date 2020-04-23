@@ -1,8 +1,11 @@
 package Views;
-import java.awt.Button;
+import javafx.scene.control.Button;
 
 import Controllers.Controller;
+import Controllers.StatisticsController;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 /**
@@ -12,9 +15,10 @@ import javafx.stage.Stage;
  */
 public class StatisticsView extends View{
 	private Button backButton;
-
+	private Stage stage;
+	private StatisticsController control;
 	public StatisticsView(Stage stage) {
-		// TODO Auto-generated constructor stub
+		this.stage = stage;
 	}
 
 	/**
@@ -22,20 +26,23 @@ public class StatisticsView extends View{
 	 */
 	@Override
 	public Scene getScene() {
-		// TODO Auto-generated method stub
-		return null;
+		TilePane tp = new TilePane();
+		Label txt = new Label("Stats");
+		backButton = new Button("Back");
+		backButton.setOnMouseClicked(control.handleOnBackButton());
+		tp.getChildren().addAll(txt,backButton);
+		return new Scene(tp,canvasHeight,canvasWidth);
 	}
 
 	@Override
 	public void setController(Controller controller) {
-		// TODO Auto-generated method stub
+		control = (StatisticsController) controller;
 		
 	}
 
 	@Override
 	public Stage getStage() {
-		// TODO Auto-generated method stub
-		return null;
+		return stage;
 	}
 
 }
