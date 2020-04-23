@@ -168,6 +168,9 @@ public class DrawYardController extends Controller<DrawYardView>{
 		System.out.println("press");
 		model.setDrawPressX(event.getX());
 		model.setDrawPressY(event.getY());
+		if (model.getDrawMode() == DrawMode.RECTANGLE) {
+			view.addRectangle(x0, y0, x1, y1);
+		}
 	}
 	
 	/**
@@ -176,8 +179,11 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 */
 	public void releasePane(MouseEvent event) {
 		if (model.getDrawMode() == DrawMode.RECTANGLE) {
-//			view.addRectangle(model.getDrawPressX(), model.getDrawPressY(), event.getX(), event.getY());
-			view.addRectangle();
+			System.out.println(model.getDrawPressX());
+			System.out.println(model.getDrawPressY());
+			System.out.println(event.getX());
+			System.out.println(event.getY());
+			view.addRectangle(model.getDrawPressX(), model.getDrawPressY(), event.getX(), event.getY());
 		}
 	}
 	/**
