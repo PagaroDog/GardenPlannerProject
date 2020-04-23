@@ -5,16 +5,19 @@ import Views.ConditionsView;
 import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * @author Tommy White
  */
 public class ConditionsController extends Controller {
 	
-	ConditionsView view;
+	private ConditionsView view;
+	private Stage stage;
 	
 	public ConditionsController(Model model, View view) {
 		super(model, view);
+		stage = view.getStage();
 	}
 
 	/**
@@ -198,7 +201,7 @@ public class ConditionsController extends Controller {
 	 * @param event
 	 */
 	public void nextButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
+		stage.setScene(Main.getScenes().get(StageName.PREFERENCES));
 		model.setStageName(StageName.PREFERENCES);
 	}
 	
@@ -207,7 +210,7 @@ public class ConditionsController extends Controller {
 	 * @param event
 	 */
 	public void prevButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.DRAW));
+		stage.setScene(Main.getScenes().get(StageName.DRAW));
 		model.setStageName(StageName.DRAW);
 	}
 }

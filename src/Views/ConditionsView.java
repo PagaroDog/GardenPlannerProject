@@ -28,15 +28,7 @@ public class ConditionsView extends View{
 	private ConditionsController control;
 	
 	public ConditionsView(Stage stage) {
-		TilePane tp = new TilePane();
-		Label txt = new Label("DrawPhase");
-		next = new Button("Next");
-		next.setOnMouseClicked(control.getHandleNextButton());
-		prev = new Button("Prev");
-		prev.setOnMouseClicked(control.getHandlePrevButton());
 		
-		tp.getChildren().addAll(txt,prev,next);
-		scene = new Scene(tp, canvasHeight,canvasWidth);
 		this.stage = stage;
 	}
 	
@@ -45,6 +37,15 @@ public class ConditionsView extends View{
 	 */
 	@Override
 	public Scene getScene() {
+		TilePane tp = new TilePane();
+		Label txt = new Label("Conditions");
+		next = new Button("Next");
+		next.setOnMouseClicked(control.getHandleNextButton());
+		prev = new Button("Prev");
+		prev.setOnMouseClicked(control.getHandlePrevButton());
+		
+		tp.getChildren().addAll(txt,prev,next);
+		scene = new Scene(tp, canvasHeight,canvasWidth);
 		
 		return scene;
 	}
@@ -58,7 +59,6 @@ public class ConditionsView extends View{
 
 	@Override
 	public Stage getStage() {
-		// TODO Auto-generated method stub
-		return null;
+		return stage;
 	}
 }
