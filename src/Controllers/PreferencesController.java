@@ -1,20 +1,23 @@
 package Controllers;
 
 import Model.Model;
+import Model.StageName;
 import Views.PreferencesView;
 import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 /**
  * Controller for the PreferencesView. Contains EventHandlers for button presses.
  * @author Brandon Wu
  *
  */
 public class PreferencesController extends Controller {
-	PreferencesView view;
-	
-	public PreferencesController(Model model, View view) {
-		super(model, view);
+
+	private Stage stage;
+	public PreferencesController(Model model, View Pview) {
+		super(model, Pview);
+		this.stage = Pview.getStage();
 	}
 
 
@@ -26,7 +29,7 @@ public class PreferencesController extends Controller {
  */
 	
 	public EventHandler gethandleOnBackButton() {
-		return null;
+		return event -> BackButton((MouseEvent)event);
 	}
 /**
  * This will send the user back to the ConditionsView stage where they can continue to label
@@ -34,7 +37,8 @@ public class PreferencesController extends Controller {
  * @param event
  */
 	public void BackButton(MouseEvent event) {
-		
+		stage.setScene(Main.getScenes().get(StageName.DRAW));
+		model.setStageName(StageName.DRAW);
 	}
 	
 /**
@@ -43,7 +47,7 @@ public class PreferencesController extends Controller {
  * @return EventHandler
  */
 	public EventHandler gethandleOnNextButton() {
-		return null;
+		return event -> NextButton((MouseEvent)event);
 	}
 /**
  * This will send the user to the GardenView stage. Sets the StageName to StageName.Design. 
@@ -52,7 +56,8 @@ public class PreferencesController extends Controller {
  * @param event
  */
 	public void NextButton(MouseEvent event) {
-		
+		stage.setScene(Main.getScenes().get(StageName.DESIGN));
+		model.setStageName(StageName.DESIGN);
 	}
 	
 	

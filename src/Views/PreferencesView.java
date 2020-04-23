@@ -4,6 +4,8 @@ import Controllers.PreferencesController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 /**
  * Creates the scene for the preferences view. 
@@ -19,10 +21,11 @@ public class PreferencesView extends View{
 	private ComboBox<String> color;
 	private ComboBox<String> bloom;
 	private PreferencesController control;
+	private Stage stage;
 	
 	
 	public PreferencesView(Stage stage) {
-		// TODO Auto-generated constructor stub
+		this.stage = stage;
 	}
 	
 	@Override
@@ -30,8 +33,16 @@ public class PreferencesView extends View{
 	 * Creates the PreferencesView scene the user will see
 	 */
 	public Scene getScene() {
-		// TODO Auto-generated method stub
-		return null;
+		TilePane tp = new TilePane();
+		Label txt = new Label("Pref");
+		nextButton = new Button("Next");
+		nextButton.setOnMouseClicked(control.gethandleOnNextButton());
+		
+		backButton = new Button("Back");
+		backButton.setOnMouseClicked(control.gethandleOnBackButton());
+		
+		tp.getChildren().addAll(txt,backButton,nextButton);
+		return new Scene(tp,canvasHeight,canvasWidth);
 	}
 
 
@@ -63,7 +74,6 @@ public class PreferencesView extends View{
 
 	@Override
 	public Stage getStage() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.stage;
 	}
 }
