@@ -25,8 +25,8 @@ public class StartupView extends View{
 	public StartupView(Stage stage) {
 		this.stage = stage;
 	}
-	@Override
-	public Scene getScene() {
+	
+	public void setup() {
 		label = new Label("StartUp");
 
 		Buttons = new TilePane();
@@ -39,7 +39,12 @@ public class StartupView extends View{
 		loadButton = new Button("Load");
 		loadButton.setOnMouseClicked(suc.handleOnLoadButton());
 		Buttons.getChildren().addAll(label,newButton,loadButton,tutorialButton);
-		return new Scene(Buttons,canvasHeight,canvasWidth);
+		scene = new Scene(Buttons,canvasHeight,canvasWidth);
+	}
+	
+	@Override
+	public Scene getScene() {
+		return scene;
 	}
 	public Stage getStage() {
 		return stage;

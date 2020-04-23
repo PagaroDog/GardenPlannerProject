@@ -28,11 +28,7 @@ public class PreferencesView extends View{
 		this.stage = stage;
 	}
 	
-	@Override
-	/**
-	 * Creates the PreferencesView scene the user will see
-	 */
-	public Scene getScene() {
+	public void setup() {
 		TilePane tp = new TilePane();
 		Label txt = new Label("Pref");
 		nextButton = new Button("Next");
@@ -42,7 +38,15 @@ public class PreferencesView extends View{
 		backButton.setOnMouseClicked(control.gethandleOnBackButton());
 		
 		tp.getChildren().addAll(txt,backButton,nextButton);
-		return new Scene(tp,canvasHeight,canvasWidth);
+		scene = new Scene(tp,canvasHeight,canvasWidth);
+	}
+	
+	@Override
+	/**
+	 * Creates the PreferencesView scene the user will see
+	 */
+	public Scene getScene() {
+		return scene;
 	}
 
 

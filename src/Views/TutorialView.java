@@ -20,11 +20,8 @@ public class TutorialView extends View{
 	public TutorialView(Stage stage) {
 		this.stage = stage;
 	}
-	/**
-	 * @return Scene object for the Tutorial screen
-	 */
-	@Override
-	public Scene getScene() {
+	
+	public void setup() {
 		Buttons = new TilePane();
 		Label txt = new Label("Tutorial");
 		nextButton = new Button("Next");
@@ -34,9 +31,15 @@ public class TutorialView extends View{
 		prevButton.setOnMouseClicked(control.getHandleOnPrevButton());
 		
 		Buttons.getChildren().addAll(txt,nextButton,prevButton);
-		return new Scene(Buttons,canvasHeight,canvasWidth);
-		
+		scene = new Scene(Buttons,canvasHeight,canvasWidth);
+	}
 	
+	/**
+	 * @return Scene object for the Tutorial screen
+	 */
+	@Override
+	public Scene getScene() {
+		return scene;
 	}
 	
 	/**

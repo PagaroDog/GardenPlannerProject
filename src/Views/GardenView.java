@@ -24,12 +24,12 @@ public class GardenView extends View{
 	private Button stats;
 	private Button pref;
 	private Button save;
+	
 	public GardenView(Stage stage) {
 		this.stage = stage;
 	}
-
-	@Override
-	public Scene getScene() {
+	
+	public void setup () {
 		TilePane tp = new TilePane();
 		Label txt = new Label("Design");
 		stats = new Button("Stats");
@@ -42,7 +42,12 @@ public class GardenView extends View{
 		pref.setOnMouseClicked(control.handleOnPrefButton());
 		
 		tp.getChildren().addAll(txt,pref,stats,save);
-		return new Scene(tp,canvasHeight,canvasWidth);
+		scene = new Scene(tp,canvasHeight,canvasWidth);
+	}
+
+	@Override
+	public Scene getScene() {
+		return scene;
 	}
 
 	@Override

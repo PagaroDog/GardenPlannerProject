@@ -16,7 +16,6 @@ import javafx.stage.Stage;
  */
 public class ConditionsView extends View{
 	private Stage stage;
-	private Scene scene;
 	private Button selectButton;
 	private Button deleteButton;
 	private Button labelButton;
@@ -32,11 +31,7 @@ public class ConditionsView extends View{
 		this.stage = stage;
 	}
 	
-	/**
-	 * @return Scene object for the Conditions Areas screen
-	 */
-	@Override
-	public Scene getScene() {
+	public void setup () {
 		TilePane tp = new TilePane();
 		Label txt = new Label("Conditions");
 		next = new Button("Next");
@@ -46,7 +41,13 @@ public class ConditionsView extends View{
 		
 		tp.getChildren().addAll(txt,prev,next);
 		scene = new Scene(tp, canvasHeight,canvasWidth);
-		
+	}
+	
+	/**
+	 * @return Scene object for the Conditions Areas screen
+	 */
+	@Override
+	public Scene getScene() {
 		return scene;
 	}
 

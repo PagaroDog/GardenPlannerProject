@@ -20,18 +20,22 @@ public class StatisticsView extends View{
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
 	}
+	
+	public void setup() {
+		TilePane tp = new TilePane();
+		Label txt = new Label("Stats");
+		backButton = new Button("Back");
+		backButton.setOnMouseClicked(control.handleOnBackButton());
+		tp.getChildren().addAll(txt,backButton);
+		scene = new Scene(tp,canvasHeight,canvasWidth);
+	}
 
 	/**
 	 * @return Scene object for the Draw Yard screen
 	 */
 	@Override
 	public Scene getScene() {
-		TilePane tp = new TilePane();
-		Label txt = new Label("Stats");
-		backButton = new Button("Back");
-		backButton.setOnMouseClicked(control.handleOnBackButton());
-		tp.getChildren().addAll(txt,backButton);
-		return new Scene(tp,canvasHeight,canvasWidth);
+		return scene;
 	}
 
 	@Override

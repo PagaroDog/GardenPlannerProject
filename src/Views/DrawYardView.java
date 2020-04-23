@@ -28,11 +28,7 @@ public class DrawYardView extends View{
 		this.stage = stage;
 	}
 	
-	/**
-	 * @return Scene object for the Draw Yard screen
-	 */
-	@Override
-	public Scene getScene() {
+	public void setup() {
 		TilePane tp = new TilePane();
 		Label txt = new Label("DrawPhase");
 		next = new Button("Next");
@@ -41,7 +37,15 @@ public class DrawYardView extends View{
 		prev.setOnMouseClicked(control.getHandlePrevButton());
 		
 		tp.getChildren().addAll(txt,prev,next);
-		return new Scene(tp,canvasHeight,canvasWidth);
+		scene = new Scene(tp,canvasHeight,canvasWidth);
+	}
+	
+	/**
+	 * @return Scene object for the Draw Yard screen
+	 */
+	@Override
+	public Scene getScene() {
+		return scene;
 	}
 	
 	/**

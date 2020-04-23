@@ -12,6 +12,7 @@ public class Controller {
 		this.view = view;
 		
 		view.setController(this);
+		view.setup();
 		model.setController(this);
 	}
 	
