@@ -1,6 +1,8 @@
 package Views;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import Controllers.Controller;
 import Controllers.SaveController;
@@ -24,24 +26,26 @@ public class SaveView extends View{
 	 */
 	@Override
 	public Scene getScene() {
-		return null;
+		TilePane tp = new TilePane();
+		Label txt = new Label("Save");
+		prevButton = new Button("prev");
+		prevButton.setOnMouseClicked(control.getHandleOnPrevButton());
+		tp.getChildren().addAll(txt,prevButton);
+		return new Scene(tp,canvasHeight,canvasWidth);
 	}
 	
 	/**
 	 * Sets control to sc
 	 */
-	public void setController(SaveController sc) {
-		
-	}
+
 	@Override
 	public void setController(Controller controller) {
-		// TODO Auto-generated method stub
+		control = (SaveController)controller;
 		
 	}
 	@Override
 	public Stage getStage() {
-		// TODO Auto-generated method stub
-		return null;
+		return stage;
 	}
 
 }

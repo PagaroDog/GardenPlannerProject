@@ -1,9 +1,11 @@
 package Controllers;
 import Model.Model;
+import Model.StageName;
 import Views.SaveView;
 import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * @author Josh Stone
@@ -11,10 +13,13 @@ import javafx.scene.input.MouseEvent;
 */
 public class SaveController extends Controller{
 	
-		SaveView view;
+
+		private Stage stage;
 		
-		public SaveController(Model model, View view) {
-			super(model, view);
+		public SaveController(Model model, View Sview) {
+			super(model, Sview);
+			this.stage = Sview.getStage();
+			
 		}
 		
 		/**
@@ -46,6 +51,16 @@ public class SaveController extends Controller{
 		 */
 		public void PNGButton(MouseEvent event) {
 			
+		}
+
+		public EventHandler getHandleOnPrevButton() {
+			
+			return event -> prevButton((MouseEvent)event);
+		}
+
+		public void prevButton(MouseEvent event) {
+			stage.setScene(Main.getScenes().get(StageName.DESIGN));
+			model.setStageName(StageName.DESIGN);
 		}
 	
 }
