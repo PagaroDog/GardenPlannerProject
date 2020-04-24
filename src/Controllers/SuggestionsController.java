@@ -25,13 +25,13 @@ public class SuggestionsController extends Controller<SuggestionsView>{
 	 * @return EventHandler
 	 */
 		public EventHandler gethandleOnNextButton() {
-			return event -> NextButton((MouseEvent)event);
+			return event -> nextButton((MouseEvent)event);
 		}
 	/**
 	 * This will send the user to the GardenView stage. Sets the StageName to StageName.DESIGN. 
 	 * @param event
 	 */
-		public void NextButton(MouseEvent event) {
+		public void nextButton(MouseEvent event) {
 
 			view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 

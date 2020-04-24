@@ -1,7 +1,6 @@
 package Views;
 
 import Controllers.Controller;
-import Controllers.StatisticsController;
 import Controllers.SuggestionsController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,6 +20,8 @@ public class SuggestionsView extends View{
 	
 
 	public void setup() {
+		
+		
 		TilePane tp = new TilePane();
 		Label txt = new Label("SUGGS");
 		backButton = new Button("Back");
