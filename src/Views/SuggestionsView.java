@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
@@ -27,11 +28,25 @@ public class SuggestionsView extends View{
 		
 		BorderPane border = new BorderPane();
 		HBox nav = top();
+		GridPane cen = center();
 		border.setTop(nav);
+		border.setCenter(cen);
 		scene = new Scene(border,canvasHeight,canvasWidth);
 	}
 	/**
+	 * Creates the grid of ImageViews of plants that most closely relates to the users conditions and 
+	 * preferences.
+	 * @return GridPane
+	 */
+	public GridPane center() {
+		GridPane pane = new GridPane();
+		pane.setPrefWidth(canvasWidth);
+		pane.setStyle("-fx-background-color: rgba(255, 130, 203,0.5);");
+		return pane;
+	}
+	/**
 	 * Creates the navigation portion of BoarderPane. Assigned to the Top of the BoarderPane.
+	 * @return HBox
 	 */
 	public HBox top() {
 		HBox nav = new HBox();
