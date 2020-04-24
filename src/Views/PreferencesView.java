@@ -3,10 +3,12 @@ import Controllers.Controller;
 import Controllers.PreferencesController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -27,7 +29,7 @@ public class PreferencesView extends View{
 	private ComboBox<String> soil;
 	private ComboBox<String> water;
 	private ComboBox<String> sun;
-	private ComboBox<String> color;
+	private TilePane color;
 	private ComboBox<String> bloom;
 	private PreferencesController control;
 	private Stage stage;
@@ -48,18 +50,14 @@ public class PreferencesView extends View{
 		iv.setFitHeight(800);
 		border.setLeft(iv);
 		TilePane tp = new TilePane();
-		Label txt = new Label("Pref");
 		
-		//tp.getChildren().addAll(backButton,nextButton);
-		
-		//tp.getChildren().addAll(txt,backButton,nextButton);
 		scene = new Scene(border,canvasHeight,canvasWidth);
 	}
 	public VBox addVBox() {
 		VBox vbox = new VBox();
 		//Not yet implemented
 		HBox zoneButtons = new HBox();
-		Label label = new Label("Zone Flips");
+		Label label = new Label("Zone Flips (not yet implemented");
 		label.setPrefHeight(50);
 		zoneButtons.getChildren().add(label);
 		zoneButtons.setAlignment(Pos.CENTER);
@@ -67,21 +65,37 @@ public class PreferencesView extends View{
 		vbox.setPadding(new Insets(15, 12, 15, 12));
 	    vbox.setSpacing(25);
 		vbox.setStyle("-fx-background-color: #336699;");
+		
+		String[] seasons = {"Any","Winter","Spring","Summer","Fall"};
 		Label labbloom = new Label("When do you want the plant to bloom?");
 		bloom = new ComboBox<String>();
+		bloom.getItems().addAll(seasons);
+		
+		String[] soils = {"Any","Clay","Sand","Loam"};
 		Label labsoil = new Label("What type of soil?");
 		soil = new ComboBox<String>();
+		soil.getItems().addAll(soils);
+		
+		String[] moistures = {"Any","Dry","Medium","Wet"};
 		Label labwater = new Label("What is your soil's moisture?");
-
 		water = new ComboBox<String>();
+		water.getItems().addAll(moistures);
+		
+		String[] sunlevels = {"Any","Full Sun","Partial Sun","Parial Shade", "Shade"};
 		Label labsun = new Label("What degree of sunlight?");
-
 		sun = new ComboBox<String>();
+		sun.getItems().addAll(sunlevels);
+		
+		String[] colors = {"Red","Blue","Violet","Pink","White","Yellow","Black"};
+		color = new TilePane();
+		color.setPadding(new Insets(10,10,10,10));
 		Label labcolor = new Label("What color of the bloom?");
-
-		color = new ComboBox<String>();
+		for(String c : colors) {
+			color.getChildren().add(new RadioButton(c));;
+		}
+		
 		bloom.setPrefWidth(250);soil.setPrefWidth(250);water.setPrefWidth(250);
-		sun.setPrefWidth(250);color.setPrefWidth(250);
+		sun.setPrefWidth(250);color.setPrefWidth(500);
 		vbox.getChildren().addAll(zoneButtons,labwater,water,labsoil,soil,labsun,sun,labcolor,color,labbloom,bloom);
 		vbox.setPrefWidth(500);
 		return vbox;
@@ -124,7 +138,7 @@ public class PreferencesView extends View{
 		return sun;
 	}
 
-	public ComboBox<String> getColor() {
+	public TilePane getColor() {
 		return color;
 	}
 
