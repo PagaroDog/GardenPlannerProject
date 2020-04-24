@@ -32,4 +32,6 @@ public class StatisticsController extends Controller<StatisticsView>{
 		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 		model.setStageName(StageName.DESIGN);
 	}
+	
+	
 }

@@ -12,6 +12,7 @@ import Views.PreferencesView;
 import Views.SaveView;
 import Views.StartupView;
 import Views.StatisticsView;
+import Views.SuggestionsView;
 import Views.TutorialView;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -31,6 +32,7 @@ public class Main extends Application{
 	private StatisticsView statView;
 	private GardenView gardenView;
 	private SaveView saveView;
+	private SuggestionsView suggView;
 	private PreferencesView prefView;
 	private StartupController startControl;
 	private TutorialController tutControl;
@@ -40,6 +42,7 @@ public class Main extends Application{
 	private GardenController gardenControl;
 	private SaveController saveControl;
 	private PreferencesController prefControl;
+	private SuggestionsController suggControl;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -53,6 +56,7 @@ public class Main extends Application{
 		gardenView = new GardenView(stage);
 		saveView = new SaveView(stage);
 		prefView = new PreferencesView(stage);
+		suggView = new SuggestionsView(stage);
 		startControl = new StartupController(model, startView);
 		tutControl = new TutorialController(model, tutView);
 		dyControl = new DrawYardController(model, dyView);
@@ -61,6 +65,7 @@ public class Main extends Application{
 		gardenControl = new GardenController(model, gardenView);
 		saveControl = new SaveController(model, saveView);
 		prefControl = new PreferencesController(model, prefView);
+		suggControl = new SuggestionsController(model,suggView);
 		
 		scenes.put(StageName.WELCOME, startView.getScene());
 		scenes.put(StageName.TUTORIAL, tutView.getScene());
@@ -70,6 +75,7 @@ public class Main extends Application{
 		scenes.put(StageName.DESIGN, gardenView.getScene());
 		scenes.put(StageName.SAVE, saveView.getScene());
 		scenes.put(StageName.PREFERENCES, prefView.getScene());
+		scenes.put(StageName.SUGGESTIONS, suggView.getScene());
 		
 		
 		// Start with the main scene

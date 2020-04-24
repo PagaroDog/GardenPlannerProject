@@ -48,16 +48,16 @@ public class PreferencesController extends Controller<PreferencesView> {
 		return event -> NextButton((MouseEvent)event);
 	}
 /**
- * This will send the user to the GardenView stage. Sets the StageName to StageName.Design. 
+ * This will send the user to the GardenView stage. Sets the StageName to StageName.SUGGESTIONS. 
  * Saves the users preferences in the Model's userPreferences collection. Creates the collection
  * of suggested plants from preferences selected. 
  * @param event
  */
 	public void NextButton(MouseEvent event) {
 
-		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
+		view.getStage().setScene(Main.getScenes().get(StageName.SUGGESTIONS));
 
-		model.setStageName(StageName.DESIGN);
+		model.setStageName(StageName.SUGGESTIONS);
 	}
 	
 	
