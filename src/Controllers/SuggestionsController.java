@@ -4,6 +4,7 @@ import Model.Model;
 import Model.StageName;
 import Views.SuggestionsView;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
 public class SuggestionsController extends Controller<SuggestionsView>{
@@ -43,7 +44,15 @@ public class SuggestionsController extends Controller<SuggestionsView>{
 	}
 
 	public void MouseEnter(MouseEvent event) {
-		view.changeStats();
+		view.inputStats(event.getSource());
+	}
+
+	public EventHandler gethandleOnMouseExit() {
+		return event -> MouseExit((MouseEvent)event);
+	}
+
+	public void MouseExit(MouseEvent event) {
+		view.removeStats(event.getSource());
 	}
 
 }

@@ -6,6 +6,7 @@ import Controllers.Controller;
 import Controllers.SuggestionsController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -59,6 +60,7 @@ public class SuggestionsView extends View{
 			imgs.add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),thumbnailHeight,thumbnailWidth,true,false)));
 			GridPane.setConstraints(imgs.get(imgs.size()-1),j,i);
 			imgs.get(imgs.size()-1).setOnMouseEntered(control.gethandleOnMouseEnter());
+			imgs.get(imgs.size()-1).setOnMouseExited(control.gethandleOnMouseExit());
 			
 			}
 			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
@@ -83,13 +85,20 @@ public class SuggestionsView extends View{
 	 */
 	public HBox stats() {
 		HBox stats = new HBox();
-		stats.getChildren().add(new Label("Label"));
 		stats.setStyle("-fx-background-color: rgba(255, 182, 130,1);");
 		return stats;
 	}
 
-	public void changeStats() {
+	public void inputStats(Object event) {
+	
+		ImageView copy = new ImageView(((ImageView) event).getImage());
+		stats.getChildren().add(copy);
 		stats.setStyle("-fx-background-color: rgba(255,255,255,1);");
+		
+	}
+	public void removeStats(Object event) {
+		stats.getChildren().remove(0);
+		stats.setStyle("-fx-background-color: rgba(255,255,0,1);");
 	}
 	/**
 	 * Creates the navigation portion of BoarderPane. Assigned to the Top of the BoarderPane.
