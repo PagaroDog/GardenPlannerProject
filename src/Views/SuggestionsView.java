@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
@@ -24,7 +25,7 @@ public class SuggestionsView extends View{
 	private Button backButton;
 	private Stage stage;
 	private SuggestionsController control;
-	private HBox stats;
+	private GridPane stats;
 	private int thumbnailWidth = 200;
 	private int thumbnailHeight = 100;
 	public SuggestionsView(Stage stage) {
@@ -54,6 +55,8 @@ public class SuggestionsView extends View{
 	
 		pane.setPrefWidth(canvasWidth);
 		pane.setStyle("-fx-background-color: rgba(255, 130, 203,0.5);");
+		
+		//This lines are here only for testing the GridPane Layout
 		ArrayList<ImageView>imgs = new ArrayList<ImageView>();
 		for(int i = 0; i<rows;i++) {
 			for(int j = 0; j<cols;j++) {
@@ -67,7 +70,7 @@ public class SuggestionsView extends View{
 		}
 		this.stats = stats();
 		GridPane.setConstraints(stats, 0, rows, cols, 3);
-		//Creates three rows of height 100 for the stats HBox
+		//Creates three rows of height 100 for the stats gridpane
 		for(int i = 0; i<3;i++) {
 			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
 		}
@@ -80,12 +83,28 @@ public class SuggestionsView extends View{
 		return pane;
 	}
 	/**
-	 * Creates an HBox used to display enlarged plant images and statistics
-	 * @return HBox
+	 * Creates an GridPane used to display enlarged plant images and statistics
+	 * @return GridPane
 	 */
-	public HBox stats() {
-		HBox stats = new HBox();
+	public GridPane stats() {
+		GridPane stats = new GridPane();
 		stats.setStyle("-fx-background-color: rgba(255, 182, 130,1);");
+		stats.setGridLinesVisible(true);
+		
+		Label common = new Label("COMMON NAME");
+		GridPane.setConstraints(common,1,0);
+		stats.getChildren().add(common);
+		
+		ImageView hold = new ImageView(new Image(getClass().getResourceAsStream("/imgs/placeholder.jpg"),thumbnailHeight*2,thumbnailWidth*2,true,false));
+		GridPane.setConstraints(hold,0,0);
+		hold.prefHeight(thumbnailHeight*2);
+		hold.prefWidth(thumbnailWidth*2);
+		hold.setPreserveRatio(true);
+		stats.getChildren().add(hold);
+		
+		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailHeight*2));
+		
+		
 		return stats;
 	}
 
@@ -95,7 +114,9 @@ public class SuggestionsView extends View{
 		copy.setFitHeight(thumbnailHeight*2);
 		copy.setFitWidth(thumbnailWidth*2);
 		copy.setPreserveRatio(true);
+		GridPane.setConstraints(copy,0,0,1,2);
 		stats.getChildren().add(copy);
+		
 		stats.setStyle("-fx-background-color: rgba(255,255,255,1);");
 		
 	}
