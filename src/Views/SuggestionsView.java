@@ -25,7 +25,8 @@ public class SuggestionsView extends View{
 	private Stage stage;
 	private SuggestionsController control;
 	private HBox stats;
-	
+	private int thumbnailWidth = 200;
+	private int thumbnailHeight = 100;
 	public SuggestionsView(Stage stage) {
 		this.stage = stage;
 	}
@@ -46,8 +47,7 @@ public class SuggestionsView extends View{
 	 * @return GridPane
 	 */
 	public GridPane center() {
-		int thumbnailWidth = 200;
-		int thumbnailHeight = 100;
+		
 		int rows = canvasHeight/(thumbnailHeight*2);
 		int cols = canvasWidth/thumbnailWidth;
 		GridPane pane = new GridPane();
@@ -92,6 +92,9 @@ public class SuggestionsView extends View{
 	public void inputStats(Object event) {
 	
 		ImageView copy = new ImageView(((ImageView) event).getImage());
+		copy.setFitHeight(thumbnailHeight*2);
+		copy.setFitWidth(thumbnailWidth*2);
+		copy.setPreserveRatio(true);
 		stats.getChildren().add(copy);
 		stats.setStyle("-fx-background-color: rgba(255,255,255,1);");
 		
