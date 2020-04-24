@@ -7,14 +7,11 @@ import Model.DrawMode;
 import Model.Model;
 import Model.StageName;
 import Views.DrawYardView;
-import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
-import javafx.stage.Stage;
 
 public class DrawYardController extends Controller<DrawYardView>{
 	

@@ -38,8 +38,8 @@ public class DrawYardView extends View{
 	}
 	
 	/**
-	 * Initial setup of this class that could not be completed in the constructor since the
-	 * controller had not yet been set
+	 * Initial setup of this class that could not be completed in the
+	 * constructor since the controller had not yet been set
 	 */
 	public void setup() {
 		toolbar  = new TilePane();
