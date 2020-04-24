@@ -106,6 +106,7 @@ public class DrawYardView extends View{
 		rect.setFill(Color.TRANSPARENT);
 		rect.setStroke(Color.BLACK);
 		rect.setOnMouseClicked(control.getHandleOnPressShape());
+		rect.setOnMouseDragged(control.getHandleOnDragRectangle());
 		shapes.add(rect);
 		int index = shapes.size()-1;
 		rect.setUserData(index);
@@ -125,11 +126,18 @@ public class DrawYardView extends View{
 		rect.setHeight(height);
 	}
 	
+	public void moveRectangle(int index, double x, double y) {
+		Rectangle rect = (Rectangle) shapes.get(index);
+		rect.setX(x);
+		rect.setY(y);
+	}
+	
 	public void addCircle(double x, double y) {
 		Ellipse circle = new Ellipse(x, y, 10, 10);
 		circle.setFill(Color.TRANSPARENT);
 		circle.setStroke(Color.BLACK);
 		circle.setOnMouseClicked(control.getHandleOnPressShape());
+		circle.setOnMouseDragged(control.getHandleOnDragCircle());
 		shapes.add(circle);
 		int index = shapes.size()-1;
 		circle.setUserData(index);
@@ -143,6 +151,12 @@ public class DrawYardView extends View{
 		double radiusY = Math.abs(circle.getCenterY() - y);
 		circle.setRadiusX(radiusX);
 		circle.setRadiusY(radiusY);
+	}
+	
+	public void moveCircle(int index, double x, double y) {
+		Ellipse circle = (Ellipse) shapes.get(index);
+		circle.setCenterX(x);
+		circle.setCenterY(y);
 	}
 	
 	public void deleteShape(int index) {

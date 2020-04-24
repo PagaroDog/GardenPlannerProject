@@ -125,6 +125,20 @@ public class DrawYardController extends Controller<DrawYardView>{
 	}
 	
 	/**
+	 * 
+	 */
+	public EventHandler getHandleOnDragRectangle() {
+		return event -> dragRectangle((MouseEvent)event);
+	}
+	
+	/**
+	 * 
+	 */
+	public EventHandler getHandleOnDragCircle() {
+		return event -> dragCircle((MouseEvent)event);
+	}
+	
+	/**
 	 * Sets drawing mode to select
 	 */
 	public void selectButton(MouseEvent event) {
@@ -220,6 +234,22 @@ public class DrawYardController extends Controller<DrawYardView>{
 		switch(model.getDrawMode()) {
 		case SELECT:
 			model.setCurrDrawObj((int) ((Shape)event.getSource()).getUserData());
+		}
+	}
+	
+	public void dragRectangle(MouseEvent event) {
+		System.out.println("drag");
+		switch(model.getDrawMode()) {
+		case SELECT:
+			view.moveRectangle((int) ((Shape)event.getSource()).getUserData(), event.getX(), event.getY());
+		}
+	}
+	
+	public void dragCircle(MouseEvent event) {
+		System.out.println("drag");
+		switch(model.getDrawMode()) {
+		case SELECT:
+			view.moveCircle((int) ((Shape)event.getSource()).getUserData(), event.getX(), event.getY());
 		}
 	}
 	
