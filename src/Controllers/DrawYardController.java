@@ -282,5 +282,10 @@ public class DrawYardController extends Controller<DrawYardView>{
 			view.moveCircle((Ellipse)event.getSource(), event.getX(), event.getY());
 		}
 	}
+
+	public void releasePane(MouseEvent mouseEvent) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

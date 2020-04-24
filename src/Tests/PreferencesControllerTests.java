@@ -32,7 +32,7 @@ public class PreferencesControllerTests {
 		Mod.setStageName(StageName.PREFERENCES);
 		pc.gethandleOnNextButton();
 		assertEquals(StageName.DESIGN, Mod.getStageName());
-		GardenPref test = new GardenPref();
+		GardenPref test = new GardenPref(null, 0, 0, 0, 0);
 		assertEquals(test,Mod.getGardenPreferences());
 		
 	}

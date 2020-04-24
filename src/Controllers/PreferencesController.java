@@ -54,7 +54,9 @@ public class PreferencesController extends Controller<PreferencesView> {
  * @param event
  */
 	public void NextButton(MouseEvent event) {
+
 		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
+
 		model.setStageName(StageName.DESIGN);
 	}
 	
