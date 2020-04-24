@@ -10,6 +10,8 @@ import Views.DrawYardView;
 import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 public class DrawYardController extends Controller<DrawYardView>{
@@ -114,6 +116,14 @@ public class DrawYardController extends Controller<DrawYardView>{
 	public EventHandler getHandlePrevButton() {
 		return event -> prevButton((MouseEvent)event);
 	}
+	
+	/**
+	 * 
+	 */
+	public EventHandler getHandleOnPressShape() {
+		return event -> pressShape((MouseEvent)event);
+	}
+	
 	/**
 	 * Sets drawing mode to select
 	 */
@@ -146,7 +156,7 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 * Deletes currently selected object, if any
 	 */
 	public void deleteButton(MouseEvent event){
-		 
+		 view.deleteShape(model.getCurrDrawObj());
 	}
 	
 	public void importButton(MouseEvent event){
@@ -157,7 +167,13 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 * Creates new objects, or moves already made objects
 	 */
 	public void dragPane(MouseEvent event) {
-		
+		switch(model.getDrawMode()) {
+		case RECTANGLE:
+			view.updateRect(model.getDrawPressX(), model.getDrawPressY(), event.getX(), event.getY());
+			break;
+		case CIRCLE:
+			view.updateCircle(event.getX(), event.getY());
+		}
 	}
 	
 	/**
@@ -168,8 +184,13 @@ public class DrawYardController extends Controller<DrawYardView>{
 		System.out.println("press");
 		model.setDrawPressX(event.getX());
 		model.setDrawPressY(event.getY());
-		if (model.getDrawMode() == DrawMode.RECTANGLE) {
-			view.addRectangle(x0, y0, x1, y1);
+		switch(model.getDrawMode()) {
+		case RECTANGLE:
+			view.addRectangle(event.getX(), event.getY());
+			break;
+		case CIRCLE:
+			view.addCircle(event.getX(), event.getY());
+			break;
 		}
 	}
 	
@@ -178,13 +199,7 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 * creating new shape.
 	 */
 	public void releasePane(MouseEvent event) {
-		if (model.getDrawMode() == DrawMode.RECTANGLE) {
-			System.out.println(model.getDrawPressX());
-			System.out.println(model.getDrawPressY());
-			System.out.println(event.getX());
-			System.out.println(event.getY());
-			view.addRectangle(model.getDrawPressX(), model.getDrawPressY(), event.getX(), event.getY());
-		}
+		
 	}
 	/**
 	 * Sets the scene to ConditionsView, and model StageName to StageName.CONDITIONS
@@ -198,6 +213,14 @@ public class DrawYardController extends Controller<DrawYardView>{
 	public void prevButton(MouseEvent event) {
 		view.getStage().setScene(Main.getScenes().get(StageName.WELCOME));
 		model.setStageName(StageName.WELCOME);
+	}
+
+	public void pressShape(MouseEvent event) {
+		System.out.println("rect");
+		switch(model.getDrawMode()) {
+		case SELECT:
+			model.setCurrDrawObj((int) ((Shape)event.getSource()).getUserData());
+		}
 	}
 	
 }

@@ -16,6 +16,7 @@ import Controllers.SaveController;
 import Controllers.StartupController;
 import Controllers.StatisticsController;
 import Controllers.TutorialController;
+import javafx.scene.Node;
 
 /**
  * 
@@ -31,6 +32,7 @@ public class Model {
 	private DrawMode drawMode;
 	private double drawPressX;
 	private double drawPressY;
+	private int currDrawObj;
 	
     private HashMap<Integer, GardenPref> gardenPreferences; 
     private HashMap<Integer, GardenObj> gardenObjects;  
@@ -285,6 +287,15 @@ public class Model {
     public void redo() {
     	
     }
+
+
+	public void setCurrDrawObj(int index) {
+		currDrawObj = index;
+	}
+	
+	public int getCurrDrawObj() {
+		return currDrawObj;
+	}
     
    
 	
