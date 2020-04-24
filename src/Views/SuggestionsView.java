@@ -2,9 +2,13 @@ package Views;
 
 import Controllers.Controller;
 import Controllers.SuggestionsController;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
@@ -21,17 +25,32 @@ public class SuggestionsView extends View{
 
 	public void setup() {
 		
+		BorderPane border = new BorderPane();
+		HBox nav = top();
+		border.setTop(nav);
+		scene = new Scene(border,canvasHeight,canvasWidth);
+	}
+	/**
+	 * Creates the navigation portion of BoarderPane. Assigned to the Top of the BoarderPane.
+	 */
+	public HBox top() {
+		HBox nav = new HBox();
+		nav.setPadding(new Insets(15,300,15,300));
 		
-		TilePane tp = new TilePane();
 		Label txt = new Label("SUGGS");
 		backButton = new Button("Back");
 		backButton.setOnMouseClicked(control.gethandleOnBackButton());
 		nextButton = new Button("Next");
 		nextButton.setOnMouseClicked(control.gethandleOnNextButton());
-		tp.getChildren().addAll(txt,backButton,nextButton);
-		scene = new Scene(tp,canvasHeight,canvasWidth);
+	
+		nav.getChildren().addAll(backButton,txt,nextButton);
+		nav.setStyle("-fx-background-color: rgba(255, 222, 133,1);");
+		nav.setSpacing(15);
+		nav.setPrefHeight(20);
+		nav.setPrefWidth(canvasWidth);
+		nav.setAlignment(Pos.CENTER);
+		return nav;
 	}
-
 	/**
 	 * @return Scene object for the Draw Yard screen
 	 */
