@@ -35,11 +35,9 @@ public class DrawYardView extends View{
 	private Button labelButton;
 	private Button deleteButton;
 	private DrawYardController control;
-	private ArrayList<Node> shapes;
 	
 	public DrawYardView(Stage stage) {
 		this.stage = stage;
-		shapes = new ArrayList<Node>();
 	}
 	
 	/**
@@ -96,26 +94,25 @@ public class DrawYardView extends View{
 	public Stage getStage() {
 		return stage;
 	}
-	
-	public ArrayList<Node> getShapes() {
-		return shapes;
-	}
 
-	public void addRectangle(double x, double y) {
+	/**
+	 * Called when user clicks on the drawing Pane.
+	 * Creates a new Ractangle object and adds it to the
+	 * shapes ArrayList, as well as the 
+	 * @param x
+	 * @param y
+	 */
+	public Node addRectangle(double x, double y) {
 		Rectangle rect = new Rectangle(x, y, 10, 10);
 		rect.setFill(Color.TRANSPARENT);
 		rect.setStroke(Color.BLACK);
 		rect.setOnMouseClicked(control.getHandleOnPressShape());
 		rect.setOnMouseDragged(control.getHandleOnDragRectangle());
-		shapes.add(rect);
-		int index = shapes.size()-1;
-		rect.setUserData(index);
-		drawing.getChildren().add(shapes.get(index));
+		drawing.getChildren().add(rect);
+		return rect;
 	}
 
-	public void updateRect(double x0, double y0, double x1, double y1) {
-		int index = shapes.size()-1;
-		Rectangle rect = (Rectangle) shapes.get(index);
+	public void updateRect(Rectangle rect, double x0, double y0, double x1, double y1) {
 		double topLeftX = Math.min(x0, x1);
 		double topLeftY = Math.min(y0, y1);
 		double width = Math.max(x0, x1) - topLeftX;
@@ -126,44 +123,38 @@ public class DrawYardView extends View{
 		rect.setHeight(height);
 	}
 	
-	public void moveRectangle(int index, double x, double y) {
-		Rectangle rect = (Rectangle) shapes.get(index);
+	public void moveRectangle(Rectangle rect, double x, double y) {
 		rect.setX(x);
 		rect.setY(y);
 	}
 	
-	public void addCircle(double x, double y) {
+	public Node addCircle(double x, double y) {
 		Ellipse circle = new Ellipse(x, y, 10, 10);
 		circle.setFill(Color.TRANSPARENT);
 		circle.setStroke(Color.BLACK);
 		circle.setOnMouseClicked(control.getHandleOnPressShape());
 		circle.setOnMouseDragged(control.getHandleOnDragCircle());
-		shapes.add(circle);
-		int index = shapes.size()-1;
-		circle.setUserData(index);
-		drawing.getChildren().add(shapes.get(index));
+		drawing.getChildren().add(circle);
+		return circle;
 	}
 
-	public void updateCircle(double x, double y) {
-		int index = shapes.size()-1;
-		Ellipse circle = (Ellipse) shapes.get(index);
+	public void updateCircle(Ellipse circle, double x, double y) {
 		double radiusX = Math.abs(circle.getCenterX() - x);
 		double radiusY = Math.abs(circle.getCenterY() - y);
 		circle.setRadiusX(radiusX);
 		circle.setRadiusY(radiusY);
 	}
 	
-	public void moveCircle(int index, double x, double y) {
-		Ellipse circle = (Ellipse) shapes.get(index);
+	public void moveCircle(Ellipse circle, double x, double y) {
 		circle.setCenterX(x);
 		circle.setCenterY(y);
 	}
 	
-	public void deleteShape(int index) {
-		drawing.getChildren().remove(shapes.get(index));
-		shapes.remove(index);
-		for (int i = index; i < shapes.size(); i++) {
-			shapes.get(i).setUserData(i);
-		}
+	public void deleteShape(Node node) {
+		drawing.getChildren().remove(node);
+//		shapes.remove(index);
+//		for (int i = index; i < shapes.size(); i++) {
+//			shapes.get(i).setUserData(i);
+//		}
 	}
 }

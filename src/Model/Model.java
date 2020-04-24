@@ -32,7 +32,7 @@ public class Model {
 	private DrawMode drawMode;
 	private double drawPressX;
 	private double drawPressY;
-	private int currDrawObj;
+	private Node currDrawObj;
 	
     private HashMap<Integer, GardenPref> gardenPreferences; 
     private HashMap<Integer, GardenObj> gardenObjects;  
@@ -289,11 +289,11 @@ public class Model {
     }
 
 
-	public void setCurrDrawObj(int index) {
-		currDrawObj = index;
+	public void setCurrDrawObj(Node node) {
+		currDrawObj = node;
 	}
 	
-	public int getCurrDrawObj() {
+	public Node getCurrDrawObj() {
 		return currDrawObj;
 	}
     

@@ -9,7 +9,9 @@ import Model.StageName;
 import Views.DrawYardView;
 import Views.View;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
@@ -183,10 +185,10 @@ public class DrawYardController extends Controller<DrawYardView>{
 	public void dragPane(MouseEvent event) {
 		switch(model.getDrawMode()) {
 		case RECTANGLE:
-			view.updateRect(model.getDrawPressX(), model.getDrawPressY(), event.getX(), event.getY());
+			view.updateRect((Rectangle) model.getCurrDrawObj(), model.getDrawPressX(), model.getDrawPressY(), event.getX(), event.getY());
 			break;
 		case CIRCLE:
-			view.updateCircle(event.getX(), event.getY());
+			view.updateCircle((Ellipse) model.getCurrDrawObj(), event.getX(), event.getY());
 		}
 	}
 	
@@ -200,10 +202,10 @@ public class DrawYardController extends Controller<DrawYardView>{
 		model.setDrawPressY(event.getY());
 		switch(model.getDrawMode()) {
 		case RECTANGLE:
-			view.addRectangle(event.getX(), event.getY());
+			model.setCurrDrawObj(view.addRectangle(event.getX(), event.getY()));
 			break;
 		case CIRCLE:
-			view.addCircle(event.getX(), event.getY());
+			model.setCurrDrawObj(view.addCircle(event.getX(), event.getY()));
 			break;
 		}
 	}
@@ -233,7 +235,7 @@ public class DrawYardController extends Controller<DrawYardView>{
 		System.out.println("rect");
 		switch(model.getDrawMode()) {
 		case SELECT:
-			model.setCurrDrawObj((int) ((Shape)event.getSource()).getUserData());
+			model.setCurrDrawObj((Node) event.getSource());
 		}
 	}
 	
@@ -241,7 +243,7 @@ public class DrawYardController extends Controller<DrawYardView>{
 		System.out.println("drag");
 		switch(model.getDrawMode()) {
 		case SELECT:
-			view.moveRectangle((int) ((Shape)event.getSource()).getUserData(), event.getX(), event.getY());
+			view.moveRectangle((Rectangle)event.getSource(), event.getX(), event.getY());
 		}
 	}
 	
@@ -249,7 +251,7 @@ public class DrawYardController extends Controller<DrawYardView>{
 		System.out.println("drag");
 		switch(model.getDrawMode()) {
 		case SELECT:
-			view.moveCircle((int) ((Shape)event.getSource()).getUserData(), event.getX(), event.getY());
+			view.moveCircle((Ellipse)event.getSource(), event.getX(), event.getY());
 		}
 	}
 	
