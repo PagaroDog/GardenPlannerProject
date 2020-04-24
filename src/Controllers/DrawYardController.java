@@ -95,46 +95,45 @@ public class DrawYardController extends Controller<DrawYardView>{
 	}
 	
 	/**
-	 * Handles event when user presses on Pane,
-	 * invoking releasePane()
-	 * @return EventHandler object for this action
-	 */
-	public EventHandler getHandleOnReleasePane() {
-		return event -> releasePane((MouseEvent)event);
-	}
-	
-	/**
 	 * Handles event when the user presses the next button.
 	 * Invokes nextButtion()
-	 * @return
+	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleNextButton() {
 		return event -> nextButton((MouseEvent)event);
 	}
 	
 	/**
-	 * 
+	 * Handles event when user presses prevButton,
+	 * invoking prevButton()
+	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandlePrevButton() {
 		return event -> prevButton((MouseEvent)event);
 	}
 	
 	/**
-	 * 
+	 * Handles event when user presses on a Shape,
+	 * invoking pressShape()
+	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnPressShape() {
 		return event -> pressShape((MouseEvent)event);
 	}
 	
 	/**
-	 * 
+	 * Handles event when user drags on a Rectangle,
+	 * invoking dragRectangle()
+	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnDragRectangle() {
 		return event -> dragRectangle((MouseEvent)event);
 	}
 	
 	/**
-	 * 
+	 * Handles event when user drags on a circle,
+	 * invoking dragCircle()
+	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnDragCircle() {
 		return event -> dragCircle((MouseEvent)event);
@@ -142,6 +141,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 	
 	/**
 	 * Sets drawing mode to select
+	 * @param event The MouseEvent generated when the
+	 * 		button was pressed
 	 */
 	public void selectButton(MouseEvent event) {
 		 model.setDrawMode(DrawMode.SELECT);
@@ -149,6 +150,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 	
 	/**
 	 * Sets drawing mode to rectangle
+	 * @param event The MouseEvent generated when the
+	 * 		button was pressed
 	 */
 	public void rectButton(MouseEvent event) {
 		model.setDrawMode(DrawMode.RECTANGLE);
@@ -156,6 +159,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 	
 	/**
 	 * Sets drawing mode to circle
+	 * @param event The MouseEvent generated when the
+	 * 		button was pressed
 	 */
 	public void circleButton(MouseEvent event) {
 		model.setDrawMode(DrawMode.CIRCLE);
@@ -163,6 +168,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 	
 	/**
 	 * Sets drawing mode to label
+	 * @param event The MouseEvent generated when the
+	 * 		button was pressed
 	 */
 	public void labelButton(MouseEvent event) {
 		model.setDrawMode(DrawMode.LABEL);
@@ -170,17 +177,26 @@ public class DrawYardController extends Controller<DrawYardView>{
 	
 	/**
 	 * Deletes currently selected object, if any
+	 * @param event The MouseEvent generated when the
+	 * 		button was pressed
 	 */
 	public void deleteButton(MouseEvent event){
 		 view.deleteShape(model.getCurrDrawObj());
 	}
 	
+	/**
+	 * Allows user to import picture file of lawn layout
+	 * @param event The MouseEvent generated when the
+	 * 		button was pressed
+	 */
 	public void importButton(MouseEvent event){
 		 
 	}
 	
 	/**
-	 * Creates new objects, or moves already made objects
+	 * Creates new objects, if in the correct mode
+	 * @param event The MouseEvent generated when the
+	 * 		Pane was dragged
 	 */
 	public void dragPane(MouseEvent event) {
 		switch(model.getDrawMode()) {
@@ -194,10 +210,11 @@ public class DrawYardController extends Controller<DrawYardView>{
 	
 	/**
 	 * In select mode, selects object pressed, if any.
-	 * In either shape mode, stores initial coordinates.
+	 * Also stores initial coordinates.
+	 * @param event The MouseEvent generated when the
+	 * 		Pane was pressed
 	 */
 	public void pressPane(MouseEvent event) {
-		System.out.println("press");
 		model.setDrawPressX(event.getX());
 		model.setDrawPressY(event.getY());
 		switch(model.getDrawMode()) {
@@ -211,26 +228,30 @@ public class DrawYardController extends Controller<DrawYardView>{
 	}
 	
 	/**
-	 * In either shape mode, stores final coordinates,
-	 * creating new shape.
-	 */
-	public void releasePane(MouseEvent event) {
-		
-	}
-	/**
 	 * Sets the scene to ConditionsView, and model StageName to StageName.CONDITIONS
-	 * @param event
+	 * @param event The MouseEvent generated when the
+	 * 		button was pressed
 	 */
 	public void nextButton(MouseEvent event) {
 		view.getStage().setScene(Main.getScenes().get(StageName.CONDITIONS));
 		model.setStageName(StageName.CONDITIONS);
 	}
 	
+	/**
+	 * Sets the scene to StartupView, and model StageName to StageName.WELCOME
+	 * @param event The MouseEvent generated when the
+	 * 		button was pressed
+	 */
 	public void prevButton(MouseEvent event) {
 		view.getStage().setScene(Main.getScenes().get(StageName.WELCOME));
 		model.setStageName(StageName.WELCOME);
 	}
 
+	/**
+	 * In select mode, sets model's currDrawObj to the pressed shape
+	 * @param event The MouseEvent generated when the
+	 * 		shape was pressed
+	 */
 	public void pressShape(MouseEvent event) {
 		System.out.println("rect");
 		switch(model.getDrawMode()) {
@@ -239,6 +260,11 @@ public class DrawYardController extends Controller<DrawYardView>{
 		}
 	}
 	
+	/**
+	 * In select mode, moves a dragged rectangle
+	 * @param event The MouseEvent generated when the
+	 * 		rectangle was dragged 
+	 */
 	public void dragRectangle(MouseEvent event) {
 		System.out.println("drag");
 		switch(model.getDrawMode()) {
@@ -247,6 +273,11 @@ public class DrawYardController extends Controller<DrawYardView>{
 		}
 	}
 	
+	/**
+	 * In select mode, moves a dragged circle
+	 * @param event The MouseEvent generated when the
+	 * 		circle was dragged
+	 */
 	public void dragCircle(MouseEvent event) {
 		System.out.println("drag");
 		switch(model.getDrawMode()) {

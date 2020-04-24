@@ -1,8 +1,6 @@
 package Views;
 import javafx.scene.control.Button;
 
-import java.util.ArrayList;
-
 import Controllers.Controller;
 import Controllers.DrawYardController;
 import javafx.scene.Node;
@@ -14,7 +12,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 /**
@@ -66,7 +63,6 @@ public class DrawYardView extends View{
 		drawing = new Pane();
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
 		drawing.setOnMouseDragged(control.getHandleOnDragPane());
-		drawing.setOnMouseReleased(control.getHandleOnReleasePane());
 		
 		root = new BorderPane();
 		root.setTop(toolbar);
@@ -96,11 +92,11 @@ public class DrawYardView extends View{
 	}
 
 	/**
-	 * Called when user clicks on the drawing Pane.
-	 * Creates a new Ractangle object and adds it to the
-	 * shapes ArrayList, as well as the 
-	 * @param x
-	 * @param y
+	 * Called when user clicks on the drawing Pane in RECTANGLE mode.
+	 * Creates a new Rectangle object and adds it to the drawing Pane 
+	 * @param x The x coordinate of the initial mouse press
+	 * @param y The y coordinate of the initial mouse press
+	 * @return The newly created rectangle
 	 */
 	public Node addRectangle(double x, double y) {
 		Rectangle rect = new Rectangle(x, y, 10, 10);
@@ -112,6 +108,15 @@ public class DrawYardView extends View{
 		return rect;
 	}
 
+	/**
+	 * Called when user drags on the drawing Pane while creating a 
+	 * new rectangle, showing the current state of the rectangle.
+	 * @param The Rectangle to be updated
+	 * @param x0 The x coordinate of the initial mouse press
+	 * @param y0 The y coordinate of the initial mouse press
+	 * @param x1 The x coordinate of the current mouse position
+	 * @param y1 The y coordinate of the current mouse position
+	 */
 	public void updateRect(Rectangle rect, double x0, double y0, double x1, double y1) {
 		double topLeftX = Math.min(x0, x1);
 		double topLeftY = Math.min(y0, y1);
@@ -123,11 +128,25 @@ public class DrawYardView extends View{
 		rect.setHeight(height);
 	}
 	
+	/**
+	 * Called when user drags on an already created rectangle,
+	 * moving the position of the rectangle.
+	 * @param rect The Rectangle to be moved.
+	 * @param x The new x coordinate of the rectangle
+	 * @param y The new y coordinate of the rectangle
+	 */
 	public void moveRectangle(Rectangle rect, double x, double y) {
 		rect.setX(x);
 		rect.setY(y);
 	}
 	
+	/**
+	 * Called when user clicks on the drawing Pane in CIRLCE mode.
+	 * Creates a new Circle object and adds it to the drawing Pane 
+	 * @param x The x coordinate of the initial mouse press
+	 * @param y The y coordinate of the initial mouse press
+	 * @return The newly created circle
+	 */
 	public Node addCircle(double x, double y) {
 		Ellipse circle = new Ellipse(x, y, 10, 10);
 		circle.setFill(Color.TRANSPARENT);
@@ -138,6 +157,13 @@ public class DrawYardView extends View{
 		return circle;
 	}
 
+	/**
+	 * Called when user drags on the drawing Pane while creating a 
+	 * new circle, showing the current state of the circle.
+	 * @param circle The circle to be updated
+	 * @param x The x coordinate of the current mouse position
+	 * @param y The y coordinate of the current mouse position
+	 */
 	public void updateCircle(Ellipse circle, double x, double y) {
 		double radiusX = Math.abs(circle.getCenterX() - x);
 		double radiusY = Math.abs(circle.getCenterY() - y);
@@ -145,16 +171,24 @@ public class DrawYardView extends View{
 		circle.setRadiusY(radiusY);
 	}
 	
+	/**
+	 * Called when user drags on an already created circle,
+	 * moving the position of the circle.
+	 * @param rect The Rectangle to be moved.
+	 * @param x The new x coordinate of the center of the circle
+	 * @param y The new y coordinate of the center of the circle
+	 */
 	public void moveCircle(Ellipse circle, double x, double y) {
 		circle.setCenterX(x);
 		circle.setCenterY(y);
 	}
 	
+	/**
+	 * Called when user presses the delete button,
+	 * deleting the currently selected object.
+	 * @param node The shape to be deleted.
+	 */
 	public void deleteShape(Node node) {
 		drawing.getChildren().remove(node);
-//		shapes.remove(index);
-//		for (int i = index; i < shapes.size(); i++) {
-//			shapes.get(i).setUserData(i);
-//		}
 	}
 }
