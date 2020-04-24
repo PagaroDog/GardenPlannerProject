@@ -57,14 +57,14 @@ public class PreferencesView extends View{
 		VBox vbox = new VBox();
 		//Not yet implemented
 		HBox zoneButtons = new HBox();
-		Label label = new Label("Zone Flips (not yet implemented");
+		Label label = new Label("Zone Flips (not yet implemented)");
 		label.setPrefHeight(50);
 		zoneButtons.getChildren().add(label);
 		zoneButtons.setAlignment(Pos.CENTER);
-		zoneButtons.setStyle("-fx-background-color: #987654;");
+		zoneButtons.setStyle("-fx-background-color: rgba(255,252,158,1);");
 		vbox.setPadding(new Insets(15, 12, 15, 12));
 	    vbox.setSpacing(25);
-		vbox.setStyle("-fx-background-color: #336699;");
+		vbox.setStyle("-fx-background-color: rgba(158,255,174,1);");
 		
 		String[] seasons = {"Any","Winter","Spring","Summer","Fall"};
 		Label labbloom = new Label("When do you want the plant to bloom?");
@@ -102,17 +102,19 @@ public class PreferencesView extends View{
 	}
 	public HBox addHBox() {
 	    HBox hbox = new HBox();
-	    hbox.setPadding(new Insets(15, 12, 15, 12));
-	    hbox.setSpacing(10);
-	    hbox.setStyle("-fx-background-color: #123456;");
-
+	    hbox.setPadding(new Insets(15, 300, 15, 300));
+	    hbox.setSpacing(15);
+	    hbox.setStyle("-fx-background-color: rgba(168,158,255,1);");
+	    hbox.setAlignment(Pos.CENTER);
 	    nextButton = new Button("Next");
 		nextButton.setOnMouseClicked(control.gethandleOnNextButton());
 		
+		
 		backButton = new Button("Back");
 		backButton.setOnMouseClicked(control.gethandleOnBackButton());
-	    hbox.getChildren().addAll(backButton, nextButton);
+	    hbox.getChildren().addAll(backButton, new Label("Choose Your Preferences"),nextButton);
 	    hbox.setPrefHeight(20);
+	    hbox.setPrefWidth(canvasWidth);
 	    return hbox;
 	}
 
