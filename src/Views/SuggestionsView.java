@@ -1,5 +1,7 @@
 package Views;
 
+import java.util.ArrayList;
+
 import Controllers.Controller;
 import Controllers.SuggestionsController;
 import javafx.geometry.Insets;
@@ -7,6 +9,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -39,11 +43,32 @@ public class SuggestionsView extends View{
 	 * @return GridPane
 	 */
 	public GridPane center() {
+		int thumbnailHeight = 200;
+		int thumbnailWidth = 100;
+		int rows = canvasHeight/thumbnailHeight;
+		int cols = canvasWidth/(thumbnailWidth*2);
 		GridPane pane = new GridPane();
 		pane.setPrefWidth(canvasWidth);
 		pane.setStyle("-fx-background-color: rgba(255, 130, 203,0.5);");
+		ArrayList<ImageView>imgs = new ArrayList<ImageView>();
+		for(int i = 0; i<cols;i++) {
+			for(int j = 0; j<rows;j++) {
+			imgs.add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),thumbnailWidth,thumbnailHeight,true,false)));
+			GridPane.setConstraints(imgs.get(imgs.size()-1),i,j);
+			}
+		}
+		//ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),200,200,true,false));
+		//GridPane.setConstraints(img,0,0);
+		pane.setGridLinesVisible(true);
+		pane.getChildren().addAll(imgs);
 		return pane;
 	}
+	public HBox stats() {
+		HBox stats = new HBox();
+		
+		return stats;
+	}
+	
 	/**
 	 * Creates the navigation portion of BoarderPane. Assigned to the Top of the BoarderPane.
 	 * @return HBox
