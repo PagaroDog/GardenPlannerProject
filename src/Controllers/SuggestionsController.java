@@ -38,4 +38,12 @@ public class SuggestionsController extends Controller<SuggestionsView>{
 			model.setStageName(StageName.DESIGN);
 		}
 
+	public EventHandler gethandleOnMouseEnter() {
+		return event -> MouseEnter((MouseEvent)event);
+	}
+
+	public void MouseEnter(MouseEvent event) {
+		view.changeStats();
+	}
+
 }

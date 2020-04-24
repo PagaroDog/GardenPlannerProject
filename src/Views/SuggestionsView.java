@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
@@ -22,6 +23,7 @@ public class SuggestionsView extends View{
 	private Button backButton;
 	private Stage stage;
 	private SuggestionsController control;
+	private HBox stats;
 	
 	public SuggestionsView(Stage stage) {
 		this.stage = stage;
@@ -43,32 +45,52 @@ public class SuggestionsView extends View{
 	 * @return GridPane
 	 */
 	public GridPane center() {
-		int thumbnailHeight = 200;
-		int thumbnailWidth = 100;
-		int rows = canvasHeight/thumbnailHeight;
-		int cols = canvasWidth/(thumbnailWidth*2);
+		int thumbnailWidth = 200;
+		int thumbnailHeight = 100;
+		int rows = canvasHeight/(thumbnailHeight*2);
+		int cols = canvasWidth/thumbnailWidth;
 		GridPane pane = new GridPane();
+	
 		pane.setPrefWidth(canvasWidth);
 		pane.setStyle("-fx-background-color: rgba(255, 130, 203,0.5);");
 		ArrayList<ImageView>imgs = new ArrayList<ImageView>();
-		for(int i = 0; i<cols;i++) {
-			for(int j = 0; j<rows;j++) {
-			imgs.add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),thumbnailWidth,thumbnailHeight,true,false)));
-			GridPane.setConstraints(imgs.get(imgs.size()-1),i,j);
+		for(int i = 0; i<rows;i++) {
+			for(int j = 0; j<cols;j++) {
+			imgs.add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),thumbnailHeight,thumbnailWidth,true,false)));
+			GridPane.setConstraints(imgs.get(imgs.size()-1),j,i);
+			imgs.get(imgs.size()-1).setOnMouseEntered(control.gethandleOnMouseEnter());
+			
 			}
+			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
 		}
-		//ImageView img = new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),200,200,true,false));
-		//GridPane.setConstraints(img,0,0);
+		this.stats = stats();
+		GridPane.setConstraints(stats, 0, rows, cols, 3);
+		//Creates three rows of height 100 for the stats HBox
+		for(int i = 0; i<3;i++) {
+			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
+		}
+		
+		
+		
 		pane.setGridLinesVisible(true);
 		pane.getChildren().addAll(imgs);
+		pane.getChildren().add(stats);
 		return pane;
 	}
+	/**
+	 * Creates an HBox used to display enlarged plant images and statistics
+	 * @return HBox
+	 */
 	public HBox stats() {
 		HBox stats = new HBox();
-		
+		stats.getChildren().add(new Label("Label"));
+		stats.setStyle("-fx-background-color: rgba(255, 182, 130,1);");
 		return stats;
 	}
-	
+
+	public void changeStats() {
+		stats.setStyle("-fx-background-color: rgba(255,255,255,1);");
+	}
 	/**
 	 * Creates the navigation portion of BoarderPane. Assigned to the Top of the BoarderPane.
 	 * @return HBox
@@ -109,6 +131,8 @@ public class SuggestionsView extends View{
 	public Stage getStage() {
 		return stage;
 	}
+
+
 
 
 
