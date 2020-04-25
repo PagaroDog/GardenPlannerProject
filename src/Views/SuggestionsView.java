@@ -112,7 +112,13 @@ public class SuggestionsView extends View{
 	}
 	public void selectImage(MouseEvent event) {
 		Node n = (Node) event.getSource();
-		n.setStyle("-fx-background-color: BLACK;");
+		if(n.getStyle().equals("-fx-background-color: BLACK;")) {
+			n.setStyle("-fx-background-color: transparent;");
+		}
+		else {
+			n.setStyle("-fx-background-color: BLACK;");
+		}
+		
 	}
 	/**
 	 * Creates an GridPane used to display enlarged plant images and statistics
