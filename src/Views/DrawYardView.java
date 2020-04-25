@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 /**
@@ -190,5 +191,13 @@ public class DrawYardView extends View{
 	 */
 	public void deleteShape(Node node) {
 		drawing.getChildren().remove(node);
+	}
+	
+	public void select(Shape shape) {
+		shape.setStroke(Color.RED);
+	}
+	
+	public void deselect(Shape shape) {
+		shape.setStroke(Color.BLACK);
 	}
 }

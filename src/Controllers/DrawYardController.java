@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 public class DrawYardController extends Controller<DrawYardView>{
 	
@@ -216,10 +217,18 @@ public class DrawYardController extends Controller<DrawYardView>{
 		model.setDrawPressY(event.getY());
 		switch(model.getDrawMode()) {
 		case RECTANGLE:
+			if (model.getCurrDrawObj() != null) {
+				view.deselect((Shape) model.getCurrDrawObj());
+			}
 			model.setCurrDrawObj(view.addRectangle(event.getX(), event.getY()));
+			view.select((Shape) model.getCurrDrawObj());
 			break;
 		case CIRCLE:
+			if (model.getCurrDrawObj() != null) {
+				view.deselect((Shape) model.getCurrDrawObj());
+			}
 			model.setCurrDrawObj(view.addCircle(event.getX(), event.getY()));
+			view.select((Shape) model.getCurrDrawObj());
 			break;
 		}
 	}
@@ -253,7 +262,9 @@ public class DrawYardController extends Controller<DrawYardView>{
 		System.out.println("rect");
 		switch(model.getDrawMode()) {
 		case SELECT:
+			view.deselect((Shape) model.getCurrDrawObj());
 			model.setCurrDrawObj((Node) event.getSource());
+			view.select((Shape) model.getCurrDrawObj());
 		}
 	}
 	
