@@ -34,6 +34,8 @@ public class Model {
 	private double drawPressY;
 	private Node currDrawObj;
 	
+	//make a constructor to do this
+	private ArrayList<Plant> plants=new ArrayList<Plant>();
     private HashMap<Integer, GardenPref> gardenPreferences; 
     private HashMap<Integer, GardenObj> gardenObjects;  
     private ArrayList<Actions> undoActions;
@@ -45,8 +47,6 @@ public class Model {
     private int canvasHeight; 
     
     private StartupController startControl;
-	
-
 	private TutorialController tutControl;
 	private DrawYardController dyControl;
 	private ConditionsController condControl;
@@ -296,6 +296,21 @@ public class Model {
 	public Node getCurrDrawObj() {
 		return currDrawObj;
 	}
+
+
+	public ArrayList<Plant> getPlants() {
+		return plants;
+	}
+
+
+	public void setPlants(ArrayList<Plant> plants) {
+		this.plants = plants;
+	}
+	public void addPlant(Plant p) {
+		plants.add(p);
+	}
+
+
     
    
 	

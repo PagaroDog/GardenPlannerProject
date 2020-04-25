@@ -97,7 +97,7 @@ public class SuggestionsView extends View{
 	public GridPane stats() {
 		GridPane stats = new GridPane();
 		stats.setStyle("-fx-background-color: rgba(255, 182, 130,1);");
-		stats.setGridLinesVisible(true);
+		//stats.setGridLinesVisible(true);
 		
 		
 		String[] labels = {"Common Name", "Scientific Name","Soil type","Moisture","Sun"};
@@ -121,8 +121,15 @@ public class SuggestionsView extends View{
  * Takes an event source and copies the image and displays it in the stats view. Fills in stats based on object.
  * @param event
  */
-	public void inputStats(Object event) {
-		
+	public void inputStats(Object event, String cName, String sName, String soil, String moisture, String sun) {
+		String[] info = {cName,sName,soil,moisture,sun};
+		int cnt = 0;
+		for(String s : info) {
+			Label val = new Label(s);
+			GridPane.setConstraints(val,3,cnt);
+			cnt++;
+			stats.getChildren().add(val);
+		}
 		ImageView copy = new ImageView(((ImageView) event).getImage());
 		copy.setFitHeight(thumbnailHeight*2);
 		copy.setFitWidth(thumbnailWidth*2);
@@ -130,7 +137,6 @@ public class SuggestionsView extends View{
 		GridPane.setConstraints(copy,0,0,1,5);
 		stats.getChildren().add(copy);
 		plantCopy = copy;
-		stats.setStyle("-fx-background-color: rgba(255,255,255,1);");
 		
 	}
 	/**
@@ -138,7 +144,9 @@ public class SuggestionsView extends View{
 	 */
 	public void removeStats() {
 		stats.getChildren().remove(plantCopy);
-		stats.setStyle("-fx-background-color: rgba(255,255,0,1);");
+		for(int i =0;i<5;i++) {
+			stats.getChildren().remove(stats.getChildren().size()-1);
+		}
 	}
 	/**
 	 * Creates the navigation portion of BoarderPane. Assigned to the Top of the BoarderPane.

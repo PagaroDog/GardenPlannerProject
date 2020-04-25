@@ -1,6 +1,7 @@
 package Controllers;
 
 import Model.Model;
+import Model.Plant;
 import Model.StageName;
 import Views.SuggestionsView;
 import javafx.event.EventHandler;
@@ -55,7 +56,15 @@ public class SuggestionsController extends Controller<SuggestionsView>{
 	 * @param MouseEvent event
 	 */
 	public void MouseEnter(MouseEvent event) {
-		view.inputStats(event.getSource());
+		String[] colors = {"Blue","Green"};
+		Plant dummy = new Plant("Milkweed", "ScineceMilkWeed", "Shade", 3, "Clay", "Arid", colors, 2, 5);
+		model.addPlant(dummy);
+		
+		view.inputStats(event.getSource(),( model).getPlants().get(0).getName(), 
+				model.getPlants().get(0).getScience(), 
+				model.getPlants().get(0).getSoilType(),
+				model.getPlants().get(0).getWaterlevel(), 
+				model.getPlants().get(0).getLight());
 	}
 	/**
 	 * Used to handle when the user leaves from hovering over a plant in the grid. Calls MouseExit method with a MouseEvent
