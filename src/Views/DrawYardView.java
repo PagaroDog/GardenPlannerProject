@@ -1,9 +1,12 @@
 package Views;
 import javafx.scene.control.Button;
 
+import java.util.ArrayList;
+
 import Controllers.Controller;
 import Controllers.DrawYardController;
 import Model.StageName;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -25,14 +28,17 @@ import javafx.stage.Stage;
  */
 public class DrawYardView extends View{
 	private Stage stage;
+	
 	private BorderPane root;
 	private Pane drawing;
 	private TilePane toolbar;
 	private Pane drawBar;
 	private Pane condBar;
+	
 	private Label drawtxt;
 	private Label condtxt;
 	private Label labelSizetxt;
+	
 	private Button nextButton;
 	private Button prevButton;
 	private Button selectButton;
@@ -43,9 +49,14 @@ public class DrawYardView extends View{
 	private Button minusButton;
 	private Button plusButton;
 	private Button newAreaButton;
+	
 	private TextField labeltxt;
+	
 	private DrawYardController control;
+	
 	private double labelSize;
+	
+	private ArrayList<Node> areas = new ArrayList<Node>();
 	
 	public DrawYardView(Stage stage) {
 		this.stage = stage;
@@ -256,8 +267,9 @@ public class DrawYardView extends View{
 	public void select(Node node) {
 		if (node instanceof Shape)
 			((Shape) node).setStroke(Color.RED);
-		else
+		else if (node instanceof Label)
 			((Label) node).setTextFill(Color.RED);
+		//nothing if null
 	}
 	
 	public void deselect(Node node) {
@@ -267,18 +279,26 @@ public class DrawYardView extends View{
 				shape.setStroke(Color.TRANSPARENT);
 			else
 				shape.setStroke(Color.BLACK);
-		} else
+		} else if (node instanceof Label)
 			((Label) node).setTextFill(Color.BLACK);
+		//nothing if null
 	}
 	
 	public void drawMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
 		toolbar.getChildren().addAll(drawtxt, prevButton, nextButton, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
+		ObservableList<Node> drawObjs = drawing.getChildren();
+		for (int i = drawObjs.size()-1; i >= 0 && drawObjs.get(i).getUserData() == StageName.CONDITIONS; i--) {
+			areas.add(drawObjs.get(i));
+			drawObjs.remove(i);
+		}
 	}
 	
 	public void condMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
 		toolbar.getChildren().addAll(condtxt, prevButton, nextButton, selectButton, deleteButton, newAreaButton);
+		drawing.getChildren().addAll(areas);
+		areas.clear();
 	}
 	
 	public double getToolbarHeight() {

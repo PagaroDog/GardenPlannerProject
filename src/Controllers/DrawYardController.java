@@ -268,6 +268,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 * 		button was pressed
 	 */
 	public void nextButton(MouseEvent event) {
+		view.deselect(model.getCurrDrawObj());
+		model.setCurrDrawObj(null);
 		if (model.getStageName() == StageName.DRAW) {
 			model.setStageName(StageName.CONDITIONS);
 			view.condMode();
@@ -283,6 +285,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 * 		button was pressed
 	 */
 	public void prevButton(MouseEvent event) {
+		view.deselect(model.getCurrDrawObj());
+		model.setCurrDrawObj(null);
 		if (model.getStageName() == StageName.DRAW) {
 			view.getStage().setScene(Main.getScenes().get(StageName.WELCOME));
 			model.setStageName(StageName.WELCOME);
