@@ -6,28 +6,39 @@ package Model;
  *
  */
 public class Plant {
-	private String name; 
-	private int light; 
+	private String commonName; 
+	private String light; 
 	private int bloomtime; 
 	private String soilType; 
-	private double waterlevel; 
-	private String color; 
+	private String waterlevel; 
+	private String[] color; 
 	private int animalsFed; 
-	private int pollinator; //is this whether or not the plant pollinates or
-	//how many things it pollinates 
-	
-	
+	private int pollinator; //is this whether or not the plant pollinates or how many things it pollinates 
+	private String science;
+		
+	public Plant(String name, String science,String light, int bloomtime,String soilType,String waterlevel, String[] color, int animalsFed, int pollinator) {
+		this.commonName = name;
+		this.science = science;
+		this.light = light;
+		this.bloomtime = bloomtime;
+		this.soilType = soilType;
+		this.waterlevel = waterlevel;
+		this.color = color;
+		this.animalsFed = animalsFed;
+		
+		
+	}
 	
 	public String getName() {
-		return name;
+		return commonName;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.commonName = name;
 	}
-	public int getLight() {
+	public String getLight() {
 		return light;
 	}
-	public void setLight(int light) {
+	public void setLight(String light) {
 		this.light = light;
 	}
 	public int getBloomtime() {
@@ -42,16 +53,16 @@ public class Plant {
 	public void setSoilType(String soilType) {
 		this.soilType = soilType;
 	}
-	public double getWaterlevel() {
+	public String getWaterlevel() {
 		return waterlevel;
 	}
-	public void setWaterlevel(double waterlevel) {
+	public void setWaterlevel(String waterlevel) {
 		this.waterlevel = waterlevel;
 	}
-	public String getColor() {
+	public String[] getColor() {
 		return color;
 	}
-	public void setColor(String color) {
+	public void setColor(String[] color) {
 		this.color = color;
 	}
 	public int getAnimalsFed() {
@@ -65,6 +76,14 @@ public class Plant {
 	}
 	public void setPollinator(int pollinator) {
 		this.pollinator = pollinator;
+	}
+
+	public String getScience() {
+		return science;
+	}
+
+	public void setScience(String science) {
+		this.science = science;
 	}
 	
 }
