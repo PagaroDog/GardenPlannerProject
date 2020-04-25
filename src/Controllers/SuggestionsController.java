@@ -92,11 +92,17 @@ public class SuggestionsController extends Controller<SuggestionsView>{
 	public void MouseExit(MouseEvent event) {
 		view.removeStats();
 	}
-
+	/**
+	 * Used to handle when the user selects the plant from the suggested grid. Calls imgMouseClick
+	 * @return EventHandler
+	 */
 	public EventHandler gethandleOnMouseClick() {
 		return event -> imgMouseClick((MouseEvent)event);
 	}
-
+	/**
+	 * Called by gethandeleOnMouseClick. Calls the SuggestionsView selectImage method
+	 * @param MouseEvent event
+	 */
 	public void imgMouseClick(MouseEvent event) {
 		view.selectImage(event);
 		
