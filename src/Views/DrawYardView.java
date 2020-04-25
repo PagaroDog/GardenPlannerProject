@@ -225,7 +225,7 @@ public class DrawYardView extends View{
 	/**
 	 * Called when user drags on an already created circle,
 	 * moving the position of the circle.
-	 * @param rect The Rectangle to be moved.
+	 * @param rect The Circle to be moved.
 	 * @param x The new x coordinate of the center of the circle
 	 * @param y The new y coordinate of the center of the circle
 	 */
@@ -250,6 +250,13 @@ public class DrawYardView extends View{
 		}
 	}
 	
+	/**
+	 * Called when user drags on an already created label,
+	 * moving the position of the label.
+	 * @param label The Label to be moved
+	 * @param x The new x coordinate of the center of the label
+	 * @param y The new y coordinate of the center of the label
+	 */
 	public void moveLabel (Label label, double x, double y) {
 		label.setLayoutX(x);
 		label.setLayoutY(y);
@@ -264,6 +271,10 @@ public class DrawYardView extends View{
 		drawing.getChildren().remove(node);
 	}
 	
+	/**
+	 * Changes the view to show that a certain object has been selected
+	 * @param node The selected node
+	 */
 	public void select(Node node) {
 		if (node instanceof Shape)
 			((Shape) node).setStroke(Color.RED);
@@ -272,6 +283,10 @@ public class DrawYardView extends View{
 		//nothing if null
 	}
 	
+	/**
+	 * Changes the view to show that a certain object has been deselected
+	 * @param node The deselected node
+	 */
 	public void deselect(Node node) {
 		if (node instanceof Shape) {
 			Shape shape = (Shape) node;
@@ -284,6 +299,9 @@ public class DrawYardView extends View{
 		//nothing if null
 	}
 	
+	/**
+	 * Makes changes to the view when entering draw mode from conditions mode
+	 */
 	public void drawMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
 		toolbar.getChildren().addAll(drawtxt, prevButton, nextButton, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
@@ -294,6 +312,9 @@ public class DrawYardView extends View{
 		}
 	}
 	
+	/**
+	 * Makes changes to the view when entering conditions mode from draw mode
+	 */
 	public void condMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
 		toolbar.getChildren().addAll(condtxt, prevButton, nextButton, selectButton, deleteButton, newAreaButton);
@@ -301,6 +322,9 @@ public class DrawYardView extends View{
 		areas.clear();
 	}
 	
+	/**
+	 * @return The height of the toolbar
+	 */
 	public double getToolbarHeight() {
 		return toolbar.getHeight();
 	}

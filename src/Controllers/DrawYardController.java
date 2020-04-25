@@ -57,10 +57,20 @@ public class DrawYardController extends Controller<DrawYardView>{
 		return event -> labelButton((MouseEvent) event);
 	}
 	
+	/**
+	 * Handles event when user presses plus button,
+	 * invoking plusButton()
+	 * @return EventHandler object for this action
+	 */
 	public EventHandler getHandleOnMinusButton() {
 		return event -> minusButton((MouseEvent) event);
 	}
 	
+	/**
+	 * Handles event when user presses minus button,
+	 * invoking minusButton()
+	 * @return EventHandler object for this action
+	 */
 	public EventHandler getHandleOnPlusButton() {
 		return event -> plusButton((MouseEvent) event);
 	}
@@ -83,6 +93,11 @@ public class DrawYardController extends Controller<DrawYardView>{
 		return event -> importButton((MouseEvent) event);
 	}
 	
+	/**
+	 * Handles event when user presses new area button,
+	 * invoking newAreaButton()
+	 * @return EventHandler object for this action
+	 */
 	public EventHandler getHandleOnNewAreaButton() {
 		return event -> rectButton((MouseEvent) event);
 	}
@@ -132,6 +147,11 @@ public class DrawYardController extends Controller<DrawYardView>{
 		return event -> pressShape((MouseEvent)event);
 	}
 	
+	/**
+	 * Handles event when user presses on a conditions area,
+	 * invoking pressArea()
+	 * @return EventHandler object for this action
+	 */
 	public EventHandler getHandleOnPressArea() {
 		return event -> pressArea((MouseEvent)event);
 	}
@@ -155,6 +175,11 @@ public class DrawYardController extends Controller<DrawYardView>{
 		return event -> dragCircle((MouseEvent)event);
 	}
 	
+	/**
+	 * Handles event when user drags a label,
+	 * invoking dragLabel()
+	 * @return EventHandler object for this action
+	 */
 	public EventHandler getHandleOnDragLabel() {
 		return event -> dragLabel((MouseEvent)event);
 	}
@@ -195,10 +220,20 @@ public class DrawYardController extends Controller<DrawYardView>{
 		model.setDrawMode(DrawMode.LABEL);
 	}
 	
+	/**
+	 * Decreases the label font by 1, with a minimum of 4
+	 * @param event The MouseEvent generated when the
+	 * 		button was pressed
+	 */
 	public void minusButton(MouseEvent event) {
 		view.setLabelSize(Math.max(4, view.getLabelSize()-1));
 	}
 	
+	/**
+	 * Increased the label font by 1, with a maximum of 50
+	 * @param event The MouseEvent generated when the
+	 * 		button was pressed
+	 */
 	public void plusButton(MouseEvent event) {
 		view.setLabelSize(Math.min(50, view.getLabelSize()+1));
 	}
@@ -222,7 +257,7 @@ public class DrawYardController extends Controller<DrawYardView>{
 	}
 	
 	/**
-	 * Creates new objects, if in the correct mode
+	 * Shows current state of objects being drawn, if in the correct mode
 	 * @param event The MouseEvent generated when the
 	 * 		Pane was dragged
 	 */
@@ -237,7 +272,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 	}
 	
 	/**
-	 * In select mode, selects object pressed, if any.
+	 * Adds a rectangle, circle or label to drawing
+	 * or does nothing based on the DrawMode.
 	 * Also stores initial coordinates.
 	 * @param event The MouseEvent generated when the
 	 * 		Pane was pressed
@@ -263,7 +299,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 	}
 	
 	/**
-	 * Sets the scene to ConditionsView, and model StageName to StageName.CONDITIONS
+	 * If in draw mode, does not change view and changes model StageName to StageName.CONDITIONS
+	 * If in conditions mode, sets scene to PreferencesView and model StageName to StageName.PREFERENCES
 	 * @param event The MouseEvent generated when the
 	 * 		button was pressed
 	 */
@@ -280,7 +317,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 	}
 	
 	/**
-	 * Sets the scene to StartupView, and model StageName to StageName.WELCOME
+	 * If in draw mode, sets the scene to StartupView and model StageName to StageName.WELCOME
+	 * If in conditions mode, does not change view and changes model StageName to StageName.DRAW
 	 * @param event The MouseEvent generated when the
 	 * 		button was pressed
 	 */
@@ -297,7 +335,7 @@ public class DrawYardController extends Controller<DrawYardView>{
 	}
 
 	/**
-	 * In select mode, sets model's currDrawObj to the pressed shape
+	 * In select mode and draw mode, sets model's currDrawObj to the pressed shape
 	 * @param event The MouseEvent generated when the
 	 * 		shape was pressed
 	 */
@@ -313,6 +351,11 @@ public class DrawYardController extends Controller<DrawYardView>{
 		}
 	}
 	
+	/**
+	 * In select mode and conditions mode, sets model's currDrawObj to the 
+	 * 		pressed conditions area
+	 * @param event
+	 */
 	public void pressArea(MouseEvent event) {
 		switch(model.getDrawMode()) {
 		case SELECT:
@@ -352,6 +395,11 @@ public class DrawYardController extends Controller<DrawYardView>{
 		}
 	}
 	
+	/**
+	 * In select mode, moves a dragged label
+	 * @param event The MouseEvent generated when the
+	 * 		button was pressed
+	 */
 	public void dragLabel(MouseEvent event) {
 		System.out.println("drag");
 		switch(model.getDrawMode()) {

@@ -26,7 +26,6 @@ import javafx.scene.Node;
 public class Model {
     private Season season;
     private StageName stageName = StageName.WELCOME;
-    private CondMode condMode;
 
 	private DrawMode drawMode;
 	private double drawPressX;
@@ -143,16 +142,6 @@ public class Model {
 	public void setCanvasHeight(int canvasHeight) {
 		this.canvasHeight = canvasHeight;
 	}
-	
-	public CondMode getCondMode() {
-		return condMode;
-	}
-
-
-	public void setCondMode(CondMode condMode) {
-		this.condMode = condMode;
-	}
-
 
 	public DrawMode getDrawMode() {
 		return drawMode;
