@@ -9,6 +9,7 @@ import Model.StageName;
 import Views.DrawYardView;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
@@ -56,6 +57,14 @@ public class DrawYardController extends Controller<DrawYardView>{
 		return event -> labelButton((MouseEvent) event);
 	}
 	
+	public EventHandler getHandleOnMinusButton() {
+		return event -> minusButton((MouseEvent) event);
+	}
+	
+	public EventHandler getHandleOnPlusButton() {
+		return event -> plusButton((MouseEvent) event);
+	}
+	
 	/**
 	 * Handles event when user presses delete button,
 	 * invoking deleteButton()
@@ -72,6 +81,10 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 */
 	public EventHandler getHandleOnImportButton() {
 		return event -> importButton((MouseEvent) event);
+	}
+	
+	public EventHandler getHandleOnNewAreaButton() {
+		return event -> rectButton((MouseEvent) event);
 	}
 	
 	/**
@@ -119,6 +132,11 @@ public class DrawYardController extends Controller<DrawYardView>{
 		return event -> pressShape((MouseEvent)event);
 	}
 	
+	public EventHandler getHandleOnPressArea() {
+		return event -> pressArea((MouseEvent)event);
+	}
+	
+	
 	/**
 	 * Handles event when user drags on a Rectangle,
 	 * invoking dragRectangle()
@@ -135,6 +153,10 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 */
 	public EventHandler getHandleOnDragCircle() {
 		return event -> dragCircle((MouseEvent)event);
+	}
+	
+	public EventHandler getHandleOnDragLabel() {
+		return event -> dragLabel((MouseEvent)event);
 	}
 	
 	/**
@@ -171,6 +193,14 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 */
 	public void labelButton(MouseEvent event) {
 		model.setDrawMode(DrawMode.LABEL);
+	}
+	
+	public void minusButton(MouseEvent event) {
+		view.setLabelSize(Math.max(4, view.getLabelSize()-1));
+	}
+	
+	public void plusButton(MouseEvent event) {
+		view.setLabelSize(Math.min(50, view.getLabelSize()+1));
 	}
 	
 	/**
@@ -215,22 +245,21 @@ public class DrawYardController extends Controller<DrawYardView>{
 	public void pressPane(MouseEvent event) {
 		model.setDrawPressX(event.getX());
 		model.setDrawPressY(event.getY());
+		if (model.getCurrDrawObj() != null) {
+			view.deselect(model.getCurrDrawObj());
+		}
 		switch(model.getDrawMode()) {
 		case RECTANGLE:
-			if (model.getCurrDrawObj() != null) {
-				view.deselect((Shape) model.getCurrDrawObj());
-			}
-			model.setCurrDrawObj(view.addRectangle(event.getX(), event.getY()));
-			view.select((Shape) model.getCurrDrawObj());
+			model.setCurrDrawObj(view.addRectangle(model.getStageName(), event.getX(), event.getY()));
 			break;
 		case CIRCLE:
-			if (model.getCurrDrawObj() != null) {
-				view.deselect((Shape) model.getCurrDrawObj());
-			}
 			model.setCurrDrawObj(view.addCircle(event.getX(), event.getY()));
-			view.select((Shape) model.getCurrDrawObj());
+			break;
+		case LABEL:
+			model.setCurrDrawObj(view.addLabel(event.getX(), event.getY()));
 			break;
 		}
+		view.select(model.getCurrDrawObj());
 	}
 	
 	/**
@@ -239,8 +268,13 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 * 		button was pressed
 	 */
 	public void nextButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.CONDITIONS));
-		model.setStageName(StageName.CONDITIONS);
+		if (model.getStageName() == StageName.DRAW) {
+			model.setStageName(StageName.CONDITIONS);
+			view.condMode();
+		} else {
+			view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
+			model.setStageName(StageName.CONDITIONS);
+		}
 	}
 	
 	/**
@@ -249,8 +283,13 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 * 		button was pressed
 	 */
 	public void prevButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.WELCOME));
-		model.setStageName(StageName.WELCOME);
+		if (model.getStageName() == StageName.DRAW) {
+			view.getStage().setScene(Main.getScenes().get(StageName.WELCOME));
+			model.setStageName(StageName.WELCOME);
+		} else {
+			model.setStageName(StageName.DRAW);
+			view.drawMode();
+		}
 	}
 
 	/**
@@ -262,9 +301,22 @@ public class DrawYardController extends Controller<DrawYardView>{
 		System.out.println("rect");
 		switch(model.getDrawMode()) {
 		case SELECT:
-			view.deselect((Shape) model.getCurrDrawObj());
-			model.setCurrDrawObj((Node) event.getSource());
-			view.select((Shape) model.getCurrDrawObj());
+			if (model.getStageName() == StageName.DRAW) {
+				view.deselect(model.getCurrDrawObj());
+				model.setCurrDrawObj((Node) event.getSource());
+				view.select(model.getCurrDrawObj());
+			}
+		}
+	}
+	
+	public void pressArea(MouseEvent event) {
+		switch(model.getDrawMode()) {
+		case SELECT:
+			if (model.getStageName() == StageName.CONDITIONS) {
+				view.deselect(model.getCurrDrawObj());
+				model.setCurrDrawObj((Node) event.getSource());
+				view.select(model.getCurrDrawObj());
+			}
 		}
 	}
 	
@@ -277,7 +329,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 		System.out.println("drag");
 		switch(model.getDrawMode()) {
 		case SELECT:
-			view.moveRectangle((Rectangle)event.getSource(), event.getX(), event.getY());
+			if (((Rectangle) event.getSource()).getUserData() == model.getStageName())
+				view.moveRectangle((Rectangle)event.getSource(), event.getX(), event.getY());
 		}
 	}
 	
@@ -290,7 +343,18 @@ public class DrawYardController extends Controller<DrawYardView>{
 		System.out.println("drag");
 		switch(model.getDrawMode()) {
 		case SELECT:
-			view.moveCircle((Ellipse)event.getSource(), event.getX(), event.getY());
+			if (model.getStageName() == StageName.DRAW)
+				view.moveCircle((Ellipse)event.getSource(), event.getX(), event.getY());
+		}
+	}
+	
+	public void dragLabel(MouseEvent event) {
+		System.out.println("drag");
+		switch(model.getDrawMode()) {
+		case SELECT:
+			event.getX();
+			if (model.getStageName() == StageName.DRAW)
+				view.moveLabel((Label)event.getSource(), event.getSceneX(), event.getSceneY() - view.getToolbarHeight());
 		}
 	}
 

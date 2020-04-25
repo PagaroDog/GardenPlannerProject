@@ -3,16 +3,19 @@ import javafx.scene.control.Button;
 
 import Controllers.Controller;
 import Controllers.DrawYardController;
+import Model.StageName;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -24,15 +27,25 @@ public class DrawYardView extends View{
 	private Stage stage;
 	private BorderPane root;
 	private Pane drawing;
-	private Pane toolbar;
+	private TilePane toolbar;
+	private Pane drawBar;
+	private Pane condBar;
+	private Label drawtxt;
+	private Label condtxt;
+	private Label labelSizetxt;
 	private Button nextButton;
 	private Button prevButton;
 	private Button selectButton;
+	private Button deleteButton;
 	private Button rectButton;
 	private Button circleButton;
 	private Button labelButton;
-	private Button deleteButton;
+	private Button minusButton;
+	private Button plusButton;
+	private Button newAreaButton;
+	private TextField labeltxt;
 	private DrawYardController control;
+	private double labelSize;
 	
 	public DrawYardView(Stage stage) {
 		this.stage = stage;
@@ -43,23 +56,33 @@ public class DrawYardView extends View{
 	 * constructor since the controller had not yet been set
 	 */
 	public void setup() {
-		toolbar  = new TilePane();
-		Label txt = new Label("DrawPhase");
+		labelSize = 12;
+		drawtxt = new Label("DrawPhase");
+		condtxt = new Label("Conditions");
+		labelSizetxt = new Label("Label Size: " + (int) labelSize);
 		nextButton = new Button("Next");
 		nextButton.setOnMouseClicked(control.getHandleNextButton());
 		prevButton = new Button("Prev");
 		prevButton.setOnMouseClicked(control.getHandlePrevButton());
 		selectButton = new Button("Select");
 		selectButton.setOnMouseClicked(control.getHandleOnSelectButton());
+		deleteButton = new Button("Delete");
+		deleteButton.setOnMousePressed(control.getHandleOnDeleteButton());
 		rectButton = new Button("Rectangle");
 		rectButton.setOnMouseClicked(control.getHandleOnRectButton());
 		circleButton = new Button("Circle");
 		circleButton.setOnMouseClicked(control.getHandleOnCircleButton());
 		labelButton = new Button("Label");
 		labelButton.setOnMouseClicked(control.getHandleOnLabelButton());
-		deleteButton = new Button("Delete");
-		deleteButton.setOnMousePressed(control.getHandleOnDeleteButton());
-		toolbar.getChildren().addAll(txt,prevButton,nextButton, selectButton, rectButton, circleButton, labelButton, deleteButton);
+		minusButton = new Button("-");
+		minusButton.setOnMouseClicked(control.getHandleOnMinusButton());
+		plusButton = new Button("+");
+		plusButton.setOnMouseClicked(control.getHandleOnPlusButton());
+		newAreaButton = new Button("New Conditions Area");
+		newAreaButton.setOnMousePressed(control.getHandleOnNewAreaButton());
+		labeltxt = new TextField();
+
+		toolbar  = new TilePane(drawtxt, prevButton, nextButton, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
 		
 		drawing = new Pane();
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
@@ -92,6 +115,15 @@ public class DrawYardView extends View{
 		return stage;
 	}
 
+	public double getLabelSize() {
+		return labelSize;
+	}
+
+	public void setLabelSize(double labelSize) {
+		this.labelSize = labelSize;
+		labelSizetxt.setText("Label Size: " + (int) labelSize);
+	}
+
 	/**
 	 * Called when user clicks on the drawing Pane in RECTANGLE mode.
 	 * Creates a new Rectangle object and adds it to the drawing Pane 
@@ -99,11 +131,18 @@ public class DrawYardView extends View{
 	 * @param y The y coordinate of the initial mouse press
 	 * @return The newly created rectangle
 	 */
-	public Node addRectangle(double x, double y) {
+	public Node addRectangle(StageName mode, double x, double y) {
 		Rectangle rect = new Rectangle(x, y, 10, 10);
-		rect.setFill(Color.TRANSPARENT);
-		rect.setStroke(Color.BLACK);
-		rect.setOnMouseClicked(control.getHandleOnPressShape());
+		if (mode == StageName.DRAW) {
+			rect.setFill(Color.TRANSPARENT);
+			rect.setStroke(Color.BLACK);
+			rect.setOnMouseClicked(control.getHandleOnPressShape());
+		} else {
+			rect.setFill(Color.rgb((int) (Math.random()*255), (int) (Math.random()*255), (int) (Math.random()*255), 0.3));
+			rect.setStroke(Color.TRANSPARENT);
+			rect.setOnMouseClicked(control.getHandleOnPressArea());
+		}
+		rect.setUserData(mode);
 		rect.setOnMouseDragged(control.getHandleOnDragRectangle());
 		drawing.getChildren().add(rect);
 		return rect;
@@ -184,6 +223,27 @@ public class DrawYardView extends View{
 		circle.setCenterY(y);
 	}
 	
+	public Node addLabel(double x, double y) {
+		if (labeltxt.getText().length() > 0) {
+			Label txt = new Label(labeltxt.getText());
+			txt.setLayoutX(x);
+			txt.setLayoutY(y);
+			txt.setFont(new Font(labelSize));
+			txt.setOnMousePressed(control.getHandleOnPressShape());
+			txt.setOnMouseDragged(control.getHandleOnDragLabel());
+			drawing.getChildren().add(txt);
+			labeltxt.setText("");
+			return txt;
+		} else {
+			return null;
+		}
+	}
+	
+	public void moveLabel (Label label, double x, double y) {
+		label.setLayoutX(x);
+		label.setLayoutY(y);
+	}
+	
 	/**
 	 * Called when user presses the delete button,
 	 * deleting the currently selected object.
@@ -193,11 +253,35 @@ public class DrawYardView extends View{
 		drawing.getChildren().remove(node);
 	}
 	
-	public void select(Shape shape) {
-		shape.setStroke(Color.RED);
+	public void select(Node node) {
+		if (node instanceof Shape)
+			((Shape) node).setStroke(Color.RED);
+		else
+			((Label) node).setTextFill(Color.RED);
 	}
 	
-	public void deselect(Shape shape) {
-		shape.setStroke(Color.BLACK);
+	public void deselect(Node node) {
+		if (node instanceof Shape) {
+			Shape shape = (Shape) node;
+			if (shape.getUserData() == StageName.CONDITIONS)
+				shape.setStroke(Color.TRANSPARENT);
+			else
+				shape.setStroke(Color.BLACK);
+		} else
+			((Label) node).setTextFill(Color.BLACK);
+	}
+	
+	public void drawMode() {
+		toolbar.getChildren().remove(0, toolbar.getChildren().size());
+		toolbar.getChildren().addAll(drawtxt, prevButton, nextButton, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
+	}
+	
+	public void condMode() {
+		toolbar.getChildren().remove(0, toolbar.getChildren().size());
+		toolbar.getChildren().addAll(condtxt, prevButton, nextButton, selectButton, deleteButton, newAreaButton);
+	}
+	
+	public double getToolbarHeight() {
+		return toolbar.getHeight();
 	}
 }
