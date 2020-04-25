@@ -12,12 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 /**
  * The SuggestionsView is used to display the screen where the user will select their top picks of plants that fit their
@@ -65,13 +66,18 @@ public class SuggestionsView extends View{
 		pane.setStyle("-fx-background-color: rgba(255, 130, 203,0.5);");
 		
 		//This lines are here only for testing the GridPane Layout
-		ArrayList<ImageView>imgs = new ArrayList<ImageView>();
+		ArrayList<Pane>imgs = new ArrayList<Pane>();
 		for(int i = 0; i<rows;i++) {
 			for(int j = 0; j<cols;j++) {
-			imgs.add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),thumbnailHeight,thumbnailWidth,true,false)));
-			GridPane.setConstraints(imgs.get(imgs.size()-1),j,i);
-			imgs.get(imgs.size()-1).setOnMouseEntered(control.gethandleOnMouseEnter());
-			imgs.get(imgs.size()-1).setOnMouseExited(control.gethandleOnMouseExit());
+				Pane p = new Pane();
+				//p.setStyle("-fx-background-color: BLACK;");
+				p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),thumbnailHeight,thumbnailWidth,true,false)));
+				imgs.add(p);
+				GridPane.setConstraints(imgs.get(imgs.size()-1),j,i);
+				imgs.get(imgs.size()-1).setOnMouseEntered(control.gethandleOnMouseEnter());
+				imgs.get(imgs.size()-1).setOnMouseExited(control.gethandleOnMouseExit());
+				imgs.get(imgs.size()-1).setOnMouseClicked(control.gethandleOnMouseClick());
+				
 			
 			}
 			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
@@ -89,6 +95,10 @@ public class SuggestionsView extends View{
 		pane.getChildren().addAll(imgs);
 		pane.getChildren().add(stats);
 		return pane;
+	}
+	public void selectImage(MouseEvent event) {
+		Node n = (Node) event.getSource();
+		n.setStyle("-fx-background-color: BLACK;");
 	}
 	/**
 	 * Creates an GridPane used to display enlarged plant images and statistics
@@ -130,7 +140,8 @@ public class SuggestionsView extends View{
 			cnt++;
 			stats.getChildren().add(val);
 		}
-		ImageView copy = new ImageView(((ImageView) event).getImage());
+		Node n = (Node)event;
+		ImageView copy = new ImageView(((ImageView) ((Pane)n).getChildren().get(0)).getImage());
 		copy.setFitHeight(thumbnailHeight*2);
 		copy.setFitWidth(thumbnailWidth*2);
 		copy.setPreserveRatio(true);
@@ -189,6 +200,8 @@ public class SuggestionsView extends View{
 	public Stage getStage() {
 		return stage;
 	}
+
+
 
 
 

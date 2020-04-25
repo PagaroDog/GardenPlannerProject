@@ -81,4 +81,13 @@ public class SuggestionsController extends Controller<SuggestionsView>{
 		view.removeStats();
 	}
 
+	public EventHandler gethandleOnMouseClick() {
+		return event -> imgMouseClick((MouseEvent)event);
+	}
+
+	public void imgMouseClick(MouseEvent event) {
+		view.selectImage(event);
+		
+	}
+
 }
