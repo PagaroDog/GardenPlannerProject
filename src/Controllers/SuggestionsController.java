@@ -7,6 +7,7 @@ import Views.SuggestionsView;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 /**
  * SuggestionsController is used to handle all events form the SuggestionsView
  * @author Brandon Wu
@@ -59,12 +60,23 @@ public class SuggestionsController extends Controller<SuggestionsView>{
 		String[] colors = {"Blue","Green"};
 		Plant dummy = new Plant("Milkweed", "ScineceMilkWeed", "Shade", 3, "Clay", "Arid", colors, 2, 5);
 		model.addPlant(dummy);
-		
+		Plant dummy2 = new Plant("WhiteAsh", "ScienceWhiteAsh", "Direct Sun", 3, "Loam", "Dry", colors, 2, 5);
+		model.addPlant(dummy2);
+		if(view.getGrid().getColumnIndex((Pane)event.getSource())==1 &&
+				view.getGrid().getRowIndex((Pane)event.getSource())==1){
+			view.inputStats(event.getSource(),( model).getPlants().get(1).getName(), 
+					model.getPlants().get(1).getScience(), 
+					model.getPlants().get(1).getSoilType(),
+					model.getPlants().get(1).getWaterlevel(), 
+					model.getPlants().get(1).getLight());
+		}
+		else {
 		view.inputStats(event.getSource(),( model).getPlants().get(0).getName(), 
 				model.getPlants().get(0).getScience(), 
 				model.getPlants().get(0).getSoilType(),
 				model.getPlants().get(0).getWaterlevel(), 
 				model.getPlants().get(0).getLight());
+		}
 	}
 	/**
 	 * Used to handle when the user leaves from hovering over a plant in the grid. Calls MouseExit method with a MouseEvent

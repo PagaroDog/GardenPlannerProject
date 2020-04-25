@@ -35,6 +35,8 @@ public class SuggestionsView extends View{
 	private int thumbnailWidth = 200;
 	private int thumbnailHeight = 100;
 	private ImageView plantCopy;
+	BorderPane border;
+	ArrayList<Pane>imgs ;
 	public SuggestionsView(Stage stage) {
 		this.stage = stage;
 	}
@@ -44,7 +46,7 @@ public class SuggestionsView extends View{
  */
 	public void setup() {
 		
-		BorderPane border = new BorderPane();
+		border = new BorderPane();
 		HBox nav = top();
 		GridPane cen = center();
 		border.setTop(nav);
@@ -66,11 +68,10 @@ public class SuggestionsView extends View{
 		pane.setStyle("-fx-background-color: rgba(255, 130, 203,0.5);");
 		
 		//This lines are here only for testing the GridPane Layout
-		ArrayList<Pane>imgs = new ArrayList<Pane>();
+		imgs = new ArrayList<Pane>();
 		for(int i = 0; i<rows;i++) {
 			for(int j = 0; j<cols;j++) {
 				Pane p = new Pane();
-				//p.setStyle("-fx-background-color: BLACK;");
 				p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),thumbnailHeight,thumbnailWidth,true,false)));
 				imgs.add(p);
 				GridPane.setConstraints(imgs.get(imgs.size()-1),j,i);
@@ -78,10 +79,23 @@ public class SuggestionsView extends View{
 				imgs.get(imgs.size()-1).setOnMouseExited(control.gethandleOnMouseExit());
 				imgs.get(imgs.size()-1).setOnMouseClicked(control.gethandleOnMouseClick());
 				
-			
 			}
 			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
 		}
+		
+		
+		Pane test = new Pane();
+		test.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/whiteAsh.png"),thumbnailHeight,thumbnailWidth,true,false)));
+		imgs.add(test);
+		GridPane.setConstraints(test,1,1);
+		imgs.get(imgs.size()-1).setOnMouseEntered(control.gethandleOnMouseEnter());
+		imgs.get(imgs.size()-1).setOnMouseExited(control.gethandleOnMouseExit());
+		imgs.get(imgs.size()-1).setOnMouseClicked(control.gethandleOnMouseClick());
+		
+		
+		
+		
+		
 		this.stats = stats();
 		GridPane.setConstraints(stats, 0, rows, cols, 3);
 		//Creates three rows of height 100 for the stats gridpane
@@ -182,6 +196,9 @@ public class SuggestionsView extends View{
 		return nav;
 	}
 
+	public GridPane getGrid(){
+		return (GridPane) border.getCenter();
+	}
 	/**
 	 * @return Scene object for the Draw Yard screen
 	 */
