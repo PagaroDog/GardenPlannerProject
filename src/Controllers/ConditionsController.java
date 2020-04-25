@@ -50,7 +50,7 @@ public class ConditionsController extends Controller<ConditionsView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnSelectButton() {
-		return null; 
+		return event -> selectButton((MouseEvent) event); 
 	}
 	
 	/**
@@ -59,7 +59,7 @@ public class ConditionsController extends Controller<ConditionsView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnRectButton() {
-		return null;
+		return event -> rectButton((MouseEvent) event); 
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public class ConditionsController extends Controller<ConditionsView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnCircleButton() {
-		return null;
+		return event -> selectButton((MouseEvent) event); 
 	}
 	
 	/**
@@ -77,7 +77,7 @@ public class ConditionsController extends Controller<ConditionsView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnLabelButton() {
-		return null;
+		return event -> labelButton((MouseEvent) event); 
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class ConditionsController extends Controller<ConditionsView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnDeleteButton(){
-		return null; 
+		return event -> deleteButton((MouseEvent) event); 
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class ConditionsController extends Controller<ConditionsView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnDragPane() {
-		return null;
+		return event -> dragPane((MouseEvent) event);
 	}
 	
 	/**
@@ -104,7 +104,7 @@ public class ConditionsController extends Controller<ConditionsView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnPressPane() {
-		return null;
+		return event -> pressPane((MouseEvent) event);
 	}
 	
 	/**
@@ -113,7 +113,7 @@ public class ConditionsController extends Controller<ConditionsView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnReleasePane() {
-		return null;
+		return event -> releasePane((MouseEvent) event);
 	}
 	
 	/**

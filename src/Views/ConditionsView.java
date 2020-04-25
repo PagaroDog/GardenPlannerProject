@@ -5,7 +5,9 @@ import Controllers.DrawYardController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
@@ -20,10 +22,14 @@ public class ConditionsView extends View{
 	private Button deleteButton;
 	private Button labelButton;
 	private Button rectButton;
-	private Button circleButton;
+	//private Button circleButton;
+	private Pane toolbar;
+	private BorderPane root;
+	private Pane stack;
+	private Pane areasPane;
 	private Pane drawing;
-	private Button next;
-	private Button prev;
+	private Button nextButton;
+	private Button prevButton;
 	private ConditionsController control;
 	
 	public ConditionsView(Stage stage) {
@@ -32,15 +38,34 @@ public class ConditionsView extends View{
 	}
 	
 	public void setup () {
-		TilePane tp = new TilePane();
+		toolbar = new TilePane();
 		Label txt = new Label("Conditions");
-		next = new Button("Next");
-		next.setOnMouseClicked(control.getHandleNextButton());
-		prev = new Button("Prev");
-		prev.setOnMouseClicked(control.getHandlePrevButton());
+		nextButton = new Button("Next");
+		nextButton.setOnMouseClicked(control.getHandleNextButton());
+		prevButton = new Button("Prev");
+		prevButton.setOnMouseClicked(control.getHandlePrevButton());
+		selectButton = new Button("Select");
+		selectButton.setOnMouseClicked(control.getHandleOnSelectButton());
+		rectButton = new Button("Rectangle");
+		rectButton.setOnMouseClicked(control.getHandleOnRectButton());
+//		circleButton = new Button("Circle");
+//		circleButton.setOnMouseClicked(control.getHandleOnCircleButton());
+		labelButton = new Button("Label");
+		labelButton.setOnMouseClicked(control.getHandleOnLabelButton());
+		deleteButton = new Button("Delete");
+		deleteButton.setOnMousePressed(control.getHandleOnDeleteButton());
 		
-		tp.getChildren().addAll(txt,prev,next);
-		scene = new Scene(tp, canvasHeight,canvasWidth);
+		drawing = new Pane();
+		
+		areasPane = new Pane();
+		
+		stack = new StackPane(drawing, areasPane);
+
+		toolbar.getChildren().addAll(txt, prevButton,nextButton, selectButton, rectButton, labelButton, deleteButton);
+		root = new BorderPane();
+		root.setTop(toolbar);
+		root.setCenter(stack);
+		scene = new Scene(root, canvasHeight,canvasWidth);
 	}
 	
 	/**
@@ -52,7 +77,7 @@ public class ConditionsView extends View{
 	}
 
 	/**
-	 * Sets control to cc
+	 * Sets control to c
 	 */
 	public void setController(Controller c) {
 		control = (ConditionsController) c;
