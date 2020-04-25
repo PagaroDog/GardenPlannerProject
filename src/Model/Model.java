@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import Controllers.ConditionsController;
 import Controllers.Controller;
 import Controllers.DrawYardController;
 import Controllers.GardenController;
@@ -49,7 +48,6 @@ public class Model {
 
 	private TutorialController tutControl;
 	private DrawYardController dyControl;
-	private ConditionsController condControl;
 	private StatisticsController statControl;
 	private GardenController gardenControl;
 	private SaveController saveControl;
@@ -211,16 +209,6 @@ public class Model {
 
 	public void setDyControl(DrawYardController dyControl) {
 		this.dyControl = dyControl;
-	}
-
-
-	public ConditionsController getCondControl() {
-		return condControl;
-	}
-
-
-	public void setCondControl(ConditionsController condControl) {
-		this.condControl = condControl;
 	}
 
 
