@@ -35,7 +35,7 @@ public class PreferencesController extends Controller<PreferencesView> {
  * @param event
  */
 	public void BackButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.CONDITIONS));
+		view.getStage().setScene(Main.getScenes().get(StageName.DRAW));
 		model.setStageName(StageName.CONDITIONS);
 	}
 	

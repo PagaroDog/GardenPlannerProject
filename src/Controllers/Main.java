@@ -5,7 +5,6 @@ import java.util.Map;
 
 import Model.Model;
 import Model.StageName;
-import Views.ConditionsView;
 import Views.DrawYardView;
 import Views.GardenView;
 import Views.PreferencesView;
@@ -28,7 +27,6 @@ public class Main extends Application{
 	private StartupView startView;
 	private TutorialView tutView;
 	private DrawYardView dyView;
-	private ConditionsView condView;
 	private StatisticsView statView;
 	private GardenView gardenView;
 	private SaveView saveView;
@@ -37,7 +35,6 @@ public class Main extends Application{
 	private StartupController startControl;
 	private TutorialController tutControl;
 	private DrawYardController dyControl;
-	private ConditionsController condControl;
 	private StatisticsController statControl;
 	private GardenController gardenControl;
 	private SaveController saveControl;
@@ -51,7 +48,6 @@ public class Main extends Application{
 		startView = new StartupView(stage);
 		tutView = new TutorialView(stage);
 		dyView = new DrawYardView(stage);
-		condView = new ConditionsView(stage);
 		statView = new StatisticsView(stage);
 		gardenView = new GardenView(stage);
 		saveView = new SaveView(stage);
@@ -60,7 +56,6 @@ public class Main extends Application{
 		startControl = new StartupController(model, startView);
 		tutControl = new TutorialController(model, tutView);
 		dyControl = new DrawYardController(model, dyView);
-		condControl = new ConditionsController(model, condView);
 		statControl = new StatisticsController(model, statView);
 		gardenControl = new GardenController(model, gardenView);
 		saveControl = new SaveController(model, saveView);
@@ -70,7 +65,6 @@ public class Main extends Application{
 		scenes.put(StageName.WELCOME, startView.getScene());
 		scenes.put(StageName.TUTORIAL, tutView.getScene());
 		scenes.put(StageName.DRAW, dyView.getScene());
-		scenes.put(StageName.CONDITIONS, condView.getScene());
 		scenes.put(StageName.STATS, statView.getScene());
 		scenes.put(StageName.DESIGN, gardenView.getScene());
 		scenes.put(StageName.SAVE, saveView.getScene());

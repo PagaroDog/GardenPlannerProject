@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import Controllers.ConditionsController;
 import Controllers.Controller;
 import Controllers.DrawYardController;
 import Controllers.GardenController;
@@ -27,7 +26,6 @@ import javafx.scene.Node;
 public class Model {
     private Season season;
     private StageName stageName = StageName.WELCOME;
-    private CondMode condMode;
 
 	private DrawMode drawMode;
 	private double drawPressX;
@@ -49,7 +47,6 @@ public class Model {
     private StartupController startControl;
 	private TutorialController tutControl;
 	private DrawYardController dyControl;
-	private ConditionsController condControl;
 	private StatisticsController statControl;
 	private GardenController gardenControl;
 	private SaveController saveControl;
@@ -145,16 +142,6 @@ public class Model {
 	public void setCanvasHeight(int canvasHeight) {
 		this.canvasHeight = canvasHeight;
 	}
-	
-	public CondMode getCondMode() {
-		return condMode;
-	}
-
-
-	public void setCondMode(CondMode condMode) {
-		this.condMode = condMode;
-	}
-
 
 	public DrawMode getDrawMode() {
 		return drawMode;
@@ -211,16 +198,6 @@ public class Model {
 
 	public void setDyControl(DrawYardController dyControl) {
 		this.dyControl = dyControl;
-	}
-
-
-	public ConditionsController getCondControl() {
-		return condControl;
-	}
-
-
-	public void setCondControl(ConditionsController condControl) {
-		this.condControl = condControl;
 	}
 
 

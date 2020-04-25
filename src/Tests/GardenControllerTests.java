@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import Controllers.ConditionsController;
 import Controllers.GardenController;
 import Controllers.StartupController;
 import Model.GardenObj;
