@@ -16,11 +16,14 @@ import javafx.scene.shape.Rectangle;
 
 public class DrawYardController extends Controller<DrawYardView>{
 	
+	private Main main;
+	
 	private final double minFont = 4;
 	private final double maxFont = 50;
 	
-	public DrawYardController(Model model, DrawYardView dyv) {
+	public DrawYardController(Model model, DrawYardView dyv, Main main) {
 		super(model, dyv);
+		this.main = main;
 	}
 	
 	/**
@@ -314,7 +317,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 			view.condMode();
 		} else {
 			view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
-			model.setStageName(StageName.CONDITIONS);
+			model.setStageName(StageName.PREFERENCES);
+			main.getPrefControl().setDrawing(view.getDrawing());
 		}
 	}
 	
@@ -410,11 +414,6 @@ public class DrawYardController extends Controller<DrawYardView>{
 			if (model.getStageName() == StageName.DRAW)
 				view.moveLabel((Label)event.getSource(), event.getSceneX(), event.getSceneY() - view.getToolbarHeight());
 		}
-	}
-
-	public void releasePane(MouseEvent mouseEvent) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

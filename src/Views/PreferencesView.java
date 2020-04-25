@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -33,6 +34,7 @@ public class PreferencesView extends View{
 	private ComboBox<String> bloom;
 	private PreferencesController control;
 	private Stage stage;
+	private Pane drawing;
 	
 	
 	public PreferencesView(Stage stage) {
@@ -48,7 +50,8 @@ public class PreferencesView extends View{
 		ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/imgs/emptygarden.jpg"),800,400,true,false));
 		iv.setPreserveRatio(true);
 		iv.setFitHeight(800);
-		border.setLeft(iv);
+		drawing = new Pane();
+		border.setLeft(drawing);
 		TilePane tp = new TilePane();
 		
 		scene = new Scene(border,canvasHeight,canvasWidth);
@@ -151,6 +154,11 @@ public class PreferencesView extends View{
 	@Override
 	public void setController(Controller c) {
 		control =  (PreferencesController)c;
+	}
+	
+	public void setDrawing(Pane drawing) {
+		System.out.println("here");
+		this.drawing = drawing;
 	}
 
 	@Override

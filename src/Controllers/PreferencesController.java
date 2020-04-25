@@ -3,10 +3,9 @@ package Controllers;
 import Model.Model;
 import Model.StageName;
 import Views.PreferencesView;
-import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 /**
  * Controller for the PreferencesView. Contains EventHandlers for button presses.
  * @author Brandon Wu
@@ -58,6 +57,10 @@ public class PreferencesController extends Controller<PreferencesView> {
 		view.getStage().setScene(Main.getScenes().get(StageName.SUGGESTIONS));
 
 		model.setStageName(StageName.SUGGESTIONS);
+	}
+	
+	public void setDrawing(Pane drawing) {
+		view.setDrawing(drawing);
 	}
 	
 	

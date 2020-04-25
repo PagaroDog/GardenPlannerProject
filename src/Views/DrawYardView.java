@@ -141,6 +141,14 @@ public class DrawYardView extends View{
 		labelSizetxt.setText("Label Size: " + (int) labelSize);
 	}
 
+	public Pane getDrawing() {
+		return drawing;
+	}
+
+	public void setDrawing(Pane drawing) {
+		this.drawing = drawing;
+	}
+
 	/**
 	 * Called when user clicks on the drawing Pane in RECTANGLE mode.
 	 * Creates a new Rectangle object and adds it to the drawing Pane 
