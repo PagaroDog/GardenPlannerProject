@@ -52,7 +52,7 @@ public class SuggestionsController extends Controller<SuggestionsView>{
 	}
 
 	public void MouseExit(MouseEvent event) {
-		view.removeStats(event.getSource());
+		view.removeStats();
 	}
 
 }

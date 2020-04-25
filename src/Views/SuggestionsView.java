@@ -28,6 +28,7 @@ public class SuggestionsView extends View{
 	private GridPane stats;
 	private int thumbnailWidth = 200;
 	private int thumbnailHeight = 100;
+	private ImageView plantCopy;
 	public SuggestionsView(Stage stage) {
 		this.stage = stage;
 	}
@@ -91,37 +92,39 @@ public class SuggestionsView extends View{
 		stats.setStyle("-fx-background-color: rgba(255, 182, 130,1);");
 		stats.setGridLinesVisible(true);
 		
-		Label common = new Label("COMMON NAME");
-		GridPane.setConstraints(common,1,0);
-		stats.getChildren().add(common);
 		
-		ImageView hold = new ImageView(new Image(getClass().getResourceAsStream("/imgs/placeholder.jpg"),thumbnailHeight*2,thumbnailWidth*2,true,false));
-		GridPane.setConstraints(hold,0,0);
-		hold.prefHeight(thumbnailHeight*2);
-		hold.prefWidth(thumbnailWidth*2);
-		hold.setPreserveRatio(true);
-		stats.getChildren().add(hold);
+		String[] labels = {"Common Name", "Scientific Name","Soil type","Moisture","Sun"};
 		
+	
 		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailHeight*2));
+		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailWidth/2));
+		for(int i = 0; i<5;i++) {
+			stats.getRowConstraints().add(new RowConstraints(40));
+			Label dud = new Label(labels[i]+":");
+			GridPane.setConstraints(dud,1,i);
+			stats.getChildren().add(dud);
+			
+		}
+		
 		
 		
 		return stats;
 	}
 
 	public void inputStats(Object event) {
-	
+		
 		ImageView copy = new ImageView(((ImageView) event).getImage());
 		copy.setFitHeight(thumbnailHeight*2);
 		copy.setFitWidth(thumbnailWidth*2);
 		copy.setPreserveRatio(true);
-		GridPane.setConstraints(copy,0,0,1,2);
+		GridPane.setConstraints(copy,0,0,1,5);
 		stats.getChildren().add(copy);
-		
+		plantCopy = copy;
 		stats.setStyle("-fx-background-color: rgba(255,255,255,1);");
 		
 	}
-	public void removeStats(Object event) {
-		stats.getChildren().remove(0);
+	public void removeStats() {
+		stats.getChildren().remove(plantCopy);
 		stats.setStyle("-fx-background-color: rgba(255,255,0,1);");
 	}
 	/**
@@ -146,6 +149,7 @@ public class SuggestionsView extends View{
 		nav.setAlignment(Pos.CENTER);
 		return nav;
 	}
+
 	/**
 	 * @return Scene object for the Draw Yard screen
 	 */
