@@ -7,6 +7,7 @@ import Controllers.Controller;
 import Controllers.DrawYardController;
 import Model.StageName;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -32,8 +33,6 @@ public class DrawYardView extends View{
 	private BorderPane root;
 	private Pane drawing;
 	private TilePane toolbar;
-	private Pane drawBar;
-	private Pane condBar;
 	
 	private Label drawtxt;
 	private Label condtxt;
@@ -55,6 +54,10 @@ public class DrawYardView extends View{
 	private DrawYardController control;
 	
 	private double labelSize;
+	private final double initShapeSize = 10;
+	private final double toolbarVGap = 15;
+	private final double toolbarVPadding = 10;
+	private final double toolbarHPadding = 10;
 	
 	private ArrayList<Node> areas = new ArrayList<Node>();
 	
@@ -94,6 +97,9 @@ public class DrawYardView extends View{
 		labeltxt = new TextField();
 
 		toolbar  = new TilePane(drawtxt, prevButton, nextButton, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
+		toolbar.setStyle("-fx-background-color: rgba(168,158,255,1);");
+		toolbar.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
+		toolbar.setVgap(toolbarVGap);
 		
 		drawing = new Pane();
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
@@ -143,7 +149,7 @@ public class DrawYardView extends View{
 	 * @return The newly created rectangle
 	 */
 	public Node addRectangle(StageName mode, double x, double y) {
-		Rectangle rect = new Rectangle(x, y, 10, 10);
+		Rectangle rect = new Rectangle(x, y, initShapeSize, initShapeSize);
 		if (mode == StageName.DRAW) {
 			rect.setFill(Color.TRANSPARENT);
 			rect.setStroke(Color.BLACK);
@@ -199,7 +205,7 @@ public class DrawYardView extends View{
 	 * @return The newly created circle
 	 */
 	public Node addCircle(double x, double y) {
-		Ellipse circle = new Ellipse(x, y, 10, 10);
+		Ellipse circle = new Ellipse(x, y, initShapeSize, initShapeSize);
 		circle.setFill(Color.TRANSPARENT);
 		circle.setStroke(Color.BLACK);
 		circle.setOnMouseClicked(control.getHandleOnPressShape());

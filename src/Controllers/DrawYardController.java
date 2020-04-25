@@ -13,9 +13,11 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
 public class DrawYardController extends Controller<DrawYardView>{
+	
+	private final double minFont = 4;
+	private final double maxFont = 50;
 	
 	public DrawYardController(Model model, DrawYardView dyv) {
 		super(model, dyv);
@@ -226,7 +228,7 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 * 		button was pressed
 	 */
 	public void minusButton(MouseEvent event) {
-		view.setLabelSize(Math.max(4, view.getLabelSize()-1));
+		view.setLabelSize(Math.max(minFont, view.getLabelSize()-1));
 	}
 	
 	/**
@@ -235,7 +237,7 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 * 		button was pressed
 	 */
 	public void plusButton(MouseEvent event) {
-		view.setLabelSize(Math.min(50, view.getLabelSize()+1));
+		view.setLabelSize(Math.min(maxFont, view.getLabelSize()+1));
 	}
 	
 	/**
