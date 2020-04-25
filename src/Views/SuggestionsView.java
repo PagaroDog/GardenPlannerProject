@@ -19,7 +19,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
-
+/**
+ * The SuggestionsView is used to display the screen where the user will select their top picks of plants that fit their
+ * conditions
+ * @author Brandon Wu
+ *
+ */
 public class SuggestionsView extends View{
 	private Button nextButton;
 	private Button backButton;
@@ -33,7 +38,9 @@ public class SuggestionsView extends View{
 		this.stage = stage;
 	}
 	
-
+/**
+ * Creates the scene to be displayed. Calls separate methods to build each segment of the border pane.
+ */
 	public void setup() {
 		
 		BorderPane border = new BorderPane();
@@ -110,7 +117,10 @@ public class SuggestionsView extends View{
 		
 		return stats;
 	}
-
+/**
+ * Takes an event source and copies the image and displays it in the stats view. Fills in stats based on object.
+ * @param event
+ */
 	public void inputStats(Object event) {
 		
 		ImageView copy = new ImageView(((ImageView) event).getImage());
@@ -123,6 +133,9 @@ public class SuggestionsView extends View{
 		stats.setStyle("-fx-background-color: rgba(255,255,255,1);");
 		
 	}
+	/**
+	 * Clears the stats section from plant image and data
+	 */
 	public void removeStats() {
 		stats.getChildren().remove(plantCopy);
 		stats.setStyle("-fx-background-color: rgba(255,255,0,1);");

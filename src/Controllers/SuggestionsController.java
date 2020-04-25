@@ -6,7 +6,11 @@ import Views.SuggestionsView;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-
+/**
+ * SuggestionsController is used to handle all events form the SuggestionsView
+ * @author Brandon Wu
+ *
+ */
 public class SuggestionsController extends Controller<SuggestionsView>{
 
 	public SuggestionsController(Model model, SuggestionsView view) {
@@ -38,19 +42,32 @@ public class SuggestionsController extends Controller<SuggestionsView>{
 
 			model.setStageName(StageName.DESIGN);
 		}
-
+	/**
+	 * Used to handle when the user hovers over a plant in the grid. Calls MouseEnter method with a MouseEvent
+	 * @return EventHandler
+	 */
 	public EventHandler gethandleOnMouseEnter() {
 		return event -> MouseEnter((MouseEvent)event);
 	}
 
+	/**
+	 * Called by gethandleOnMouseEnter. Calls the SuggestionsView inputStats() method.
+	 * @param MouseEvent event
+	 */
 	public void MouseEnter(MouseEvent event) {
 		view.inputStats(event.getSource());
 	}
-
+	/**
+	 * Used to handle when the user leaves from hovering over a plant in the grid. Calls MouseExit method with a MouseEvent
+	 * @return EventHandler
+	 */
 	public EventHandler gethandleOnMouseExit() {
 		return event -> MouseExit((MouseEvent)event);
 	}
-
+	/**
+	 * Called by gethandleOnMouseExit. Calls the SuggestionsView removeStats() method.
+	 * @param MouseEvent event
+	 */
 	public void MouseExit(MouseEvent event) {
 		view.removeStats();
 	}
