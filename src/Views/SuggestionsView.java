@@ -32,8 +32,9 @@ public class SuggestionsView extends View{
 	private Stage stage;
 	private SuggestionsController control;
 	private GridPane stats;
-	private int thumbnailWidth = 200;
+	private int thumbnailWidth = 100;
 	private int thumbnailHeight = 100;
+	private final int spaceBetweenLabelsPerRow = 17;
 	private ImageView plantCopy;
 	BorderPane border;
 	ArrayList<Pane>imgs ;
@@ -96,10 +97,10 @@ public class SuggestionsView extends View{
 		
 		
 		
-		this.stats = stats();
-		GridPane.setConstraints(stats, 0, rows, cols, 3);
+		this.stats = stats(rows);
+		GridPane.setConstraints(stats, 0, rows, cols, rows);
 		//Creates three rows of height 100 for the stats gridpane
-		for(int i = 0; i<3;i++) {
+		for(int i = 0; i<rows;i++) {
 			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
 		}
 		
@@ -124,7 +125,7 @@ public class SuggestionsView extends View{
 	 * Creates an GridPane used to display enlarged plant images and statistics
 	 * @return GridPane
 	 */
-	public GridPane stats() {
+	public GridPane stats(int rows) {
 		GridPane stats = new GridPane();
 		stats.setStyle("-fx-background-color: rgba(255, 182, 130,1);");
 		//stats.setGridLinesVisible(true);
@@ -134,10 +135,9 @@ public class SuggestionsView extends View{
 		
 	
 		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailHeight*2));
-		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailWidth/2));
-		for(int i = 0; i<5;i++) {
-			stats.getRowConstraints().add(new RowConstraints(40));
-			Label dud = new Label(labels[i]+":");
+		for(int i = 0; i<5; i++) {
+			stats.getRowConstraints().add(new RowConstraints(rows * spaceBetweenLabelsPerRow));
+			Label dud = new Label(labels[i]+": ");
 			GridPane.setConstraints(dud,1,i);
 			stats.getChildren().add(dud);
 			
