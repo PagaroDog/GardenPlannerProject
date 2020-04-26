@@ -58,6 +58,9 @@ public class DrawYardView extends View{
 	private final double toolbarVGap = 15;
 	private final double toolbarVPadding = 10;
 	private final double toolbarHPadding = 10;
+	private final int minRGB = 30;
+	private final double randRGB = 255 - minRGB;
+	private final double opacity = 0.3;
 	
 	private ArrayList<Node> areas = new ArrayList<Node>();
 	
@@ -163,7 +166,7 @@ public class DrawYardView extends View{
 			rect.setStroke(Color.BLACK);
 			rect.setOnMouseClicked(control.getHandleOnPressShape());
 		} else {
-			rect.setFill(Color.rgb((int) (Math.random()*255), (int) (Math.random()*255), (int) (Math.random()*255), 0.3));
+			rect.setFill(Color.rgb((int) (Math.random()*randRGB) + minRGB, (int) (Math.random()*randRGB) + minRGB, (int) (Math.random()*randRGB) + minRGB, opacity));
 			rect.setStroke(Color.TRANSPARENT);
 			rect.setOnMouseClicked(control.getHandleOnPressArea());
 		}

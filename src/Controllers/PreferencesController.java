@@ -1,10 +1,15 @@
 package Controllers;
 
+import java.util.ArrayList;
+
+import Model.GardenPref;
 import Model.Model;
 import Model.StageName;
 import Views.PreferencesView;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.RadioButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -51,8 +56,8 @@ public class PreferencesController extends Controller<PreferencesView> {
 		return event -> NextButton((MouseEvent)event);
 	}
 	
-	public EventHandler getHandleOnZoneButton(Rectangle rect) {
-		return event -> zoneButton((MouseEvent)event, rect);
+	public EventHandler getHandleOnZoneButton(Rectangle rect, GardenPref gardenPref) {
+		return event -> zoneButton((MouseEvent)event, rect, gardenPref);
 	}
 /**
  * This will send the user to the GardenView stage. Sets the StageName to StageName.SUGGESTIONS. 
@@ -79,10 +84,10 @@ public class PreferencesController extends Controller<PreferencesView> {
 		double newWidth = view.getBorder().getWidth() - view.getVBox().getWidth();
 		double ratio = newWidth/oldWidth;
 		drawing.setMaxWidth(newWidth);
-		model.setNumAreas(0);
+		model.getGardenPreferences().clear();
 		for (Node child : drawing.getChildren()) {
 			if (child.getUserData() == StageName.CONDITIONS) {
-				model.setNumAreas(model.getNumAreas() + 1);
+				model.getGardenPreferences().add(new GardenPref());
 			}
 			double oldX = child.getBoundsInParent().getMinX();
 			child.setScaleX(ratio);
@@ -90,7 +95,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 			child.setTranslateX(oldX * ratio - newX);
 		}
 		view.setDrawing(drawing);
-		view.setupZoneFlips(model.getNumAreas());
+		view.setupZoneFlips(model.getGardenPreferences());
 	}
 	
 	/**
@@ -101,12 +106,48 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 * @param rect The rectangle area associated with
 	 * 		the button
 	 */
-	public void zoneButton(MouseEvent event, Rectangle rect) {
+	public void zoneButton(MouseEvent event, Rectangle rect, GardenPref gardenPref) {
+		ObservableList<Node> colorButtons = view.getColor().getChildren();
+		ArrayList<String> colors = new ArrayList<String>();
+		if (model.getCurrPref() != null) {
+			model.getCurrPref().setName(view.getName().getText());
+			model.getCurrPref().setUserLight(view.getSun().getValue());
+			model.getCurrPref().setUserBloom(view.getBloom().getValue());
+			model.getCurrPref().setUserSoil(view.getSoil().getValue());
+			model.getCurrPref().setUserWater(view.getWater().getValue());
+			
+			for (int i = 0; i < colorButtons.size(); i++) {
+				RadioButton button = (RadioButton) (colorButtons.get(i));
+				if (button.isSelected()) {
+					colors.add(button.getText());
+					button.setSelected(false);
+				}
+			}
+			String[] strings = new String[colors.size()];
+			for (int i = 0; i < strings.length; i++)
+				strings[i] = colors.get(i);
+			model.getCurrPref().setUserColor(strings);
+		}
 		if (view.getCurrArea() != null) {
 			view.getCurrArea().setStroke(Color.TRANSPARENT);
 		}
-		view.setCurrArea(rect);
 		rect.setStroke(Color.RED);
+		model.setCurrPref(gardenPref);
+		view.setCurrArea(rect);
+		view.getName().setText(gardenPref.getName());
+		view.getSun().setValue(gardenPref.getUserLight());
+		view.getBloom().setValue(gardenPref.getUserBloom());
+		view.getSoil().setValue(gardenPref.getUserSoil());
+		view.getWater().setValue(gardenPref.getUserWater());
+		for (String str : gardenPref.getUserColor()) {
+			for (int i = 0; i < colorButtons.size(); i++) {
+				RadioButton button = (RadioButton) (colorButtons.get(i));
+				if (!button.isSelected()) {
+					button.setSelected(str.equals(button.getText()));
+				}
+			}
+		}
+		
 	}
 	
 }

@@ -1,6 +1,11 @@
 package Views;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.function.Predicate;
+
 import Controllers.Controller;
 import Controllers.PreferencesController;
+import Model.GardenPref;
 import Model.StageName;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -30,6 +36,7 @@ import javafx.stage.Stage;
 public class PreferencesView extends View{
 	private Button nextButton;
 	private Button backButton;
+	private TextField name;
 	private ComboBox<String> soil;
 	private ComboBox<String> water;
 	private ComboBox<String> sun;
@@ -63,6 +70,7 @@ public class PreferencesView extends View{
 		
 		scene = new Scene(border,canvasHeight,canvasWidth);
 	}
+	
 	public VBox addVBox() {
 		vbox = new VBox();
 		//Not yet implemented
@@ -75,6 +83,8 @@ public class PreferencesView extends View{
 		vbox.setPadding(new Insets(15, 12, 15, 12));
 	    vbox.setSpacing(25);
 		vbox.setStyle("-fx-background-color: rgba(158,255,174,1);");
+		
+		name = new TextField();
 		
 		String[] seasons = {"Any","Winter","Spring","Summer","Fall"};
 		Label labbloom = new Label("When do you want the plant to bloom?");
@@ -101,12 +111,12 @@ public class PreferencesView extends View{
 		color.setPadding(new Insets(10,10,10,10));
 		Label labcolor = new Label("What color of the bloom?");
 		for(String c : colors) {
-			color.getChildren().add(new RadioButton(c));;
+			color.getChildren().add(new RadioButton(c));
 		}
 		
 		bloom.setPrefWidth(250);soil.setPrefWidth(250);water.setPrefWidth(250);
 		sun.setPrefWidth(250);color.setPrefWidth(500);
-		vbox.getChildren().addAll(zoneButtons,labwater,water,labsoil,soil,labsun,sun,labcolor,color,labbloom,bloom);
+		vbox.getChildren().addAll(zoneButtons,name,labwater,water,labsoil,soil,labsun,sun,labcolor,color,labbloom,bloom);
 		vbox.setPrefWidth(500);
 		return vbox;
 	}
@@ -129,10 +139,10 @@ public class PreferencesView extends View{
 	    return hbox;
 	}
 	
-	public void setupZoneFlips(int numAreas) {
-		for (int i = 0; i < numAreas; i++) {
+	public void setupZoneFlips(ArrayList<GardenPref> gardenPrefs) {
+		for (int i = 0; i < gardenPrefs.size(); i++) {
 			Button button = new Button("" + (i+1));
-			button.setOnMousePressed(control.getHandleOnZoneButton((Rectangle) drawing.getChildren().get(drawing.getChildren().size() - numAreas + i)));
+			button.setOnMousePressed(control.getHandleOnZoneButton((Rectangle) drawing.getChildren().get(drawing.getChildren().size() - gardenPrefs.size() + i), gardenPrefs.get(i)));
 			zoneButtons.getChildren().add(button);
 		}
 	}
@@ -145,7 +155,9 @@ public class PreferencesView extends View{
 		return scene;
 	}
 
-
+	public TextField getName() {
+		return name;
+	}
 
 	public ComboBox<String> getSoil() {
 		return soil;
@@ -181,7 +193,6 @@ public class PreferencesView extends View{
 	}
 	
 	public void setDrawing(Pane drawing) {
-		System.out.println("here");
 		this.drawing = drawing;
 	}
 
@@ -200,5 +211,24 @@ public class PreferencesView extends View{
 
 	public Pane getDrawing() {
 		return drawing;
+	}
+
+	public String[] getUserColor() {
+		Object[] buttons = color.getChildren().filtered(new Predicate<Node>() {
+			@Override
+			public boolean test(Node node) {
+				if (node instanceof RadioButton) {
+					return ((RadioButton) node).isSelected();
+				}
+				return false;
+			}
+			
+		}).toArray();
+		String[] strings = new String[buttons.length];
+		for (int i = 0; i < buttons.length; i++) {
+			strings[i] = buttons[i].toString();
+		}
+		System.out.println(strings);
+		return strings;
 	}
 }

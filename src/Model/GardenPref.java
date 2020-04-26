@@ -11,10 +11,13 @@ public class GardenPref {
 	private String userBloom;
 	private String userSoil;
 	private String[] userColor;
+	private String userWater;
 	private double xLoc;
 	private double yLoc;
 	private double height;
 	private double width;
+	
+	public GardenPref() {}
 	
 	/**
 	 * Creates a GardenPref that is called by the Conditions Controller when the user chooses to
@@ -32,11 +35,8 @@ public class GardenPref {
 		this.height = height;
 		this.width = width;
 		this.name = name;
-		userLight = null;
-		userBloom = null;
-		userSoil = null;
-		userColor = null;
 	}
+	
 	/**
 	 * Creates a GardenPref if all attributes are known
 	 * @param name
@@ -61,7 +61,7 @@ public class GardenPref {
 		this.height = height;
 		this.width = width;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -76,6 +76,9 @@ public class GardenPref {
 	}
 	public String[] getUserColor() {
 		return userColor;
+	}
+	public String getUserWater() {
+		return userWater;
 	}
 	public double getxLoc() {
 		return xLoc;
@@ -103,6 +106,9 @@ public class GardenPref {
 	}
 	public void setUserColor(String[] userColor) {
 		this.userColor = userColor;
+	}
+	public void setUserWater(String userWater) {
+		this.userWater = userWater;
 	}
 	public void setxLoc(double xLoc) {
 		this.xLoc = xLoc;

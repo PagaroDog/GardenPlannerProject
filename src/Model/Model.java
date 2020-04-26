@@ -30,11 +30,10 @@ public class Model {
 	private double drawPressY;
 	private Node currDrawObj;
 	
-	private int numAreas;
-	
 	//make a constructor to do this
 	private ArrayList<Plant> plants=new ArrayList<Plant>();
-    private HashMap<Integer, GardenPref> gardenPreferences; 
+    private ArrayList<GardenPref> gardenPreferences = new ArrayList<GardenPref>(); 
+    private GardenPref currPref;
     private HashMap<Integer, GardenObj> gardenObjects;  
     private ArrayList<Actions> undoActions;
     private ArrayList<Actions> redoActions;
@@ -74,22 +73,15 @@ public class Model {
 	}
 
 
-	public HashMap<Integer, GardenPref> getGardenPreferences() {
+	public ArrayList<GardenPref> getGardenPreferences() {
 		return gardenPreferences;
 	}
 
 
-	public void setGardenPreferences(HashMap<Integer, GardenPref> gardenPreferences) {
+	public void setGardenPreferences(ArrayList<GardenPref> gardenPreferences) {
 		this.gardenPreferences = gardenPreferences;
 	}
-	
-	public int getNumAreas() {
-		return numAreas;
-	}
-	
-	public void setNumAreas(int numAreas) {
-		this.numAreas = numAreas;
-	}
+
 
 	public HashMap<Integer, GardenObj> getGardenObjects() {
 		return gardenObjects;
@@ -292,6 +284,15 @@ public class Model {
 	}
 	public void addPlant(Plant p) {
 		plants.add(p);
+	}
+
+
+	public void setCurrPref(GardenPref gardenPref) {
+		currPref = gardenPref;
+	}
+
+	public GardenPref getCurrPref() {
+		return currPref;
 	}
 
 
