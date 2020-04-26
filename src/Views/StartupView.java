@@ -39,7 +39,7 @@ public class StartupView extends View{
 		loadButton = new Button("Load");
 		loadButton.setOnMouseClicked(suc.handleOnLoadButton());
 		Buttons.getChildren().addAll(label,newButton,loadButton,tutorialButton);
-		scene = new Scene(Buttons,canvasHeight,canvasWidth);
+		scene = new Scene(Buttons, canvasWidth, canvasHeight);
 	}
 	
 	@Override

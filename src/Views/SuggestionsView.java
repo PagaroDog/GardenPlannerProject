@@ -51,7 +51,7 @@ public class SuggestionsView extends View{
 		GridPane cen = center();
 		border.setTop(nav);
 		border.setCenter(cen);
-		scene = new Scene(border,canvasHeight,canvasWidth);
+		scene = new Scene(border, canvasWidth, canvasHeight);
 	}
 	/**
 	 * Creates the grid of ImageViews of plants that most closely relates to the users conditions and 

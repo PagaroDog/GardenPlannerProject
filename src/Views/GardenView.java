@@ -42,7 +42,7 @@ public class GardenView extends View{
 		pref.setOnMouseClicked(control.handleOnPrefButton());
 		
 		tp.getChildren().addAll(txt,pref,stats,save);
-		scene = new Scene(tp,canvasHeight,canvasWidth);
+		scene = new Scene(tp, canvasWidth, canvasHeight);
 	}
 
 	@Override

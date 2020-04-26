@@ -112,7 +112,7 @@ public class DrawYardView extends View{
 		root.setTop(toolbar);
 		root.setCenter(drawing);
 		
-		scene = new Scene(root,canvasHeight,canvasWidth);
+		scene = new Scene(root, canvasWidth, canvasHeight);
 	}
 	
 	/**

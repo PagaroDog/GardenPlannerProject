@@ -27,7 +27,7 @@ public class StatisticsView extends View{
 		backButton = new Button("Back");
 		backButton.setOnMouseClicked(control.handleOnBackButton());
 		tp.getChildren().addAll(txt,backButton);
-		scene = new Scene(tp,canvasHeight,canvasWidth);
+		scene = new Scene(tp, canvasWidth, canvasHeight);
 	}
 
 	/**

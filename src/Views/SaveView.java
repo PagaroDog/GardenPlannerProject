@@ -28,7 +28,7 @@ public class SaveView extends View{
 		prevButton = new Button("prev");
 		prevButton.setOnMouseClicked(control.getHandleOnPrevButton());
 		tp.getChildren().addAll(txt,prevButton);
-		scene = new Scene(tp,canvasHeight,canvasWidth);
+		scene = new Scene(tp, canvasWidth, canvasHeight);
 	}
 	/**
 	 * @return Scene object for the Save screen

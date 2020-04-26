@@ -68,7 +68,7 @@ public class PreferencesView extends View{
 		border.setLeft(drawing);
 		TilePane tp = new TilePane();
 		
-		scene = new Scene(border,canvasHeight,canvasWidth);
+		scene = new Scene(border, canvasWidth, canvasHeight);
 	}
 	
 	public VBox addVBox() {

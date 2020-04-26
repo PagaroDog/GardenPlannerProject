@@ -31,7 +31,7 @@ public class TutorialView extends View{
 		prevButton.setOnMouseClicked(control.getHandleOnPrevButton());
 		
 		Buttons.getChildren().addAll(txt,nextButton,prevButton);
-		scene = new Scene(Buttons,canvasHeight,canvasWidth);
+		scene = new Scene(Buttons, canvasWidth, canvasHeight);
 	}
 	
 	/**
