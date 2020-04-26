@@ -2,6 +2,7 @@ package Controllers;
 
 import Model.Model;
 import Model.StageName;
+import Model.Season;
 import Views.GardenView;
 import Views.View;
 import javafx.event.EventHandler;
@@ -24,7 +25,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnSpringButton() {
-		return null;
+		return event -> springButton((MouseEvent)event);
+	}
+	/**
+	 * sets model season to spring
+	 * @param event
+	 */
+	public void springButton(MouseEvent event) {
+		model.setSeason(Season.SPRING);
 	}
 	
 	/**
@@ -32,7 +40,15 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnSummerButton() {
-		return null;
+		return event -> summerButton((MouseEvent)event);
+	}
+	/**
+	 * sets model season to summer
+	 * @param event
+	 */
+	public void summerButton(MouseEvent event) {
+		model.setSeason(Season.SUMMER);
+		
 	}
 	
 	/**
@@ -40,7 +56,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnFallButton() {
-		return null;
+		return event -> fallButton((MouseEvent)event);
+	}
+	/**
+	 * sets model season to fall
+	 * @param event
+	 */
+	public void fallButton(MouseEvent event) {
+		model.setSeason(Season.FALL);
 	}
 	
 	/**
@@ -48,7 +71,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnWinterButton() {
-		return null;
+		return event -> winterButton((MouseEvent)event);
+	}
+	/**
+	 * sets model season to winter
+	 * @param event
+	 */
+	public void winterButton(MouseEvent event) {
+		model.setSeason(Season.WINTER);
 	}
 	
 	/**
@@ -73,7 +103,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnYear1Button() {
-		return null;
+		return event -> year1Button((MouseEvent)event);
+	}
+	/**
+	 * sets model year to 1
+	 * @param event
+	 */
+	public void year1Button(MouseEvent event) {
+		model.setYear(1);
 	}
 	
 	/**
@@ -81,7 +118,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnYear2Button() {
-		return null;
+		return event -> year2Button((MouseEvent)event);
+	}
+	/**
+	 * sets model year to 2
+	 * @param event
+	 */
+	public void year2Button(MouseEvent event) {
+		model.setYear(2);
 	}
 	
 	/**
@@ -89,7 +133,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnYear3Button() {
-		return null;
+		return event -> year3Button((MouseEvent)event);
+	}
+	/**
+	 * sets model year to 3
+	 * @param event
+	 */
+	public void year3Button(MouseEvent event) {
+		model.setYear(3);
 	}
 	
 	/**
@@ -97,7 +148,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnImgDrag() {
-		return null;		
+		return event -> imgDrag((MouseEvent)event);
+	}
+	/**
+	 * runs when an image is dragged.
+	 * @param event
+	 */
+	public void imgDrag(MouseEvent event) {
+		
 	}
 	
 	/**
@@ -117,9 +175,7 @@ public class GardenController extends Controller<GardenView>{
 	}
 
 
-	public void ImgDrag(MouseEvent e) {
-		
-	}
+	
 
 	/**
 	* code is triggered by a press of SaveButton
