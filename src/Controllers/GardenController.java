@@ -228,7 +228,7 @@ public class GardenController extends Controller<GardenView>{
 		if (event.getX() > view.getTPWidth() && !copied) {
 			System.out.println("in if");
 			Object plant = event.getSource();
-			int index = view.addIVToFlow((ImageView) plant);	//TODO: creates the multiple children error. figure out way to clone imageview.
+			int index = view.addIVToFlow(new ImageView(((ImageView) plant).getImage()));	//TODO: creates the multiple children error. figure out way to clone imageview.
 //			model.addX(0);
 //			model.addY(event.getY());
 			view.setXs(index, 0 - view.getPicSize()*index);

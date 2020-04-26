@@ -174,7 +174,7 @@ public class GardenView extends View{
 	
 	public int addIVToFlow(ImageView plant) {
 		System.out.println("dragging image");
-    	this.garden.getChildren().add(plant);
+    	this.garden.getChildren().add(plant);	//TODO: creates error duplicate children added. 
     	List<Node> imageArr = garden.getChildren();
     	int i = imageArr.size()-1;
     	((ImageView) imageArr.get(i)).setPreserveRatio(true);
