@@ -42,9 +42,8 @@ public class GardenView extends View{
 	private Button summer;
 	private Button fall;
 	private Button winter;
-	private ArrayList<ImageView> ivs;
 	int SIZE = 200;
-	
+	int TILE_PANE_WIDTH = 1000;
 	public GardenView(Stage stage) {
 		this.stage = stage;
 	}
@@ -174,14 +173,48 @@ public class GardenView extends View{
     }
 	
 	public int addIVToFlow(ImageView plant) {
+		System.out.println("brrrr");
     	this.garden.getChildren().add(plant);
     	List<Node> imageArr = garden.getChildren();
     	int i = imageArr.size()-1;
     	((ImageView) imageArr.get(i)).setPreserveRatio(true);
-    	imageArr.get(i).setFitHeight(SIZE);
-    	imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag(i));
-    	garden.getChildren().add(ivs.get(i));
+    	((ImageView) imageArr.get(i)).setFitHeight(SIZE);
+    	imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
     	return i;
+    }
+	
+	/**
+     * Gets the size of the picture
+     * @return size of the picture 
+     */
+    public double getPicSize() {
+    	return SIZE;
+    }
+    
+    /**
+     * Sets a new x value for any of the ImageViews in garden 
+     * @param index the index of the ImageView in garden to be modified
+     * @param x the new x value of the specified imagView in garden
+     */
+    public void setXs(int index, double x) {
+    	garden.getChildren().get(index).setTranslateX(garden.getChildren().get(index).getLayoutX() + x);
+    }
+    
+    /**
+     * Sets a new y value for any of the ImageViews in garden 
+     * @param index the index of the ImageView in garden to be modified
+     * @param y the new y value of the specified ImageView in garden
+     */
+    public void setYs(int index, double y) {
+    	garden.getChildren().get(index).setTranslateY(garden.getChildren().get(index).getLayoutY() + y);
+    }
+    
+    /**
+     * Gets the tile pane width 
+     * @return width of the TilePane 
+     */
+    public double getTPWidth() {
+    	return TILE_PANE_WIDTH;
     }
 
 }

@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 * this class is the controller for the Garden screen
 */
 public class GardenController extends Controller<GardenView>{
-	
+	boolean copied = true;
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
 	}
@@ -226,9 +226,9 @@ public class GardenController extends Controller<GardenView>{
 		//TODO: figure out how to add plant objects in the model
 		if (event.getX() > view.getTPWidth() && !copied) {
 			Object plant = event.getSource();
-			int index = view.addIVToFlow(plant);
-			model.addX(0);
-			model.addY(event.getY());
+			int index = view.addIVToFlow((ImageView) plant);
+//			model.addX(0);
+//			model.addY(event.getY());
 			view.setXs(index, 0 - view.getPicSize()*index);
 			view.setYs(index, event.getY());
 			copied = true;
@@ -242,6 +242,16 @@ public class GardenController extends Controller<GardenView>{
 	public EventHandler getHandlerForPress() {
 		return event -> press((MouseEvent) event);
 	}
+	
+	/**
+	 * Registers a mouse press on the milkweed image, sets copied to false so that a new milkweed image may be generated
+	 * @param event the mouse pressing event 
+	 */
+	public void press(MouseEvent event) {
+		copied = false;
+	}
+	
+	
 	
 
 }
