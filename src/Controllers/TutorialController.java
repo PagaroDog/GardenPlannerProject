@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 */
 public class TutorialController extends Controller<TutorialView>{
 	
-	public TutorialController(Model model, TutorialView view) {
-		super(model, view);
+	public TutorialController(Model model, TutorialView view, Main main) {
+		super(model, view, main);
 	}
 	
 	/**

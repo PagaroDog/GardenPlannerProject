@@ -22,8 +22,8 @@ public class StartupController extends Controller<StartupView>{
 	private Button tutorialButton;
 
 	
-	public StartupController(Model model, StartupView view) {
-		super(model, view);
+	public StartupController(Model model, StartupView view, Main main) {
+		super(model, view, main);
 	}
 
 	/**

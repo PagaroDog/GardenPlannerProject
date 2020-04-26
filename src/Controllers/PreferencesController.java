@@ -15,12 +15,9 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class PreferencesController extends Controller<PreferencesView> {
-	
-	Main main;
 
 	public PreferencesController(Model model, PreferencesView view, Main main) {
-		super(model, view);
-		this.main = main;
+		super(model, view, main);
 	}
 
 

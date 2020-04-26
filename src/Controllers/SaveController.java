@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 */
 public class SaveController extends Controller<SaveView>{
 		
-		public SaveController(Model model, SaveView view) {
-			super(model, view);
+		public SaveController(Model model, SaveView view, Main main) {
+			super(model, view, main);
 			
 		}
 		

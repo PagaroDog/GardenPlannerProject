@@ -15,8 +15,8 @@ import javafx.stage.Stage;
  */
 public class StatisticsController extends Controller<StatisticsView>{
 
-	public StatisticsController(Model model, StatisticsView view) {
-		super(model, view);
+	public StatisticsController(Model model, StatisticsView view, Main main) {
+		super(model, view, main);
 	}
 
 	/**

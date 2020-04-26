@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 */
 public class GardenController extends Controller<GardenView>{
 	
-	public GardenController(Model model, GardenView view) {
-		super(model, view);
+	public GardenController(Model model, GardenView view, Main main) {
+		super(model, view, main);
 	}
 
 

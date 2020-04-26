@@ -15,8 +15,8 @@ import javafx.scene.layout.Pane;
  */
 public class SuggestionsController extends Controller<SuggestionsView>{
 
-	public SuggestionsController(Model model, SuggestionsView view) {
-		super(model, view);
+	public SuggestionsController(Model model, SuggestionsView view, Main main) {
+		super(model, view, main);
 	}
 
 	public EventHandler gethandleOnBackButton() {

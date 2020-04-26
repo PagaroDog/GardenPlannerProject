@@ -53,14 +53,14 @@ public class Main extends Application{
 		saveView = new SaveView(stage);
 		prefView = new PreferencesView(stage);
 		suggView = new SuggestionsView(stage);
-		startControl = new StartupController(model, startView);
-		tutControl = new TutorialController(model, tutView);
+		startControl = new StartupController(model, startView, this);
+		tutControl = new TutorialController(model, tutView, this);
 		dyControl = new DrawYardController(model, dyView, this);
-		statControl = new StatisticsController(model, statView);
-		gardenControl = new GardenController(model, gardenView);
-		saveControl = new SaveController(model, saveView);
+		statControl = new StatisticsController(model, statView, this);
+		gardenControl = new GardenController(model, gardenView, this);
+		saveControl = new SaveController(model, saveView, this);
 		prefControl = new PreferencesController(model, prefView, this);
-		suggControl = new SuggestionsController(model, suggView);
+		suggControl = new SuggestionsController(model, suggView, this);
 		
 		scenes.put(StageName.WELCOME, startView.getScene());
 		scenes.put(StageName.TUTORIAL, tutView.getScene());
