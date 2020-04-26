@@ -19,6 +19,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 /**
  * Creates the scene for the preferences view. 
@@ -38,6 +40,8 @@ public class PreferencesView extends View{
 	private Pane drawing;
 	private BorderPane border;
 	private VBox vbox;
+	private HBox zoneButtons;
+	private Rectangle currArea;
 	
 	
 	public PreferencesView(Stage stage) {
@@ -62,8 +66,8 @@ public class PreferencesView extends View{
 	public VBox addVBox() {
 		vbox = new VBox();
 		//Not yet implemented
-		HBox zoneButtons = new HBox();
-		Label label = new Label("Zone Flips (not yet implemented)");
+		zoneButtons = new HBox();
+		Label label = new Label("Garden Area:");
 		label.setPrefHeight(50);
 		zoneButtons.getChildren().add(label);
 		zoneButtons.setAlignment(Pos.CENTER);
@@ -106,6 +110,7 @@ public class PreferencesView extends View{
 		vbox.setPrefWidth(500);
 		return vbox;
 	}
+	
 	public HBox addHBox() {
 	    HBox hbox = new HBox();
 	    hbox.setPadding(new Insets(15, 300, 15, 300));
@@ -122,6 +127,14 @@ public class PreferencesView extends View{
 	    hbox.setPrefHeight(20);
 	    hbox.setPrefWidth(canvasWidth);
 	    return hbox;
+	}
+	
+	public void setupZoneFlips(int numAreas) {
+		for (int i = 0; i < numAreas; i++) {
+			Button button = new Button("" + (i+1));
+			button.setOnMousePressed(control.getHandleOnZoneButton((Rectangle) drawing.getChildren().get(drawing.getChildren().size() - numAreas + i)));
+			zoneButtons.getChildren().add(button);
+		}
 	}
 
 	@Override
@@ -175,5 +188,13 @@ public class PreferencesView extends View{
 	@Override
 	public Stage getStage() {
 		return this.stage;
+	}
+
+	public Shape getCurrArea() {
+		return currArea;
+	}
+
+	public void setCurrArea(Rectangle rect) {
+		currArea = rect;
 	}
 }
