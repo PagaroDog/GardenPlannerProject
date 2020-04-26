@@ -173,7 +173,7 @@ public class GardenView extends View{
     }
 	
 	public int addIVToFlow(ImageView plant) {
-		System.out.println("brrrr");
+		System.out.println("dragging image");
     	this.garden.getChildren().add(plant);
     	List<Node> imageArr = garden.getChildren();
     	int i = imageArr.size()-1;
@@ -214,7 +214,7 @@ public class GardenView extends View{
      * @return width of the TilePane 
      */
     public double getTPWidth() {
-    	return TILE_PANE_WIDTH;
+    	return 1;
     }
 
 }

@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 * this class is the controller for the Garden screen
 */
 public class GardenController extends Controller<GardenView>{
-	boolean copied = true;
+	boolean copied = false;
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
 	}
@@ -224,7 +224,9 @@ public class GardenController extends Controller<GardenView>{
 	 */
 	public void drag(MouseEvent event) {
 		//TODO: figure out how to add plant objects in the model
+		System.out.println("in drag");
 		if (event.getX() > view.getTPWidth() && !copied) {
+			System.out.println("in if");
 			Object plant = event.getSource();
 			int index = view.addIVToFlow((ImageView) plant);
 //			model.addX(0);
