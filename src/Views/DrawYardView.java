@@ -8,13 +8,17 @@ import Controllers.DrawYardController;
 import Model.StageName;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
@@ -33,13 +37,16 @@ public class DrawYardView extends View{
 	private BorderPane root;
 	private Pane drawing;
 	private TilePane toolbar;
+	private BorderPane navigation;
 	
 	private Label drawtxt;
 	private Label condtxt;
 	private Label labelSizetxt;
 	
-	private Button nextButton;
-	private Button prevButton;
+	private Button nextButtonDraw;
+	private Button prevButtonDraw;
+	private Button nextButtonCond;
+	private Button prevButtonCond;
 	private Button selectButton;
 	private Button deleteButton;
 	private Button rectButton;
@@ -74,13 +81,9 @@ public class DrawYardView extends View{
 	 */
 	public void setup() {
 		labelSize = 12;
-		drawtxt = new Label("DrawPhase");
+		drawtxt = new Label("Draw An Outline of Your Property");
 		condtxt = new Label("Conditions");
 		labelSizetxt = new Label("Label Size: " + (int) labelSize);
-		nextButton = new Button("Next");
-		nextButton.setOnMouseClicked(control.getHandleNextButton());
-		prevButton = new Button("Prev");
-		prevButton.setOnMouseClicked(control.getHandlePrevButton());
 		selectButton = new Button("Select");
 		selectButton.setOnMouseClicked(control.getHandleOnSelectButton());
 		deleteButton = new Button("Delete");
@@ -99,10 +102,26 @@ public class DrawYardView extends View{
 		newAreaButton.setOnMousePressed(control.getHandleOnNewAreaButton());
 		labeltxt = new TextField();
 
-		toolbar  = new TilePane(drawtxt, prevButton, nextButton, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
+		toolbar  = new TilePane(drawtxt, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
 		toolbar.setStyle("-fx-background-color: rgba(168,158,255,1);");
 		toolbar.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
 		toolbar.setVgap(toolbarVGap);
+		
+		prevButtonDraw = new Button("Main Menu");
+		prevButtonDraw.setOnMouseClicked(control.getHandlePrevButton());
+		nextButtonDraw = new Button("Create Areas");
+		nextButtonDraw.setOnMouseClicked(control.getHandleNextButton());
+		prevButtonCond = new Button("Draw Yard");
+		prevButtonCond.setOnMouseClicked(control.getHandlePrevButton());
+		nextButtonCond = new Button("Set Preferences");
+		nextButtonCond.setOnMouseClicked(control.getHandleNextButton());
+	
+		navigation = new BorderPane();
+		navigation.setStyle("-fx-background-color: rgba(25,100,255,1);");
+		navigation.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
+		navigation.setLeft(prevButtonDraw);
+		navigation.setRight(nextButtonDraw);
+		navigation.setCenter(drawtxt);
 		
 		drawing = new Pane();
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
@@ -111,6 +130,7 @@ public class DrawYardView extends View{
 		root = new BorderPane();
 		root.setTop(toolbar);
 		root.setCenter(drawing);
+		root.setBottom(navigation);
 		
 		scene = new Scene(root, canvasWidth, canvasHeight);
 	}
@@ -323,12 +343,16 @@ public class DrawYardView extends View{
 	 */
 	public void drawMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
-		toolbar.getChildren().addAll(drawtxt, prevButton, nextButton, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
+		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
 		ObservableList<Node> drawObjs = drawing.getChildren();
 		for (int i = drawObjs.size()-1; i >= 0 && drawObjs.get(i).getUserData() == StageName.CONDITIONS; i--) {
 			areas.add(drawObjs.get(i));
 			drawObjs.remove(i);
 		}
+		navigation.getChildren().remove(0, navigation.getChildren().size());
+		navigation.setLeft(prevButtonDraw);
+		navigation.setCenter(drawtxt);
+		navigation.setRight(nextButtonDraw);
 	}
 	
 	/**
@@ -336,9 +360,13 @@ public class DrawYardView extends View{
 	 */
 	public void condMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
-		toolbar.getChildren().addAll(condtxt, prevButton, nextButton, selectButton, deleteButton, newAreaButton);
+		toolbar.getChildren().addAll(selectButton, deleteButton, newAreaButton);
 		drawing.getChildren().addAll(areas);
 		areas.clear();
+		navigation.getChildren().remove(0, navigation.getChildren().size());
+		navigation.setLeft(prevButtonCond);
+		navigation.setCenter(condtxt);
+		navigation.setRight(nextButtonCond);
 	}
 	
 	/**
