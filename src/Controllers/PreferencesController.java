@@ -15,9 +15,12 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class PreferencesController extends Controller<PreferencesView> {
+	
+	Main main;
 
-	public PreferencesController(Model model, PreferencesView view) {
+	public PreferencesController(Model model, PreferencesView view, Main main) {
 		super(model, view);
+		this.main = main;
 	}
 
 
@@ -39,6 +42,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	public void BackButton(MouseEvent event) {
 		view.getStage().setScene(Main.getScenes().get(StageName.DRAW));
 		model.setStageName(StageName.CONDITIONS);
+		main.getDyControl().setDrawing(view.getDrawing());
 	}
 	
 /**

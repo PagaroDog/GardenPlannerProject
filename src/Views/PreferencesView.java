@@ -197,4 +197,8 @@ public class PreferencesView extends View{
 	public void setCurrArea(Rectangle rect) {
 		currArea = rect;
 	}
+
+	public Pane getDrawing() {
+		return drawing;
+	}
 }

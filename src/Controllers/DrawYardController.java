@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 
@@ -417,4 +418,13 @@ public class DrawYardController extends Controller<DrawYardView>{
 		}
 	}
 	
+	public void setDrawing(Pane drawing) {
+		//Set children nodes back to original size and position
+		for (Node child : drawing.getChildren()) {
+			child.setTranslateX(0);
+			child.setScaleX(1);
+		}
+		view.getRoot().setCenter(drawing);
+		view.setDrawing(drawing);
+	}
 }

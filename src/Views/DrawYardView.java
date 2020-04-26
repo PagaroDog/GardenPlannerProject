@@ -342,4 +342,8 @@ public class DrawYardView extends View{
 	public double getToolbarHeight() {
 		return toolbar.getHeight();
 	}
+
+	public BorderPane getRoot() {
+		return root;
+	}
 }

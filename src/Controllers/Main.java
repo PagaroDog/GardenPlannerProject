@@ -59,7 +59,7 @@ public class Main extends Application{
 		statControl = new StatisticsController(model, statView);
 		gardenControl = new GardenController(model, gardenView);
 		saveControl = new SaveController(model, saveView);
-		prefControl = new PreferencesController(model, prefView);
+		prefControl = new PreferencesController(model, prefView, this);
 		suggControl = new SuggestionsController(model, suggView);
 		
 		scenes.put(StageName.WELCOME, startView.getScene());
@@ -87,6 +87,10 @@ public class Main extends Application{
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	public DrawYardController getDyControl() {
+		return dyControl;
 	}
 
 }
