@@ -75,7 +75,8 @@ public class Main extends Application{
 		// Start with the main scene
 		stage.setScene(scenes.get(StageName.WELCOME));
 		stage.setTitle("Garden Simulator");
-		stage.show();	}
+		stage.show();
+		startView.start();}
 	
 	public static Map<StageName,Scene> getScenes(){
 		return scenes;
