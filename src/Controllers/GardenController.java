@@ -6,6 +6,7 @@ import Model.Season;
 import Views.GardenView;
 import Views.View;
 import javafx.event.EventHandler;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -193,5 +194,54 @@ public class GardenController extends Controller<GardenView>{
 		view.getStage().setScene(Main.getScenes().get(StageName.SAVE));
 		model.setStageName(StageName.SAVE);
 	}
+	
+	/**
+	 * Gets event handler for when a mouse drag is released 
+	 * @return drag released mouse event 
+	 */
+	public EventHandler getHandlerForDragReleased() {
+		return event -> dragReleased((MouseEvent) event);
+	}
+	/**
+	 * Registers a mouse drag released event, sets copied to true so a new image will not be generated accidentally 
+	 * @param event
+	 */
+	public void dragReleased(MouseEvent event) {
+		copied = true;
+	}
+	
+	/**
+	 * Gets the drag event handler for images in the FlowPane 
+	 * @param i the milkweed image that is being dragged 
+	 * @return the mouse event handler for the specific milkweed image that was created 
+	 */
+	public EventHandler getHandlerForDrag() {
+		return event -> drag((MouseEvent) event);
+	}
+	/**
+	 * Handles the dragging logic of the static milkweed image in the TilePane 
+	 * @param event the drag event that occurred
+	 */
+	public void drag(MouseEvent event) {
+		//TODO: figure out how to add plant objects in the model
+		if (event.getX() > view.getTPWidth() && !copied) {
+			Object plant = event.getSource();
+			int index = view.addIVToFlow(plant);
+			model.addX(0);
+			model.addY(event.getY());
+			view.setXs(index, 0 - view.getPicSize()*index);
+			view.setYs(index, event.getY());
+			copied = true;
+		}
+	}
+	
+	/**
+	 * Gets the event handler for when the mouse presses on the TilePane milkweed 
+	 * @return mouse press event 
+	 */
+	public EventHandler getHandlerForPress() {
+		return event -> press((MouseEvent) event);
+	}
+	
 
 }

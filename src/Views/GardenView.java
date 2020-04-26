@@ -3,10 +3,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import Controllers.Controller;
 import Controllers.GardenController;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,6 +28,7 @@ public class GardenView extends View{
 	private TilePane yearTilePane;
 	private TilePane statsTilePane;
 	private TilePane toolbarTilePane;
+	private Pane garden;
 	private Image backyardImage;
 	private GardenController control;
 	private Stage stage;
@@ -40,15 +43,14 @@ public class GardenView extends View{
 	private Button fall;
 	private Button winter;
 	private ArrayList<ImageView> ivs;
+	int SIZE = 200;
 	
 	public GardenView(Stage stage) {
 		this.stage = stage;
 	}
 	
 	public void setup () {
-		int size = 200;
-		ivs = new ArrayList<ImageView>();
-		
+				
 		TilePane tp = new TilePane();
 		Label txt = new Label("Design");
 		stats = new Button("Stats");
@@ -73,9 +75,6 @@ public class GardenView extends View{
 		spring = new Button("Spring");
 		spring.setOnMouseClicked(control.handleOnSpringButton());
 		seasonTilePane.getChildren().addAll(seasonLabel,summer,fall,winter,spring);
-		
-		
-		
 		
 		
 		yearTilePane = new TilePane();
@@ -105,7 +104,7 @@ public class GardenView extends View{
 		tile.setHgap(4);
 		tile.setPrefColumns(1);
 		tile.setStyle("-fx-background-color: DAE6F3;");
-		tile.setPrefWidth(size);
+		tile.setPrefWidth(SIZE);
 		
 		plantImages.put("whiteAsh", new Image("/imgs/whiteAsh.png"));
 		plantImages.put("commonMilkweed.png", new Image("/imgs/commonMilkweed.png"));
@@ -120,8 +119,11 @@ public class GardenView extends View{
 		for (Image img: plantImages.values()) {
 			ImageView imageview = new ImageView(img);
 			imageview.setPreserveRatio(true);
-		    imageview.setFitHeight(size);
-		    imageview.setFitWidth(size);
+		    imageview.setFitHeight(SIZE);
+		    imageview.setFitWidth(SIZE);
+		    imageview.setOnMouseDragged(control.getHandlerForDrag());
+		    imageview.setOnMousePressed(control.getHandlerForPress());
+		    imageview.setOnMouseReleased(control.getHandlerForDragReleased());
 		    tile.getChildren().add(imageview);
 		}
 		ScrollPane scrollPane = new ScrollPane();
@@ -129,7 +131,7 @@ public class GardenView extends View{
 	    scrollPane.setContent(tile);
 		border.setLeft(scrollPane);
 		
-		Pane garden = new Pane();
+		garden = new Pane();
 		ImageView background = new ImageView(new Image("/imgs/lawn.jpg"));
 		background.fitWidthProperty().bind(garden.widthProperty()); 
 		background.fitHeightProperty().bind(garden.heightProperty());
@@ -171,13 +173,13 @@ public class GardenView extends View{
         }
     }
 	
-	public int addIVToFlow() {
-    	ivs.add(new ImageView());
-    	int i = ivs.size()-1;
-    	ivs.get(i).setImage(im1);	//im1 is the image we want to create, how to figure this out?
-    	ivs.get(i).setPreserveRatio(true);
-    	ivs.get(i).setFitHeight(PIC_SIZE);
-    	ivs.get(i).setOnMouseDragged(imc.getHandlerForDrag(i));
+	public int addIVToFlow(ImageView plant) {
+    	this.garden.getChildren().add(plant);
+    	List<Node> imageArr = garden.getChildren();
+    	int i = imageArr.size()-1;
+    	((ImageView) imageArr.get(i)).setPreserveRatio(true);
+    	imageArr.get(i).setFitHeight(SIZE);
+    	imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag(i));
     	garden.getChildren().add(ivs.get(i));
     	return i;
     }
