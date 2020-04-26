@@ -73,7 +73,7 @@ public class SuggestionsView extends View{
 		for(int i = 0; i<rows;i++) {
 			for(int j = 0; j<cols;j++) {
 				Pane p = new Pane();
-				p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),thumbnailHeight,thumbnailWidth,true,false)));
+				p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream(""),thumbnailHeight,thumbnailWidth,true,false)));
 				imgs.add(p);
 				GridPane.setConstraints(imgs.get(imgs.size()-1),j,i);
 				imgs.get(imgs.size()-1).setOnMouseEntered(control.gethandleOnMouseEnter());
