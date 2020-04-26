@@ -4,6 +4,7 @@ import Model.Model;
 import Model.StageName;
 import Views.PreferencesView;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 /**
@@ -60,6 +61,22 @@ public class PreferencesController extends Controller<PreferencesView> {
 	}
 	
 	public void setDrawing(Pane drawing) {
+		view.getBorder().setLeft(drawing);
+		double oldWidth = drawing.getWidth();
+		double newWidth = view.getBorder().getWidth() - view.getVBox().getWidth();
+		double ratio = newWidth/oldWidth;
+		drawing.setMaxWidth(newWidth);
+		model.setNumAreas(0);
+		for (Node child : drawing.getChildren()) {
+			if (child.getUserData() == StageName.CONDITIONS) {
+				model.setNumAreas(model.getNumAreas() + 1);
+			}
+			double oldX = child.getBoundsInParent().getMinX();
+			child.setScaleX(ratio);
+			double newX = child.getBoundsInParent().getMinX();
+			child.setTranslateX(oldX * ratio - newX);
+		}
+//		view.setupZoneFlips(model.getNumAreas());
 		view.setDrawing(drawing);
 	}
 	

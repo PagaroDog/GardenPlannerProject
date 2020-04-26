@@ -318,6 +318,7 @@ public class DrawYardController extends Controller<DrawYardView>{
 		} else {
 			view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
 			model.setStageName(StageName.PREFERENCES);
+			model.setDrawMode(null);
 			main.getPrefControl().setDrawing(view.getDrawing());
 		}
 	}

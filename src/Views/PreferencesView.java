@@ -1,6 +1,7 @@
 package Views;
 import Controllers.Controller;
 import Controllers.PreferencesController;
+import Model.StageName;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -35,6 +36,8 @@ public class PreferencesView extends View{
 	private PreferencesController control;
 	private Stage stage;
 	private Pane drawing;
+	private BorderPane border;
+	private VBox vbox;
 	
 	
 	public PreferencesView(Stage stage) {
@@ -42,9 +45,9 @@ public class PreferencesView extends View{
 	}
 	
 	public void setup() {
-		BorderPane border = new BorderPane();
+		border = new BorderPane();
 		HBox hbox = addHBox();
-		VBox vbox = addVBox();
+		vbox = addVBox();
 		border.setTop(hbox);
 		border.setRight(vbox);
 		ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/imgs/emptygarden.jpg"),800,400,true,false));
@@ -57,7 +60,7 @@ public class PreferencesView extends View{
 		scene = new Scene(border,canvasHeight,canvasWidth);
 	}
 	public VBox addVBox() {
-		VBox vbox = new VBox();
+		vbox = new VBox();
 		//Not yet implemented
 		HBox zoneButtons = new HBox();
 		Label label = new Label("Zone Flips (not yet implemented)");
@@ -149,6 +152,14 @@ public class PreferencesView extends View{
 
 	public ComboBox<String> getBloom() {
 		return bloom;
+	}
+	
+	public BorderPane getBorder() {
+		return border;
+	}
+	
+	public VBox getVBox() {
+		return vbox;
 	}
 
 	@Override
