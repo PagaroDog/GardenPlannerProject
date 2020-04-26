@@ -82,6 +82,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 		view.getBorder().setLeft(drawing);
 		double oldWidth = drawing.getWidth();
 		double newWidth = view.getBorder().getWidth() - view.getVBox().getWidth();
+		drawing.setMinWidth(newWidth);
 		double ratio = newWidth/oldWidth;
 		drawing.setMaxWidth(newWidth);
 		model.getGardenPreferences().clear();
@@ -90,8 +91,10 @@ public class PreferencesController extends Controller<PreferencesView> {
 				model.getGardenPreferences().add(new GardenPref());
 			}
 			double oldX = child.getBoundsInParent().getMinX();
+			System.out.println(child.getScaleX());
 			child.setScaleX(ratio);
 			double newX = child.getBoundsInParent().getMinX();
+			System.out.println(child.getTranslateX());
 			child.setTranslateX(oldX * ratio - newX);
 		}
 		view.setDrawing(drawing);

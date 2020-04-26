@@ -417,11 +417,17 @@ public class DrawYardController extends Controller<DrawYardView>{
 	
 	public void setDrawing(Pane drawing) {
 		//Set children nodes back to original size and position
-		for (Node child : drawing.getChildren()) {
-			child.setTranslateX(0);
-			child.setScaleX(1);
-		}
-		view.getRoot().setCenter(drawing);
 		view.setDrawing(drawing);
+		view.getRoot().setCenter(drawing);
+		drawing.setMinWidth(view.getRoot().getWidth());
+		System.out.println(drawing.getWidth());
+		for (Node child : drawing.getChildren()) {
+			System.out.println(child.getTranslateX());
+			child.setTranslateX(0);
+			System.out.println(child.getScaleX());
+			child.setScaleX(1);
+			System.out.println(child.getTranslateX());
+			System.out.println(child.getScaleX());
+		}
 	}
 }

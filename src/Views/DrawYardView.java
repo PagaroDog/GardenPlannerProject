@@ -160,6 +160,8 @@ public class DrawYardView extends View{
 	 * @return The newly created rectangle
 	 */
 	public Node addRectangle(StageName mode, double x, double y) {
+		
+		System.out.println(drawing.getWidth());
 		Rectangle rect = new Rectangle(x, y, initShapeSize, initShapeSize);
 		if (mode == StageName.DRAW) {
 			rect.setFill(Color.TRANSPARENT);
