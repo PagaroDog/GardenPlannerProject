@@ -36,12 +36,14 @@ public class DrawYardView extends View{
 	
 	private BorderPane root;
 	private Pane drawing;
-	private TilePane toolbar;
+	private HBox toolbar;
 	private BorderPane navigation;
 	
 	private Label drawtxt;
 	private Label condtxt;
 	private Label labelSizetxt;
+	
+	Font font;
 	
 	private Button nextButtonDraw;
 	private Button prevButtonDraw;
@@ -62,12 +64,13 @@ public class DrawYardView extends View{
 	
 	private double labelSize;
 	private final double initShapeSize = 10;
-	private final double toolbarVGap = 15;
+	private final double toolbarHGap = 15;
 	private final double toolbarVPadding = 10;
 	private final double toolbarHPadding = 10;
 	private final int minRGB = 30;
 	private final double randRGB = 255 - minRGB;
 	private final double opacity = 0.3;
+	private final double initFontSize = 25;
 	
 	private ArrayList<Node> areas = new ArrayList<Node>();
 	
@@ -83,6 +86,9 @@ public class DrawYardView extends View{
 		labelSize = 12;
 		drawtxt = new Label("Draw An Outline of Your Property");
 		condtxt = new Label("Conditions");
+		font = new Font(initFontSize);
+		drawtxt.setFont(font);
+		condtxt.setFont(font);
 		labelSizetxt = new Label("Label Size: " + (int) labelSize);
 		selectButton = new Button("Select");
 		selectButton.setOnMouseClicked(control.getHandleOnSelectButton());
@@ -102,10 +108,10 @@ public class DrawYardView extends View{
 		newAreaButton.setOnMousePressed(control.getHandleOnNewAreaButton());
 		labeltxt = new TextField();
 
-		toolbar  = new TilePane(drawtxt, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
-		toolbar.setStyle("-fx-background-color: rgba(168,158,255,1);");
+		toolbar  = new HBox(drawtxt, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
+		toolbar.setStyle("-fx-background-color: rgba(25,100,255,1);");
 		toolbar.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
-		toolbar.setVgap(toolbarVGap);
+		toolbar.setSpacing(toolbarHGap);
 		
 		prevButtonDraw = new Button("Main Menu");
 		prevButtonDraw.setOnMouseClicked(control.getHandlePrevButton());
@@ -117,7 +123,7 @@ public class DrawYardView extends View{
 		nextButtonCond.setOnMouseClicked(control.getHandleNextButton());
 	
 		navigation = new BorderPane();
-		navigation.setStyle("-fx-background-color: rgba(25,100,255,1);");
+		navigation.setStyle("-fx-background-color: rgba(168,158,255,1);");
 		navigation.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
 		navigation.setLeft(prevButtonDraw);
 		navigation.setRight(nextButtonDraw);

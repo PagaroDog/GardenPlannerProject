@@ -27,6 +27,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 /**
  * Creates the scene for the preferences view. 
@@ -49,6 +50,12 @@ public class PreferencesView extends View{
 	private VBox vbox;
 	private HBox zoneButtons;
 	private Rectangle currArea;
+	private double bottomLabelFontSize = 25;
+	private double bottomHeight = 60;
+	private Label label;
+
+	private final double bottomVPadding = 10;
+	private final double bottomHPadding = 10;
 	
 	
 	public PreferencesView(Stage stage) {
@@ -57,13 +64,10 @@ public class PreferencesView extends View{
 	
 	public void setup() {
 		border = new BorderPane();
-		HBox hbox = addHBox();
+		BorderPane bottom = addBottom();
 		vbox = addVBox();
-		border.setTop(hbox);
+		border.setBottom(bottom);
 		border.setRight(vbox);
-		ImageView iv = new ImageView(new Image(getClass().getResourceAsStream("/imgs/emptygarden.jpg"),800,400,true,false));
-		iv.setPreserveRatio(true);
-		iv.setFitHeight(800);
 		drawing = new Pane();
 		border.setLeft(drawing);
 		TilePane tp = new TilePane();
@@ -121,22 +125,26 @@ public class PreferencesView extends View{
 		return vbox;
 	}
 	
-	public HBox addHBox() {
-	    HBox hbox = new HBox();
-	    hbox.setPadding(new Insets(15, 300, 15, 300));
-	    hbox.setSpacing(15);
-	    hbox.setStyle("-fx-background-color: rgba(168,158,255,1);");
-	    hbox.setAlignment(Pos.CENTER);
+	public BorderPane addBottom() {
+	    BorderPane bottom = new BorderPane();
+	    bottom.setPadding(new Insets(bottomVPadding, bottomHPadding, bottomVPadding, bottomHPadding));
+	    bottom.setStyle("-fx-background-color: rgba(168,158,255,1);");
 	    nextButton = new Button("Next");
 		nextButton.setOnMouseClicked(control.gethandleOnNextButton());
 		
 		
 		backButton = new Button("Back");
 		backButton.setOnMouseClicked(control.gethandleOnBackButton());
-	    hbox.getChildren().addAll(backButton, new Label("Choose Your Preferences"),nextButton);
-	    hbox.setPrefHeight(20);
-	    hbox.setPrefWidth(canvasWidth);
-	    return hbox;
+		
+		
+		label = new Label("Choose Your Preferences");
+		label.setFont(new Font(bottomLabelFontSize));
+		
+		bottom.setLeft(backButton);
+		bottom.setRight(nextButton);
+		bottom.setCenter(label);
+		
+	    return bottom;
 	}
 	
 	public void setupZoneFlips(ArrayList<GardenPref> gardenPrefs) {
