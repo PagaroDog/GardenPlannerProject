@@ -1,16 +1,25 @@
 package Controllers;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+
 import Model.Model;
 import Model.StageName;
 import Views.SaveView;
-import Views.View;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Josh Stone
-* this class is the controller for the Save screen
-*/
+ * this class is the controller for the Save screen
+ */
 public class SaveController extends Controller<SaveView>{
 		
 		public SaveController(Model model, SaveView view) {
@@ -24,7 +33,7 @@ public class SaveController extends Controller<SaveView>{
 		 * @return EventHandler object for this action
 		 */
 		public EventHandler getHandleOnFileButton() {
-			return null; 
+			return event -> fileButton((MouseEvent)event); 
 		}
 		
 		/**
@@ -33,24 +42,55 @@ public class SaveController extends Controller<SaveView>{
 		 * @return EventHandler object for this action
 		 */
 		public EventHandler getHandleOnPNGButton() {
-			return null;
+			return event -> PNGButton((MouseEvent)event);
 		}
+		
 		/**
 		 * saves the garden as a .garden file
 		 */
-		public void fileButton(MouseEvent event) {
-			 
+		public void fileButton(MouseEvent event) {//not sure how to work with load
+			 saveGarden(view.getScene());
 		}
 		
 		/**
 		 * saves the garden as a .png file
 		 */
 		public void PNGButton(MouseEvent event) {
-			
+			takeSnapShot(view.getScene());
 		}
 
+		/**
+		 * takes a snapshot of the user's window
+		 * @param scene
+		 */
+		private void takeSnapShot(Scene scene){
+			WritableImage writableImage = new WritableImage((int)scene.getWidth(), (int)scene.getHeight());
+	        scene.snapshot(writableImage);
+	        
+	        File file = new File("snapshot.png");
+	        try {
+	        	ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
+	            System.out.println("snapshot saved: " + file.getAbsolutePath());
+	        } catch (IOException ex) {
+	            Logger.getLogger(SaveController.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+	    }
+		
+		private void saveGarden(Scene scene){//needs to work for load
+			WritableImage writableImage = new WritableImage((int)scene.getWidth(), (int)scene.getHeight());
+	        scene.snapshot(writableImage);
+	        
+	        File file = new File("Garden.garden");
+	        try {
+	        	ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "garden", file);
+	            System.out.println("snapshot saved: " + file.getAbsolutePath());
+	        } catch (IOException ex) {
+	            Logger.getLogger(SaveController.class.getName()).log(Level.SEVERE, null, ex);
+	        }
+		}
+		
+		
 		public EventHandler getHandleOnPrevButton() {
-			
 			return event -> prevButton((MouseEvent)event);
 		}
 

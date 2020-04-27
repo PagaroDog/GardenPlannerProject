@@ -16,8 +16,10 @@ public class SaveView extends View{
 	private Stage stage;
 	private Button prevButton;
 	private Button nextButton;
-	private SaveController control;
-	
+	private Button fileButton;
+	private Button PNGButton;
+	private SaveController saveC;
+	private TilePane Buttons;
 	public SaveView(Stage stage) {
 		this.stage = stage;
 	}
@@ -26,10 +28,19 @@ public class SaveView extends View{
 		TilePane tp = new TilePane();
 		Label txt = new Label("Save");
 		prevButton = new Button("prev");
-		prevButton.setOnMouseClicked(control.getHandleOnPrevButton());
-		tp.getChildren().addAll(txt,prevButton);
+		prevButton.setOnMouseClicked(saveC.getHandleOnPrevButton());
+		
+		fileButton = new Button("Save as .garden");
+		fileButton.setOnMouseClicked(saveC.getHandleOnFileButton());
+		
+		PNGButton = new Button("Save as .png");
+		PNGButton.setOnMouseClicked(saveC.getHandleOnPNGButton());
+		
+		tp.getChildren().addAll(txt,prevButton, fileButton, PNGButton);
 		scene = new Scene(tp,canvasHeight,canvasWidth);
+	
 	}
+	
 	/**
 	 * @return Scene object for the Save screen
 	 */
@@ -44,7 +55,7 @@ public class SaveView extends View{
 
 	@Override
 	public void setController(Controller controller) {
-		control = (SaveController)controller;
+		saveC = (SaveController)controller;
 		
 	}
 	@Override
