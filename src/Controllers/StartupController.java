@@ -17,9 +17,7 @@ import javafx.stage.Stage;
 public class StartupController extends Controller<StartupView>{
 	
 
-	private Button newButton;
-	private Button loadButton;
-	private Button tutorialButton;
+
 
 	
 	public StartupController(Model model, StartupView view, Main main) {
