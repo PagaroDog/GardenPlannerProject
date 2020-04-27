@@ -80,7 +80,7 @@ public class TutorialController extends Controller<TutorialView>{
 		view.background=new ImageView(view.tutorialSlides.get(view.currentSlide));
 		view.slide.getChildren().add(view.background);
 		System.out.println(view.currentSlide);
-		view.currentSlide++;
+		if(!(view.currentSlide+1>3)) view.currentSlide++;
 		
 	}
 	
@@ -89,7 +89,8 @@ public class TutorialController extends Controller<TutorialView>{
 	 */
 	public void backButton(MouseEvent event) {
 		System.out.println(view.currentSlide);
-		view.currentSlide--;
+		if(!(view.currentSlide-1<=0)) view.currentSlide--;
+		
 		view.background=new ImageView(view.tutorialSlides.get(view.currentSlide-1));
 		view.slide.getChildren().add(view.background);
 		//.getChildren().add(view.background);

@@ -23,14 +23,13 @@ public class TutorialView extends View{
 	private Button nextButton;
 	private TutorialController control;
 	private TilePane Buttons;
-	public Button continueButton;
+	private Button continueButton;
 	private Button backButton;
-	public StackPane slide;
-	
 	private BorderPane border;
+	
+	public StackPane slide;
 	public ArrayList<Image> tutorialSlides = new ArrayList<Image>();	
-	public static ArrayList<String> tutorialSlidesPath = new ArrayList<String>();	
-	public static ImageView background = new ImageView("/TutorialSlides/2019-11-27 (1).png");;
+	public ImageView background = new ImageView("/TutorialSlides/Slide1.PNG");;
 	public int currentSlide=1;
 	
 	public TutorialView(Stage stage) {
@@ -39,12 +38,10 @@ public class TutorialView extends View{
 	
 	public void setup() {
 		
-		tutorialSlides.add(new Image("/TutorialSlides/2019-11-27 (1).png"));//0
-		tutorialSlides.add(new Image("/TutorialSlides/Earthquake+Focus+and+Epicenter.jpg"));//1
-		tutorialSlides.add(new Image("/TutorialSlides/Reverse Fault.png"));//2
-		tutorialSlidesPath.add("/TutorialSlides/2019-11-27 (1).png");//0
-		tutorialSlidesPath.add("/TutorialSlides/Earthquake+Focus+and+Epicenter.jpg");//1
-		tutorialSlidesPath.add("/TutorialSlides/Reverse Fault.png");//2
+		tutorialSlides.add(new Image("/TutorialSlides/Slide1.PNG"));//0
+		tutorialSlides.add(new Image("/TutorialSlides/Slide2.PNG"));//1
+		tutorialSlides.add(new Image("/TutorialSlides/Slide3.PNG"));//2
+		tutorialSlides.add(null);//3
 		
 		
 		border = new BorderPane();
@@ -63,25 +60,14 @@ public class TutorialView extends View{
 		continueButton = new Button("Continue");
 		continueButton.setOnMouseClicked(control.getHandleOnContinueButton());
 		
-		
-		
-		/*
-		 * ImageView bg = new ImageView(); continueButton.setOnAction(e -> { int
-		 * imageIndex = -1; imageIndex++; String imageFilename =
-		 * tutorialSlidesPath.get(imageIndex); imageObject = new Image(imageFilename);
-		 * bg.setImage(imageObject); });
-		 */
-		
 		Buttons.getChildren().addAll(txt,nextButton,prevButton,continueButton,backButton);
 		
 		border.setTop(Buttons);
 		
 		slide = new StackPane();
-		//background = new ImageView(tutorialSlides.get(currentSlide));
-		//background.fitWidthProperty().bind(slide.widthProperty()); 
-		//background.fitHeightProperty().bind(slide.heightProperty());
-		slide.getChildren().add(background);
-		//slide.getChildren().add(background);
+		
+		slide.getChildren().add(background);//sets up initial slide
+		
 		border.setCenter(slide);
 		
 		scene = new Scene(border,canvasWidth,canvasHeight);
