@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import Controllers.Main;
 import Controllers.StatisticsController;
 import Model.Model;
 import Model.StageName;
@@ -21,7 +22,8 @@ public class StatisticsControllerTests {
 	public void test() {
 		Model model = new Model();
 		StatisticsView sv = new StatisticsView(new Stage());
-		StatisticsController sc = new StatisticsController(model,sv);
+		Main main = new Main();
+		StatisticsController sc = new StatisticsController(model,sv,main);
 		
 		sc.handleOnBackButton();
 		assertEquals(StageName.DESIGN, model.getStageName());

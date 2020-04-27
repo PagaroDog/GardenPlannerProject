@@ -8,6 +8,7 @@ import java.util.HashMap;
 import org.junit.Test;
 
 import Controllers.GardenController;
+import Controllers.Main;
 import Controllers.StartupController;
 import Model.GardenObj;
 import Model.Model;
@@ -29,7 +30,8 @@ public class GardenControllerTests {
 	public void test() {
 		Model model = new Model();
 		GardenView gv = new GardenView(new Stage());
-		GardenController gc = new GardenController(model, gv);
+		Main main = new Main();
+		GardenController gc = new GardenController(model, gv,main);
 		
 		gc.handleOnFallButton();
 		assertEquals(model.getSeason(), Season.FALL);
@@ -65,7 +67,7 @@ public class GardenControllerTests {
 		gardenobj.put(0, new GardenObj());
 		double initxLoc = gardenobj.get(0).getxLoc();
 		double inityLoc = gardenobj.get(0).getyLoc();
-		gc.ImgDrag(dragEvent);
+		gc.imgDrag(dragEvent);
 		double secxLoc = gardenobj.get(0).getxLoc();
 		double secyLoc = gardenobj.get(0).getyLoc();
 		assertEquals(0, initxLoc, 0.01);

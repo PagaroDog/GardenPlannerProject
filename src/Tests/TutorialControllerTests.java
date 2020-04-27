@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-
+import Controllers.Main;
 import Controllers.TutorialController;
 import Model.Model;
 import Model.StageName;
@@ -23,7 +23,8 @@ public class TutorialControllerTests {
 	public void test() {
 		Model model = new Model();
 	    TutorialView tv = new TutorialView(new Stage());
-	    TutorialController tc = new TutorialController(model, tv);
+	    Main main = new Main();
+	    TutorialController tc = new TutorialController(model, tv,main);
 	    
 	    
 	    tc.nextButton(emptyMouseEvent);

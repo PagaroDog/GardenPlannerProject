@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 
 import org.junit.Test;
 
-
+import Controllers.Main;
 import Controllers.PreferencesController;
 import Model.GardenPref;
 import Model.Model;
@@ -26,7 +26,8 @@ public class PreferencesControllerTests {
 		Model Mod = new Model();
 
 		PreferencesView pv = new PreferencesView(new Stage());
-		PreferencesController pc = new PreferencesController(Mod, pv);
+		Main main = new Main();
+		PreferencesController pc = new PreferencesController(Mod, pv,main);
 		//MouseEvent me = new MouseEvent(null, 0, 0, 0, 0, 0, 0, false);
 		
 		Mod.setStageName(StageName.PREFERENCES);
@@ -41,7 +42,8 @@ public class PreferencesControllerTests {
 		Model Mod = new Model();
 
 		PreferencesView pv = new PreferencesView(new Stage());
-		PreferencesController pc = new PreferencesController(Mod, pv);
+		Main main = new Main();
+		PreferencesController pc = new PreferencesController(Mod, pv,main);
 		//MouseEvent me = new MouseEvent(null, 0, 0, 0, 0, 0, 0, false);
 		
 		

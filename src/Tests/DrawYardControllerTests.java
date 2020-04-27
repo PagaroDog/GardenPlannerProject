@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import Controllers.DrawYardController;
+import Controllers.Main;
 import Model.DrawMode;
 import Model.Model;
 import Views.DrawYardView;
@@ -22,20 +23,21 @@ public class DrawYardControllerTests {
 	public void create50x50rect(DrawYardController dyc) {
 		dyc.pressPane(new MouseEvent(null, null, null, 10, 10, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
 		dyc.dragPane(emptyMouseEvent);
-		dyc.releasePane(new MouseEvent(null, null, null, 60, 60, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
+		//dyc.releasePane(new MouseEvent(null, null, null, 60, 60, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
 	}
 	
 	public void create100x90rect(DrawYardController dyc) {
 		dyc.pressPane(new MouseEvent(null, null, null, 70, 40, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
 		dyc.dragPane(emptyMouseEvent);
-		dyc.releasePane(new MouseEvent(null, null, null, 170, 130, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
+		//dyc.releasePane(new MouseEvent(null, null, null, 170, 130, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
 	}
 	
 	@Test
 	public void testRectangleButton() {
 		Model model = new Model();
 		DrawYardView dyv = new DrawYardView(new Stage());
-		DrawYardController dyc = new DrawYardController(model, dyv);
+		Main main = new Main();
+		DrawYardController dyc = new DrawYardController(model, dyv,main);
 		
 		model.setDrawMode(DrawMode.CIRCLE);
 		dyc.rectButton(emptyMouseEvent);
@@ -51,7 +53,8 @@ public class DrawYardControllerTests {
 	public void testCircleButton() {
 		Model model = new Model();
 		DrawYardView dyv = new DrawYardView(new Stage());
-		DrawYardController dyc = new DrawYardController(model, dyv);
+		Main main = new Main();
+		DrawYardController dyc = new DrawYardController(model, dyv,main);
 		
 		model.setDrawMode(DrawMode.RECTANGLE);
 		dyc.circleButton(emptyMouseEvent);
@@ -67,7 +70,8 @@ public class DrawYardControllerTests {
 	public void testDragPressAndDelete() {
 		Model model = new Model();
 		DrawYardView dyv = new DrawYardView(new Stage());
-		DrawYardController dyc = new DrawYardController(model, dyv);
+		Main main = new Main();
+		DrawYardController dyc = new DrawYardController(model, dyv,main);
 		
 		model.setDrawMode(DrawMode.RECTANGLE);
 		create50x50rect(dyc);
@@ -88,7 +92,8 @@ public class DrawYardControllerTests {
 	public void testDeleteWithNoSelection() {
 		Model model = new Model();
 		DrawYardView dyv = new DrawYardView(new Stage());
-		DrawYardController dyc = new DrawYardController(model, dyv);
+		Main main = new Main();
+		DrawYardController dyc = new DrawYardController(model, dyv,main);
 		
 		dyc.rectButton(emptyMouseEvent);
 		create50x50rect(dyc);

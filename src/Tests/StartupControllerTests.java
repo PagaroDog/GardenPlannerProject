@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
  */
 import org.junit.Test;
 
+import Controllers.Main;
 import Controllers.StartupController;
 import Model.Model;
 import Model.StageName;
@@ -18,7 +19,8 @@ public class StartupControllerTests {
 	public void test() {
 		Model model = new Model();
 		StartupView suv = new StartupView(new Stage());
-		StartupController suc = new StartupController(model, suv);
+		Main main = new Main();
+		StartupController suc = new StartupController(model, suv,main);
 		
 		
 		suc.handleOnNewButton();

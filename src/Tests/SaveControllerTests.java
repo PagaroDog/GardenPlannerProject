@@ -2,6 +2,8 @@ package Tests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import Controllers.Main;
 import Controllers.SaveController;
 import Model.Model;
 import Model.StageName;
@@ -22,7 +24,8 @@ public class SaveControllerTests {
             Model model = new Model();
             
             SaveView sv = new SaveView(new Stage());
-            SaveController sc = new SaveController(model, sv);
+            Main main = new Main();
+            SaveController sc = new SaveController(model, sv,main);
             
             sc.fileButton(emptyMouseEvent);
             assertEquals(StageName.PREFERENCES, model.getStageName());

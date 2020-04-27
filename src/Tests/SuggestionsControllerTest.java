@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import Controllers.Main;
 import Controllers.StartupController;
 import Controllers.SuggestionsController;
 import Model.Model;
@@ -18,7 +19,8 @@ public class SuggestionsControllerTest {
 	public void test() {
 		Model model = new Model();
 		SuggestionsView sv = new SuggestionsView(new Stage());
-		SuggestionsController sc = new SuggestionsController(model, sv);
+		Main main = new Main();
+		SuggestionsController sc = new SuggestionsController(model, sv,main);
 		
 		
 		sc.gethandleOnNextButton();
