@@ -38,7 +38,7 @@ public class SaveView extends View{
 		PNGButton.setOnMouseClicked(saveC.getHandleOnPNGButton());
 		
 		tp.getChildren().addAll(txt,prevButton, fileButton, PNGButton);
-		scene = new Scene(tp,canvasHeight,canvasWidth);
+		scene = new Scene(tp,canvasWidth,canvasHeight);
 	
 
 	}

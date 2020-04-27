@@ -49,6 +49,8 @@ public class TutorialView extends View{
 		
 		continueButton = new Button("Continue");
 		continueButton.setOnMouseClicked(control.getHandleOnContinueButton());
+		
+		
 		//continueButton.setStyle("-fx-background-image: url('orc_animation/orc_forward_north.jpg')");
 		/*
 		BackgroundImage myBI= new BackgroundImage(new Image("ClassDiagram.png",32,32,false,true),
@@ -58,7 +60,7 @@ public class TutorialView extends View{
 		*/
 		Buttons.getChildren().addAll(txt,nextButton,prevButton,continueButton,backButton);
 		
-		scene = new Scene(Buttons,canvasHeight,canvasWidth);
+		scene = new Scene(Buttons,canvasWidth,canvasHeight);
 
 	}
 	
