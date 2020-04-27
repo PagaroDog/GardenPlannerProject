@@ -5,6 +5,8 @@ import Model.StageName;
 import Views.TutorialView;
 import Views.View;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -70,21 +72,28 @@ public class TutorialController extends Controller<TutorialView>{
 		return event -> backButton((MouseEvent)event);
 	}
 	
-	//int currentSlide = 0;
+	
 	/**
 	 * Goes to the next slide
 	 */
 	public void continueButton(MouseEvent event) {
+		view.background=new ImageView(view.tutorialSlides.get(view.currentSlide));
+		view.slide.getChildren().add(view.background);
+		System.out.println(view.currentSlide);
+		view.currentSlide++;
 		
-		//view.continueButton.setStyle("-fx-background-image: url('orc_animation/orc_forward_north.jpg')");
-		//setStyle("-fx-background-image: url('/tutorial/1.jpg')");
-		//model.setStageName(StageName.DRAW);
 	}
 	
 	/**
 	 * Goes to the previous slide
 	 */
 	public void backButton(MouseEvent event) {
+		System.out.println(view.currentSlide);
+		view.currentSlide--;
+		view.background=new ImageView(view.tutorialSlides.get(view.currentSlide-1));
+		view.slide.getChildren().add(view.background);
+		//.getChildren().add(view.background);
+		
 		
 	}
 
