@@ -142,11 +142,13 @@ public class PreferencesController extends Controller<PreferencesView> {
 		view.getBloom().setValue(gardenPref.getUserBloom());
 		view.getSoil().setValue(gardenPref.getUserSoil());
 		view.getWater().setValue(gardenPref.getUserWater());
-		for (String str : gardenPref.getUserColor()) {
-			for (int i = 0; i < colorButtons.size(); i++) {
-				RadioButton button = (RadioButton) (colorButtons.get(i));
-				if (!button.isSelected()) {
-					button.setSelected(str.equals(button.getText()));
+		if (gardenPref.getUserColor() != null) {
+			for (String str : gardenPref.getUserColor()) {
+				for (int i = 0; i < colorButtons.size(); i++) {
+					RadioButton button = (RadioButton) (colorButtons.get(i));
+					if (!button.isSelected()) {
+						button.setSelected(str.equals(button.getText()));
+					}
 				}
 			}
 		}

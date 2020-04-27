@@ -3,7 +3,7 @@ import Controllers.Controller;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 public abstract class View {
-	int canvasWidth = 1600 ;
+	int canvasWidth = 1600;
 	int canvasHeight = 900;
 	Scene scene; 
 	public abstract Scene getScene();
