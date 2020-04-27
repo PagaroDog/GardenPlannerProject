@@ -1,9 +1,7 @@
 package Controllers;
 
 import Model.DrawMode;
-/**
- * @author Tommy White
- */
+
 import Model.Model;
 import Model.StageName;
 import Views.DrawYardView;
@@ -15,6 +13,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 
+
+/**
+ * @author Tommy White
+ */
 public class DrawYardController extends Controller<DrawYardView>{
 	
 	private final double minFont = 4;
@@ -265,12 +267,14 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 * 		Pane was dragged
 	 */
 	public void dragPane(MouseEvent event) {
-		switch(model.getDrawMode()) {
-		case RECTANGLE:
-			view.updateRect((Rectangle) model.getCurrDrawObj(), model.getDrawPressX(), model.getDrawPressY(), event.getX(), event.getY());
-			break;
-		case CIRCLE:
-			view.updateCircle((Ellipse) model.getCurrDrawObj(), event.getX(), event.getY());
+		if (model.getDrawMode() != null) {
+			switch(model.getDrawMode()) {
+			case RECTANGLE:
+				view.updateRect((Rectangle) model.getCurrDrawObj(), model.getDrawPressX(), model.getDrawPressY(), event.getX(), event.getY());
+				break;
+			case CIRCLE:
+				view.updateCircle((Ellipse) model.getCurrDrawObj(), event.getX(), event.getY());
+			}
 		}
 	}
 	
@@ -287,16 +291,18 @@ public class DrawYardController extends Controller<DrawYardView>{
 		if (model.getCurrDrawObj() != null) {
 			view.deselect(model.getCurrDrawObj());
 		}
-		switch(model.getDrawMode()) {
-		case RECTANGLE:
-			model.setCurrDrawObj(view.addRectangle(model.getStageName(), event.getX(), event.getY()));
-			break;
-		case CIRCLE:
-			model.setCurrDrawObj(view.addCircle(event.getX(), event.getY()));
-			break;
-		case LABEL:
-			model.setCurrDrawObj(view.addLabel(event.getX(), event.getY()));
-			break;
+		if (model.getDrawMode() != null) {
+			switch(model.getDrawMode()) {
+			case RECTANGLE:
+				model.setCurrDrawObj(view.addRectangle(model.getStageName(), event.getX(), event.getY()));
+				break;
+			case CIRCLE:
+				model.setCurrDrawObj(view.addCircle(event.getX(), event.getY()));
+				break;
+			case LABEL:
+				model.setCurrDrawObj(view.addLabel(event.getX(), event.getY()));
+				break;
+			}
 		}
 		view.select(model.getCurrDrawObj());
 	}
@@ -346,12 +352,14 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 */
 	public void pressShape(MouseEvent event) {
 		System.out.println("rect");
-		switch(model.getDrawMode()) {
-		case SELECT:
-			if (model.getStageName() == StageName.DRAW) {
-				view.deselect(model.getCurrDrawObj());
-				model.setCurrDrawObj((Node) event.getSource());
-				view.select(model.getCurrDrawObj());
+		if (model.getDrawMode() != null) {
+			switch(model.getDrawMode()) {
+			case SELECT:
+				if (model.getStageName() == StageName.DRAW) {
+					view.deselect(model.getCurrDrawObj());
+					model.setCurrDrawObj((Node) event.getSource());
+					view.select(model.getCurrDrawObj());
+				}
 			}
 		}
 	}
@@ -362,12 +370,14 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 * @param event
 	 */
 	public void pressArea(MouseEvent event) {
-		switch(model.getDrawMode()) {
-		case SELECT:
-			if (model.getStageName() == StageName.CONDITIONS) {
-				view.deselect(model.getCurrDrawObj());
-				model.setCurrDrawObj((Node) event.getSource());
-				view.select(model.getCurrDrawObj());
+		if (model.getDrawMode() != null) {
+			switch(model.getDrawMode()) {
+			case SELECT:
+				if (model.getStageName() == StageName.CONDITIONS) {
+					view.deselect(model.getCurrDrawObj());
+					model.setCurrDrawObj((Node) event.getSource());
+					view.select(model.getCurrDrawObj());
+				}
 			}
 		}
 	}
@@ -379,10 +389,12 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 */
 	public void dragRectangle(MouseEvent event) {
 		System.out.println("drag");
-		switch(model.getDrawMode()) {
-		case SELECT:
-			if (((Rectangle) event.getSource()).getUserData() == model.getStageName())
-				view.moveRectangle((Rectangle)event.getSource(), event.getX(), event.getY());
+		if (model.getDrawMode() != null) {
+			switch(model.getDrawMode()) {
+			case SELECT:
+				if (((Rectangle) event.getSource()).getUserData() == model.getStageName())
+					view.moveRectangle((Rectangle)event.getSource(), event.getX(), event.getY());
+			}
 		}
 	}
 	
@@ -393,10 +405,12 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 */
 	public void dragCircle(MouseEvent event) {
 		System.out.println("drag");
-		switch(model.getDrawMode()) {
-		case SELECT:
-			if (model.getStageName() == StageName.DRAW)
-				view.moveCircle((Ellipse)event.getSource(), event.getX(), event.getY());
+		if (model.getDrawMode() != null) {
+			switch(model.getDrawMode()) {
+			case SELECT:
+				if (model.getStageName() == StageName.DRAW)
+					view.moveCircle((Ellipse)event.getSource(), event.getX(), event.getY());
+			}
 		}
 	}
 	
@@ -407,11 +421,13 @@ public class DrawYardController extends Controller<DrawYardView>{
 	 */
 	public void dragLabel(MouseEvent event) {
 		System.out.println("drag");
-		switch(model.getDrawMode()) {
-		case SELECT:
-			event.getX();
-			if (model.getStageName() == StageName.DRAW)
-				view.moveLabel((Label)event.getSource(), event.getSceneX(), event.getSceneY() - view.getToolbarHeight());
+		if (model.getDrawMode() != null) {
+			switch(model.getDrawMode()) {
+			case SELECT:
+				event.getX();
+				if (model.getStageName() == StageName.DRAW)
+					view.moveLabel((Label)event.getSource(), event.getSceneX(), event.getSceneY() - view.getToolbarHeight());
+			}
 		}
 	}
 	
@@ -419,15 +435,18 @@ public class DrawYardController extends Controller<DrawYardView>{
 		//Set children nodes back to original size and position
 		view.setDrawing(drawing);
 		view.getRoot().setCenter(drawing);
-		drawing.setMinWidth(view.getRoot().getWidth());
-		System.out.println(drawing.getWidth());
+		drawing.setPrefWidth(view.getRoot().getWidth());
 		for (Node child : drawing.getChildren()) {
-			System.out.println(child.getTranslateX());
 			child.setTranslateX(0);
-			System.out.println(child.getScaleX());
 			child.setScaleX(1);
-			System.out.println(child.getTranslateX());
-			System.out.println(child.getScaleX());
 		}
+	}
+	
+	public Pane getDrawing() {
+		return view.getDrawing();
+	}
+	
+	public double getViewWidth() {
+		return view.getRoot().getWidth();
 	}
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 import Controllers.Controller;
 import Controllers.GardenController;
+import Model.GardenPref;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -42,6 +43,9 @@ public class GardenView extends View{
 	private Button summer;
 	private Button fall;
 	private Button winter;
+	private Pane drawing;
+	private ScrollPane scrollPane;
+	private BorderPane border;
 	int SIZE = 200;
 	int TILE_PANE_WIDTH = 1000;
 	public GardenView(Stage stage) {
@@ -93,7 +97,7 @@ public class GardenView extends View{
 		
 		
 		
-		BorderPane border = new BorderPane();
+		border = new BorderPane();
 		border.setTop(tp);
 		border.setBottom(bottom);
 		
@@ -125,16 +129,17 @@ public class GardenView extends View{
 		    imageview.setOnMouseReleased(control.getHandlerForDragReleased());
 		    tile.getChildren().add(imageview);
 		}
-		ScrollPane scrollPane = new ScrollPane();
+		scrollPane = new ScrollPane();
 	    scrollPane.setFitToWidth(true);
 	    scrollPane.setContent(tile);
 		border.setLeft(scrollPane);
 		
 		garden = new Pane();
-		ImageView background = new ImageView(new Image("/imgs/lawn.jpg"));
-		background.fitWidthProperty().bind(garden.widthProperty()); 
-		background.fitHeightProperty().bind(garden.heightProperty());
-		garden.getChildren().add(background);
+//		ImageView background = new ImageView(new Image("/imgs/lawn.jpg"));
+//		background.fitWidthProperty().bind(garden.widthProperty()); 
+//		background.fitHeightProperty().bind(garden.heightProperty());
+		
+//		garden.getChildren().add(background);
 		border.setCenter(garden);
 		
 		scene = new Scene(border, canvasWidth, canvasHeight);
@@ -218,5 +223,25 @@ public class GardenView extends View{
     public double getTPWidth() {
     	return 1;
     }
+    
+    public Pane getDrawing() {
+		return drawing;
+	}
+
+	public void setDrawing(Pane drawing) {
+		this.drawing = drawing;
+	}
+
+	public Pane getGarden() {
+		return garden;
+	}
+	
+	public ScrollPane getScrollPane() {
+		return scrollPane;
+	}
+
+	public BorderPane getBorder() {
+		return border;
+	}
 
 }
