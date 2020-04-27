@@ -180,6 +180,8 @@ public class GardenView extends View{
     	((ImageView) imageArr.get(i)).setPreserveRatio(true);
     	((ImageView) imageArr.get(i)).setFitHeight(SIZE);
     	imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
+    	//((ImageView) imageArr.get(i)).setX(x);
+    	//((ImageView) imageArr.get(i)).setY(y);
     	return i;
     }
 	

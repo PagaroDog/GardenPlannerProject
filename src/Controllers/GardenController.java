@@ -144,6 +144,8 @@ public class GardenController extends Controller<GardenView>{
 		model.setYear(3);
 	}
 	
+	
+	
 	/**
 	* code is triggered by dragging an image
 	* @return EventHandler object for this action
@@ -223,35 +225,43 @@ public class GardenController extends Controller<GardenView>{
 	 * @param event the drag event that occurred
 	 */
 	public void drag(MouseEvent event) {
-		//TODO: figure out how to add plant objects in the model
-		System.out.println("in drag");
-		if (event.getX() > view.getTPWidth() && !copied) {
-			System.out.println("in if");
-			Object plant = event.getSource();
-			int index = view.addIVToFlow(new ImageView(((ImageView) plant).getImage()));	//TODO: creates the multiple children error. figure out way to clone imageview.
-//			model.addX(0);
-//			model.addY(event.getY());
-			view.setXs(index, 0 - view.getPicSize()*index);
-			view.setYs(index, event.getY());
-			copied = true;
+//		//TODO: figure out how to add plant objects in the model
+//		System.out.println("in drag");
+//		if (event.getX() > view.getTPWidth() && !copied) {
+//			System.out.println("in if");
+//			Object plant = event.getSource();
+//			//int index = view.addIVToFlow(new ImageView(((ImageView) plant).getImage()));	//TODO: creates the multiple children error. figure out way to clone imageview.
+////			model.addX(0);
+////			model.addY(event.getY());
+//			view.setXs(view.getXs().size -1, event.getX());
+//			view.setYs(index, event.getY());
+//			copied = true;
+		ImageView dragPlant = (ImageView) event.getSource();
+		dragPlant.setX(event.getX());
+		dragPlant.setY(event.getY());
+		
 		}
-	}
+		
+		/**
+		* code is triggered by a press of mouse
+		* @return EventHandler object for this action
+		*/
+		public EventHandler getHandlerForPress() {
+			return event -> press((MouseEvent)event);
+		}
+		
+		/**
+		 * Registers a mouse press on the milkweed image, sets copied to false so that a new milkweed image may be generated
+		 * @param event the mouse pressing event 
+		 */
+		public void press(MouseEvent event) {
+			Object click = event.getSource();
+			int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
+		}
+		
 	
-	/**
-	 * Gets the event handler for when the mouse presses on the TilePane milkweed 
-	 * @return mouse press event 
-	 */
-	public EventHandler getHandlerForPress() {
-		return event -> press((MouseEvent) event);
-	}
-	
-	/**
-	 * Registers a mouse press on the milkweed image, sets copied to false so that a new milkweed image may be generated
-	 * @param event the mouse pressing event 
-	 */
-	public void press(MouseEvent event) {
-		copied = false;
-	}
+
+
 	
 	
 	
