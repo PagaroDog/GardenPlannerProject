@@ -105,7 +105,7 @@ public class PreferencesView extends View{
 		water = new ComboBox<String>();
 		water.getItems().addAll(moistures);
 		
-		String[] sunlevels = {"Any","Full Sun","Partial Sun","Parial Shade", "Shade"};
+		String[] sunlevels = {"Any","Full Sun","Partial Sun","Partial Shade", "Shade"};
 		Label labsun = new Label("What degree of sunlight?");
 		sun = new ComboBox<String>();
 		sun.getItems().addAll(sunlevels);
@@ -129,11 +129,11 @@ public class PreferencesView extends View{
 	    BorderPane bottom = new BorderPane();
 	    bottom.setPadding(new Insets(bottomVPadding, bottomHPadding, bottomVPadding, bottomHPadding));
 	    bottom.setStyle("-fx-background-color: rgba(168,158,255,1);");
-	    nextButton = new Button("Next");
+	    nextButton = new Button("See Suggestions");
 		nextButton.setOnMouseClicked(control.gethandleOnNextButton());
 		
 		
-		backButton = new Button("Back");
+		backButton = new Button("Edit Areas");
 		backButton.setOnMouseClicked(control.gethandleOnBackButton());
 		
 		
