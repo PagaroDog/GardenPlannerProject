@@ -80,25 +80,34 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 */
 	public void setDrawing(Pane drawing) {
 		view.getBorder().setLeft(drawing);
-		double oldWidth = drawing.getWidth();
+		for (Node child : drawing.getChildren()) {
+			child.setTranslateX(0);
+			child.setScaleX(1);
+		}
+		double oldWidth = main.getDyControl().getViewWidth();
+		System.out.println(oldWidth);
 		double newWidth = view.getBorder().getWidth() - view.getVBox().getWidth();
-		drawing.setMinWidth(newWidth);
+		System.out.println(newWidth);
+		drawing.setPrefWidth(newWidth);
 		double ratio = newWidth/oldWidth;
-		drawing.setMaxWidth(newWidth);
 		model.getGardenPreferences().clear();
 		for (Node child : drawing.getChildren()) {
 			if (child.getUserData() == StageName.CONDITIONS) {
 				model.getGardenPreferences().add(new GardenPref());
 			}
 			double oldX = child.getBoundsInParent().getMinX();
-			System.out.println(child.getScaleX());
+			System.out.println(oldX);
 			child.setScaleX(ratio);
 			double newX = child.getBoundsInParent().getMinX();
-			System.out.println(child.getTranslateX());
+			System.out.println(newX);
 			child.setTranslateX(oldX * ratio - newX);
 		}
 		view.setDrawing(drawing);
 		view.setupZoneFlips(model.getGardenPreferences());
+	}
+	
+	public Pane getDrawing() {
+		return view.getDrawing();
 	}
 	
 	/**

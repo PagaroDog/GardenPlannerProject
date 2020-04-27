@@ -82,16 +82,20 @@ public class Main extends Application{
 		return scenes;
 	}
 	
-	public PreferencesController getPrefControl() {
-		return prefControl;
-	}
-	
 	public static void main(String[] args) {
 		launch(args);
 	}
 
 	public DrawYardController getDyControl() {
 		return dyControl;
+	}
+	
+	public PreferencesController getPrefControl() {
+		return prefControl;
+	}
+	
+	public GardenController getGardenControl() {
+		return gardenControl;
 	}
 
 }

@@ -43,6 +43,8 @@ public class SuggestionsController extends Controller<SuggestionsView>{
 			view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 
 			model.setStageName(StageName.DESIGN);
+			
+			main.getGardenControl().setDrawing(main.getPrefControl().getDrawing());
 		}
 	/**
 	 * Used to handle when the user hovers over a plant in the grid. Calls MouseEnter method with a MouseEvent

@@ -1,13 +1,17 @@
 package Controllers;
 
+import Model.GardenPref;
 import Model.Model;
 import Model.StageName;
 import Model.Season;
 import Views.GardenView;
 import Views.View;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 /**
@@ -175,6 +179,7 @@ public class GardenController extends Controller<GardenView>{
 	public void prefButton(MouseEvent event) {
 		view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
 		model.setStageName(StageName.PREFERENCES);
+		main.getPrefControl().setDrawing(view.getDrawing());
 	}
 
 
@@ -239,7 +244,7 @@ public class GardenController extends Controller<GardenView>{
 		ImageView dragPlant = (ImageView) event.getSource();
 		dragPlant.setX(event.getX());
 		dragPlant.setY(event.getY());
-		
+		System.out.println(view.getScrollPane().getWidth());
 		}
 		
 		/**
@@ -259,7 +264,24 @@ public class GardenController extends Controller<GardenView>{
 			int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
 		}
 		
-	
+		public void setDrawing(Pane drawing) {
+			view.setDrawing(drawing);
+			view.getGarden().getChildren().add(drawing);
+			for (Node child : drawing.getChildren()) {
+				child.setTranslateX(0);
+				child.setScaleX(1);
+			}
+			double oldWidth = main.getDyControl().getViewWidth();
+			drawing.setPrefWidth(view.getGarden().getWidth());
+			double newWidth = view.getGarden().getWidth();
+			double ratio = newWidth / oldWidth;
+			for (Node child : drawing.getChildren()) {
+				double oldX = child.getBoundsInParent().getMinX();
+				child.setScaleX(ratio);
+				double newX = child.getBoundsInParent().getMinX();
+				child.setTranslateX(oldX * ratio - newX);
+			}
+		}
 
 
 	
