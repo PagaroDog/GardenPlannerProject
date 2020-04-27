@@ -2,9 +2,11 @@ package Controllers;
 
 import Model.Model;
 import Model.StageName;
+import Model.Season;
 import Views.GardenView;
 import Views.View;
 import javafx.event.EventHandler;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -13,7 +15,7 @@ import javafx.stage.Stage;
 * this class is the controller for the Garden screen
 */
 public class GardenController extends Controller<GardenView>{
-	
+	boolean copied = false;
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
 	}
@@ -24,7 +26,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnSpringButton() {
-		return null;
+		return event -> springButton((MouseEvent)event);
+	}
+	/**
+	 * sets model season to spring
+	 * @param event
+	 */
+	public void springButton(MouseEvent event) {
+		model.setSeason(Season.SPRING);
 	}
 	
 	/**
@@ -32,7 +41,15 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnSummerButton() {
-		return null;
+		return event -> summerButton((MouseEvent)event);
+	}
+	/**
+	 * sets model season to summer
+	 * @param event
+	 */
+	public void summerButton(MouseEvent event) {
+		model.setSeason(Season.SUMMER);
+		
 	}
 	
 	/**
@@ -40,7 +57,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnFallButton() {
-		return null;
+		return event -> fallButton((MouseEvent)event);
+	}
+	/**
+	 * sets model season to fall
+	 * @param event
+	 */
+	public void fallButton(MouseEvent event) {
+		model.setSeason(Season.FALL);
 	}
 	
 	/**
@@ -48,7 +72,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnWinterButton() {
-		return null;
+		return event -> winterButton((MouseEvent)event);
+	}
+	/**
+	 * sets model season to winter
+	 * @param event
+	 */
+	public void winterButton(MouseEvent event) {
+		model.setSeason(Season.WINTER);
 	}
 	
 	/**
@@ -73,7 +104,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnYear1Button() {
-		return null;
+		return event -> year1Button((MouseEvent)event);
+	}
+	/**
+	 * sets model year to 1
+	 * @param event
+	 */
+	public void year1Button(MouseEvent event) {
+		model.setYear(1);
 	}
 	
 	/**
@@ -81,7 +119,14 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnYear2Button() {
-		return null;
+		return event -> year2Button((MouseEvent)event);
+	}
+	/**
+	 * sets model year to 2
+	 * @param event
+	 */
+	public void year2Button(MouseEvent event) {
+		model.setYear(2);
 	}
 	
 	/**
@@ -89,15 +134,31 @@ public class GardenController extends Controller<GardenView>{
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnYear3Button() {
-		return null;
+		return event -> year3Button((MouseEvent)event);
 	}
+	/**
+	 * sets model year to 3
+	 * @param event
+	 */
+	public void year3Button(MouseEvent event) {
+		model.setYear(3);
+	}
+	
+	
 	
 	/**
 	* code is triggered by dragging an image
 	* @return EventHandler object for this action
 	*/
 	public EventHandler handleOnImgDrag() {
-		return null;		
+		return event -> imgDrag((MouseEvent)event);
+	}
+	/**
+	 * runs when an image is dragged.
+	 * @param event
+	 */
+	public void imgDrag(MouseEvent event) {
+		
 	}
 	
 	/**
@@ -117,9 +178,7 @@ public class GardenController extends Controller<GardenView>{
 	}
 
 
-	public void ImgDrag(MouseEvent e) {
-		
-	}
+	
 
 	/**
 	* code is triggered by a press of SaveButton
@@ -137,5 +196,74 @@ public class GardenController extends Controller<GardenView>{
 		view.getStage().setScene(Main.getScenes().get(StageName.SAVE));
 		model.setStageName(StageName.SAVE);
 	}
+	
+	/**
+	 * Gets event handler for when a mouse drag is released 
+	 * @return drag released mouse event 
+	 */
+	public EventHandler getHandlerForDragReleased() {
+		return event -> dragReleased((MouseEvent) event);
+	}
+	/**
+	 * Registers a mouse drag released event, sets copied to true so a new image will not be generated accidentally 
+	 * @param event
+	 */
+	public void dragReleased(MouseEvent event) {
+		copied = true;
+	}
+	
+	/**
+	 * Gets the drag event handler for images in the FlowPane 
+	 * @param i the milkweed image that is being dragged 
+	 * @return the mouse event handler for the specific milkweed image that was created 
+	 */
+	public EventHandler getHandlerForDrag() {
+		return event -> drag((MouseEvent) event);
+	}
+	/**
+	 * Handles the dragging logic of the static milkweed image in the TilePane 
+	 * @param event the drag event that occurred
+	 */
+	public void drag(MouseEvent event) {
+//		//TODO: figure out how to add plant objects in the model
+//		System.out.println("in drag");
+//		if (event.getX() > view.getTPWidth() && !copied) {
+//			System.out.println("in if");
+//			Object plant = event.getSource();
+//			//int index = view.addIVToFlow(new ImageView(((ImageView) plant).getImage()));	//TODO: creates the multiple children error. figure out way to clone imageview.
+////			model.addX(0);
+////			model.addY(event.getY());
+//			view.setXs(view.getXs().size -1, event.getX());
+//			view.setYs(index, event.getY());
+//			copied = true;
+		ImageView dragPlant = (ImageView) event.getSource();
+		dragPlant.setX(event.getX());
+		dragPlant.setY(event.getY());
+		
+		}
+		
+		/**
+		* code is triggered by a press of mouse
+		* @return EventHandler object for this action
+		*/
+		public EventHandler getHandlerForPress() {
+			return event -> press((MouseEvent)event);
+		}
+		
+		/**
+		 * Registers a mouse press on the milkweed image, sets copied to false so that a new milkweed image may be generated
+		 * @param event the mouse pressing event 
+		 */
+		public void press(MouseEvent event) {
+			Object click = event.getSource();
+			int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
+		}
+		
+	
+
+
+	
+	
+	
 
 }

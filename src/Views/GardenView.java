@@ -1,35 +1,55 @@
 package Views;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 import Controllers.Controller;
 import Controllers.GardenController;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 public class GardenView extends View{
-	private Collection plantImages;
+	private HashMap<String,Image> plantImages = new HashMap<String,Image>();	
 	private FlowPane suggestedFlowPane;
 	private TilePane seasonTilePane;
 	private TilePane yearTilePane;
 	private TilePane statsTilePane;
 	private TilePane toolbarTilePane;
+	private Pane garden;
 	private Image backyardImage;
 	private GardenController control;
 	private Stage stage;
 	private Button stats;
 	private Button pref;
 	private Button save;
-	
+	private Button year1;
+	private Button year2;
+	private Button year3;
+	private Button spring;
+	private Button summer;
+	private Button fall;
+	private Button winter;
+	int SIZE = 200;
+	int TILE_PANE_WIDTH = 1000;
 	public GardenView(Stage stage) {
 		this.stage = stage;
 	}
 	
 	public void setup () {
+				
 		TilePane tp = new TilePane();
 		Label txt = new Label("Design");
 		stats = new Button("Stats");
@@ -42,7 +62,83 @@ public class GardenView extends View{
 		pref.setOnMouseClicked(control.handleOnPrefButton());
 		
 		tp.getChildren().addAll(txt,pref,stats,save);
-		scene = new Scene(tp, canvasWidth, canvasHeight);
+		
+		seasonTilePane = new TilePane();
+		Label seasonLabel = new Label("Select Season");
+		summer = new Button("Summer");
+		summer.setOnMouseClicked(control.handleOnSummerButton());
+		fall = new Button("Fall");
+		fall.setOnMouseClicked(control.handleOnFallButton());
+		winter = new Button("Winter");
+		winter.setOnMouseClicked(control.handleOnWinterButton());
+		spring = new Button("Spring");
+		spring.setOnMouseClicked(control.handleOnSpringButton());
+		seasonTilePane.getChildren().addAll(seasonLabel,summer,fall,winter,spring);
+		
+		
+		yearTilePane = new TilePane();
+		Label yearLabel = new Label("Select Year");
+		year1 = new Button("Year: 1");
+		year1.setOnMouseClicked(control.handleOnYear1Button());
+		year2 = new Button("Year: 2");
+		year2.setOnMouseClicked(control.handleOnYear2Button());
+		year3 = new Button("Year: 3");
+		year3.setOnMouseClicked(control.handleOnYear3Button());
+		yearTilePane.getChildren().addAll(yearLabel,year1,year2,year3);
+		
+		FlowPane bottom = new FlowPane();
+		bottom.getChildren().add(seasonTilePane);
+		bottom.getChildren().add(yearTilePane);
+
+		
+		
+		
+		BorderPane border = new BorderPane();
+		border.setTop(tp);
+		border.setBottom(bottom);
+		
+		TilePane tile = new TilePane();
+		tile.setPadding(new Insets(5, 0, 5, 0));
+		tile.setVgap(4);
+		tile.setHgap(4);
+		tile.setPrefColumns(1);
+		tile.setStyle("-fx-background-color: DAE6F3;");
+		tile.setPrefWidth(SIZE);
+		
+		plantImages.put("whiteAsh", new Image("/imgs/whiteAsh.png"));
+		plantImages.put("commonMilkweed.png", new Image("/imgs/commonMilkweed.png"));
+		plantImages.put("american-elm.jpg", new Image("/imgs/american-elm.jpg"));
+		plantImages.put("american-plum.jpg", new Image("/imgs/american-plum.jpg"));
+		plantImages.put("goldenrod.jpg", new Image("/imgs/goldenrod.jpg"));
+		
+		
+		
+		//addImageFromFile("/imgs/");
+
+		for (Image img: plantImages.values()) {
+			ImageView imageview = new ImageView(img);
+			imageview.setPreserveRatio(true);
+		    imageview.setFitHeight(SIZE);
+		    imageview.setFitWidth(SIZE);
+		    imageview.setOnMouseDragged(control.getHandlerForDrag());
+		    imageview.setOnMousePressed(control.getHandlerForPress());
+		    imageview.setOnMouseReleased(control.getHandlerForDragReleased());
+		    tile.getChildren().add(imageview);
+		}
+		ScrollPane scrollPane = new ScrollPane();
+	    scrollPane.setFitToWidth(true);
+	    scrollPane.setContent(tile);
+		border.setLeft(scrollPane);
+		
+		garden = new Pane();
+		ImageView background = new ImageView(new Image("/imgs/lawn.jpg"));
+		background.fitWidthProperty().bind(garden.widthProperty()); 
+		background.fitHeightProperty().bind(garden.heightProperty());
+		garden.getChildren().add(background);
+		border.setCenter(garden);
+		
+		scene = new Scene(border, canvasWidth, canvasHeight);
+		
 	}
 
 	@Override
@@ -60,5 +156,67 @@ public class GardenView extends View{
 	public Stage getStage() {
 		return stage;
 	}
+	
+	/**
+	 * go through directory and create file objects for everything in it, then load into plantImages
+	 * @param myDirectoryPath
+	 */
+	public void addImageFromFile(String myDirectoryPath) {
+        File dir = new File(myDirectoryPath);
+		System.out.println(dir.isDirectory());
+        File[] directoryListing = dir.listFiles();
+        for (File child : directoryListing) {
+        	String name = child.getName();
+        	Image img = new Image("myDirectoryPath" + name);
+        	plantImages.put(name, img);
+        }
+    }
+	
+	public int addIVToFlow(ImageView plant) {
+		System.out.println("dragging image");
+    	this.garden.getChildren().add(plant);	//TODO: creates error duplicate children added. 
+    	List<Node> imageArr = garden.getChildren();
+    	int i = imageArr.size()-1;
+    	((ImageView) imageArr.get(i)).setPreserveRatio(true);
+    	((ImageView) imageArr.get(i)).setFitHeight(SIZE);
+    	imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
+    	//((ImageView) imageArr.get(i)).setX(x);
+    	//((ImageView) imageArr.get(i)).setY(y);
+    	return i;
+    }
+	
+	/**
+     * Gets the size of the picture
+     * @return size of the picture 
+     */
+    public double getPicSize() {
+    	return SIZE;
+    }
+    
+    /**
+     * Sets a new x value for any of the ImageViews in garden 
+     * @param index the index of the ImageView in garden to be modified
+     * @param x the new x value of the specified imagView in garden
+     */
+    public void setXs(int index, double x) {
+    	garden.getChildren().get(index).setTranslateX(garden.getChildren().get(index).getLayoutX() + x);
+    }
+    
+    /**
+     * Sets a new y value for any of the ImageViews in garden 
+     * @param index the index of the ImageView in garden to be modified
+     * @param y the new y value of the specified ImageView in garden
+     */
+    public void setYs(int index, double y) {
+    	garden.getChildren().get(index).setTranslateY(garden.getChildren().get(index).getLayoutY() + y);
+    }
+    
+    /**
+     * Gets the tile pane width 
+     * @return width of the TilePane 
+     */
+    public double getTPWidth() {
+    	return 1;
+    }
 
 }
