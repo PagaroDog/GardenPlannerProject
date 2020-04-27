@@ -2,6 +2,7 @@ package Views;
 import java.util.ArrayList;
 import Controllers.Controller;
 import Controllers.TutorialController;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -22,15 +24,22 @@ public class TutorialView extends View{
 	private Button prevButton;
 	private Button nextButton;
 	private TutorialController control;
-	private TilePane Buttons;
+	private BorderPane buttons;
 	private Button continueButton;
 	private Button backButton;
 	private BorderPane border;
+	private double fontSize = 25;
 	
-	public StackPane slide;
-	public ArrayList<Image> tutorialSlides = new ArrayList<Image>();	
-	public ImageView background = new ImageView("/TutorialSlides/Slide1.PNG");;
-	public int currentSlide=1;
+	private final double buttonsVPadding = 10;
+	private final double buttonsHPadding = 10;
+
+	private final double bottomVPadding = 10;
+	private final double bottomHPadding = 10;
+	
+	private StackPane slide;
+	private ArrayList<Image> tutorialSlides = new ArrayList<Image>();	
+	private ImageView background = new ImageView("/TutorialSlides/Slide1.PNG");;
+	private int currentSlide=1;
 	
 	public TutorialView(Stage stage) {
 		this.stage = stage;
@@ -43,30 +52,44 @@ public class TutorialView extends View{
 		tutorialSlides.add(new Image("/TutorialSlides/Slide3.PNG"));//2
 		tutorialSlides.add(null);//3
 		
-		
 		border = new BorderPane();
 		
-		Buttons = new TilePane();
-		Label txt = new Label("Tutorial");
-		nextButton = new Button("Next");
-		nextButton.setOnMouseClicked(control.getHandleOnNextButton());
+		buttons = new BorderPane();
+		buttons.setPadding(new Insets(buttonsVPadding, buttonsHPadding, buttonsVPadding, buttonsHPadding));
+		buttons.setStyle("-fx-background-color: rgba(25,100,255,1);");
 		
-		prevButton = new Button("Prev");
-		prevButton.setOnMouseClicked(control.getHandleOnPrevButton());
-		
-		backButton = new Button("Back");
+		backButton = new Button("Previous Slide");
 		backButton.setOnMouseClicked(control.getHandleOnBackButton());
 		
-		continueButton = new Button("Continue");
+		continueButton = new Button("Next Slide");
 		continueButton.setOnMouseClicked(control.getHandleOnContinueButton());
 		
-		Buttons.getChildren().addAll(txt,nextButton,prevButton,continueButton,backButton);
+		buttons.setLeft(backButton);
+		buttons.setRight(continueButton);
 		
-		border.setTop(Buttons);
+		border.setTop(buttons);
 		
 		slide = new StackPane();
 		
 		slide.getChildren().add(background);//sets up initial slide
+		
+		prevButton = new Button("Main Menu");
+		prevButton.setOnMouseClicked(control.getHandleOnPrevButton());
+		
+		nextButton = new Button("Draw Yard");
+		nextButton.setOnMouseClicked(control.getHandleOnNextButton());
+
+	    Label txt = new Label("Tutorial");
+		txt.setFont(new Font(fontSize));
+		
+		BorderPane bottom = new BorderPane();
+		bottom.setPadding(new Insets(bottomVPadding, bottomHPadding, bottomVPadding, bottomHPadding));
+	    bottom.setStyle("-fx-background-color: rgba(168,158,255,1);");
+		bottom.setLeft(prevButton);
+		bottom.setRight(nextButton);
+		bottom.setCenter(txt);
+		
+		border.setBottom(bottom);
 		
 		border.setCenter(slide);
 		
@@ -94,6 +117,38 @@ public class TutorialView extends View{
 	@Override
 	public Stage getStage() {
 		return stage;
+	}
+
+	public StackPane getSlide() {
+		return slide;
+	}
+
+	public void setSlide(StackPane slide) {
+		this.slide = slide;
+	}
+
+	public ImageView getBackground() {
+		return background;
+	}
+
+	public void setBackground(ImageView background) {
+		this.background = background;
+	}
+
+	public int getCurrentSlide() {
+		return currentSlide;
+	}
+
+	public void setCurrentSlide(int currentSlide) {
+		this.currentSlide = currentSlide;
+	}
+
+	public ArrayList<Image> getTutorialSlides() {
+		return tutorialSlides;
+	}
+
+	public void setTutorialSlides(ArrayList<Image> tutorialSlides) {
+		this.tutorialSlides = tutorialSlides;
 	}
 
 }

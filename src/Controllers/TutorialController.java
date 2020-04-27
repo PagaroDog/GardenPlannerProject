@@ -77,10 +77,10 @@ public class TutorialController extends Controller<TutorialView>{
 	 * Goes to the next slide
 	 */
 	public void continueButton(MouseEvent event) {
-		view.background=new ImageView(view.tutorialSlides.get(view.currentSlide));
-		view.slide.getChildren().add(view.background);
-		System.out.println(view.currentSlide);
-		if(!(view.currentSlide+1>3)) view.currentSlide++;
+		view.setBackground(new ImageView(view.getTutorialSlides().get(view.getCurrentSlide())));
+		view.getSlide().getChildren().add(view.getBackground());
+		System.out.println(view.getCurrentSlide());
+		if(!(view.getCurrentSlide() + 1 > 3)) view.setCurrentSlide(view.getCurrentSlide() + 1);
 		
 	}
 	
@@ -88,11 +88,11 @@ public class TutorialController extends Controller<TutorialView>{
 	 * Goes to the previous slide
 	 */
 	public void backButton(MouseEvent event) {
-		System.out.println(view.currentSlide);
-		if(!(view.currentSlide-1<=0)) view.currentSlide--;
+		System.out.println(view.getCurrentSlide());
+		if(!(view.getCurrentSlide() - 1<=0)) view.setCurrentSlide(view.getCurrentSlide() - 1);
 		
-		view.background=new ImageView(view.tutorialSlides.get(view.currentSlide-1));
-		view.slide.getChildren().add(view.background);
+		view.setBackground(new ImageView(view.getTutorialSlides().get(view.getCurrentSlide() - 1)));
+		view.getSlide().getChildren().add(view.getBackground());
 		//.getChildren().add(view.background);
 		
 		
