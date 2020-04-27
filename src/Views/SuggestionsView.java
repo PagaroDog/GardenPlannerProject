@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import Controllers.Controller;
 import Controllers.SuggestionsController;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,6 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 /**
  * The SuggestionsView is used to display the screen where the user will select their top picks of plants that fit their
@@ -38,6 +41,11 @@ public class SuggestionsView extends View{
 	private ImageView plantCopy;
 	BorderPane border;
 	ArrayList<Pane>imgs ;
+	
+	private final double bottomVPadding = 10;
+	private final double bottomHPadding = 10;
+	private final double bottomLabelFontSize = 25;
+	
 	public SuggestionsView(Stage stage) {
 		this.stage = stage;
 	}
@@ -48,9 +56,9 @@ public class SuggestionsView extends View{
 	public void setup() {
 		
 		border = new BorderPane();
-		HBox nav = top();
+		BorderPane nav = bottom();
 		GridPane cen = center();
-		border.setTop(nav);
+		border.setBottom(nav);
 		border.setCenter(cen);
 		scene = new Scene(border, canvasWidth, canvasHeight);
 	}
@@ -109,6 +117,7 @@ public class SuggestionsView extends View{
 		pane.setGridLinesVisible(true);
 		pane.getChildren().addAll(imgs);
 		pane.getChildren().add(stats);
+		pane.setAlignment(Pos.CENTER);
 		return pane;
 	}
 	public void selectImage(MouseEvent event) {
@@ -183,22 +192,21 @@ public class SuggestionsView extends View{
 	 * Creates the navigation portion of BoarderPane. Assigned to the Top of the BoarderPane.
 	 * @return HBox
 	 */
-	public HBox top() {
-		HBox nav = new HBox();
-		nav.setPadding(new Insets(15,300,15,300));
+	public BorderPane bottom() {
+		BorderPane nav = new BorderPane();
+		nav.setPadding(new Insets(bottomVPadding, bottomHPadding, bottomVPadding, bottomHPadding));
 		
-		Label txt = new Label("SUGGS");
-		backButton = new Button("Back");
+		Label txt = new Label("Pick Some of Your Favorites From Our Suggestions");
+		txt.setFont(new Font(bottomLabelFontSize));
+		backButton = new Button("Edit Preferences");
 		backButton.setOnMouseClicked(control.gethandleOnBackButton());
-		nextButton = new Button("Next");
+		nextButton = new Button("Design Garden");
 		nextButton.setOnMouseClicked(control.gethandleOnNextButton());
 	
-		nav.getChildren().addAll(backButton,txt,nextButton);
-		nav.setStyle("-fx-background-color: rgba(255, 222, 133,1);");
-		nav.setSpacing(15);
-		nav.setPrefHeight(20);
-		nav.setPrefWidth(canvasWidth);
-		nav.setAlignment(Pos.CENTER);
+		nav.setLeft(backButton);
+		nav.setRight(nextButton);
+		nav.setCenter(txt);
+		nav.setStyle("-fx-background-color: rgba(168,158,255,1);");
 		return nav;
 	}
 
