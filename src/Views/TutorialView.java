@@ -151,4 +151,12 @@ public class TutorialView extends View{
 		this.tutorialSlides = tutorialSlides;
 	}
 
+	public BorderPane getBorder() {
+		return border;
+	}
+
+	public void setBorder(BorderPane border) {
+		this.border = border;
+	}
+
 }
