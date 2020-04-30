@@ -9,6 +9,7 @@ import Controllers.Controller;
 import Controllers.GardenController;
 import Model.GardenPref;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,6 +27,7 @@ public class GardenView extends View{
 	private HashMap<String,Image> plantImages = new HashMap<String,Image>();	
 	private FlowPane suggestedFlowPane;
 	private TilePane seasonTilePane;
+	private double bottomHeight =35;
 	private TilePane yearTilePane;
 	private TilePane statsTilePane;
 	private TilePane toolbarTilePane;
@@ -66,7 +68,7 @@ public class GardenView extends View{
 		
 		left();
 		border.setLeft(scrollPane);
-		
+
 		gard();
 		border.setCenter(garden);
 		
@@ -156,7 +158,7 @@ public class GardenView extends View{
 		spring = new Button("Spring");
 		spring.setOnMouseClicked(control.handleOnSpringButton());
 		seasonTilePane.getChildren().addAll(seasonLabel,summer,fall,winter,spring);
-		
+		seasonTilePane.setPrefHeight(bottomHeight);;
 		
 		yearTilePane = new TilePane();
 		Label yearLabel = new Label("Select Year");
@@ -220,8 +222,8 @@ public class GardenView extends View{
     	((ImageView) imageArr.get(i)).setPreserveRatio(true);
     	((ImageView) imageArr.get(i)).setFitHeight(SIZE);
     	imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
-    	garden.getChildren().get(i).setLayoutX(x-SIZE/2);
-    	garden.getChildren().get(i).setLayoutY(y-SIZE/2);
+    	garden.getChildren().get(i).setLayoutX(x);
+    	garden.getChildren().get(i).setLayoutY(y);
 
     	//((ImageView) imageArr.get(i)).setX(x);
     	//((ImageView) imageArr.get(i)).setY(y);
@@ -286,6 +288,12 @@ public class GardenView extends View{
 
 	public BorderPane getBorder() {
 		return border;
+	}
+	public int getSize() {
+		return SIZE;
+	}
+	public double getBottomHeight() {
+		return bottomHeight;
 	}
 
 }

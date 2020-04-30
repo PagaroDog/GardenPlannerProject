@@ -301,9 +301,9 @@ public class GardenController extends Controller<GardenView>{
 			Dragboard db = n.startDragAndDrop(TransferMode.ANY);
 			
 			ClipboardContent content = new ClipboardContent();
-			ImageView copy = ((ImageView)n);
 			
-	        content.putImage(copy.getImage());
+			
+	        content.putImage(((ImageView)n).getImage());
 	        db.setContent(content);
 			event.consume();
 		}
@@ -332,7 +332,10 @@ public class GardenController extends Controller<GardenView>{
 			
 			if(db.hasImage()){
 				//view.getTilePane().getChildren().add(view.createImageView(db.getImage()));
-				view.addIVToFlow(new ImageView(db.getImage()), event.getX(),event.getY());
+				double calcX = model.calcX(event.getX(),view.getSize(),view.getSize());
+				
+				double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight());
+				view.addIVToFlow(new ImageView(db.getImage()), calcX,calcY);
 				success = true;
 			}
 			event.setDropCompleted(success);
