@@ -297,11 +297,13 @@ public class GardenController extends Controller<GardenView>{
 		public void  imageDrag(MouseEvent event) {
 			System.out.println("Started To Drag");
 			Node n = (Node) event.getSource();
+			
 			Dragboard db = n.startDragAndDrop(TransferMode.ANY);
 			
 			ClipboardContent content = new ClipboardContent();
+			ImageView copy = ((ImageView)n);
 			
-	        content.putImage(((ImageView)n).getImage());
+	        content.putImage(copy.getImage());
 	        db.setContent(content);
 			event.consume();
 		}
@@ -327,6 +329,7 @@ public class GardenController extends Controller<GardenView>{
 			Node n =(Node)event.getSource();
 			Dragboard db = event.getDragboard();
 			boolean success = false;
+			
 			if(db.hasImage()){
 				//view.getTilePane().getChildren().add(view.createImageView(db.getImage()));
 				view.addIVToFlow(new ImageView(db.getImage()), event.getX(),event.getY());
