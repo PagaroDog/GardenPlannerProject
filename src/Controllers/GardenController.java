@@ -8,8 +8,13 @@ import Views.GardenView;
 import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
@@ -261,7 +266,7 @@ public class GardenController extends Controller<GardenView>{
 		 */
 		public void press(MouseEvent event) {
 			Object click = event.getSource();
-			int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
+			//int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
 		}
 		
 		public void setDrawing(Pane drawing) {
@@ -284,6 +289,54 @@ public class GardenController extends Controller<GardenView>{
 		}
 
 
+		public EventHandler getHandlerForDragDetected() {
+			return event -> imageDrag((MouseEvent) event);
+		}
+
+
+		public void  imageDrag(MouseEvent event) {
+			System.out.println("Started To Drag");
+			Node n = (Node) event.getSource();
+			Dragboard db = n.startDragAndDrop(TransferMode.ANY);
+			
+			ClipboardContent content = new ClipboardContent();
+			
+	        content.putImage(((ImageView)n).getImage());
+	        db.setContent(content);
+			event.consume();
+		}
+
+
+		public EventHandler getHandlerForDragOver() {
+			return event -> gardenDragOver((DragEvent)event);
+		}
+
+
+		public void gardenDragOver(DragEvent event) {
+			event.acceptTransferModes(TransferMode.MOVE);
+			event.consume();
+		}
+
+
+		public EventHandler getHandlerForDragDropped() {
+			return event -> gardenDragDropped((DragEvent)event);
+		}
+
+
+		public void gardenDragDropped(DragEvent event) {
+			Node n =(Node)event.getSource();
+			Dragboard db = event.getDragboard();
+			boolean success = false;
+			if(db.hasImage()){
+				//view.getTilePane().getChildren().add(view.createImageView(db.getImage()));
+				view.addIVToFlow(new ImageView(db.getImage()), event.getX(),event.getY());
+				success = true;
+			}
+			event.setDropCompleted(success);
+			event.consume();
+		}
+
+		
 	
 	
 	
