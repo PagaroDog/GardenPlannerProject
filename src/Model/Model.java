@@ -1,9 +1,13 @@
 package Model;
 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.HashMap;
+import java.util.List;
 
 import Controllers.Controller;
 import Controllers.DrawYardController;
@@ -31,7 +35,7 @@ public class Model {
 	private Node currDrawObj;
 	
 	//make a constructor to do this
-	private ArrayList<Plant> plants=new ArrayList<Plant>();
+	private HashMap<String, Plant> plants=new HashMap<String, Plant>();
     private ArrayList<GardenPref> gardenPreferences = new ArrayList<GardenPref>(); 
     private GardenPref currPref;
     private HashMap<Integer, GardenObj> gardenObjects;  
@@ -51,7 +55,9 @@ public class Model {
 	private SaveController saveControl;
 	private PreferencesController prefControl;
     
-    
+    public Model() {
+    	importPlantsFromCSV();
+    }
     
     public Season getSeason() {
 		return season;
@@ -274,16 +280,16 @@ public class Model {
 	}
 
 
-	public ArrayList<Plant> getPlants() {
+	public HashMap<String, Plant> getPlants() {
 		return plants;
 	}
 
 
-	public void setPlants(ArrayList<Plant> plants) {
+	public void setPlants(HashMap<String, Plant> plants) {
 		this.plants = plants;
 	}
-	public void addPlant(Plant p) {
-		plants.add(p);
+	public void addPlant(String name, Plant p) {
+		plants.put(name, p);
 	}
 
 
@@ -296,8 +302,135 @@ public class Model {
 	}
 
 
-    
+    public void importPlantsFromCSV() {
+    	String csvFile = "plantInfo.csv";
+        String line = "";
+        List<String> parsedLine;
+        
+        String name;
+    	String[] commonNames;
+    	String duration;
+    	String type;
+    	String[] heightStr = new String[2];
+    	int[] height = new int[2];
+    	String[] color;
+    	String[] bloomtimeStr;
+    	int[] bloomtime;
+    	String waterLevel;
+    	String light;
+    	String[] spreadStr = new String[2];
+    	int[] spread = new int[2];
+
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+        	line = br.readLine(); //ignore header
+            while ((line = br.readLine()) != null) {
+            	
+            	parsedLine = parseLine(line);
+
+            	name = parsedLine.get(0);
+            	commonNames = parsedLine.get(1).split(",");
+            	duration = parsedLine.get(2);
+            	type = parsedLine.get(3);
+        		heightStr = parsedLine.get(5).replaceAll(" ", "").split("-");
+        		if (heightStr.length == 1) {
+        			height[0] = height[1] = Integer.valueOf(heightStr[0].replaceAll("[^0-9]", "")) * 12;
+        		} else {
+        			height[0] = Integer.valueOf(heightStr[0]);
+            		height[1] = Integer.valueOf(heightStr[1].replaceAll("[^0-9]", ""));
+        		}
+        		if (parsedLine.get(5).contains("ft")) {
+	        		height[0] *= 12;
+	        		height[1] *= 12;
+            	}
+            	color = parsedLine.get(6).replaceAll(" ", "").split(",");
+            	bloomtimeStr = parsedLine.get(7).replaceAll(" ", "").replace("Jan", "1").replace("Feb", "2").replace("Mar", "3").replace("Apr", "4").replace("May", "5").replace("Jun", "6").replace("Jul", "7").replace("Aug", "8").replace("Sep", "9").replace("Oct", "10").replace("Nov", "11").replace("Dec", "12").split(",");
+            	bloomtime = new int[bloomtimeStr.length];
+            	for (int i = 0; i < bloomtime.length; i++) {
+            		bloomtime[i] = Integer.valueOf(bloomtimeStr[i]);
+            	}
+            	waterLevel = parsedLine.get(8);
+            	light = parsedLine.get(9);
+            	if (parsedLine.get(10).equals("fail")) {
+            		spread[0] = 0;
+        			spread[1] = 0;
+            	} else {
+            		spreadStr = parsedLine.get(10).replaceAll(" ", "").split("-");
+	            	if (spreadStr.length == 1) {
+	            		spread[0] = height[1] = Integer.valueOf(spreadStr[0].replaceAll("[^0-9]", "")) * 12;
+	        		} else {
+	        			spread[0] = Integer.valueOf(spreadStr[0]);
+	        			spread[1] = Integer.valueOf(spreadStr[1].replaceAll("[^0-9]", ""));
+	        		}
+	        		if (parsedLine.get(10).contains("feet")) {
+	        			spread[0] *= 12;
+	        			spread[1] *= 12;
+	            	}
+            	}
+            	
+            	
+                System.out.println("Science Name: " + parsedLine.get(0) + ", common names: " + parsedLine.get(1) + ", duration: " + parsedLine.get(2) + ", type: " + parsedLine.get(3) + ", fruit: " + parsedLine.get(4) + ", size: " + parsedLine.get(5) + ", color: " + parsedLine.get(6) + ", time: " + parsedLine.get(7) + ", water: " + parsedLine.get(8) + ", light: " + parsedLine.get(9) + ", spread: " + parsedLine.get(10));
+
+                plants.put(parsedLine.get(0), new Plant(name, commonNames, duration, type, height, color, bloomtime, waterLevel, light, spread));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
    
-	
-	
+    public static List<String> parseLine(String csvLine) {
+
+        List<String> result = new ArrayList<>();
+
+        //if empty, return!
+        if (csvLine == null && csvLine.isEmpty()) {
+            return result;
+        }
+        
+        char customQuote = '"';
+
+        char separators = ',';
+
+        StringBuffer curVal = new StringBuffer();
+        boolean inQuotes = false;
+
+        char[] chars = csvLine.toCharArray();
+
+        for (char ch : chars) {
+
+            if (inQuotes) {
+                if (ch == customQuote) {
+                    inQuotes = false;
+                } else {
+                    curVal.append(ch);
+                }
+            } else {
+                if (ch == customQuote) {
+
+                    inQuotes = true;
+
+                } else if (ch == separators) {
+
+                    result.add(curVal.toString());
+
+                    curVal = new StringBuffer();
+
+                } else if (ch == '\r') {
+                    //ignore LF characters
+                    continue;
+                } else if (ch == '\n') {
+                    //the end, break!
+                    break;
+                } else {
+                    curVal.append(ch);
+                }
+            }
+
+        }
+
+        result.add(curVal.toString());
+
+        return result;
+    }
+
 }
