@@ -124,9 +124,10 @@ public class GardenView extends View{
 			imageview.setPreserveRatio(true);
 		    imageview.setFitHeight(SIZE);
 		    imageview.setFitWidth(SIZE);
-		    imageview.setOnMouseDragged(control.getHandlerForDrag());
-		    imageview.setOnMousePressed(control.getHandlerForPress());
-		    imageview.setOnMouseReleased(control.getHandlerForDragReleased());
+		    imageview.setOnDragDetected(control.getHandlerForDragDetected());
+		    //imageview.setOnMouseDragged(control.getHandlerForDrag());
+		    //imageview.setOnMousePressed(control.getHandlerForPress());
+		    //imageview.setOnMouseReleased(control.getHandlerForDragReleased());
 		    tile.getChildren().add(imageview);
 		}
 		scrollPane = new ScrollPane();
@@ -135,6 +136,8 @@ public class GardenView extends View{
 		border.setLeft(scrollPane);
 		
 		garden = new Pane();
+		garden.setOnDragOver(control.getHandlerForDragOver());
+		garden.setOnDragDropped(control.getHandlerForDragDropped());
 //		ImageView background = new ImageView(new Image("/imgs/lawn.jpg"));
 //		background.fitWidthProperty().bind(garden.widthProperty()); 
 //		background.fitHeightProperty().bind(garden.heightProperty());
@@ -177,7 +180,7 @@ public class GardenView extends View{
         }
     }
 	
-	public int addIVToFlow(ImageView plant) {
+	public int addIVToFlow(ImageView plant, double x, double y) {
 		System.out.println("dragging image");
     	this.garden.getChildren().add(plant);	//TODO: creates error duplicate children added. 
     	List<Node> imageArr = garden.getChildren();
@@ -185,10 +188,18 @@ public class GardenView extends View{
     	((ImageView) imageArr.get(i)).setPreserveRatio(true);
     	((ImageView) imageArr.get(i)).setFitHeight(SIZE);
     	imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
+    	garden.getChildren().get(i).setLayoutX(x);
+    	garden.getChildren().get(i).setLayoutY(y);
     	//((ImageView) imageArr.get(i)).setX(x);
     	//((ImageView) imageArr.get(i)).setY(y);
     	return i;
     }
+	
+	
+	
+	
+	
+	
 	
 	/**
      * Gets the size of the picture
