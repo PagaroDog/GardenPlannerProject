@@ -46,6 +46,8 @@ public class GardenView extends View{
 	private Pane drawing;
 	private ScrollPane scrollPane;
 	private BorderPane border;
+	private TilePane navigation;
+	private FlowPane bottom;
 	int SIZE = 200;
 	int TILE_PANE_WIDTH = 1000;
 	public GardenView(Stage stage) {
@@ -54,53 +56,27 @@ public class GardenView extends View{
 	
 	public void setup () {
 				
-		TilePane tp = new TilePane();
-		Label txt = new Label("Design");
-		stats = new Button("Stats");
-		stats.setOnMouseClicked(control.handleOnStatsButton());
-		
-		save = new Button("Save");
-		save.setOnMouseClicked(control.handleOnSaveButton());
-		
-		pref = new Button("Pref");
-		pref.setOnMouseClicked(control.handleOnPrefButton());
-		
-		tp.getChildren().addAll(txt,pref,stats,save);
-		
-		seasonTilePane = new TilePane();
-		Label seasonLabel = new Label("Select Season");
-		summer = new Button("Summer");
-		summer.setOnMouseClicked(control.handleOnSummerButton());
-		fall = new Button("Fall");
-		fall.setOnMouseClicked(control.handleOnFallButton());
-		winter = new Button("Winter");
-		winter.setOnMouseClicked(control.handleOnWinterButton());
-		spring = new Button("Spring");
-		spring.setOnMouseClicked(control.handleOnSpringButton());
-		seasonTilePane.getChildren().addAll(seasonLabel,summer,fall,winter,spring);
-		
-		
-		yearTilePane = new TilePane();
-		Label yearLabel = new Label("Select Year");
-		year1 = new Button("Year: 1");
-		year1.setOnMouseClicked(control.handleOnYear1Button());
-		year2 = new Button("Year: 2");
-		year2.setOnMouseClicked(control.handleOnYear2Button());
-		year3 = new Button("Year: 3");
-		year3.setOnMouseClicked(control.handleOnYear3Button());
-		yearTilePane.getChildren().addAll(yearLabel,year1,year2,year3);
-		
-		FlowPane bottom = new FlowPane();
-		bottom.getChildren().add(seasonTilePane);
-		bottom.getChildren().add(yearTilePane);
-
-		
-		
-		
 		border = new BorderPane();
-		border.setTop(tp);
+		bottom();
 		border.setBottom(bottom);
 		
+		top();
+		border.setTop(navigation);
+		
+		
+		left();
+		border.setLeft(scrollPane);
+		
+		gard();
+		border.setCenter(garden);
+		
+		scene = new Scene(border, canvasWidth, canvasHeight);
+		
+	}
+	/**
+	 * Creates a ScrollPane of suggested plants for the left part of the BorderPane
+	 */
+	public void left() {
 		TilePane tile = new TilePane();
 		tile.setPadding(new Insets(5, 0, 5, 0));
 		tile.setVgap(4);
@@ -133,8 +109,11 @@ public class GardenView extends View{
 		scrollPane = new ScrollPane();
 	    scrollPane.setFitToWidth(true);
 	    scrollPane.setContent(tile);
-		border.setLeft(scrollPane);
-		
+	}
+/**
+ * Creates the garden pane. Placed in the center of the BorderPane 
+ */
+	public void gard() {
 		garden = new Pane();
 		garden.setOnDragOver(control.getHandlerForDragOver());
 		garden.setOnDragDropped(control.getHandlerForDragDropped());
@@ -143,10 +122,56 @@ public class GardenView extends View{
 //		background.fitHeightProperty().bind(garden.heightProperty());
 		
 //		garden.getChildren().add(background);
-		border.setCenter(garden);
+	}
+/**
+ * Creates the top TilePane. Contains navigation buttons to stats, save and preferences.
+ */
+	public void top() {
+		navigation = new TilePane();
+		Label txt = new Label("Design");
+		stats = new Button("Stats");
+		stats.setOnMouseClicked(control.handleOnStatsButton());
 		
-		scene = new Scene(border, canvasWidth, canvasHeight);
+		save = new Button("Save");
+		save.setOnMouseClicked(control.handleOnSaveButton());
 		
+		pref = new Button("Pref");
+		pref.setOnMouseClicked(control.handleOnPrefButton());
+		
+		navigation.getChildren().addAll(txt,pref,stats,save);
+	
+	}
+/**
+ * Creates a FlowPane for the bottom part of the border pane. Contains Year and Season TilePanes	
+ */
+	public void bottom() {
+		seasonTilePane = new TilePane();
+		Label seasonLabel = new Label("Select Season");
+		summer = new Button("Summer");
+		summer.setOnMouseClicked(control.handleOnSummerButton());
+		fall = new Button("Fall");
+		fall.setOnMouseClicked(control.handleOnFallButton());
+		winter = new Button("Winter");
+		winter.setOnMouseClicked(control.handleOnWinterButton());
+		spring = new Button("Spring");
+		spring.setOnMouseClicked(control.handleOnSpringButton());
+		seasonTilePane.getChildren().addAll(seasonLabel,summer,fall,winter,spring);
+		
+		
+		yearTilePane = new TilePane();
+		Label yearLabel = new Label("Select Year");
+		year1 = new Button("Year: 1");
+		year1.setOnMouseClicked(control.handleOnYear1Button());
+		year2 = new Button("Year: 2");
+		year2.setOnMouseClicked(control.handleOnYear2Button());
+		year3 = new Button("Year: 3");
+		year3.setOnMouseClicked(control.handleOnYear3Button());
+		yearTilePane.getChildren().addAll(yearLabel,year1,year2,year3);
+		
+		bottom = new FlowPane();
+		bottom.getChildren().add(seasonTilePane);
+		bottom.getChildren().add(yearTilePane);
+
 	}
 
 	@Override
@@ -180,7 +205,14 @@ public class GardenView extends View{
         }
     }
 	
-	public int addIVToFlow(ImageView plant, double x, double y) {
+	/**
+	 * Adds an ImageView to the garden Pane when the user releases a drag over the pane. 
+	 * Uses the SIZE to center images around mouse.
+	 * @param plant ImageView of plant from ScrollPane that was dragged by user
+	 * @param x x coordinates of mouse
+	 * @param y y coordinates of mouse
+	 */
+	public void addIVToFlow(ImageView plant, double x, double y) {
 		System.out.println("Dropping image");
     	this.garden.getChildren().add(plant);	//TODO: creates error duplicate children added. 
     	List<Node> imageArr = garden.getChildren();
@@ -193,7 +225,7 @@ public class GardenView extends View{
 
     	//((ImageView) imageArr.get(i)).setX(x);
     	//((ImageView) imageArr.get(i)).setY(y);
-    	return i;
+    
     }
 	
 	
