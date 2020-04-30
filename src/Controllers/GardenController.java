@@ -247,9 +247,11 @@ public class GardenController extends Controller<GardenView>{
 //			view.setYs(index, event.getY());
 //			copied = true;
 		ImageView dragPlant = (ImageView) event.getSource();
-		dragPlant.setX(event.getX());
-		dragPlant.setY(event.getY());
-		System.out.println(view.getScrollPane().getWidth());
+		//double calcX = model.calcX(event.getX(),view.getSize(),view.getSize(),((ImageView) event.getSource()).getX());
+		
+		//double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight());
+		view.movePlant(dragPlant,event.getX(),event.getY());
+		System.out.println(event.getX()+" " +event.getY());
 		}
 		
 		/**
@@ -332,7 +334,7 @@ public class GardenController extends Controller<GardenView>{
 			
 			if(db.hasImage()){
 				//view.getTilePane().getChildren().add(view.createImageView(db.getImage()));
-				double calcX = model.calcX(event.getX(),view.getSize(),view.getSize());
+				double calcX = model.calcX(event.getX(),view.getSize(),view.getSize(),0);
 				
 				double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight());
 				view.addIVToFlow(new ImageView(db.getImage()), calcX,calcY);

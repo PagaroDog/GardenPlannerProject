@@ -230,7 +230,10 @@ public class GardenView extends View{
     
     }
 	
-	
+	public void movePlant(ImageView plant, double x, double y) {
+		plant.setX(x);
+		plant.setY(y);
+	}
 	
 	
 	

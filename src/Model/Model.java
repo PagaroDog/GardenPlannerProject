@@ -304,16 +304,18 @@ public class Model {
 	 * @param left the size of the ScrollPane of images
 	 * @return ret 
 	 */
-	public double calcX(double x,int size,double left) {
+	public double calcX(double x,int size,double left,double initX) {
 		double rightBorder = canvasWidth-size-left;
-		
-		double ret = x-size/2;
-		System.out.println(ret + " " + rightBorder);
+		System.out.println("Initial X: "+ initX);
+		double ret = (x+initX)-size/2;
+		System.out.println("RightBorder Check: " + ret + " " + rightBorder);
 
 		if(ret<0) {
+			System.out.println("Returning 0");
 			return 0;
 		}
 		if(ret>rightBorder) {
+			System.out.println("Returning rightBorder");
 			return rightBorder;
 		}
 		return ret;
@@ -328,7 +330,7 @@ public class Model {
 	public double calcY(double y, int size,double bottom) {
 		double bottomBorder = canvasHeight-size-bottom*1.5;
 		double ret = y-size/2;
-		System.out.println(ret + " " + bottomBorder);
+		System.out.println("BottomBorder Check: " +ret + " " + bottomBorder);
 		if(ret<0) {
 			return 0;
 		}
