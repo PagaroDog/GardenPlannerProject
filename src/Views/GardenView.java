@@ -181,15 +181,16 @@ public class GardenView extends View{
     }
 	
 	public int addIVToFlow(ImageView plant, double x, double y) {
-		System.out.println("dragging image");
+		System.out.println("Dropping image");
     	this.garden.getChildren().add(plant);	//TODO: creates error duplicate children added. 
     	List<Node> imageArr = garden.getChildren();
     	int i = imageArr.size()-1;
     	((ImageView) imageArr.get(i)).setPreserveRatio(true);
     	((ImageView) imageArr.get(i)).setFitHeight(SIZE);
     	imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
-    	garden.getChildren().get(i).setLayoutX(x);
-    	garden.getChildren().get(i).setLayoutY(y);
+    	garden.getChildren().get(i).setLayoutX(x-SIZE/2);
+    	garden.getChildren().get(i).setLayoutY(y-SIZE/2);
+
     	//((ImageView) imageArr.get(i)).setX(x);
     	//((ImageView) imageArr.get(i)).setY(y);
     	return i;
