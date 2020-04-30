@@ -6,34 +6,35 @@ package Model;
  *
  */
 public class Plant {
-	private String commonName; 
-	private String light; 
-	private int bloomtime; 
-	private String soilType; 
-	private String waterlevel; 
-	private String[] color; 
-	private int animalsFed; 
-	private int pollinator; //is this whether or not the plant pollinates or how many things it pollinates 
-	private String science;
+	private String name;
+	private String[] commonNames;
+	private String duration;
+	private String type;
+	private int[] height;
+	private String[] color;
+	private int[] bloomtime;
+	private String waterLevel;
+	private String light;
+	private int[] spread;
 		
-	public Plant(String name, String science,String light, int bloomtime,String soilType,String waterlevel, String[] color, int animalsFed, int pollinator) {
-		this.commonName = name;
-		this.science = science;
-		this.light = light;
-		this.bloomtime = bloomtime;
-		this.soilType = soilType;
-		this.waterlevel = waterlevel;
+	public Plant(String name, String[] commonNames, String duration, String type, int[] height, String[] color, int[] bloomtime, String waterLevel, String light, int[] spread) {
+		this.name = name;
+		this.commonNames = commonNames;
+		this.duration = duration;
+		this.type = type;
+		this.height = height;
 		this.color = color;
-		this.animalsFed = animalsFed;
-		
-		
+		this.bloomtime = bloomtime;
+		this.waterLevel = waterLevel;
+		this.light = light;
+		this.spread = spread;
 	}
 	
 	public String getName() {
-		return commonName;
+		return name;
 	}
 	public void setName(String name) {
-		this.commonName = name;
+		this.name = name;
 	}
 	public String getLight() {
 		return light;
@@ -41,23 +42,17 @@ public class Plant {
 	public void setLight(String light) {
 		this.light = light;
 	}
-	public int getBloomtime() {
+	public int[] getBloomtime() {
 		return bloomtime;
 	}
-	public void setBloomtime(int bloomtime) {
+	public void setBloomtime(int[] bloomtime) {
 		this.bloomtime = bloomtime;
 	}
-	public String getSoilType() {
-		return soilType;
+	public String getWaterLevel() {
+		return waterLevel;
 	}
-	public void setSoilType(String soilType) {
-		this.soilType = soilType;
-	}
-	public String getWaterlevel() {
-		return waterlevel;
-	}
-	public void setWaterlevel(String waterlevel) {
-		this.waterlevel = waterlevel;
+	public void setWaterLevel(String waterLevel) {
+		this.waterLevel = waterLevel;
 	}
 	public String[] getColor() {
 		return color;
@@ -65,26 +60,45 @@ public class Plant {
 	public void setColor(String[] color) {
 		this.color = color;
 	}
-	public int getAnimalsFed() {
-		return animalsFed;
-	}
-	public void setAnimalsFed(int animalsFed) {
-		this.animalsFed = animalsFed;
-	}
-	public int getPollinator() {
-		return pollinator;
-	}
-	public void setPollinator(int pollinator) {
-		this.pollinator = pollinator;
+
+	public String[] getCommonNames() {
+		return commonNames;
 	}
 
-	public String getScience() {
-		return science;
+	public void setCommonNames(String[] commonNames) {
+		this.commonNames = commonNames;
 	}
 
-	public void setScience(String science) {
-		this.science = science;
+	public String getDuration() {
+		return duration;
 	}
-	
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public int[] getHeight() {
+		return height;
+	}
+
+	public void setHeight(int[] height) {
+		this.height = height;
+	}
+
+	public int[] getSpread() {
+		return spread;
+	}
+
+	public void setSpread(int[] spread) {
+		this.spread = spread;
+	}
 }
 
