@@ -1,5 +1,6 @@
 package Controllers;
 
+import Model.GardenObj;
 import Model.GardenPref;
 import Model.Model;
 import Model.StageName;
@@ -219,7 +220,8 @@ public class GardenController extends Controller<GardenView>{
 	 * @param event
 	 */
 	public void dragReleased(MouseEvent event) {
-		copied = true;
+		ImageView dragPlant = (ImageView) event.getSource();
+		System.out.println(dragPlant.getX());
 	}
 	
 	/**
@@ -247,11 +249,18 @@ public class GardenController extends Controller<GardenView>{
 //			view.setYs(index, event.getY());
 //			copied = true;
 		ImageView dragPlant = (ImageView) event.getSource();
-		//double calcX = model.calcX(event.getX(),view.getSize(),view.getSize(),((ImageView) event.getSource()).getX());
 		
-		//double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight());
-		view.movePlant(dragPlant,event.getX(),event.getY());
-		System.out.println(event.getX()+" " +event.getY());
+		double x = ((GardenObj)((ImageView) event.getSource()).getUserData()).getxLoc();
+		double calcX = model.calcX(event.getX(),view.getSize(),view.getSize(),x);
+		//System.out.println(view.getGarden().getLayoutX());
+		//System.out.println(dragPlant.getTranslateX());
+		
+		
+		double y = ((GardenObj)((ImageView) event.getSource()).getUserData()).getyLoc();
+		double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight(),y);
+		view.movePlant(dragPlant,calcX,calcY);
+		
+	
 		}
 		
 		/**
@@ -334,9 +343,10 @@ public class GardenController extends Controller<GardenView>{
 			
 			if(db.hasImage()){
 				//view.getTilePane().getChildren().add(view.createImageView(db.getImage()));
-				double calcX = model.calcX(event.getX(),view.getSize(),view.getSize(),0);
 				
-				double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight());
+				double calcX = model.calcX(event.getX(),view.getSize(),view.getSize(),0);//magic number?
+				
+				double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight(),0);//magic number?
 				view.addIVToFlow(new ImageView(db.getImage()), calcX,calcY);
 				success = true;
 			}
