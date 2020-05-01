@@ -1,5 +1,6 @@
 package Controllers;
 
+import Model.GardenObj;
 import Model.GardenPref;
 import Model.Model;
 import Model.StageName;
@@ -8,8 +9,13 @@ import Views.GardenView;
 import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
@@ -214,7 +220,8 @@ public class GardenController extends Controller<GardenView>{
 	 * @param event
 	 */
 	public void dragReleased(MouseEvent event) {
-		copied = true;
+		ImageView dragPlant = (ImageView) event.getSource();
+		System.out.println(dragPlant.getX());
 	}
 	
 	/**
@@ -242,9 +249,18 @@ public class GardenController extends Controller<GardenView>{
 //			view.setYs(index, event.getY());
 //			copied = true;
 		ImageView dragPlant = (ImageView) event.getSource();
-		dragPlant.setX(event.getX());
-		dragPlant.setY(event.getY());
-		System.out.println(view.getScrollPane().getWidth());
+		
+		double x = ((GardenObj)((ImageView) event.getSource()).getUserData()).getxLoc();
+		double calcX = model.calcX(event.getX(),view.getSize(),view.getSize(),x);
+		//System.out.println(view.getGarden().getLayoutX());
+		//System.out.println(dragPlant.getTranslateX());
+		
+		
+		double y = ((GardenObj)((ImageView) event.getSource()).getUserData()).getyLoc();
+		double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight(),y);
+		view.movePlant(dragPlant,calcX,calcY);
+		
+	
 		}
 		
 		/**
@@ -261,7 +277,7 @@ public class GardenController extends Controller<GardenView>{
 		 */
 		public void press(MouseEvent event) {
 			Object click = event.getSource();
-			int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
+			//int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
 		}
 		
 		public void setDrawing(Pane drawing) {
@@ -284,6 +300,61 @@ public class GardenController extends Controller<GardenView>{
 		}
 
 
+		public EventHandler getHandlerForDragDetected() {
+			return event -> imageDrag((MouseEvent) event);
+		}
+
+
+		public void  imageDrag(MouseEvent event) {
+			System.out.println("Started To Drag");
+			Node n = (Node) event.getSource();
+			
+			Dragboard db = n.startDragAndDrop(TransferMode.ANY);
+			
+			ClipboardContent content = new ClipboardContent();
+			
+			
+	        content.putImage(((ImageView)n).getImage());
+	        db.setContent(content);
+			event.consume();
+		}
+
+
+		public EventHandler getHandlerForDragOver() {
+			return event -> gardenDragOver((DragEvent)event);
+		}
+
+
+		public void gardenDragOver(DragEvent event) {
+			event.acceptTransferModes(TransferMode.MOVE);
+			event.consume();
+		}
+
+
+		public EventHandler getHandlerForDragDropped() {
+			return event -> gardenDragDropped((DragEvent)event);
+		}
+
+
+		public void gardenDragDropped(DragEvent event) {
+			Node n =(Node)event.getSource();
+			Dragboard db = event.getDragboard();
+			boolean success = false;
+			
+			if(db.hasImage()){
+				//view.getTilePane().getChildren().add(view.createImageView(db.getImage()));
+				
+				double calcX = model.calcX(event.getX(),view.getSize(),view.getSize(),0);//magic number?
+				
+				double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight(),0);//magic number?
+				view.addIVToFlow(new ImageView(db.getImage()), calcX,calcY);
+				success = true;
+			}
+			event.setDropCompleted(success);
+			event.consume();
+		}
+
+		
 	
 	
 	

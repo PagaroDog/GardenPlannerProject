@@ -23,7 +23,7 @@ public class ModelTests {
 	@Test
 	public void copyTest() {
 		Model test = new Model(); 
-		GardenObj j = new GardenObj(); 
+		GardenObj j = new GardenObj(0, 0, 0, 0, null); 
 		
 		test.getGardenObjects().put(1, j); 
 		
@@ -36,7 +36,7 @@ public class ModelTests {
 	@Test
 	public void undoTest() {
 		Model test = new Model(); 
-		GardenObj j = new GardenObj(); 
+		GardenObj j = new GardenObj(0, 0, 0, 0, null); 
 		
 		test.getGardenObjects().put(1, j); 
 		
@@ -47,7 +47,7 @@ public class ModelTests {
 	
 	public void redoTest() {
 		Model test = new Model(); 
-		GardenObj j = new GardenObj(); 
+		GardenObj j = new GardenObj(0, 0, 0, 0, null); 
 		
 		test.getGardenObjects().put(1, j); 
 		

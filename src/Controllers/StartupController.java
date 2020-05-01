@@ -62,7 +62,7 @@ public class StartupController extends Controller<StartupView>{
 		view.getStage().setScene(Main.getScenes().get(StageName.TUTORIAL));
 		model.setStageName(StageName.TUTORIAL);
 	}
-	
+
 	
 	
 }

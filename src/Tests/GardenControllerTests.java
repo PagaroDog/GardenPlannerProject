@@ -64,7 +64,7 @@ public class GardenControllerTests {
 		MouseEvent dragEvent = new MouseEvent(null, null, null, 10, 10, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null);
 		HashMap <Integer, GardenObj> gardenobj = new HashMap <Integer, GardenObj>(); 
 		gardenobj = model.getGardenObjects();
-		gardenobj.put(0, new GardenObj());
+		gardenobj.put(0, new GardenObj(0, 0, 0, 0, null));
 		double initxLoc = gardenobj.get(0).getxLoc();
 		double inityLoc = gardenobj.get(0).getyLoc();
 		gc.imgDrag(dragEvent);

@@ -4,6 +4,8 @@ package Model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 
 import java.util.HashMap;
@@ -44,8 +46,9 @@ public class Model {
     private int year; 
  
     
-    private int canvasWidth; 
-    private int canvasHeight; 
+    GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+	int canvasWidth = gd.getDisplayMode().getWidth() - 150;
+	int canvasHeight = gd.getDisplayMode().getHeight() - 150;
     
     private StartupController startControl;
 	private TutorialController tutControl;
@@ -300,7 +303,47 @@ public class Model {
 	public GardenPref getCurrPref() {
 		return currPref;
 	}
+	/**
+	 * Calculate the x position of where the user is dropping the image from the scroll pane
+	 * @param x x coordinates of the users mouse
+	 * @param size the size of the image being dropped 
+	 * @param left the size of the ScrollPane of images
+	 * @return ret 
+	 */
+	public double calcX(double x,int size,double left,double initX) {
+		double rightBorder = canvasWidth-size-left;
 
+		double ret = (x+initX)-size/2;
+
+		if(ret<0) {
+			System.out.println("Returning 0");
+			return 0;
+		}
+		if(ret>rightBorder) {
+			System.out.println("Returning rightBorder");
+			return rightBorder;
+		}
+		
+		return ret;
+	}
+	/**
+	 * Calculate the y position of where the user is dropping the image from the scroll pane
+	 * @param y y coordinates of the users mouse
+	 * @param size the size of the image being dropped
+	 * @param bottom the size of the bottom border of the BorderPane
+	 * @return ret
+	 */
+	public double calcY(double y, int size,double bottom,double initY) {
+		double bottomBorder = canvasHeight-size-bottom*1.5;
+		double ret = (y+initY)-size/2;
+		if(ret<0) {
+			return 0;
+		}
+		else if(ret>bottomBorder) {
+			return bottomBorder;
+		}
+		return ret;
+	}
 
     public void importPlantsFromCSV() {
     	String csvFile = "plantInfo.csv";
