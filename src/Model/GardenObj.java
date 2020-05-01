@@ -7,14 +7,18 @@ package Model;
  */
 public class GardenObj {
 	private int ID;
-	private int xLoc;
-	private int yLoc; 
-	private int area;
+	private double xLoc;
+	private double yLoc; 
+	private double area;
 	private String name; 
 	//Should there be an image associated with each object?
 	
-	public GardenObj() {
-		
+	public GardenObj(int ID, double xLoc, double yLoc, double area, String Name) {
+		this.ID = ID;
+		this.xLoc = xLoc;
+		this.yLoc = yLoc;
+		this.area = area;
+		this.name = Name;
 	}
 	
 	
@@ -31,37 +35,37 @@ public class GardenObj {
 
 
 
-	public int getxLoc() {
+	public double getxLoc() {
 		return xLoc;
 	}
 
 
 
-	public void setxLoc(int xLoc) {
+	public void setxLoc(double xLoc) {
 		this.xLoc = xLoc;
 	}
 
 
 
-	public int getyLoc() {
+	public double getyLoc() {
 		return yLoc;
 	}
 
 
 
-	public void setyLoc(int yLoc) {
+	public void setyLoc(double yLoc) {
 		this.yLoc = yLoc;
 	}
 
 
 
-	public int getArea() {
+	public double getArea() {
 		return area;
 	}
 
 
 
-	public void setArea(int area) {
+	public void setArea(double area) {
 		this.area = area;
 	}
 
