@@ -7,6 +7,7 @@ import java.util.List;
 
 import Controllers.Controller;
 import Controllers.GardenController;
+import Model.GardenObj;
 import Model.GardenPref;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -222,19 +223,30 @@ public class GardenView extends View{
     	((ImageView) imageArr.get(i)).setPreserveRatio(true);
     	((ImageView) imageArr.get(i)).setFitHeight(SIZE);
     	imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
+    	imageArr.get(i).setUserData(new GardenObj(i, x, y, 0, null));
+    	//imageArr.get(i).setOnMouseReleased(control.getHandlerForDragReleased());
     	garden.getChildren().get(i).setLayoutX(x);
     	garden.getChildren().get(i).setLayoutY(y);
-
+    
     	//((ImageView) imageArr.get(i)).setX(x);
     	//((ImageView) imageArr.get(i)).setY(y);
     
     }
-	
+	/**
+	 * Called to move an already placed plant. Places the plant at the given (x,y) coordinates and changes the 
+	 * plants xLoc and yLoc values carried by the ImageView's User Data
+	 * @param plant
+	 * @param x
+	 * @param y
+	 */
 	public void movePlant(ImageView plant, double x, double y) {
-		plant.setX(x);
-		plant.setY(y);
+		int i =  ((GardenObj)plant.getUserData()).getID();
+		garden.getChildren().get(i).setLayoutX(x);
+		((GardenObj)garden.getChildren().get(i).getUserData()).setxLoc(x);
+		garden.getChildren().get(i).setLayoutY(y);
+		((GardenObj)garden.getChildren().get(i).getUserData()).setyLoc(y);
 	}
-	
+
 	
 	
 	
