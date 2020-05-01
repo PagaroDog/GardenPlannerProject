@@ -317,6 +317,7 @@ public class Model {
 			System.out.println("Returning rightBorder");
 			return rightBorder;
 		}
+		
 		return ret;
 	}
 	/**
