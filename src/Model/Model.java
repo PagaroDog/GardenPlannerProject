@@ -306,9 +306,8 @@ public class Model {
 	 */
 	public double calcX(double x,int size,double left,double initX) {
 		double rightBorder = canvasWidth-size-left;
-		System.out.println("Initial X: "+ initX);
+
 		double ret = (x+initX)-size/2;
-		System.out.println("RightBorder Check: " + ret + " " + rightBorder);
 
 		if(ret<0) {
 			System.out.println("Returning 0");
@@ -327,10 +326,9 @@ public class Model {
 	 * @param bottom the size of the bottom border of the BorderPane
 	 * @return ret
 	 */
-	public double calcY(double y, int size,double bottom) {
+	public double calcY(double y, int size,double bottom,double initY) {
 		double bottomBorder = canvasHeight-size-bottom*1.5;
-		double ret = y-size/2;
-		System.out.println("BottomBorder Check: " +ret + " " + bottomBorder);
+		double ret = (y+initY)-size/2;
 		if(ret<0) {
 			return 0;
 		}
