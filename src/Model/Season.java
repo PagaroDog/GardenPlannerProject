@@ -2,5 +2,16 @@ package Model;
 
 
 public enum Season {
-	FALL, WINTER, SPRING, SUMMER; 
+	WINTER("Winter"), SPRING("Spring"), SUMMER("Summer"), FALL("Fall"); 
+
+	private String season = null;
+	
+	private Season(String s){
+		season = s;
+	}
+	
+	@Override
+	public String toString() {
+		return season;
+	}
 }

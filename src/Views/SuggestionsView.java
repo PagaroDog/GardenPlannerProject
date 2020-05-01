@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import Controllers.Controller;
 import Controllers.SuggestionsController;
+import Model.PlantType;
+import Model.Sun;
+import Model.Water;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -160,11 +163,11 @@ public class SuggestionsView extends View{
  * Takes an event source and copies the image and displays it in the stats view. Fills in stats based on object.
  * @param event
  */
-	public void inputStats(Object event, String cName, String sName, String soil, String moisture, String sun) {
-		String[] info = {cName,sName,soil,moisture,sun};
+	public void inputStats(Object event, String name, String[] cNames, PlantType type, Water[] moisture, Sun[] sun) {
+		Object[] info = {name,cNames,type,moisture,sun};
 		int cnt = 0;
-		for(String s : info) {
-			Label val = new Label(s);
+		for(Object s : info) {
+			Label val = new Label(s.toString());
 			GridPane.setConstraints(val,3,cnt);
 			cnt++;
 			stats.getChildren().add(val);

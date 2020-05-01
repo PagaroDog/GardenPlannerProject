@@ -60,24 +60,20 @@ public class SuggestionsController extends Controller<SuggestionsView>{
 	 */
 	public void MouseEnter(MouseEvent event) {
 		String[] colors = {"Blue","Green"};
-		Plant dummy = new Plant("Milkweed", "ScineceMilkWeed", "Shade", 3, "Clay", "Arid", colors, 2, 5);
-		model.addPlant(dummy);
-		Plant dummy2 = new Plant("WhiteAsh", "ScienceWhiteAsh", "Direct Sun", 3, "Loam", "Dry", colors, 2, 5);
-		model.addPlant(dummy2);
 		if(view.getGrid().getColumnIndex((Pane)event.getSource())==1 &&
 				view.getGrid().getRowIndex((Pane)event.getSource())==1){
-			view.inputStats(event.getSource(),( model).getPlants().get(1).getName(), 
-					model.getPlants().get(1).getScience(), 
-					model.getPlants().get(1).getSoilType(),
-					model.getPlants().get(1).getWaterlevel(), 
-					model.getPlants().get(1).getLight());
+			view.inputStats(event.getSource(),( model).getPlants().get("Asclepias tuberosa").getName(), 
+					model.getPlants().get("Asclepias tuberosa").getCommonNames(), 
+					model.getPlants().get("Asclepias tuberosa").getType(),
+					model.getPlants().get("Asclepias tuberosa").getWaterLevel(), 
+					model.getPlants().get("Asclepias tuberosa").getLight());
 		}
 		else {
-		view.inputStats(event.getSource(),( model).getPlants().get(0).getName(), 
-				model.getPlants().get(0).getScience(), 
-				model.getPlants().get(0).getSoilType(),
-				model.getPlants().get(0).getWaterlevel(), 
-				model.getPlants().get(0).getLight());
+		view.inputStats(event.getSource(),( model).getPlants().get("Fraxinus americana").getName(), 
+				model.getPlants().get("Fraxinus americana").getCommonNames(), 
+				model.getPlants().get("Fraxinus americana").getType(),
+				model.getPlants().get("Fraxinus americana").getWaterLevel(), 
+				model.getPlants().get("Fraxinus americana").getLight());
 		}
 	}
 	/**

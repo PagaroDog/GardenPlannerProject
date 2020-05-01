@@ -9,7 +9,9 @@ import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import Controllers.Controller;
 import Controllers.DrawYardController;
@@ -353,14 +355,20 @@ public class Model {
         String name;
     	String[] commonNames;
     	String duration;
-    	String type;
+    	String typeStr;
+    	PlantType type;
     	String[] heightStr = new String[2];
     	int[] height = new int[2];
     	String[] color;
     	String[] bloomtimeStr;
-    	int[] bloomtime;
-    	String waterLevel;
-    	String light;
+    	HashSet<Season> bloomSet = new HashSet<Season>();
+    	Season[] bloomtime;
+    	String[] waterStr;
+    	HashSet<Water> waterSet = new HashSet<Water>();
+    	Water[] waterLevel;
+    	String[] lightStr;
+    	HashSet<Sun> lightSet = new HashSet<Sun>();
+    	Sun[] light;
     	String[] spreadStr = new String[2];
     	int[] spread = new int[2];
 
@@ -369,11 +377,22 @@ public class Model {
             while ((line = br.readLine()) != null) {
             	
             	parsedLine = parseLine(line);
+            	
+            	System.out.println("Science Name: " + parsedLine.get(0) + ", common names: " + parsedLine.get(1) + ", duration: " + parsedLine.get(2) + ", type: " + parsedLine.get(3) + ", fruit: " + parsedLine.get(4) + ", size: " + parsedLine.get(5) + ", color: " + parsedLine.get(6) + ", time: " + parsedLine.get(7) + ", water: " + parsedLine.get(8) + ", light: " + parsedLine.get(9) + ", spread: " + parsedLine.get(10));
 
             	name = parsedLine.get(0);
             	commonNames = parsedLine.get(1).split(",");
             	duration = parsedLine.get(2);
-            	type = parsedLine.get(3);
+            	typeStr = parsedLine.get(3).replaceAll(" ", "");
+            	if (typeStr.contentEquals("Herb")) {
+            		type = PlantType.HERB;
+            	} else if (typeStr.contentEquals("Shrub")) {
+            		type = PlantType.SHRUB;
+            	} else if (typeStr.contentEquals("Tree")) {
+            		type = PlantType.TREE;
+            	} else {
+            		type = PlantType.VINE;
+            	}
         		heightStr = parsedLine.get(5).replaceAll(" ", "").split("-");
         		if (heightStr.length == 1) {
         			height[0] = height[1] = Integer.valueOf(heightStr[0].replaceAll("[^0-9]", "")) * 12;
@@ -386,13 +405,21 @@ public class Model {
 	        		height[1] *= 12;
             	}
             	color = parsedLine.get(6).replaceAll(" ", "").split(",");
-            	bloomtimeStr = parsedLine.get(7).replaceAll(" ", "").replace("Jan", "1").replace("Feb", "2").replace("Mar", "3").replace("Apr", "4").replace("May", "5").replace("Jun", "6").replace("Jul", "7").replace("Aug", "8").replace("Sep", "9").replace("Oct", "10").replace("Nov", "11").replace("Dec", "12").split(",");
-            	bloomtime = new int[bloomtimeStr.length];
-            	for (int i = 0; i < bloomtime.length; i++) {
-            		bloomtime[i] = Integer.valueOf(bloomtimeStr[i]);
+            	bloomtimeStr = parsedLine.get(7).replaceAll(" ", "").replaceAll("Jan|Feb|Mar", "0").replaceAll("Apr|May|Jun", "1").replaceAll("Jul|Aug|Sep", "2").replaceAll("Oct|Nov|Dec", "3").split(",");
+            	for (String num : bloomtimeStr) {
+            		bloomSet.add(Season.values()[Integer.valueOf(num)]);
             	}
-            	waterLevel = parsedLine.get(8);
-            	light = parsedLine.get(9);
+            	bloomtime = bloomSet.toArray(new Season[0]);
+            	waterStr = parsedLine.get(8).replaceAll(" ", "").replaceAll("WetMesic", "1").replaceAll("DryMesic", "3").replaceAll("Wet", "0").replaceAll("Mesic", "2").replaceAll("Dry", "4").split(",");
+            	for (String num : waterStr) {
+            		waterSet.add(Water.values()[Integer.valueOf(num)]);
+            	}
+            	waterLevel = waterSet.toArray(new Water[0]);
+            	lightStr = parsedLine.get(9).replaceAll(" ", "").replaceAll("FullSuntoPartialShade", "1").replaceAll("PartialShadetoFullShade", "3").replaceAll("FullSun", "0").replaceAll("PartialorDappledShade", "2").replaceAll("FullShade", "4").split(",");
+            	for (String num : lightStr) {
+            		lightSet.add(Sun.values()[Integer.valueOf(num)]);
+            	}
+            	light = lightSet.toArray(new Sun[0]);
             	if (parsedLine.get(10).equals("fail")) {
             		spread[0] = 0;
         			spread[1] = 0;
@@ -411,8 +438,6 @@ public class Model {
             	}
             	
             	
-                System.out.println("Science Name: " + parsedLine.get(0) + ", common names: " + parsedLine.get(1) + ", duration: " + parsedLine.get(2) + ", type: " + parsedLine.get(3) + ", fruit: " + parsedLine.get(4) + ", size: " + parsedLine.get(5) + ", color: " + parsedLine.get(6) + ", time: " + parsedLine.get(7) + ", water: " + parsedLine.get(8) + ", light: " + parsedLine.get(9) + ", spread: " + parsedLine.get(10));
-
                 plants.put(parsedLine.get(0), new Plant(name, commonNames, duration, type, height, color, bloomtime, waterLevel, light, spread));
             }
 

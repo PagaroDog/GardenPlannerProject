@@ -2,7 +2,7 @@ package Model;
 
 /**
  * 
- * @author tombo
+ * @author Tommy White
  *
  */
 public enum DrawMode {

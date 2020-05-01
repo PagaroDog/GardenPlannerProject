@@ -9,15 +9,15 @@ public class Plant {
 	private String name;
 	private String[] commonNames;
 	private String duration;
-	private String type;
+	private PlantType type;
 	private int[] height;
 	private String[] color;
-	private int[] bloomtime;
-	private String waterLevel;
-	private String light;
+	private Season[] bloomtime;
+	private Water[] waterLevel;
+	private Sun[] light;
 	private int[] spread;
 		
-	public Plant(String name, String[] commonNames, String duration, String type, int[] height, String[] color, int[] bloomtime, String waterLevel, String light, int[] spread) {
+	public Plant(String name, String[] commonNames, String duration, PlantType type, int[] height, String[] color, Season[] bloomtime, Water[] waterLevel, Sun[] light, int[] spread) {
 		this.name = name;
 		this.commonNames = commonNames;
 		this.duration = duration;
@@ -36,22 +36,22 @@ public class Plant {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getLight() {
+	public Sun[] getLight() {
 		return light;
 	}
-	public void setLight(String light) {
+	public void setLight(Sun[] light) {
 		this.light = light;
 	}
-	public int[] getBloomtime() {
+	public Season[] getBloomtime() {
 		return bloomtime;
 	}
-	public void setBloomtime(int[] bloomtime) {
+	public void setBloomtime(Season[] bloomtime) {
 		this.bloomtime = bloomtime;
 	}
-	public String getWaterLevel() {
+	public Water[] getWaterLevel() {
 		return waterLevel;
 	}
-	public void setWaterLevel(String waterLevel) {
+	public void setWaterLevel(Water[] waterLevel) {
 		this.waterLevel = waterLevel;
 	}
 	public String[] getColor() {
@@ -77,11 +77,11 @@ public class Plant {
 		this.duration = duration;
 	}
 
-	public String getType() {
+	public PlantType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(PlantType type) {
 		this.type = type;
 	}
 
