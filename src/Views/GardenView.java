@@ -53,8 +53,10 @@ public class GardenView extends View{
 	private FlowPane bottom;
 	int SIZE = 200;
 	int TILE_PANE_WIDTH = 1000;
-	public GardenView(Stage stage) {
+	Images imgs;
+	public GardenView(Stage stage, Images imgs) {
 		this.stage = stage;
+		this.imgs = imgs;
 	}
 	
 	public void setup () {

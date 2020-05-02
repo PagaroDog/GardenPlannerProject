@@ -43,14 +43,16 @@ public class SuggestionsView extends View{
 	private final int spaceBetweenLabelsPerRow = 17;
 	private ImageView plantCopy;
 	BorderPane border;
-	ArrayList<Pane>imgs ;
+	ArrayList<Pane> imgs;
+	Images images;
 	
 	private final double bottomVPadding = 10;
 	private final double bottomHPadding = 10;
 	private final double bottomLabelFontSize = 25;
 	
-	public SuggestionsView(Stage stage) {
+	public SuggestionsView(Stage stage, Images imgs) {
 		this.stage = stage;
+		images = imgs;
 	}
 	
 /**

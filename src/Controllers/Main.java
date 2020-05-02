@@ -7,6 +7,7 @@ import Model.Model;
 import Model.StageName;
 import Views.DrawYardView;
 import Views.GardenView;
+import Views.Images;
 import Views.PreferencesView;
 import Views.SaveView;
 import Views.StartupView;
@@ -40,19 +41,21 @@ public class Main extends Application{
 	private SaveController saveControl;
 	private PreferencesController prefControl;
 	private SuggestionsController suggControl;
+	private Images imgs;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		
 		model = new Model();
+		imgs = new Images("Resources/imgs/");
 		startView = new StartupView(stage);
 		tutView = new TutorialView(stage);
 		dyView = new DrawYardView(stage);
 		statView = new StatisticsView(stage);
-		gardenView = new GardenView(stage);
+		gardenView = new GardenView(stage, imgs);
 		saveView = new SaveView(stage);
 		prefView = new PreferencesView(stage);
-		suggView = new SuggestionsView(stage);
+		suggView = new SuggestionsView(stage, imgs);
 		startControl = new StartupController(model, startView, this);
 		tutControl = new TutorialController(model, tutView, this);
 		dyControl = new DrawYardController(model, dyView, this);
