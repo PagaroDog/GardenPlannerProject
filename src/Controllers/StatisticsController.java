@@ -1,7 +1,5 @@
 package Controllers;
 
-
-
 import Model.Model;
 import Model.StageName;
 import Views.StatisticsView;
@@ -13,25 +11,25 @@ import javafx.stage.Stage;
 /**
  * @author Tommy White
  */
-public class StatisticsController extends Controller<StatisticsView>{
+public class StatisticsController extends Controller<StatisticsView> {
 
 	public StatisticsController(Model model, StatisticsView view, Main main) {
 		super(model, view, main);
 	}
 
 	/**
-	 * Handles event when user presses rectangle button,
-	 * bringing the user back to the design stage.
+	 * Handles event when user presses rectangle button, bringing the user back to
+	 * the design stage.
+	 * 
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler handleOnBackButton() {
-		return event -> backButton((MouseEvent)event);
+		return event -> backButton((MouseEvent) event);
 	}
 
 	public void backButton(MouseEvent event) {
 		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 		model.setStageName(StageName.DESIGN);
 	}
-	
-	
+
 }

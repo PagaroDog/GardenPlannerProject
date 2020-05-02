@@ -18,11 +18,10 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
 /**
  * @author Brandon Wu
  */
-public class Main extends Application{
+public class Main extends Application {
 	private static Map<StageName, Scene> scenes = new HashMap<>();
 	private Model model;
 	private StartupView startView;
@@ -42,10 +41,10 @@ public class Main extends Application{
 	private PreferencesController prefControl;
 	private SuggestionsController suggControl;
 	private Images imgs;
-	
+
 	@Override
 	public void start(Stage stage) throws Exception {
-		
+
 		model = new Model();
 		imgs = new Images("Resources/imgs/");
 		startView = new StartupView(stage);
@@ -64,7 +63,7 @@ public class Main extends Application{
 		saveControl = new SaveController(model, saveView, this);
 		prefControl = new PreferencesController(model, prefView, this);
 		suggControl = new SuggestionsController(model, suggView, this);
-		
+
 		scenes.put(StageName.WELCOME, startView.getScene());
 		scenes.put(StageName.TUTORIAL, tutView.getScene());
 		scenes.put(StageName.DRAW, dyView.getScene());
@@ -73,18 +72,18 @@ public class Main extends Application{
 		scenes.put(StageName.SAVE, saveView.getScene());
 		scenes.put(StageName.PREFERENCES, prefView.getScene());
 		scenes.put(StageName.SUGGESTIONS, suggView.getScene());
-		
-		
+
 		// Start with the main scene
 		stage.setScene(scenes.get(StageName.WELCOME));
 		stage.setTitle("My Native Garden");
 		stage.show();
-		startView.start();}
-	
-	public static Map<StageName,Scene> getScenes(){
+		startView.start();
+	}
+
+	public static Map<StageName, Scene> getScenes() {
 		return scenes;
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -92,11 +91,11 @@ public class Main extends Application{
 	public DrawYardController getDyControl() {
 		return dyControl;
 	}
-	
+
 	public PreferencesController getPrefControl() {
 		return prefControl;
 	}
-	
+
 	public GardenController getGardenControl() {
 		return gardenControl;
 	}

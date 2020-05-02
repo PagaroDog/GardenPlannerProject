@@ -19,64 +19,42 @@ public class ModelTests {
 	public void test() {
 		fail("Not yet implemented");
 	}
-	
+
 	@Test
 	public void copyTest() {
-		Model test = new Model(); 
-		GardenObj j = new GardenObj(0, 0, 0, 0, null); 
-		
-		test.getGardenObjects().put(1, j); 
-		
-		test.copy(j, j.getID()); 
-		
-		assertEquals(test.getGardenObjects().size(), 2); 
+		Model test = new Model();
+		GardenObj j = new GardenObj(0, 0, 0, 0, null);
+
+		test.getGardenObjects().put(1, j);
+
+		test.copy(j, j.getID());
+
+		assertEquals(test.getGardenObjects().size(), 2);
 	}
-	
-	
+
 	@Test
 	public void undoTest() {
-		Model test = new Model(); 
-		GardenObj j = new GardenObj(0, 0, 0, 0, null); 
-		
-		test.getGardenObjects().put(1, j); 
-		
+		Model test = new Model();
+		GardenObj j = new GardenObj(0, 0, 0, 0, null);
+
+		test.getGardenObjects().put(1, j);
+
 		test.undo();
-		
-		assertEquals(test.getGardenObjects().size(), 0); 
+
+		assertEquals(test.getGardenObjects().size(), 0);
 	}
-	
+
 	public void redoTest() {
-		Model test = new Model(); 
-		GardenObj j = new GardenObj(0, 0, 0, 0, null); 
-		
-		test.getGardenObjects().put(1, j); 
-		
+		Model test = new Model();
+		GardenObj j = new GardenObj(0, 0, 0, 0, null);
+
+		test.getGardenObjects().put(1, j);
+
 		test.undo();
-		test.redo(); 
-		
+		test.redo();
+
 		assertEquals(test.getGardenObjects().size(), 1);
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

@@ -63,10 +63,10 @@ public class GardenView extends View {
 		this.stage = stage;
 		this.imgs = imgs;
 	}
-	
+
 	/**
-	 * Initial setup of this class that could not be completed in the
-	 * constructor since the controller had not yet been set
+	 * Initial setup of this class that could not be completed in the constructor
+	 * since the controller had not yet been set
 	 */
 	@Override
 	public void setup() {

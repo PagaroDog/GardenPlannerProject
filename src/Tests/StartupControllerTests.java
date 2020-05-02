@@ -20,19 +20,17 @@ public class StartupControllerTests {
 		Model model = new Model();
 		StartupView suv = new StartupView(new Stage());
 		Main main = new Main();
-		StartupController suc = new StartupController(model, suv,main);
-		
-		
+		StartupController suc = new StartupController(model, suv, main);
+
 		suc.handleOnNewButton();
 		assertEquals(model.getStageName(), StageName.PREFERENCES);
-		
+
 		suc.handleOnLoadButton();
 		assertEquals(model.getStageName(), StageName.DESIGN);
-		
+
 		suc.handleOnTutorialButton();
 		assertEquals(model.getStageName(), StageName.TUTORIAL);
-		
-		
+
 	}
 
 }

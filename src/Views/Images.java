@@ -12,20 +12,21 @@ import javafx.scene.image.Image;
 
 /**
  * This class stores all the images of the plants
+ * 
  * @author Tommy White
  *
  */
 public class Images {
 	HashMap<String, ImageWithSourceInfo[]> plantImages;
-	
+
 	/**
-	 * The constructor reads the directory containing the
-	 * images and source info and creates an array of
-	 * ImageWithSourceInfo objects for each plant and stores
+	 * The constructor reads the directory containing the images and source info and
+	 * creates an array of ImageWithSourceInfo objects for each plant and stores
 	 * them in the HashMap plantImages
+	 * 
 	 * @param directory The path of the directory holding the images
 	 */
-	public Images (String directory) {
+	public Images(String directory) {
 		plantImages = new HashMap<String, ImageWithSourceInfo[]>();
 		ArrayList<ImageWithSourceInfo> arrList = new ArrayList<ImageWithSourceInfo>();
 		String[] source = new String[2];
@@ -43,11 +44,12 @@ public class Images {
 						String curr = currFolder.listFiles(pic)[0].getPath();
 						Image img = new Image(new FileInputStream(curr));
 						BufferedReader br = new BufferedReader(new FileReader(currFolder.listFiles(txt)[0]));
-						br.readLine(); //Ignore empty line
-						source[0] = br.readLine(); //Author
-						source[1] = br.readLine(); //Link
+						br.readLine(); // Ignore empty line
+						source[0] = br.readLine(); // Author
+						source[1] = br.readLine(); // Link
 						arrList.add(new ImageWithSourceInfo(img, source));
-					} catch (Exception e) {	}
+					} catch (Exception e) {
+					}
 				}
 				plantImages.put(file.getName().replace("_", " "), arrList.toArray(imgArr));
 			}

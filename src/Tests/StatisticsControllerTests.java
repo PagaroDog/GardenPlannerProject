@@ -23,8 +23,8 @@ public class StatisticsControllerTests {
 		Model model = new Model();
 		StatisticsView sv = new StatisticsView(new Stage());
 		Main main = new Main();
-		StatisticsController sc = new StatisticsController(model,sv,main);
-		
+		StatisticsController sc = new StatisticsController(model, sv, main);
+
 		sc.handleOnBackButton();
 		assertEquals(StageName.DESIGN, model.getStageName());
 	}

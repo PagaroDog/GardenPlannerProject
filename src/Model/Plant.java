@@ -1,5 +1,6 @@
 
 package Model;
+
 /**
  * 
  * @author IanMcCabe
@@ -17,8 +18,9 @@ public class Plant {
 	private Water[] waterLevel;
 	private Sun[] light;
 	private int[] spread;
-		
-	public Plant(String name, String[] commonNames, String duration, PlantType type, int[] height, String[] color, Season[] bloomtime, Water[] waterLevel, Sun[] light, int[] spread) {
+
+	public Plant(String name, String[] commonNames, String duration, PlantType type, int[] height, String[] color,
+			Season[] bloomtime, Water[] waterLevel, Sun[] light, int[] spread) {
 		this.name = name;
 		this.commonNames = commonNames;
 		this.duration = duration;
@@ -30,34 +32,43 @@ public class Plant {
 		this.light = light;
 		this.spread = spread;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public Sun[] getLight() {
 		return light;
 	}
+
 	public void setLight(Sun[] light) {
 		this.light = light;
 	}
+
 	public Season[] getBloomtime() {
 		return bloomtime;
 	}
+
 	public void setBloomtime(Season[] bloomtime) {
 		this.bloomtime = bloomtime;
 	}
+
 	public Water[] getWaterLevel() {
 		return waterLevel;
 	}
+
 	public void setWaterLevel(Water[] waterLevel) {
 		this.waterLevel = waterLevel;
 	}
+
 	public String[] getColor() {
 		return color;
 	}
+
 	public void setColor(String[] color) {
 		this.color = color;
 	}
@@ -102,4 +113,3 @@ public class Plant {
 		this.spread = spread;
 	}
 }
-

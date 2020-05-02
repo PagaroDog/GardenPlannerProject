@@ -18,6 +18,7 @@ import Views.GardenView;
 import Views.StartupView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+
 /**
  * 
  * @author matt cohen
@@ -31,38 +32,35 @@ public class GardenControllerTests {
 		Model model = new Model();
 		GardenView gv = new GardenView(new Stage());
 		Main main = new Main();
-		GardenController gc = new GardenController(model, gv,main);
-		
+		GardenController gc = new GardenController(model, gv, main);
+
 		gc.handleOnFallButton();
 		assertEquals(model.getSeason(), Season.FALL);
-		
+
 		gc.handleOnWinterButton();
 		assertEquals(model.getSeason(), Season.WINTER);
-		
+
 		gc.handleOnSpringButton();
 		assertEquals(model.getSeason(), Season.SPRING);
-		
+
 		gc.handleOnSummerButton();
 		assertEquals(model.getSeason(), Season.SUMMER);
-		
+
 		gc.handleOnStatsButton();
 		assertEquals(model.getStageName(), StageName.STATS);
-		
-		
+
 		gc.handleOnYear1Button();
 		assertEquals(model.getYear(), 1);
-		
-		
+
 		gc.handleOnYear2Button();
 		assertEquals(model.getYear(), 2);
-				
-		
+
 		gc.handleOnYear3Button();
 		assertEquals(model.getYear(), 3);
-		
-		
-		MouseEvent dragEvent = new MouseEvent(null, null, null, 10, 10, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null);
-		HashMap <Integer, GardenObj> gardenobj = new HashMap <Integer, GardenObj>(); 
+
+		MouseEvent dragEvent = new MouseEvent(null, null, null, 10, 10, 0, 0, null, 0, false, false, false, false,
+				false, false, false, false, false, false, null);
+		HashMap<Integer, GardenObj> gardenobj = new HashMap<Integer, GardenObj>();
 		gardenobj = model.getGardenObjects();
 		gardenobj.put(0, new GardenObj(0, 0, 0, 0, null));
 		double initxLoc = gardenobj.get(0).getxLoc();
@@ -74,13 +72,11 @@ public class GardenControllerTests {
 		assertEquals(0, inityLoc, 0.01);
 		assertEquals(10, secxLoc, 0.01);
 		assertEquals(10, secyLoc, 0.01);
-		
-		
+
 		assertEquals(model.getSeason(), Season.FALL);
-		
+
 		gc.handleOnPrefButton();
 		assertEquals(model.getStageName(), StageName.STATS);
 	}
-	
 
 }

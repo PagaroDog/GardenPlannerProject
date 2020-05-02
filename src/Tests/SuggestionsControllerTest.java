@@ -20,15 +20,14 @@ public class SuggestionsControllerTest {
 		Model model = new Model();
 		SuggestionsView sv = new SuggestionsView(new Stage());
 		Main main = new Main();
-		SuggestionsController sc = new SuggestionsController(model, sv,main);
-		
-		
+		SuggestionsController sc = new SuggestionsController(model, sv, main);
+
 		sc.gethandleOnNextButton();
 		assertEquals(model.getStageName(), StageName.PREFERENCES);
-		
+
 		sc.gethandleOnBackButton();
 		assertEquals(model.getStageName(), StageName.DESIGN);
-		
+
 	}
 
 }

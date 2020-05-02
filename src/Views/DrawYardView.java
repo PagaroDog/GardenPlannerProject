@@ -1,4 +1,5 @@
 package Views;
+
 import javafx.scene.control.Button;
 
 import java.util.ArrayList;
@@ -23,25 +24,26 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- * This is the View class for the Draw Yard screen.
- * Holds graphical data and defines graphical logic.
+ * This is the View class for the Draw Yard screen. Holds graphical data and
+ * defines graphical logic.
+ * 
  * @author Tommy White
  *
  */
-public class DrawYardView extends View{
+public class DrawYardView extends View {
 	private Stage stage;
-	
+
 	private BorderPane root;
 	private Pane drawing;
 	private HBox toolbar;
 	private BorderPane navigation;
-	
+
 	private Label drawtxt;
 	private Label condtxt;
 	private Label labelSizetxt;
-	
+
 	Font font;
-	
+
 	private Button nextButtonDraw;
 	private Button prevButtonDraw;
 	private Button nextButtonCond;
@@ -54,11 +56,11 @@ public class DrawYardView extends View{
 	private Button minusButton;
 	private Button plusButton;
 	private Button newAreaButton;
-	
+
 	private TextField labeltxt;
-	
+
 	private DrawYardController control;
-	
+
 	private double labelSize;
 	private final double initShapeSize = 10;
 	private final double toolbarHGap = 15;
@@ -68,16 +70,16 @@ public class DrawYardView extends View{
 	private final double randRGB = 255 - minRGB;
 	private final double opacity = 0.3;
 	private final double initFontSize = 25;
-	
+
 	private ArrayList<Node> areas = new ArrayList<Node>();
-	
+
 	public DrawYardView(Stage stage) {
 		this.stage = stage;
 	}
-	
+
 	/**
-	 * Initial setup of this class that could not be completed in the
-	 * constructor since the controller had not yet been set
+	 * Initial setup of this class that could not be completed in the constructor
+	 * since the controller had not yet been set
 	 */
 	@Override
 	public void setup() {
@@ -106,11 +108,12 @@ public class DrawYardView extends View{
 		newAreaButton.setOnMousePressed(control.getHandleOnNewAreaButton());
 		labeltxt = new TextField();
 
-		toolbar  = new HBox(drawtxt, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
+		toolbar = new HBox(drawtxt, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
+				minusButton, plusButton, labelSizetxt);
 		toolbar.setStyle("-fx-background-color: rgba(25,100,255,1);");
 		toolbar.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
 		toolbar.setSpacing(toolbarHGap);
-		
+
 		prevButtonDraw = new Button("Main Menu");
 		prevButtonDraw.setOnMouseClicked(control.getHandlePrevButton());
 		nextButtonDraw = new Button("Create Areas");
@@ -119,26 +122,26 @@ public class DrawYardView extends View{
 		prevButtonCond.setOnMouseClicked(control.getHandlePrevButton());
 		nextButtonCond = new Button("Set Preferences");
 		nextButtonCond.setOnMouseClicked(control.getHandleNextButton());
-	
+
 		navigation = new BorderPane();
 		navigation.setStyle("-fx-background-color: rgba(168,158,255,1);");
 		navigation.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
 		navigation.setLeft(prevButtonDraw);
 		navigation.setRight(nextButtonDraw);
 		navigation.setCenter(drawtxt);
-		
+
 		drawing = new Pane();
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
 		drawing.setOnMouseDragged(control.getHandleOnDragPane());
-		
+
 		root = new BorderPane();
 		root.setTop(toolbar);
 		root.setCenter(drawing);
 		root.setBottom(navigation);
-		
+
 		scene = new Scene(root, canvasWidth, canvasHeight);
 	}
-	
+
 	/**
 	 * @return Scene object for the Draw Yard screen
 	 */
@@ -146,7 +149,7 @@ public class DrawYardView extends View{
 	public Scene getScene() {
 		return scene;
 	}
-	
+
 	/**
 	 * Sets control to c
 	 */
@@ -175,20 +178,21 @@ public class DrawYardView extends View{
 	public void setDrawing(Pane drawing) {
 		this.drawing = drawing;
 	}
-	
+
 	public BorderPane getRoot() {
 		return root;
 	}
 
 	/**
-	 * Called when user clicks on the drawing Pane in RECTANGLE mode.
-	 * Creates a new Rectangle object and adds it to the drawing Pane 
+	 * Called when user clicks on the drawing Pane in RECTANGLE mode. Creates a new
+	 * Rectangle object and adds it to the drawing Pane
+	 * 
 	 * @param x The x coordinate of the initial mouse press
 	 * @param y The y coordinate of the initial mouse press
 	 * @return The newly created rectangle
 	 */
 	public Node addRectangle(StageName mode, double x, double y) {
-		
+
 		System.out.println(drawing.getWidth());
 		Rectangle rect = new Rectangle(x, y, initShapeSize, initShapeSize);
 		if (mode == StageName.DRAW) {
@@ -196,7 +200,8 @@ public class DrawYardView extends View{
 			rect.setStroke(Color.BLACK);
 			rect.setOnMouseClicked(control.getHandleOnPressShape());
 		} else {
-			rect.setFill(Color.rgb((int) (Math.random()*randRGB) + minRGB, (int) (Math.random()*randRGB) + minRGB, (int) (Math.random()*randRGB) + minRGB, opacity));
+			rect.setFill(Color.rgb((int) (Math.random() * randRGB) + minRGB, (int) (Math.random() * randRGB) + minRGB,
+					(int) (Math.random() * randRGB) + minRGB, opacity));
 			rect.setStroke(Color.TRANSPARENT);
 			rect.setOnMouseClicked(control.getHandleOnPressArea());
 		}
@@ -207,13 +212,14 @@ public class DrawYardView extends View{
 	}
 
 	/**
-	 * Called when user drags on the drawing Pane while creating a 
-	 * new rectangle, showing the current state of the rectangle.
+	 * Called when user drags on the drawing Pane while creating a new rectangle,
+	 * showing the current state of the rectangle.
+	 * 
 	 * @param The Rectangle to be updated
-	 * @param x0 The x coordinate of the initial mouse press
-	 * @param y0 The y coordinate of the initial mouse press
-	 * @param x1 The x coordinate of the current mouse position
-	 * @param y1 The y coordinate of the current mouse position
+	 * @param x0  The x coordinate of the initial mouse press
+	 * @param y0  The y coordinate of the initial mouse press
+	 * @param x1  The x coordinate of the current mouse position
+	 * @param y1  The y coordinate of the current mouse position
 	 */
 	public void updateRect(Rectangle rect, double x0, double y0, double x1, double y1) {
 		double topLeftX = Math.min(x0, x1);
@@ -225,22 +231,24 @@ public class DrawYardView extends View{
 		rect.setWidth(width);
 		rect.setHeight(height);
 	}
-	
+
 	/**
-	 * Called when user drags on an already created rectangle,
-	 * moving the position of the rectangle.
+	 * Called when user drags on an already created rectangle, moving the position
+	 * of the rectangle.
+	 * 
 	 * @param rect The Rectangle to be moved.
-	 * @param x The new x coordinate of the rectangle
-	 * @param y The new y coordinate of the rectangle
+	 * @param x    The new x coordinate of the rectangle
+	 * @param y    The new y coordinate of the rectangle
 	 */
 	public void moveRectangle(Rectangle rect, double x, double y) {
 		rect.setX(x);
 		rect.setY(y);
 	}
-	
+
 	/**
-	 * Called when user clicks on the drawing Pane in CIRLCE mode.
-	 * Creates a new Circle object and adds it to the drawing Pane 
+	 * Called when user clicks on the drawing Pane in CIRLCE mode. Creates a new
+	 * Circle object and adds it to the drawing Pane
+	 * 
 	 * @param x The x coordinate of the initial mouse press
 	 * @param y The y coordinate of the initial mouse press
 	 * @return The newly created circle
@@ -256,11 +264,12 @@ public class DrawYardView extends View{
 	}
 
 	/**
-	 * Called when user drags on the drawing Pane while creating a 
-	 * new circle, showing the current state of the circle.
+	 * Called when user drags on the drawing Pane while creating a new circle,
+	 * showing the current state of the circle.
+	 * 
 	 * @param circle The circle to be updated
-	 * @param x The x coordinate of the current mouse position
-	 * @param y The y coordinate of the current mouse position
+	 * @param x      The x coordinate of the current mouse position
+	 * @param y      The y coordinate of the current mouse position
 	 */
 	public void updateCircle(Ellipse circle, double x, double y) {
 		double radiusX = Math.abs(circle.getCenterX() - x);
@@ -268,19 +277,20 @@ public class DrawYardView extends View{
 		circle.setRadiusX(radiusX);
 		circle.setRadiusY(radiusY);
 	}
-	
+
 	/**
-	 * Called when user drags on an already created circle,
-	 * moving the position of the circle.
+	 * Called when user drags on an already created circle, moving the position of
+	 * the circle.
+	 * 
 	 * @param rect The Circle to be moved.
-	 * @param x The new x coordinate of the center of the circle
-	 * @param y The new y coordinate of the center of the circle
+	 * @param x    The new x coordinate of the center of the circle
+	 * @param y    The new y coordinate of the center of the circle
 	 */
 	public void moveCircle(Ellipse circle, double x, double y) {
 		circle.setCenterX(x);
 		circle.setCenterY(y);
 	}
-	
+
 	public Node addLabel(double x, double y) {
 		if (labeltxt.getText().length() > 0) {
 			Label txt = new Label(labeltxt.getText());
@@ -296,30 +306,33 @@ public class DrawYardView extends View{
 			return null;
 		}
 	}
-	
+
 	/**
-	 * Called when user drags on an already created label,
-	 * moving the position of the label.
+	 * Called when user drags on an already created label, moving the position of
+	 * the label.
+	 * 
 	 * @param label The Label to be moved
-	 * @param x The new x coordinate of the center of the label
-	 * @param y The new y coordinate of the center of the label
+	 * @param x     The new x coordinate of the center of the label
+	 * @param y     The new y coordinate of the center of the label
 	 */
-	public void moveLabel (Label label, double x, double y) {
+	public void moveLabel(Label label, double x, double y) {
 		label.setLayoutX(x);
 		label.setLayoutY(y);
 	}
-	
+
 	/**
-	 * Called when user presses the delete button,
-	 * deleting the currently selected object.
+	 * Called when user presses the delete button, deleting the currently selected
+	 * object.
+	 * 
 	 * @param node The shape to be deleted.
 	 */
 	public void deleteShape(Node node) {
 		drawing.getChildren().remove(node);
 	}
-	
+
 	/**
 	 * Changes the view to show that a certain object has been selected
+	 * 
 	 * @param node The selected node
 	 */
 	public void select(Node node) {
@@ -327,11 +340,12 @@ public class DrawYardView extends View{
 			((Shape) node).setStroke(Color.RED);
 		else if (node instanceof Label)
 			((Label) node).setTextFill(Color.RED);
-		//nothing if null
+		// nothing if null
 	}
-	
+
 	/**
 	 * Changes the view to show that a certain object has been deselected
+	 * 
 	 * @param node The deselected node
 	 */
 	public void deselect(Node node) {
@@ -343,17 +357,18 @@ public class DrawYardView extends View{
 				shape.setStroke(Color.BLACK);
 		} else if (node instanceof Label)
 			((Label) node).setTextFill(Color.BLACK);
-		//nothing if null
+		// nothing if null
 	}
-	
+
 	/**
 	 * Makes changes to the view when entering draw mode from conditions mode
 	 */
 	public void drawMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
-		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt, minusButton, plusButton, labelSizetxt);
+		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
+				minusButton, plusButton, labelSizetxt);
 		ObservableList<Node> drawObjs = drawing.getChildren();
-		for (int i = drawObjs.size()-1; i >= 0 && drawObjs.get(i).getUserData() == StageName.CONDITIONS; i--) {
+		for (int i = drawObjs.size() - 1; i >= 0 && drawObjs.get(i).getUserData() == StageName.CONDITIONS; i--) {
 			areas.add(drawObjs.get(i));
 			drawObjs.remove(i);
 		}
@@ -362,7 +377,7 @@ public class DrawYardView extends View{
 		navigation.setCenter(drawtxt);
 		navigation.setRight(nextButtonDraw);
 	}
-	
+
 	/**
 	 * Makes changes to the view when entering conditions mode from draw mode
 	 */
@@ -376,7 +391,7 @@ public class DrawYardView extends View{
 		navigation.setCenter(condtxt);
 		navigation.setRight(nextButtonCond);
 	}
-	
+
 	/**
 	 * @return The height of the toolbar
 	 */

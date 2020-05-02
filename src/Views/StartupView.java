@@ -1,4 +1,5 @@
 package Views;
+
 import Controllers.Controller;
 import Controllers.StartupController;
 import javafx.scene.Node;
@@ -13,14 +14,15 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- * The View class for the Startup screen.
- * Holds graphical data and defines graphical logic.
+ * The View class for the Startup screen. Holds graphical data and defines
+ * graphical logic.
+ * 
  * @author Matt Cohen
  * @author Brandon Wu
  * @author Tommy White
  * 
  */
-public class StartupView extends View{
+public class StartupView extends View {
 	private Label title;
 	private Button newButton;
 	private Button loadButton;
@@ -33,58 +35,61 @@ public class StartupView extends View{
 	private double titleXPos = canvasWidth / 2;
 	private double titleYPos = canvasHeight / 3;
 	private double buttonXPos = canvasWidth / 2;
-	private double buttonYPos = canvasHeight * 2/3;
+	private double buttonYPos = canvasHeight * 2 / 3;
 	private double buttonGap = 50;
+
 	public StartupView(Stage stage) {
 		this.stage = stage;
 	}
-	
+
 	/**
-	 * Initial setup of this class that could not be completed in the
-	 * constructor since the controller had not yet been set
+	 * Initial setup of this class that could not be completed in the constructor
+	 * since the controller had not yet been set
 	 */
 	@Override
 	public void setup() {
 		title = new Label("MyNativeGarden");
 		title.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Dandelion.ttf"), 125));
-		iv = new ImageView(new Image(getClass().getResourceAsStream("/imgs/StartupBackground.jpg"),canvasWidth,canvasHeight,false,false));
+		iv = new ImageView(new Image(getClass().getResourceAsStream("/imgs/StartupBackground.jpg"), canvasWidth,
+				canvasHeight, false, false));
 		buttons = new TilePane();
 		tutorialButton = new Button("Tutorial");
 		tutorialButton.setOnMouseClicked(suc.handleOnTutorialButton());
-		
+
 		newButton = new Button("New");
 		newButton.setOnMouseClicked(suc.handleOnNewButton());
-		
+
 		loadButton = new Button("Load");
 		loadButton.setOnMouseClicked(suc.handleOnLoadButton());
-		buttons.getChildren().addAll(newButton,loadButton,tutorialButton);
-		
+		buttons.getChildren().addAll(newButton, loadButton, tutorialButton);
+
 		root = new Pane();
 		root.getChildren().addAll(iv, title, buttons);
-		
+
 		for (Node button : buttons.getChildren()) {
 			((Button) button).setFont(new Font(35));
 		}
-		
+
 		scene = new Scene(root, canvasWidth, canvasHeight);
 	}
-	
+
 	@Override
 	public Scene getScene() {
 		return scene;
 	}
+
 	public Stage getStage() {
 		return stage;
 	}
+
 	@Override
 	public void setController(Controller controller) {
-		this.suc = (StartupController)controller;
+		this.suc = (StartupController) controller;
 	}
 
 	/**
-	 * Further setup of this screen that can only occur
-	 * once some variables have been set by the initial
-	 * showing of this screen.
+	 * Further setup of this screen that can only occur once some variables have
+	 * been set by the initial showing of this screen.
 	 */
 	public void start() {
 		buttons.setHgap(buttonGap);
@@ -92,10 +97,10 @@ public class StartupView extends View{
 		newButton.setPrefWidth(buttonWidth);
 		loadButton.setPrefWidth(buttonWidth);
 		double tileWidth = buttonWidth * 3 + buttonGap * 2;
-		buttons.setLayoutX(buttonXPos - tileWidth/2);
+		buttons.setLayoutX(buttonXPos - tileWidth / 2);
 		buttons.setLayoutY(buttonYPos);
 
-		title.setLayoutX(titleXPos - title.getWidth()/2);
+		title.setLayoutX(titleXPos - title.getWidth() / 2);
 		title.setLayoutY(titleYPos);
 	}
 }
