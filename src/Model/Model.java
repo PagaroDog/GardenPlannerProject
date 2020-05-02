@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import Controllers.Controller;
 import Controllers.DrawYardController;
@@ -450,7 +449,6 @@ public class Model {
 
         List<String> result = new ArrayList<>();
 
-        //if empty, return!
         if (csvLine == null && csvLine.isEmpty()) {
             return result;
         }
