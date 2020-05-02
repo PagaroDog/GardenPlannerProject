@@ -10,9 +10,21 @@ import java.util.HashMap;
 
 import javafx.scene.image.Image;
 
+/**
+ * This class stores all the images of the plants
+ * @author Tommy White
+ *
+ */
 public class Images {
 	HashMap<String, ImageWithSourceInfo[]> plantImages;
 	
+	/**
+	 * The constructor reads the directory containing the
+	 * images and source info and creates an array of
+	 * ImageWithSourceInfo objects for each plant and stores
+	 * them in the HashMap plantImages
+	 * @param directory The path of the directory holding the images
+	 */
 	public Images (String directory) {
 		plantImages = new HashMap<String, ImageWithSourceInfo[]>();
 		ArrayList<ImageWithSourceInfo> arrList = new ArrayList<ImageWithSourceInfo>();

@@ -8,7 +8,6 @@ import Controllers.DrawYardController;
 import Model.StageName;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -17,9 +16,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -27,7 +23,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- * 
+ * This is the View class for the Draw Yard screen.
+ * Holds graphical data and defines graphical logic.
  * @author Tommy White
  *
  */
@@ -82,6 +79,7 @@ public class DrawYardView extends View{
 	 * Initial setup of this class that could not be completed in the
 	 * constructor since the controller had not yet been set
 	 */
+	@Override
 	public void setup() {
 		labelSize = 12;
 		drawtxt = new Label("Draw An Outline of Your Property");
@@ -176,6 +174,10 @@ public class DrawYardView extends View{
 
 	public void setDrawing(Pane drawing) {
 		this.drawing = drawing;
+	}
+	
+	public BorderPane getRoot() {
+		return root;
 	}
 
 	/**
@@ -380,9 +382,5 @@ public class DrawYardView extends View{
 	 */
 	public double getToolbarHeight() {
 		return toolbar.getHeight();
-	}
-
-	public BorderPane getRoot() {
-		return root;
 	}
 }

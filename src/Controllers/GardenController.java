@@ -21,9 +21,11 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 
 /**
- * @author matt cohen
-* this class is the controller for the Garden screen
-*/
+ * This class is the controller for the Garden Design screen.
+ * It mostly handles user input.
+ * @author Matt Cohen
+ * 
+ */
 public class GardenController extends Controller<GardenView>{
 	boolean copied = false;
 	public GardenController(Model model, GardenView view, Main main) {
@@ -280,6 +282,11 @@ public class GardenController extends Controller<GardenView>{
 			//int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
 		}
 		
+		/**
+		 * Allows the drawing from DrawYardView to be displayed
+		 * in the GardenView. Resizes the drawing accordingly.
+		 * @param drawing The drawing to be resized and set.
+		 */
 		public void setDrawing(Pane drawing) {
 			view.setDrawing(drawing);
 			view.getGarden().getChildren().add(drawing);
@@ -299,7 +306,11 @@ public class GardenController extends Controller<GardenView>{
 			}
 		}
 
-
+		/**
+		 * Handles event when user drags an image,
+		 * invoking imageDrag()
+		 * @return EventHandler object for this action
+		 */
 		public EventHandler getHandlerForDragDetected() {
 			return event -> imageDrag((MouseEvent) event);
 		}

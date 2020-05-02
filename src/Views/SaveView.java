@@ -8,8 +8,9 @@ import Controllers.Controller;
 import Controllers.SaveController;
 
 /**
+ * 
+* The view for the Save screen.
  * @author Josh Stone
-* this class is the view for the Save screen
 */
 public class SaveView extends View{
 
@@ -24,6 +25,11 @@ public class SaveView extends View{
 		this.stage = stage;
 	}
 	
+	/**
+	 * Initial setup of this class that could not be completed in the
+	 * constructor since the controller had not yet been set
+	 */
+	@Override
 	public void setup() {
 		TilePane tp = new TilePane();
 		Label txt = new Label("Save");

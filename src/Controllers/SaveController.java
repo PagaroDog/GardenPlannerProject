@@ -17,8 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * This class is the controller for the Save screen.
+ * Handles user input.
  * @author Josh Stone
- * this class is the controller for the Save screen
+ * 
  */
 public class SaveController extends Controller<SaveView>{
 		
@@ -47,6 +49,8 @@ public class SaveController extends Controller<SaveView>{
 		
 		/**
 		 * saves the garden as a .garden file
+		 * @param event The MouseEvent generated when
+		 * 		the user pressed the file button.
 		 */
 		public void fileButton(MouseEvent event) {//not sure how to work with load
 			 saveGarden(view.getScene());
@@ -54,6 +58,8 @@ public class SaveController extends Controller<SaveView>{
 		
 		/**
 		 * saves the garden as a .png file
+		 * @param event The MouseEvent generated when
+		 * 		the user pressed the png button.
 		 */
 		public void PNGButton(MouseEvent event) {
 			takeSnapShot(view.getScene());
@@ -89,11 +95,20 @@ public class SaveController extends Controller<SaveView>{
 	        }
 		}
 		
-		
+		/**
+		 * Handles event when user presses prev button,
+		 * invoking prevButton()
+		 * @return EventHandler object for this action
+		 */
 		public EventHandler getHandleOnPrevButton() {
 			return event -> prevButton((MouseEvent)event);
 		}
 
+		/**
+		 * Returns the user to the garden design screen
+		 * @param event The MouseEvent generated when
+		 * 		the user pressed the prev button.
+		 */
 		public void prevButton(MouseEvent event) {
 			view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 			model.setStageName(StageName.DESIGN);

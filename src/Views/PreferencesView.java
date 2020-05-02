@@ -1,12 +1,10 @@
 package Views;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.function.Predicate;
 
 import Controllers.Controller;
 import Controllers.PreferencesController;
 import Model.GardenPref;
-import Model.StageName;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -16,13 +14,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
@@ -62,6 +56,11 @@ public class PreferencesView extends View{
 		this.stage = stage;
 	}
 	
+	/**
+	 * Initial setup of this class that could not be completed in the
+	 * constructor since the controller had not yet been set
+	 */
+	@Override
 	public void setup() {
 		border = new BorderPane();
 		BorderPane bottom = addBottom();

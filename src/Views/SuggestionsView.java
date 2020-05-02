@@ -24,8 +24,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 /**
- * The SuggestionsView is used to display the screen where the user will select their top picks of plants that fit their
- * conditions
+ * The SuggestionsView is used to display the screen where the user 
+ * will select their top picks of plants that fit their conditions
  * @author Brandon Wu
  *
  */
@@ -55,6 +55,7 @@ public class SuggestionsView extends View{
 /**
  * Creates the scene to be displayed. Calls separate methods to build each segment of the border pane.
  */
+	@Override
 	public void setup() {
 		
 		border = new BorderPane();

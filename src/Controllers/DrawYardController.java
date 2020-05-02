@@ -15,6 +15,8 @@ import javafx.scene.shape.Rectangle;
 
 
 /**
+ * The Controller for the DrawYard scene. Mainly deals
+ * with user input during this scene.
  * @author Tommy White
  */
 public class DrawYardController extends Controller<DrawYardView>{
@@ -367,7 +369,8 @@ public class DrawYardController extends Controller<DrawYardView>{
 	/**
 	 * In select mode and conditions mode, sets model's currDrawObj to the 
 	 * 		pressed conditions area
-	 * @param event
+	 * @param event The MouseEvent generated when the
+	 * 		area was pressed
 	 */
 	public void pressArea(MouseEvent event) {
 		if (model.getDrawMode() != null) {
@@ -431,6 +434,12 @@ public class DrawYardController extends Controller<DrawYardView>{
 		}
 	}
 	
+	/**
+	 * Called when returning to the DrawYard scene after entering
+	 * the Preferences scene. Since the drawing was resized,
+	 * it needs to be brought back to its original size.
+	 * @param drawing The drawing from the preferences screen
+	 */
 	public void setDrawing(Pane drawing) {
 		//Set children nodes back to original size and position
 		view.setDrawing(drawing);
@@ -442,10 +451,20 @@ public class DrawYardController extends Controller<DrawYardView>{
 		}
 	}
 	
+	/**
+	 * Gets the drawing from the DrawYardView
+	 * so that it can be passed to other controllers
+	 * @return The drawing from DrawYardView
+	 */
 	public Pane getDrawing() {
 		return view.getDrawing();
 	}
 	
+	/**
+	 * Gets the width of the BorderPane in DrawYardView
+	 * so that it can be passed to other controllers
+	 * @return The width of root from DrawYardView
+	 */
 	public double getViewWidth() {
 		return view.getRoot().getWidth();
 	}

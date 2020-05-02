@@ -5,6 +5,12 @@ import java.awt.GraphicsEnvironment;
 import Controllers.Controller;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+/**
+ * The abstract class that all View classes extend.
+ * @author Tommy White
+ *
+ */
 public abstract class View {
 	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	int canvasWidth = gd.getDisplayMode().getWidth() - 150;

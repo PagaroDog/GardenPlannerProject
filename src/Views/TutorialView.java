@@ -16,8 +16,10 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
+ * 
+* The View class for the Tutorial screen.
+ * Holds graphical data and defines graphical logic.
  * @author Josh Stone
-* this class is the view for the Tutorial screen
 */
 public class TutorialView extends View{
 	private Stage stage;
@@ -45,6 +47,11 @@ public class TutorialView extends View{
 		this.stage = stage;
 	}
 	
+	/**
+	 * Initial setup of this class that could not be completed in the
+	 * constructor since the controller had not yet been set
+	 */
+	@Override
 	public void setup() {
 		
 		tutorialSlides.add(new Image("/TutorialSlides/Slide1.PNG"));//0

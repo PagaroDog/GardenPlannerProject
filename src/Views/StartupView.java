@@ -11,9 +11,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
 /**
+ * The View class for the Startup screen.
+ * Holds graphical data and defines graphical logic.
  * @author Matt Cohen
  * @author Brandon Wu
+ * @author Tommy White
  * 
  */
 public class StartupView extends View{
@@ -35,6 +39,11 @@ public class StartupView extends View{
 		this.stage = stage;
 	}
 	
+	/**
+	 * Initial setup of this class that could not be completed in the
+	 * constructor since the controller had not yet been set
+	 */
+	@Override
 	public void setup() {
 		title = new Label("MyNativeGarden");
 		title.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Dandelion.ttf"), 125));
@@ -72,6 +81,11 @@ public class StartupView extends View{
 		this.suc = (StartupController)controller;
 	}
 
+	/**
+	 * Further setup of this screen that can only occur
+	 * once some variables have been set by the initial
+	 * showing of this screen.
+	 */
 	public void start() {
 		buttons.setHgap(buttonGap);
 		double buttonWidth = tutorialButton.getWidth();

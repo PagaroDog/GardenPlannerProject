@@ -23,8 +23,10 @@ import Controllers.TutorialController;
 import javafx.scene.Node;
 
 /**
- * 
+ * This class stores the data for this software, as
+ * well as some methods that define logic.
  * @author IanMcCabe
+ * @author Tommy White
  *
  */
 
@@ -346,6 +348,10 @@ public class Model {
 		return ret;
 	}
 
+	/**
+	 * Reads the plantInfo.csv file and adds a Plant object
+	 * to the plants HashMap for every plant in the csv.
+	 */
     public void importPlantsFromCSV() {
     	String csvFile = "plantInfo.csv";
         String line = "";
@@ -445,6 +451,12 @@ public class Model {
         }
     }
    
+    /**
+     * Reads csv lines in a custom way that allows for commas 
+     * inside of a value
+     * @param csvLine The line to be parsed
+     * @return A List of Strings containing all the values of the line
+     */
     public static List<String> parseLine(String csvLine) {
 
         List<String> result = new ArrayList<>();

@@ -3,6 +3,7 @@ package Model;
 /**
  * 
  * @author IanMcCabe
+ * @author Tommy White
  *
  */
 public class Plant {

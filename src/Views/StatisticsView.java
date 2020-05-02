@@ -16,7 +16,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- * 
+ * The View class for the Statistics screen.
+ * Holds graphical data and defines graphical logic.
+ * @author Ian McCabe
  * @author Tommy White
  *
  */
@@ -35,9 +37,12 @@ public class StatisticsView extends View{
 		this.stage = stage;
 	}
 	
+	/**
+	 * Initial setup of this class that could not be completed in the
+	 * constructor since the controller had not yet been set
+	 */
+	@Override
 	public void setup() {
-		
-		
 		BorderPane bottom = new BorderPane();
 		Label txt = new Label("Garden Statistics");
 		txt.setFont(new Font(fontSize));

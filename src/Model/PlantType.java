@@ -1,5 +1,10 @@
 package Model;
 
+/**
+ * An Enum for the different types of plants
+ * @author Tommy White
+ *
+ */
 public enum PlantType {
 	HERB("Herb"), SHRUB("Shrub"), TREE("Tree"), VINE("Vine");
 	
