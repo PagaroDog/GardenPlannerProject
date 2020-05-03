@@ -39,23 +39,23 @@ public class Images {
 		
 		
 		for (File file : files) {
-			System.out.println(file);
+		
 			arrList.clear();
 			if (file.isDirectory()) {
-				System.out.println("IN IF");
+				
 				String plant = file.getName();
-				System.out.println(plant);
+			
 				FilenameFilter pic = (File dir, String name) -> !(name.endsWith(".txt"));
-				System.out.println(pic);
+				
 				FilenameFilter txt = (File dir, String name) -> name.endsWith(".txt");
 				for (int i = 0; i < file.listFiles().length; i++) {
 					try {
 						File currFolder = new File(directory + plant + '/' + i);
-						System.out.println(currFolder.getPath());
+						
 						
 						String curr = currFolder.listFiles(pic)[0].getPath();
 						
-						System.out.println("HERE"+curr);
+						
 						Image img = new Image(new FileInputStream(curr));
 						BufferedReader br = new BufferedReader(new FileReader(currFolder.listFiles(txt)[0]));
 						br.readLine(); // Ignore empty line
@@ -64,7 +64,8 @@ public class Images {
 						
 						arrList.add(new ImageWithSourceInfo(img, source));
 					} catch (Exception e) {
-						System.out.println("ERROR");
+						File currFolder = new File(directory + plant + '/' + i);
+						System.out.println("ERROR: " + currFolder);
 					}
 				}
 				plantImages.put(file.getName().replace("_", " "), arrList.toArray(imgArr));
