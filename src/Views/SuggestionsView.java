@@ -86,7 +86,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 				p.getChildren().add(plant);
 				//p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),
 			//	thumbnailHeight, thumbnailWidth, true, false)));
-				System.out.println(control.getPlantNameAt(count));
+				//System.out.println(control.getPlantNameAt(count));
 				
 				imgs.add(p);
 				GridPane.setConstraints(imgs.get(imgs.size() - 1), j, i);
