@@ -128,6 +128,11 @@ public class PreferencesView extends View<PreferencesController> {
 		return bottom;
 	}
 
+	/**
+	 * Creates the buttons that allow the user to switch between garden areas
+	 * and associates each garden area with a GardenPref.
+	 * @param gardenPrefs The ArrayList of GardenPrefs
+	 */
 	public void setupZoneFlips(ArrayList<GardenPref> gardenPrefs) {
 		zoneButtons.getChildren().clear();
 		zoneButtons.getChildren().add(zoneButtonsLabel);

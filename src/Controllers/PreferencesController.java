@@ -118,6 +118,11 @@ public class PreferencesController extends Controller<PreferencesView> {
 		view.setupZoneFlips(model.getGardenPreferences());
 	}
 
+	
+	/**
+	 * Returns the drawing from the PreferencesView so that it can be transferred to other controllers.
+	 * @return The drawing from view
+	 */
 	public Pane getDrawing() {
 		return view.getDrawing();
 	}
