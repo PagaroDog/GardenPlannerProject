@@ -3,11 +3,9 @@ package Views;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-import Controllers.Controller;
 import Controllers.PreferencesController;
 import Model.GardenPref;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -31,34 +29,22 @@ import javafx.stage.Stage;
  * @author Brandon Wu
  *
  */
-public class PreferencesView extends View {
-	private Button nextButton;
-	private Button backButton;
+public class PreferencesView extends View<PreferencesController> {
 	private TextField name;
 	private ComboBox<String> soil;
 	private ComboBox<String> water;
 	private ComboBox<String> sun;
 	private TilePane color;
 	private ComboBox<String> bloom;
-	private PreferencesController control;
-	private Stage stage;
 	private Pane drawing;
 	private BorderPane border;
 	private VBox vbox;
 	private HBox zoneButtons;
 	private Rectangle currArea;
-	private double bottomLabelFontSize = 25;
-	private double bottomHeight = 60;
-	private Label label;
 	private Label zoneButtonsLabel;
 	
-	private double zoneButtonsVPadding = 10;
-	private double zoneButtonsHPadding = 10;
-	private double zoneButtonsHGap = 15;
 	private double zoneButtonsFontSize = 16;
 
-	private final double bottomVPadding = 10;
-	private final double bottomHPadding = 10;
 
 	public PreferencesView(Stage stage) {
 		this.stage = stage;
@@ -79,13 +65,10 @@ public class PreferencesView extends View {
 		border.setLeft(drawing);
 		TilePane tp = new TilePane();
 		
-		zoneButtons = new HBox();
+		zoneButtons = createToolbar();
 		zoneButtonsLabel = new Label("Garden Area: ");
 		zoneButtonsLabel.setFont(new Font(zoneButtonsFontSize));
 		zoneButtons.getChildren().add(zoneButtonsLabel);
-		zoneButtons.setStyle("-fx-background-color: rgba(25,100,255,1);");
-		zoneButtons.setPadding(new Insets(zoneButtonsVPadding, zoneButtonsHPadding, zoneButtonsVPadding, zoneButtonsHPadding));
-		zoneButtons.setSpacing(zoneButtonsHGap);
 		
 		border.setTop(zoneButtons);
 
@@ -140,21 +123,7 @@ public class PreferencesView extends View {
 	}
 
 	public BorderPane addBottom() {
-		BorderPane bottom = new BorderPane();
-		bottom.setPadding(new Insets(bottomVPadding, bottomHPadding, bottomVPadding, bottomHPadding));
-		bottom.setStyle("-fx-background-color: rgba(168,158,255,1);");
-		nextButton = new Button("See Suggestions");
-		nextButton.setOnMouseClicked(control.gethandleOnNextButton());
-
-		backButton = new Button("Edit Areas");
-		backButton.setOnMouseClicked(control.gethandleOnBackButton());
-
-		label = new Label("Choose Your Preferences");
-		label.setFont(new Font(bottomLabelFontSize));
-
-		bottom.setLeft(backButton);
-		bottom.setRight(nextButton);
-		bottom.setCenter(label);
+		BorderPane bottom = createNavigationBar("Edit Areas", "See Suggestions", "Choose Your Preferences", control.gethandleOnBackButton(), control.gethandleOnNextButton());
 
 		return bottom;
 	}
@@ -169,14 +138,6 @@ public class PreferencesView extends View {
 					gardenPrefs.get(i)));
 			zoneButtons.getChildren().add(button);
 		}
-	}
-
-	@Override
-	/**
-	 * Creates the PreferencesView scene the user will see
-	 */
-	public Scene getScene() {
-		return scene;
 	}
 
 	public TextField getName() {
@@ -211,18 +172,8 @@ public class PreferencesView extends View {
 		return vbox;
 	}
 
-	@Override
-	public void setController(Controller c) {
-		control = (PreferencesController) c;
-	}
-
 	public void setDrawing(Pane drawing) {
 		this.drawing = drawing;
-	}
-
-	@Override
-	public Stage getStage() {
-		return this.stage;
 	}
 
 	public Shape getCurrArea() {

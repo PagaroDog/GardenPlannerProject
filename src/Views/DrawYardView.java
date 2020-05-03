@@ -6,11 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import Controllers.Controller;
 import Controllers.DrawYardController;
 import Model.StageName;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -35,24 +33,17 @@ import javafx.stage.Stage;
  * @author Tommy White
  *
  */
-public class DrawYardView extends View {
-	private Stage stage;
-
+public class DrawYardView extends View<DrawYardController> {
 	private BorderPane root;
 	private Pane drawing;
 	private HBox toolbar;
-	private BorderPane navigation;
+	private BorderPane navigationDraw;
+	private BorderPane navigationCond;
 
-	private Label drawtxt;
-	private Label condtxt;
 	private Label labelSizetxt;
 
 	Font font;
 
-	private Button nextButtonDraw;
-	private Button prevButtonDraw;
-	private Button nextButtonCond;
-	private Button prevButtonCond;
 	private Button selectButton;
 	private Button deleteButton;
 	private Button rectButton;
@@ -69,18 +60,12 @@ public class DrawYardView extends View {
 	
 	private ImageView background;
 
-	private DrawYardController control;
-
 	private double labelSize;
 	private final double labelSizetxtSize = 16;
 	private final double initShapeSize = 10;
-	private final double toolbarHGap = 15;
-	private final double toolbarVPadding = 10;
-	private final double toolbarHPadding = 10;
 	private final int minRGB = 30;
 	private final double randRGB = 255 - minRGB;
 	private final double opacity = 0.3;
-	private final double initFontSize = 25;
 
 	private ArrayList<Node> areas = new ArrayList<Node>();
 
@@ -96,11 +81,6 @@ public class DrawYardView extends View {
 	@Override
 	public void setup() {
 		labelSize = 12;
-		drawtxt = new Label("Draw An Outline of Your Property");
-		condtxt = new Label("Conditions");
-		font = new Font(initFontSize);
-		drawtxt.setFont(font);
-		condtxt.setFont(font);
 		labelSizetxt = new Label("Label Size: " + (int) labelSize);
 		labelSizetxt.setFont(new Font(labelSizetxtSize));
 		selectButton = new Button("Select");
@@ -123,27 +103,12 @@ public class DrawYardView extends View {
 		newAreaButton.setOnMousePressed(control.getHandleOnNewAreaButton());
 		labeltxt = new TextField();
 
-		toolbar = new HBox(drawtxt, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
+		toolbar = createToolbar();
+		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
 				minusButton, plusButton, labelSizetxt, importButton);
-		toolbar.setStyle("-fx-background-color: rgba(25,100,255,1);");
-		toolbar.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
-		toolbar.setSpacing(toolbarHGap);
 
-		prevButtonDraw = new Button("Main Menu");
-		prevButtonDraw.setOnMouseClicked(control.getHandlePrevButton());
-		nextButtonDraw = new Button("Create Areas");
-		nextButtonDraw.setOnMouseClicked(control.getHandleNextButton());
-		prevButtonCond = new Button("Draw Yard");
-		prevButtonCond.setOnMouseClicked(control.getHandlePrevButton());
-		nextButtonCond = new Button("Set Preferences");
-		nextButtonCond.setOnMouseClicked(control.getHandleNextButton());
-
-		navigation = new BorderPane();
-		navigation.setStyle("-fx-background-color: rgba(168,158,255,1);");
-		navigation.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
-		navigation.setLeft(prevButtonDraw);
-		navigation.setRight(nextButtonDraw);
-		navigation.setCenter(drawtxt);
+		navigationDraw = createNavigationBar("Main Menu", "Create Areas", "Draw An Outline of Your Property", control.getHandlePrevButton(), control.getHandleNextButton());
+		navigationCond = createNavigationBar("Draw Yard", "Set Preferences", "Mark Different Areas with Different Conditions", control.getHandlePrevButton(), control.getHandleNextButton());
 
 		drawing = new Pane();
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
@@ -152,29 +117,9 @@ public class DrawYardView extends View {
 		root = new BorderPane();
 		root.setTop(toolbar);
 		root.setCenter(drawing);
-		root.setBottom(navigation);
+		root.setBottom(navigationDraw);
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
-	}
-
-	/**
-	 * @return Scene object for the Draw Yard screen
-	 */
-	@Override
-	public Scene getScene() {
-		return scene;
-	}
-
-	/**
-	 * Sets control to c
-	 */
-	public void setController(Controller c) {
-		control = (DrawYardController) c;
-	}
-
-	@Override
-	public Stage getStage() {
-		return stage;
 	}
 
 	public double getLabelSize() {
@@ -391,10 +336,7 @@ public class DrawYardView extends View {
 			areas.add(drawObjs.get(i));
 			drawObjs.remove(i);
 		}
-		navigation.getChildren().remove(0, navigation.getChildren().size());
-		navigation.setLeft(prevButtonDraw);
-		navigation.setCenter(drawtxt);
-		navigation.setRight(nextButtonDraw);
+		root.setBottom(navigationDraw);
 	}
 
 	/**
@@ -405,10 +347,7 @@ public class DrawYardView extends View {
 		toolbar.getChildren().addAll(selectButton, deleteButton, newAreaButton);
 		drawing.getChildren().addAll(areas);
 		areas.clear();
-		navigation.getChildren().remove(0, navigation.getChildren().size());
-		navigation.setLeft(prevButtonCond);
-		navigation.setCenter(condtxt);
-		navigation.setRight(nextButtonCond);
+		root.setBottom(navigationCond);
 	}
 
 	/**

@@ -1,18 +1,12 @@
 package Views;
 
-import javafx.scene.control.Button;
-
-import Controllers.Controller;
 import Controllers.StatisticsController;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -24,16 +18,10 @@ import javafx.stage.Stage;
  * @author Tommy White
  *
  */
-public class StatisticsView extends View {
-
-	private Button backButton;
-	private Stage stage;
-	private StatisticsController control;
+public class StatisticsView extends View<StatisticsController> {
 	private double hboxSpacing = 70;
 	private double vboxSpacing = 50;
 	private double fontSize = 25;
-	private final double bottomVPadding = 10;
-	private final double bottomHPadding = 10;
 
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
@@ -45,15 +33,7 @@ public class StatisticsView extends View {
 	 */
 	@Override
 	public void setup() {
-		BorderPane bottom = new BorderPane();
-		Label txt = new Label("Garden Statistics");
-		txt.setFont(new Font(fontSize));
-		backButton = new Button("Back");
-		backButton.setOnMouseClicked(control.handleOnBackButton());
-		bottom.setPadding(new Insets(bottomVPadding, bottomHPadding, bottomVPadding, bottomHPadding));
-		bottom.setStyle("-fx-background-color: rgba(168,158,255,1);");
-		bottom.setLeft(backButton);
-		bottom.setCenter(txt);
+		BorderPane bottom = createNavigationBar("Back to Garden", "Garden Statistics", control.handleOnBackButton());
 
 		BorderPane border = new BorderPane();
 		border.setBottom(bottom);
@@ -97,25 +77,6 @@ public class StatisticsView extends View {
 
 		scene = new Scene(border, canvasWidth, canvasHeight);
 
-	}
-
-	/**
-	 * @return Scene object for the Draw Yard screen
-	 */
-	@Override
-	public Scene getScene() {
-		return scene;
-	}
-
-	@Override
-	public void setController(Controller controller) {
-		control = (StatisticsController) controller;
-
-	}
-
-	@Override
-	public Stage getStage() {
-		return stage;
 	}
 
 }

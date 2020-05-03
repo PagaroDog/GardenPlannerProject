@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
-import Controllers.Controller;
 import Controllers.SaveController;
 
 /**
@@ -14,14 +13,10 @@ import Controllers.SaveController;
  * 
  * @author Josh Stone
  */
-public class SaveView extends View {
-
-	private Stage stage;
+public class SaveView extends View<SaveController> {
 	private Button prevButton;
-	private Button nextButton;
 	private Button fileButton;
 	private Button PNGButton;
-	private SaveController saveC;
 	private TilePane Buttons;
 
 	public SaveView(Stage stage) {
@@ -38,40 +33,16 @@ public class SaveView extends View {
 		Label txt = new Label("Save");
 		prevButton = new Button("prev");
 
-		prevButton.setOnMouseClicked(saveC.getHandleOnPrevButton());
+		prevButton.setOnMouseClicked(control.getHandleOnPrevButton());
 
 		fileButton = new Button("Save as .garden");
-		fileButton.setOnMouseClicked(saveC.getHandleOnFileButton());
+		fileButton.setOnMouseClicked(control.getHandleOnFileButton());
 
 		PNGButton = new Button("Save as .png");
-		PNGButton.setOnMouseClicked(saveC.getHandleOnPNGButton());
+		PNGButton.setOnMouseClicked(control.getHandleOnPNGButton());
 
 		tp.getChildren().addAll(txt, prevButton, fileButton, PNGButton);
 		scene = new Scene(tp, canvasWidth, canvasHeight);
 
 	}
-
-	/**
-	 * @return Scene object for the Save screen
-	 */
-	@Override
-	public Scene getScene() {
-		return scene;
-	}
-
-	/**
-	 * Sets control to sc
-	 */
-
-	@Override
-	public void setController(Controller controller) {
-		saveC = (SaveController) controller;
-
-	}
-
-	@Override
-	public Stage getStage() {
-		return stage;
-	}
-
 }

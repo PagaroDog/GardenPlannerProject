@@ -2,16 +2,13 @@ package Views;
 
 import java.util.ArrayList;
 
-import Controllers.Controller;
 import Controllers.SuggestionsController;
 import Model.PlantType;
 import Model.Sun;
 import Model.Water;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,7 +18,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -31,11 +27,7 @@ import javafx.stage.Stage;
  * @author Brandon Wu
  *
  */
-public class SuggestionsView extends View {
-	private Button nextButton;
-	private Button backButton;
-	private Stage stage;
-	private SuggestionsController control;
+public class SuggestionsView extends View<SuggestionsController> {
 	private GridPane stats;
 	private int thumbnailWidth = 100;
 	private int thumbnailHeight = 100;
@@ -44,10 +36,6 @@ public class SuggestionsView extends View {
 	BorderPane border;
 	ArrayList<Pane> imgs;
 	Images images;
-
-	private final double bottomVPadding = 10;
-	private final double bottomHPadding = 10;
-	private final double bottomLabelFontSize = 25;
 
 	public SuggestionsView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -201,44 +189,12 @@ public class SuggestionsView extends View {
 	 * @return HBox
 	 */
 	public BorderPane bottom() {
-		BorderPane nav = new BorderPane();
-		nav.setPadding(new Insets(bottomVPadding, bottomHPadding, bottomVPadding, bottomHPadding));
-
-		Label txt = new Label("Pick Some of Your Favorites From Our Suggestions");
-		txt.setFont(new Font(bottomLabelFontSize));
-		backButton = new Button("Edit Preferences");
-		backButton.setOnMouseClicked(control.gethandleOnBackButton());
-		nextButton = new Button("Design Garden");
-		nextButton.setOnMouseClicked(control.gethandleOnNextButton());
-
-		nav.setLeft(backButton);
-		nav.setRight(nextButton);
-		nav.setCenter(txt);
-		nav.setStyle("-fx-background-color: rgba(168,158,255,1);");
+		BorderPane nav = createNavigationBar("Edit Preferences", "Design Garden", "Pick Some of Your Favorite Plants From Our Suggestions", control.gethandleOnBackButton(), control.gethandleOnNextButton());
 		return nav;
 	}
 
 	public GridPane getGrid() {
 		return (GridPane) border.getCenter();
-	}
-
-	/**
-	 * @return Scene object for the Draw Yard screen
-	 */
-	@Override
-	public Scene getScene() {
-		return scene;
-	}
-
-	@Override
-	public void setController(Controller controller) {
-		control = (SuggestionsController) controller;
-
-	}
-
-	@Override
-	public Stage getStage() {
-		return stage;
 	}
 
 }

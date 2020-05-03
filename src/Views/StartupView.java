@@ -1,6 +1,5 @@
 package Views;
 
-import Controllers.Controller;
 import Controllers.StartupController;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,7 +21,7 @@ import javafx.stage.Stage;
  * @author Tommy White
  * 
  */
-public class StartupView extends View {
+public class StartupView extends View<StartupController> {
 	private Label title;
 	private Button newButton;
 	private Button loadButton;
@@ -30,8 +29,6 @@ public class StartupView extends View {
 	private ImageView iv;
 	private Pane root;
 	private TilePane buttons;
-	private Stage stage;
-	private StartupController suc;
 	private double titleXPos = canvasWidth / 2;
 	private double titleYPos = canvasHeight / 3;
 	private double buttonXPos = canvasWidth / 2;
@@ -54,13 +51,13 @@ public class StartupView extends View {
 				canvasHeight, false, false));
 		buttons = new TilePane();
 		tutorialButton = new Button("Tutorial");
-		tutorialButton.setOnMouseClicked(suc.handleOnTutorialButton());
+		tutorialButton.setOnMouseClicked(control.handleOnTutorialButton());
 
 		newButton = new Button("New");
-		newButton.setOnMouseClicked(suc.handleOnNewButton());
+		newButton.setOnMouseClicked(control.handleOnNewButton());
 
 		loadButton = new Button("Load");
-		loadButton.setOnMouseClicked(suc.handleOnLoadButton());
+		loadButton.setOnMouseClicked(control.handleOnLoadButton());
 		buttons.getChildren().addAll(newButton, loadButton, tutorialButton);
 
 		root = new Pane();
@@ -71,20 +68,6 @@ public class StartupView extends View {
 		}
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
-	}
-
-	@Override
-	public Scene getScene() {
-		return scene;
-	}
-
-	public Stage getStage() {
-		return stage;
-	}
-
-	@Override
-	public void setController(Controller controller) {
-		this.suc = (StartupController) controller;
 	}
 
 	/**

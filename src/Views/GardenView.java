@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
-import Controllers.Controller;
 import Controllers.GardenController;
 import Model.GardenObj;
 import javafx.geometry.Insets;
@@ -17,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
@@ -28,20 +28,15 @@ import javafx.stage.Stage;
  * @author Matt Cohen
  *
  */
-public class GardenView extends View {
+public class GardenView extends View<GardenController> {
 	private HashMap<String, Image> plantImages = new HashMap<String, Image>();
 	private FlowPane suggestedFlowPane;
 	private TilePane seasonTilePane;
 	private double bottomHeight = 35;
 	private TilePane yearTilePane;
 	private TilePane statsTilePane;
-	private TilePane toolbarTilePane;
+	private HBox toolbar;
 	private Pane garden;
-	private Image backyardImage;
-	private GardenController control;
-	private Stage stage;
-	private Button stats;
-	private Button pref;
 	private Button save;
 	private Button year1;
 	private Button year2;
@@ -53,8 +48,7 @@ public class GardenView extends View {
 	private Pane drawing;
 	private ScrollPane scrollPane;
 	private BorderPane border;
-	private TilePane navigation;
-	private FlowPane bottom;
+	private BorderPane navigation;
 	int SIZE = 200;
 	int TILE_PANE_WIDTH = 1000;
 	Images imgs;
@@ -73,10 +67,10 @@ public class GardenView extends View {
 
 		border = new BorderPane();
 		bottom();
-		border.setBottom(bottom);
+		border.setBottom(navigation);
 
 		top();
-		border.setTop(navigation);
+		border.setTop(toolbar);
 
 		left();
 		border.setLeft(scrollPane);
@@ -143,26 +137,6 @@ public class GardenView extends View {
 	 * preferences.
 	 */
 	public void top() {
-		navigation = new TilePane();
-		Label txt = new Label("Design");
-		stats = new Button("Stats");
-		stats.setOnMouseClicked(control.handleOnStatsButton());
-
-		save = new Button("Save");
-		save.setOnMouseClicked(control.handleOnSaveButton());
-
-		pref = new Button("Pref");
-		pref.setOnMouseClicked(control.handleOnPrefButton());
-
-		navigation.getChildren().addAll(txt, pref, stats, save);
-
-	}
-
-	/**
-	 * Creates a FlowPane for the bottom part of the border pane. Contains Year and
-	 * Season TilePanes
-	 */
-	public void bottom() {
 		seasonTilePane = new TilePane();
 		Label seasonLabel = new Label("Select Season");
 		summer = new Button("Summer");
@@ -174,8 +148,6 @@ public class GardenView extends View {
 		spring = new Button("Spring");
 		spring.setOnMouseClicked(control.handleOnSpringButton());
 		seasonTilePane.getChildren().addAll(seasonLabel, summer, fall, winter, spring);
-		seasonTilePane.setPrefHeight(bottomHeight);
-		;
 
 		yearTilePane = new TilePane();
 		Label yearLabel = new Label("Select Year");
@@ -186,27 +158,22 @@ public class GardenView extends View {
 		year3 = new Button("Year: 3");
 		year3.setOnMouseClicked(control.handleOnYear3Button());
 		yearTilePane.getChildren().addAll(yearLabel, year1, year2, year3);
+		
+		toolbar = createToolbar();
 
-		bottom = new FlowPane();
-		bottom.getChildren().add(seasonTilePane);
-		bottom.getChildren().add(yearTilePane);
+		save = new Button("Save");
+		save.setOnMouseClicked(control.handleOnSaveButton());
 
-	}
-
-	@Override
-	public Scene getScene() {
-		return scene;
-	}
-
-	@Override
-	public void setController(Controller controller) {
-		control = (GardenController) controller;
+		toolbar.getChildren().addAll(save, seasonTilePane, yearTilePane);
 
 	}
 
-	@Override
-	public Stage getStage() {
-		return stage;
+	/**
+	 * Creates a FlowPane for the bottom part of the border pane. Contains Year and
+	 * Season TilePanes
+	 */
+	public void bottom() {
+		navigation = createNavigationBar("Edit Preferences", "View Statistics", "Design Your Garden", control.handleOnPrefButton(), control.handleOnStatsButton());
 	}
 
 	/**
