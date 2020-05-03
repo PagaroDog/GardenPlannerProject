@@ -15,7 +15,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- * The abstract class that all View classes extend.
+ * The class that all View classes extend.
  * 
  * @author Tommy White
  *
@@ -32,6 +32,10 @@ public class View<T extends Controller> {
 	private double toolbarHGap = 15;
 	private double centerFontSize = 25;
 	
+	/**
+	 * Creates an HBox node that can act as the toolbar at the top of a View.
+	 * @return The toolbar HBox
+	 */
 	public HBox createToolbar() {
 		HBox toolbar = new HBox();
 		toolbar.setStyle("-fx-background-color: rgba(25,100,255,1);");
@@ -41,6 +45,14 @@ public class View<T extends Controller> {
 		return toolbar;
 	}
 	
+	/**
+	 * Creates a BorderPane that can be used as a navigation bar at the bottom of a View.
+	 * Should be used when a View only has a previous View and no next View.
+	 * @param prevButtonText The text to display on the Previous Button
+	 * @param CenterText The text to display at the center of the bar
+	 * @param prevHandler The EventHandler for when the Previous Button is pressed
+	 * @return The navigation bar BorderPane
+	 */
 	public BorderPane createNavigationBar(String prevButtonText, String CenterText, EventHandler prevHandler) {
 		Button prevButton = new Button(prevButtonText);
 		prevButton.setOnMouseClicked(prevHandler);
@@ -57,6 +69,16 @@ public class View<T extends Controller> {
 		return navigation;
 	}
 	
+	/**
+	 * Creates a BorderPane that can be used as a navigation bar at the bottom of a View.
+	 * Should be used when a View has a both a previous View and a next next View.
+	 * @param prevButtonText The text to display on the Previous Button
+	 * @param nextButtonText The text to display on the Next Button
+	 * @param CenterText The text to display at the center of the bar
+	 * @param prevHandler The EventHandler for when the Previous Button is pressed
+	 * @param nextHandler The EventHandler for when the Next Button is pressed
+	 * @return The navigation bar BorderPane
+	 */
 	public BorderPane createNavigationBar(String prevButtonText, String nextButtonText, String CenterText, EventHandler prevHandler, EventHandler nextHandler) {
 		Button nextButton = new Button(nextButtonText);
 		nextButton.setOnMouseClicked(nextHandler);
