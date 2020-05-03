@@ -37,7 +37,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	private int thumbnailHeight = 100;
 	private final int spaceBetweenLabelsPerRow = 17;
 	int rows = canvasHeight / (thumbnailHeight * 2);
-	int cols = canvasWidth / thumbnailWidth;
+	int cols = (int) (canvasWidth / (thumbnailWidth * 1.5));
 	private ImageView plantCopy;
 	BorderPane border;
 	ArrayList<Pane> imgs;
@@ -89,7 +89,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 				plantName = control.getPlantNameAt(count);
 				ImageView plant = new ImageView(images.getPlantImages().get(control.getPlantNameAt(count))[0].getImg());
 				p.setUserData(plantName);
-				
+			
 				p.getChildren().add(plant);
 				p.setAlignment(Pos.CENTER);
 				//p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),
