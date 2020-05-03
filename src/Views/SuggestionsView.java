@@ -73,20 +73,22 @@ public class SuggestionsView extends View<SuggestionsController> {
 		pane.setStyle("-fx-background-color: rgba(255, 130, 203,0.5);");
 				// This lines are here only for testing the GridPane Layout
 		
-		System.out.println(images.getPlantImages().get(control.getPlantNameAt(0))[0]);
+		
 		imgs = new ArrayList<Pane>();
+		int count = 0;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				Pane p = new Pane();
-				p.getChildren().add(new ImageView(images.getPlantImages().get(control.getPlantNameAt(0))[0].getImg()));
-				p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),
-						thumbnailHeight, thumbnailWidth, true, false)));
+				p.getChildren().add(new ImageView(images.getPlantImages().get(control.getPlantNameAt(count))[0].getImg()));
+				//p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),
+			//	thumbnailHeight, thumbnailWidth, true, false)));
+				System.out.println(control.getPlantNameAt(count));
 				imgs.add(p);
 				GridPane.setConstraints(imgs.get(imgs.size() - 1), j, i);
 				imgs.get(imgs.size() - 1).setOnMouseEntered(control.gethandleOnMouseEnter());
 				imgs.get(imgs.size() - 1).setOnMouseExited(control.gethandleOnMouseExit());
 				imgs.get(imgs.size() - 1).setOnMouseClicked(control.gethandleOnMouseClick());
-
+				count++;
 			}
 			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
 		}
