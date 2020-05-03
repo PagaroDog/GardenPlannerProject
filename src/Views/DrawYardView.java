@@ -357,11 +357,16 @@ public class DrawYardView extends View<DrawYardController> {
 		return toolbar.getHeight();
 	}
 
+	/**
+	 * Set the background ImageView to the image found at path 
+	 * @param path The file system path to the image
+	 */
 	public void setBackground(String path) {
 		try {
 			background = new ImageView(new Image(new FileInputStream(path), drawing.getWidth(), drawing.getHeight(), false, false));
 			if (!drawing.getChildren().contains(background)) {
 				drawing.getChildren().add(background);
+				background.toBack();
 			}
 		} catch (FileNotFoundException e) { }
 	}
