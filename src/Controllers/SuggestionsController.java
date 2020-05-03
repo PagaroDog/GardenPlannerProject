@@ -6,6 +6,7 @@ import Model.StageName;
 import Views.SuggestionsView;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -73,21 +74,12 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 	 * @param MouseEvent event
 	 */
 	public void MouseEnter(MouseEvent event) {
-		String[] colors = { "Blue", "Green" };
-		if (view.getGrid().getColumnIndex((Pane) event.getSource()) == 1
-				&& view.getGrid().getRowIndex((Pane) event.getSource()) == 1) {
-			view.inputStats(event.getSource(), (model).getPlants().get("Asclepias tuberosa").getName(),
-					model.getPlants().get("Asclepias tuberosa").getCommonNames(),
-					model.getPlants().get("Asclepias tuberosa").getType(),
-					model.getPlants().get("Asclepias tuberosa").getWaterLevel(),
-					model.getPlants().get("Asclepias tuberosa").getLight());
-		} else {
-			view.inputStats(event.getSource(), (model).getPlants().get("Fraxinus americana").getName(),
-					model.getPlants().get("Fraxinus americana").getCommonNames(),
-					model.getPlants().get("Fraxinus americana").getType(),
-					model.getPlants().get("Fraxinus americana").getWaterLevel(),
-					model.getPlants().get("Fraxinus americana").getLight());
-		}
+		
+		System.out.println(((Pane)event.getSource()).getUserData());
+		String name = (String) ((Pane)event.getSource()).getUserData();
+		Plant roll = model.getPlants().get(name);
+		view.inputStats(event.getSource(), name, roll.getCommonNames(), roll.getType(), roll.getWaterLevel(), roll.getLight());
+		
 	}
 
 	/**
