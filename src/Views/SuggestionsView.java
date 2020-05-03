@@ -8,6 +8,7 @@ import Controllers.SuggestionsController;
 import Model.PlantType;
 import Model.Sun;
 import Model.Water;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -82,11 +84,14 @@ public class SuggestionsView extends View<SuggestionsController> {
 		String plantName;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				Pane p = new Pane();
+				StackPane p = new StackPane();
+				p.setPadding(new Insets(10,10,10,10));
 				plantName = control.getPlantNameAt(count);
 				ImageView plant = new ImageView(images.getPlantImages().get(control.getPlantNameAt(count))[0].getImg());
 				p.setUserData(plantName);
+				
 				p.getChildren().add(plant);
+				p.setAlignment(Pos.CENTER);
 				//p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),
 			//	thumbnailHeight, thumbnailWidth, true, false)));
 				//System.out.println(control.getPlantNameAt(count));
