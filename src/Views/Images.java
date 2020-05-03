@@ -50,9 +50,11 @@ public class Images {
 				FilenameFilter txt = (File dir, String name) -> name.endsWith(".txt");
 				for (int i = 0; i < file.listFiles().length; i++) {
 					try {
-						File currFolder = new File(directory + plant + "\\" + i);
+						File currFolder = new File(directory + plant + '/' + i);
 						System.out.println(currFolder.getPath());
+						
 						String curr = currFolder.listFiles(pic)[0].getPath();
+						
 						System.out.println("HERE"+curr);
 						Image img = new Image(new FileInputStream(curr));
 						BufferedReader br = new BufferedReader(new FileReader(currFolder.listFiles(txt)[0]));
