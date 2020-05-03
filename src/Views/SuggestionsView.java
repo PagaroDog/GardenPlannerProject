@@ -37,7 +37,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	private int thumbnailHeight = 100;
 	private final int spaceBetweenLabelsPerRow = 17;
 	int rows = canvasHeight / (thumbnailHeight * 2);
-	int cols = (int) (canvasWidth / (thumbnailWidth * 1.5));
+	int cols = (int) (canvasWidth / (thumbnailWidth * 1.75));
 	private ImageView plantCopy;
 	BorderPane border;
 	ArrayList<Pane> imgs;
