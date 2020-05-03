@@ -76,13 +76,18 @@ public class SuggestionsView extends View<SuggestionsController> {
 		
 		imgs = new ArrayList<Pane>();
 		int count = 0;
+		String plantName;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				Pane p = new Pane();
-				p.getChildren().add(new ImageView(images.getPlantImages().get(control.getPlantNameAt(count))[0].getImg()));
+				plantName = control.getPlantNameAt(count);
+				ImageView plant = new ImageView(images.getPlantImages().get(control.getPlantNameAt(count))[0].getImg());
+				p.setUserData(plantName);
+				p.getChildren().add(plant);
 				//p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),
 			//	thumbnailHeight, thumbnailWidth, true, false)));
 				System.out.println(control.getPlantNameAt(count));
+				
 				imgs.add(p);
 				GridPane.setConstraints(imgs.get(imgs.size() - 1), j, i);
 				imgs.get(imgs.size() - 1).setOnMouseEntered(control.gethandleOnMouseEnter());
