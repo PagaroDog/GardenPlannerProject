@@ -79,7 +79,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	public void NextButton(MouseEvent event) {
 
 		view.getStage().setScene(Main.getScenes().get(StageName.SUGGESTIONS));
-
+		model.createSuggestions();
 		model.setStageName(StageName.SUGGESTIONS);
 	}
 

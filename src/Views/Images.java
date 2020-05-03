@@ -31,7 +31,13 @@ public class Images {
 		ArrayList<ImageWithSourceInfo> arrList = new ArrayList<ImageWithSourceInfo>();
 		String[] source = new String[2];
 		File[] files = new File(directory).listFiles();
-		ImageWithSourceInfo[] imgArr = new ImageWithSourceInfo[0];
+		
+		ImageWithSourceInfo[] imgArr = new ImageWithSourceInfo[2];
+		
+		
+		System.out.println(new File(directory).listFiles());
+		
+		
 		for (File file : files) {
 			arrList.clear();
 			if (file.isDirectory()) {
@@ -47,8 +53,10 @@ public class Images {
 						br.readLine(); // Ignore empty line
 						source[0] = br.readLine(); // Author
 						source[1] = br.readLine(); // Link
+						
 						arrList.add(new ImageWithSourceInfo(img, source));
 					} catch (Exception e) {
+						//System.out.println("ERROR");
 					}
 				}
 				plantImages.put(file.getName().replace("_", " "), arrList.toArray(imgArr));

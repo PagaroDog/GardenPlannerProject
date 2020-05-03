@@ -71,12 +71,14 @@ public class SuggestionsView extends View<SuggestionsController> {
 
 		pane.setPrefWidth(canvasWidth);
 		pane.setStyle("-fx-background-color: rgba(255, 130, 203,0.5);");
-
-		// This lines are here only for testing the GridPane Layout
+				// This lines are here only for testing the GridPane Layout
+		
+		System.out.println(images.getPlantImages().get(control.getPlantNameAt(0))[0]);
 		imgs = new ArrayList<Pane>();
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				Pane p = new Pane();
+				p.getChildren().add(new ImageView(images.getPlantImages().get(control.getPlantNameAt(0))[0].getImg()));
 				p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),
 						thumbnailHeight, thumbnailWidth, true, false)));
 				imgs.add(p);
@@ -89,7 +91,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
 		}
 
-		Pane test = new Pane();
+	/*	Pane test = new Pane();
 		test.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/whiteAsh.png"),
 				thumbnailHeight, thumbnailWidth, true, false)));
 		imgs.add(test);
@@ -97,7 +99,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 		imgs.get(imgs.size() - 1).setOnMouseEntered(control.gethandleOnMouseEnter());
 		imgs.get(imgs.size() - 1).setOnMouseExited(control.gethandleOnMouseExit());
 		imgs.get(imgs.size() - 1).setOnMouseClicked(control.gethandleOnMouseClick());
-
+*/
 		this.stats = stats(rows);
 		GridPane.setConstraints(stats, 0, rows, cols, rows);
 		// Creates three rows of height 100 for the stats gridpane
@@ -196,5 +198,6 @@ public class SuggestionsView extends View<SuggestionsController> {
 	public GridPane getGrid() {
 		return (GridPane) border.getCenter();
 	}
+
 
 }

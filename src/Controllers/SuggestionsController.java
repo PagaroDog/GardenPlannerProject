@@ -130,5 +130,8 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 		view.selectImage(event);
 
 	}
+	public String getPlantNameAt(int x) {
+		return model.getSuggestedPlants().get(x).getName();
+	}
 
 }
