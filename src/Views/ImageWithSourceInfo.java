@@ -17,4 +17,20 @@ public class ImageWithSourceInfo {
 		this.img = img;
 		this.sourceInfo = sourceInfo;
 	}
+
+	public Image getImg() {
+		return img;
+	}
+
+	public void setImg(Image img) {
+		this.img = img;
+	}
+
+	public String[] getSourceInfo() {
+		return sourceInfo;
+	}
+
+	public void setSourceInfo(String[] sourceInfo) {
+		this.sourceInfo = sourceInfo;
+	}
 }

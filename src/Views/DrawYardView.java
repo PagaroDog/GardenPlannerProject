@@ -258,12 +258,13 @@ public class DrawYardView extends View<DrawYardController> {
 	public Node addLabel(double x, double y) {
 		if (labeltxt.getText().length() > 0) {
 			Label txt = new Label(labeltxt.getText());
-			txt.setLayoutX(x);
-			txt.setLayoutY(y);
+			drawing.getChildren().add(txt);
+			stage.show();
 			txt.setFont(new Font(labelSize));
 			txt.setOnMousePressed(control.getHandleOnPressShape());
 			txt.setOnMouseDragged(control.getHandleOnDragLabel());
-			drawing.getChildren().add(txt);
+			txt.setLayoutX(Math.max(0, Math.min(drawing.getWidth() - txt.getWidth(), x)));
+			txt.setLayoutY(Math.max(0, Math.min(drawing.getHeight() - txt.getHeight(), y)));
 			labeltxt.setText("");
 			return txt;
 		} else {
@@ -280,8 +281,8 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y     The new y coordinate of the center of the label
 	 */
 	public void moveLabel(Label label, double x, double y) {
-		label.setLayoutX(x);
-		label.setLayoutY(y);
+		label.setLayoutX(Math.max(0, Math.min(drawing.getWidth() - label.getWidth(), x)));
+		label.setLayoutY(Math.max(0, Math.min(drawing.getHeight() - label.getHeight(), y)));
 	}
 
 	/**
