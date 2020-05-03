@@ -40,7 +40,7 @@ public class Images {
 				FilenameFilter txt = (File dir, String name) -> name.endsWith(".txt");
 				for (int i = 0; i < file.listFiles().length; i++) {
 					try {
-						File currFolder = new File(directory + plant + "\\" + i);
+						File currFolder = new File(directory + plant + "/" + i);
 						String curr = currFolder.listFiles(pic)[0].getPath();
 						Image img = new Image(new FileInputStream(curr));
 						BufferedReader br = new BufferedReader(new FileReader(currFolder.listFiles(txt)[0]));
