@@ -1,6 +1,8 @@
 package Views;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import Controllers.SuggestionsController;
 import Model.PlantType;
@@ -32,6 +34,8 @@ public class SuggestionsView extends View<SuggestionsController> {
 	private int thumbnailWidth = 100;
 	private int thumbnailHeight = 100;
 	private final int spaceBetweenLabelsPerRow = 17;
+	int rows = canvasHeight / (thumbnailHeight * 2);
+	int cols = canvasWidth / thumbnailWidth;
 	private ImageView plantCopy;
 	BorderPane border;
 	ArrayList<Pane> imgs;
@@ -65,8 +69,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 */
 	public GridPane center() {
 
-		int rows = canvasHeight / (thumbnailHeight * 2);
-		int cols = canvasWidth / thumbnailWidth;
+		
 		GridPane pane = new GridPane();
 
 		pane.setPrefWidth(canvasWidth);
@@ -137,13 +140,14 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 * @return GridPane
 	 */
 	public GridPane stats(int rows) {
+		int imageCols = 2;
 		GridPane stats = new GridPane();
 		stats.setStyle("-fx-background-color: rgba(255, 182, 130,1);");
 		// stats.setGridLinesVisible(true);
 
-		String[] labels = { "Common Name", "Scientific Name", "Soil type", "Moisture", "Sun" };
+		String[] labels = { "Common Name", "Scientific Name", "Plant type", "Moisture", "Sun" };
 
-		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailHeight * 2));
+		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailHeight * imageCols));
 		for (int i = 0; i < 5; i++) {
 			stats.getRowConstraints().add(new RowConstraints(rows * spaceBetweenLabelsPerRow));
 			Label dud = new Label(labels[i] + ": ");
@@ -151,6 +155,8 @@ public class SuggestionsView extends View<SuggestionsController> {
 			stats.getChildren().add(dud);
 
 		}
+		Label fill = new Label("");
+		fill.setPrefWidth(thumbnailWidth*cols-imageCols);
 
 		return stats;
 	}
@@ -161,15 +167,61 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 * 
 	 * @param event
 	 */
-	public void inputStats(Object event, String name, String[] cNames, PlantType type, Water[] moisture, Sun[] sun) {
-		Object[] info = { name, cNames, type, moisture, sun };
+	public void inputStats(Object event,  String[] cNames, String name,PlantType type, Water[] moisture, Sun[] sun) {
+		Object[] info = { cNames, name,  moisture, type, sun };
 		int cnt = 0;
-		for (Object s : info) {
-			Label val = new Label(s.toString());
+		/*for (Object s : info) {
+			Label val = new Label();
+			if(cnt % 2 == 0) {
+				val.setText(Arrays.deepToString((Object[]) s));
+			}
+			else {
+				val.setText(s.toString());
+			}
+			
+			
 			GridPane.setConstraints(val, 3, cnt);
 			cnt++;
 			stats.getChildren().add(val);
-		}
+			
+		}*/
+		
+		Label val = new Label(cNames[0]);
+		GridPane.setConstraints(val, 3, cnt);
+		cnt++;
+		stats.getChildren().add(val);
+		
+		Label val2 = new Label(name);
+		GridPane.setConstraints(val2, 3, cnt);
+		cnt++;
+		stats.getChildren().add(val2);
+		
+		Label val3 = new Label(type.toString());
+		GridPane.setConstraints(val3, 3, cnt);
+		cnt++;
+		stats.getChildren().add(val3);
+		
+		String moistures = "";
+		moistures = Arrays.toString(moisture).replace('[', ' ');
+		moistures = moistures.replace(']', ' ');
+
+		
+		Label val4 = new Label(moistures);
+		GridPane.setConstraints(val4, 3, cnt);
+		cnt++;
+		stats.getChildren().add(val4);
+		
+		String suns = "";
+		suns = Arrays.toString(sun).replace('[', ' ');
+		suns =suns.replace(']', ' ');
+		Label val5 = new Label(suns);
+		GridPane.setConstraints(val5, 3, cnt);
+		cnt++;
+		stats.getChildren().add(val5);
+		
+		
+		
+		
 		Node n = (Node) event;
 		ImageView copy = new ImageView(((ImageView) ((Pane) n).getChildren().get(0)).getImage());
 		copy.setFitHeight(thumbnailHeight * 2);
@@ -205,6 +257,8 @@ public class SuggestionsView extends View<SuggestionsController> {
 	public GridPane getGrid() {
 		return (GridPane) border.getCenter();
 	}
+	
+	
 
 
 }
