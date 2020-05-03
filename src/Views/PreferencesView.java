@@ -50,6 +50,12 @@ public class PreferencesView extends View {
 	private double bottomLabelFontSize = 25;
 	private double bottomHeight = 60;
 	private Label label;
+	private Label zoneButtonsLabel;
+	
+	private double zoneButtonsVPadding = 10;
+	private double zoneButtonsHPadding = 10;
+	private double zoneButtonsHGap = 15;
+	private double zoneButtonsFontSize = 16;
 
 	private final double bottomVPadding = 10;
 	private final double bottomHPadding = 10;
@@ -72,19 +78,22 @@ public class PreferencesView extends View {
 		drawing = new Pane();
 		border.setLeft(drawing);
 		TilePane tp = new TilePane();
+		
+		zoneButtons = new HBox();
+		zoneButtonsLabel = new Label("Garden Area: ");
+		zoneButtonsLabel.setFont(new Font(zoneButtonsFontSize));
+		zoneButtons.getChildren().add(zoneButtonsLabel);
+		zoneButtons.setStyle("-fx-background-color: rgba(25,100,255,1);");
+		zoneButtons.setPadding(new Insets(zoneButtonsVPadding, zoneButtonsHPadding, zoneButtonsVPadding, zoneButtonsHPadding));
+		zoneButtons.setSpacing(zoneButtonsHGap);
+		
+		border.setTop(zoneButtons);
 
 		scene = new Scene(border, canvasWidth, canvasHeight);
 	}
 
 	public VBox addVBox() {
 		vbox = new VBox();
-		// Not yet implemented
-		zoneButtons = new HBox();
-		Label label = new Label("Garden Area:");
-		label.setPrefHeight(50);
-		zoneButtons.getChildren().add(label);
-		zoneButtons.setAlignment(Pos.CENTER);
-		zoneButtons.setStyle("-fx-background-color: rgba(255,252,158,1);");
 		vbox.setPadding(new Insets(15, 12, 15, 12));
 		vbox.setSpacing(25);
 		vbox.setStyle("-fx-background-color: rgba(158,255,174,1);");
@@ -124,7 +133,7 @@ public class PreferencesView extends View {
 		water.setPrefWidth(250);
 		sun.setPrefWidth(250);
 		color.setPrefWidth(500);
-		vbox.getChildren().addAll(zoneButtons, name, labwater, water, labsoil, soil, labsun, sun, labcolor, color,
+		vbox.getChildren().addAll(name, labwater, water, labsoil, soil, labsun, sun, labcolor, color,
 				labbloom, bloom);
 		vbox.setPrefWidth(500);
 		return vbox;
@@ -151,6 +160,8 @@ public class PreferencesView extends View {
 	}
 
 	public void setupZoneFlips(ArrayList<GardenPref> gardenPrefs) {
+		zoneButtons.getChildren().clear();
+		zoneButtons.getChildren().add(zoneButtonsLabel);
 		for (int i = 0; i < gardenPrefs.size(); i++) {
 			Button button = new Button("" + (i + 1));
 			button.setOnMousePressed(control.getHandleOnZoneButton(

@@ -342,6 +342,7 @@ public class GardenController extends Controller<GardenView> {
 			double newX = child.getBoundsInParent().getMinX();
 			child.setTranslateX(oldX * ratio - newX);
 		}
+		drawing.setLayoutY(0);
 	}
 
 	/**

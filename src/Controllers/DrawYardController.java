@@ -1,5 +1,7 @@
 package Controllers;
 
+import java.io.File;
+
 import Model.DrawMode;
 
 import Model.Model;
@@ -259,7 +261,10 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the button was pressed
 	 */
 	public void importButton(MouseEvent event) {
-
+		File file = view.getFileChooser().showOpenDialog(view.getStage());
+		if (file != null) {
+            view.setBackground(file.getPath());
+         }
 	}
 
 	/**
@@ -316,6 +321,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the button was pressed
 	 */
 	public void nextButton(MouseEvent event) {
+		System.out.println(view.getDrawing().getHeight());
 		view.deselect(model.getCurrDrawObj());
 		model.setCurrDrawObj(null);
 		if (model.getStageName() == StageName.DRAW) {

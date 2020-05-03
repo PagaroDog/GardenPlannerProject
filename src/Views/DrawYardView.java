@@ -2,6 +2,8 @@ package Views;
 
 import javafx.scene.control.Button;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import Controllers.Controller;
@@ -14,6 +16,8 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -21,6 +25,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -55,13 +60,19 @@ public class DrawYardView extends View {
 	private Button labelButton;
 	private Button minusButton;
 	private Button plusButton;
+	private Button importButton;
 	private Button newAreaButton;
 
 	private TextField labeltxt;
+	
+	private FileChooser fileChooser;
+	
+	private ImageView background;
 
 	private DrawYardController control;
 
 	private double labelSize;
+	private final double labelSizetxtSize = 16;
 	private final double initShapeSize = 10;
 	private final double toolbarHGap = 15;
 	private final double toolbarVPadding = 10;
@@ -75,6 +86,7 @@ public class DrawYardView extends View {
 
 	public DrawYardView(Stage stage) {
 		this.stage = stage;
+		fileChooser = new FileChooser();
 	}
 
 	/**
@@ -90,6 +102,7 @@ public class DrawYardView extends View {
 		drawtxt.setFont(font);
 		condtxt.setFont(font);
 		labelSizetxt = new Label("Label Size: " + (int) labelSize);
+		labelSizetxt.setFont(new Font(labelSizetxtSize));
 		selectButton = new Button("Select");
 		selectButton.setOnMouseClicked(control.getHandleOnSelectButton());
 		deleteButton = new Button("Delete");
@@ -104,12 +117,14 @@ public class DrawYardView extends View {
 		minusButton.setOnMouseClicked(control.getHandleOnMinusButton());
 		plusButton = new Button("+");
 		plusButton.setOnMouseClicked(control.getHandleOnPlusButton());
+		importButton = new Button("Import Drawing");
+		importButton.setOnMouseClicked(control.getHandleOnImportButton());
 		newAreaButton = new Button("New Conditions Area");
 		newAreaButton.setOnMousePressed(control.getHandleOnNewAreaButton());
 		labeltxt = new TextField();
 
 		toolbar = new HBox(drawtxt, selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
-				minusButton, plusButton, labelSizetxt);
+				minusButton, plusButton, labelSizetxt, importButton);
 		toolbar.setStyle("-fx-background-color: rgba(25,100,255,1);");
 		toolbar.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
 		toolbar.setSpacing(toolbarHGap);
@@ -181,6 +196,10 @@ public class DrawYardView extends View {
 
 	public BorderPane getRoot() {
 		return root;
+	}
+
+	public FileChooser getFileChooser() {
+		return fileChooser;
 	}
 
 	/**
@@ -366,7 +385,7 @@ public class DrawYardView extends View {
 	public void drawMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
 		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
-				minusButton, plusButton, labelSizetxt);
+				minusButton, plusButton, labelSizetxt, importButton);
 		ObservableList<Node> drawObjs = drawing.getChildren();
 		for (int i = drawObjs.size() - 1; i >= 0 && drawObjs.get(i).getUserData() == StageName.CONDITIONS; i--) {
 			areas.add(drawObjs.get(i));
@@ -397,5 +416,14 @@ public class DrawYardView extends View {
 	 */
 	public double getToolbarHeight() {
 		return toolbar.getHeight();
+	}
+
+	public void setBackground(String path) {
+		try {
+			background = new ImageView(new Image(new FileInputStream(path), drawing.getWidth(), drawing.getHeight(), false, false));
+			if (!drawing.getChildren().contains(background)) {
+				drawing.getChildren().add(background);
+			}
+		} catch (FileNotFoundException e) { }
 	}
 }
