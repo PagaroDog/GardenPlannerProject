@@ -186,10 +186,10 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y1  The y coordinate of the current mouse position
 	 */
 	public void updateRect(Rectangle rect, double x0, double y0, double x1, double y1) {
-		double topLeftX = Math.min(x0, x1);
-		double topLeftY = Math.min(y0, y1);
-		double width = Math.max(x0, x1) - topLeftX;
-		double height = Math.max(y0, y1) - topLeftY;
+		double topLeftX = Math.max(0, Math.min(x0, x1));
+		double topLeftY = Math.max(0, Math.min(y0, y1));
+		double width = Math.min(drawing.getWidth() - topLeftX, Math.max(x0, x1) - topLeftX);
+		double height = Math.min(drawing.getHeight() - topLeftY, Math.max(y0, y1) - topLeftY);
 		rect.setX(topLeftX);
 		rect.setY(topLeftY);
 		rect.setWidth(width);
@@ -205,8 +205,8 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y    The new y coordinate of the rectangle
 	 */
 	public void moveRectangle(Rectangle rect, double x, double y) {
-		rect.setX(x);
-		rect.setY(y);
+		rect.setX(Math.max(0, Math.min(drawing.getWidth() - rect.getWidth(), x)));
+		rect.setY(Math.max(0, Math.min(drawing.getHeight() - rect.getHeight(), y)));
 	}
 
 	/**
@@ -236,8 +236,10 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y      The y coordinate of the current mouse position
 	 */
 	public void updateCircle(Ellipse circle, double x, double y) {
-		double radiusX = Math.abs(circle.getCenterX() - x);
-		double radiusY = Math.abs(circle.getCenterY() - y);
+		double maxRadiusX = Math.min(circle.getCenterX(), drawing.getWidth() - circle.getCenterX());
+		double maxRadiusY = Math.min(circle.getCenterY(), drawing.getHeight() - circle.getCenterY());
+		double radiusX = Math.min(maxRadiusX, Math.abs(circle.getCenterX() - x));
+		double radiusY = Math.min(maxRadiusY, Math.abs(circle.getCenterY() - y));
 		circle.setRadiusX(radiusX);
 		circle.setRadiusY(radiusY);
 	}
@@ -251,20 +253,19 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y    The new y coordinate of the center of the circle
 	 */
 	public void moveCircle(Ellipse circle, double x, double y) {
-		circle.setCenterX(x);
-		circle.setCenterY(y);
+		circle.setCenterX(Math.max(circle.getRadiusX(), Math.min(drawing.getWidth() - circle.getRadiusX(), x)));
+		circle.setCenterY(Math.max(circle.getRadiusY(), Math.min(drawing.getHeight() - circle.getRadiusY(), y)));
 	}
 
 	public Node addLabel(double x, double y) {
 		if (labeltxt.getText().length() > 0) {
 			Label txt = new Label(labeltxt.getText());
 			drawing.getChildren().add(txt);
-			stage.show();
 			txt.setFont(new Font(labelSize));
 			txt.setOnMousePressed(control.getHandleOnPressShape());
 			txt.setOnMouseDragged(control.getHandleOnDragLabel());
-			txt.setLayoutX(Math.max(0, Math.min(drawing.getWidth() - txt.getWidth(), x)));
-			txt.setLayoutY(Math.max(0, Math.min(drawing.getHeight() - txt.getHeight(), y)));
+			txt.setLayoutX(x);
+			txt.setLayoutY(y);
 			labeltxt.setText("");
 			return txt;
 		} else {

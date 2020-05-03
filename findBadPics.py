@@ -9,7 +9,7 @@ import sys
 from PIL import Image
 
 def checkImagesFromName(name, badNum):
-    folderNum = 0
+   folderNum = 0
     folder = 'Resources/imgs/' + name + "/" + str(folderNum)
     while (os.path.exists(folder)):
         picFiles = [f for f in os.listdir(folder) if '.txt' not in str(f)]
@@ -17,6 +17,7 @@ def checkImagesFromName(name, badNum):
             try:
                 img = Image.open(folder + '/' + str(pic)) # open the image file
                 img.verify() # verify that it is, in fact an image
+
             except (IOError, SyntaxError) as e:
                 print('Bad file:', str(pic)) # print out the names of corrupt files
                 badNum += 1
@@ -28,6 +29,7 @@ def checkImagesFromName(name, badNum):
 
 csvfile = open('plantInfo.csv', 'r', newline = '')
 reader = csv.reader(csvfile)
+
 badNum = 0
 for row in reader:
     name = row[0]
