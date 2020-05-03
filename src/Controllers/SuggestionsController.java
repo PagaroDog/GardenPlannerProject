@@ -75,10 +75,12 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 	 */
 	public void MouseEnter(MouseEvent event) {
 		
-		System.out.println(((Pane)event.getSource()).getUserData());
+		
 		String name = (String) ((Pane)event.getSource()).getUserData();
+
 		Plant roll = model.getPlants().get(name);
-		view.inputStats(event.getSource(), name, roll.getCommonNames(), roll.getType(), roll.getWaterLevel(), roll.getLight());
+		
+		view.inputStats(event.getSource(), roll.getCommonNames(), name, roll.getType(), roll.getWaterLevel(), roll.getLight());
 		
 	}
 
