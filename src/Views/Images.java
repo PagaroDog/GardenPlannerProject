@@ -18,7 +18,8 @@ import javafx.scene.image.Image;
  */
 public class Images {
 	HashMap<String, ImageWithSourceInfo[]> plantImages;
-
+	double thumbnailWidth = 100;
+	double thumbnailHeight = 100;
 	/**
 	 * The constructor reads the directory containing the images and source info and
 	 * creates an array of ImageWithSourceInfo objects for each plant and stores
@@ -31,24 +32,41 @@ public class Images {
 		ArrayList<ImageWithSourceInfo> arrList = new ArrayList<ImageWithSourceInfo>();
 		String[] source = new String[2];
 		File[] files = new File(directory).listFiles();
-		ImageWithSourceInfo[] imgArr = new ImageWithSourceInfo[0];
+		
+		ImageWithSourceInfo[] imgArr = new ImageWithSourceInfo[2];
+		
+		
+		
+		
+		
 		for (File file : files) {
+		
 			arrList.clear();
 			if (file.isDirectory()) {
+				
 				String plant = file.getName();
+			
 				FilenameFilter pic = (File dir, String name) -> !(name.endsWith(".txt"));
+				
 				FilenameFilter txt = (File dir, String name) -> name.endsWith(".txt");
 				for (int i = 0; i < file.listFiles().length; i++) {
 					try {
+
 						File currFolder = new File(directory + plant + "/" + i);
+
 						String curr = currFolder.listFiles(pic)[0].getPath();
-						Image img = new Image(new FileInputStream(curr));
+						
+						
+						Image img = new Image(new FileInputStream(curr),thumbnailHeight,thumbnailWidth,true, false);
 						BufferedReader br = new BufferedReader(new FileReader(currFolder.listFiles(txt)[0]));
 						br.readLine(); // Ignore empty line
 						source[0] = br.readLine(); // Author
 						source[1] = br.readLine(); // Link
+						
 						arrList.add(new ImageWithSourceInfo(img, source));
 					} catch (Exception e) {
+						File currFolder = new File(directory + plant + '/' + i);
+						System.out.println("ERROR: " + currFolder);
 					}
 				}
 				plantImages.put(file.getName().replace("_", " "), arrList.toArray(imgArr));

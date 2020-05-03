@@ -22,15 +22,19 @@ public class ImageWithSourceInfo {
 		return img;
 	}
 
+
 	public void setImg(Image img) {
 		this.img = img;
 	}
+
 
 	public String[] getSourceInfo() {
 		return sourceInfo;
 	}
 
+
 	public void setSourceInfo(String[] sourceInfo) {
 		this.sourceInfo = sourceInfo;
 	}
+
 }

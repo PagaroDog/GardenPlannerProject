@@ -9,7 +9,10 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import Controllers.Controller;
 import Controllers.DrawYardController;
@@ -42,6 +45,7 @@ public class Model {
 	// make a constructor to do this
 	private HashMap<String, Plant> plants = new HashMap<String, Plant>();
 	private ArrayList<GardenPref> gardenPreferences = new ArrayList<GardenPref>();
+	private ArrayList<Plant> suggestedPlants = new ArrayList<Plant>();
 	private GardenPref currPref;
 	private HashMap<Integer, GardenObj> gardenObjects;
 	private ArrayList<Actions> undoActions;
@@ -352,12 +356,12 @@ public class Model {
 			while ((line = br.readLine()) != null) {
 
 				parsedLine = parseLine(line);
-
-				System.out.println("Science Name: " + parsedLine.get(0) + ", common names: " + parsedLine.get(1)
-						+ ", duration: " + parsedLine.get(2) + ", type: " + parsedLine.get(3) + ", fruit: "
-						+ parsedLine.get(4) + ", size: " + parsedLine.get(5) + ", color: " + parsedLine.get(6)
-						+ ", time: " + parsedLine.get(7) + ", water: " + parsedLine.get(8) + ", light: "
-						+ parsedLine.get(9) + ", spread: " + parsedLine.get(10));
+//
+//				System.out.println("Science Name: " + parsedLine.get(0) + ", common names: " + parsedLine.get(1)
+//						+ ", duration: " + parsedLine.get(2) + ", type: " + parsedLine.get(3) + ", fruit: "
+//						+ parsedLine.get(4) + ", size: " + parsedLine.get(5) + ", color: " + parsedLine.get(6)
+//						+ ", time: " + parsedLine.get(7) + ", water: " + parsedLine.get(8) + ", light: "
+//						+ parsedLine.get(9) + ", spread: " + parsedLine.get(10));
 
 				name = parsedLine.get(0);
 				commonNames = parsedLine.get(1).split(",");
@@ -428,6 +432,7 @@ public class Model {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		createSuggestions();
 	}
 
 	/**
@@ -488,6 +493,20 @@ public class Model {
 		result.add(curVal.toString());
 
 		return result;
+	}
+	
+	public void createSuggestions() {
+		Iterator<Entry<String,Plant>> it = plants.entrySet().iterator();
+		while(it.hasNext()) {
+			
+			//System.out.println(it.next().getValue().getName());
+			suggestedPlants.add(it.next().getValue());
+			
+		}
+		
+	}
+	public ArrayList<Plant> getSuggestedPlants(){
+		return suggestedPlants;
 	}
 
 }
