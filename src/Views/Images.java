@@ -18,7 +18,8 @@ import javafx.scene.image.Image;
  */
 public class Images {
 	HashMap<String, ImageWithSourceInfo[]> plantImages;
-
+	double thumbnailWidth = 100;
+	double thumbnailHeight = 100;
 	/**
 	 * The constructor reads the directory containing the images and source info and
 	 * creates an array of ImageWithSourceInfo objects for each plant and stores
@@ -56,7 +57,7 @@ public class Images {
 						String curr = currFolder.listFiles(pic)[0].getPath();
 						
 						
-						Image img = new Image(new FileInputStream(curr));
+						Image img = new Image(new FileInputStream(curr),thumbnailHeight,thumbnailWidth,true, false);
 						BufferedReader br = new BufferedReader(new FileReader(currFolder.listFiles(txt)[0]));
 						br.readLine(); // Ignore empty line
 						source[0] = br.readLine(); // Author
