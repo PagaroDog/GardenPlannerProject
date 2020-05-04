@@ -2,6 +2,7 @@ package Controllers;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import Model.GardenPref;
 import Model.Model;
@@ -82,6 +83,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	public void NextButton(MouseEvent event) {
 
 		view.getStage().setScene(Main.getScenes().get(StageName.SUGGESTIONS));
+		
 		model.createSuggestions();
 		model.setStageName(StageName.SUGGESTIONS);
 		System.out.println(model.getGardenPreferences().get(0).getUserBloom());
@@ -157,9 +159,10 @@ public class PreferencesController extends Controller<PreferencesView> {
 					button.setSelected(false);
 				}
 			}
-			String[] strings = new String[colors.size()];
-			for (int i = 0; i < strings.length; i++)
-				strings[i] = colors.get(i);
+			HashSet<String> strings = new HashSet<String>();
+			for(String col:colors) {
+				strings.add(col);
+			}
 			model.getCurrPref().setUserColor(strings);
 		}
 		if (view.getCurrArea() != null) {

@@ -3,8 +3,12 @@ package Views;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import Controllers.PreferencesController;
 import Model.GardenPref;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -96,8 +100,13 @@ public class PreferencesView extends View<PreferencesController> {
 		String[] moistures = { "Any", "Wet", "Wet Mesic", "Dry Mesic","Dry" };
 		Label labwater = new Label("What is your soil's moisture?");
 		water = new ComboBox<String>();
+		
 		water.getItems().addAll(moistures);
+		
+		
 
+		
+		
 		String[] sunlevels = { "Any", "Full Sun", "Full Sun to Partial Shade", "Partial Shade", "Partial Shade to Full Shade",  "Full Shade" };
 		Label labsun = new Label("What degree of sunlight?");
 		sun = new ComboBox<String>();
@@ -138,6 +147,7 @@ public class PreferencesView extends View<PreferencesController> {
 		zoneButtons.getChildren().add(zoneButtonsLabel);
 		for (int i = 0; i < gardenPrefs.size(); i++) {
 			Button button = new Button("" + (i + 1));
+			button.setUserData(i);
 			button.setOnMousePressed(control.getHandleOnZoneButton(
 					(Rectangle) drawing.getChildren().get(drawing.getChildren().size() - gardenPrefs.size() + i),
 					gardenPrefs.get(i)));

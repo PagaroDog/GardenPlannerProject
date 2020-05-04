@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.HashSet;
+
 /**
  * GardenPref is used to organize user preferences with types of soil, bloom
  * times, light strength, the location, and how large the zone is.
@@ -12,7 +14,7 @@ public class GardenPref {
 	private String userLight;
 	private String userBloom;
 	private String userSoil;
-	private String[] userColor;
+	private HashSet<String> userColor;
 	private String userWater;
 	private double xLoc;
 	private double yLoc;
@@ -55,7 +57,7 @@ public class GardenPref {
 	 * @param height
 	 * @param width
 	 */
-	public GardenPref(String name, String userLight, String userBloom, String userSoil, String[] userColor, double xLoc,
+	public GardenPref(String name, String userLight, String userBloom, String userSoil, HashSet<String> userColor, double xLoc,
 			double yLoc, double height, double width) {
 		this.name = name;
 		this.userLight = userLight;
@@ -84,7 +86,7 @@ public class GardenPref {
 		return userSoil;
 	}
 
-	public String[] getUserColor() {
+	public HashSet<String> getUserColor() {
 		return userColor;
 	}
 
@@ -124,7 +126,7 @@ public class GardenPref {
 		this.userSoil = userSoil;
 	}
 
-	public void setUserColor(String[] userColor) {
+	public void setUserColor(HashSet<String> userColor) {
 		this.userColor = userColor;
 	}
 
