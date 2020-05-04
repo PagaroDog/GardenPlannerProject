@@ -46,11 +46,15 @@ public class Model {
 	private HashMap<String, Plant> plants = new HashMap<String, Plant>();
 	private ArrayList<GardenPref> gardenPreferences = new ArrayList<GardenPref>();
 	private ArrayList<Plant> suggestedPlants = new ArrayList<Plant>();
+	private HashMap<Integer,Plant> plantsFromPrefs = new HashMap<Integer,Plant>();
+	
+	
 	private GardenPref currPref;
 	private HashMap<Integer, GardenObj> gardenObjects;
 	private ArrayList<Actions> undoActions;
 	private ArrayList<Actions> redoActions;
 	private int year;
+	private int prefCategoriesCnt=4;
 
 	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	int canvasWidth = gd.getDisplayMode().getWidth() - 150;
@@ -388,13 +392,22 @@ public class Model {
 					height[1] *= 12;
 				}
 				color = parsedLine.get(6).replaceAll(" ", "").split(",");
-				bloomtimeStr = parsedLine.get(7).replaceAll(" ", "").replaceAll("Jan|Feb|Mar", "0")
-						.replaceAll("Apr|May|Jun", "1").replaceAll("Jul|Aug|Sep", "2").replaceAll("Oct|Nov|Dec", "3")
+				
+				
+				bloomtimeStr = parsedLine.get(7).replaceAll(" ", "").replaceAll("Dec|Jan|Feb", "0")
+						.replaceAll("Mar|Apr|May", "1").replaceAll("Jun|Jul|Aug|Sep", "2").replaceAll("Oct|Nov", "3")
 						.split(",");
+			
 				for (String num : bloomtimeStr) {
-					bloomSet.add(Season.values()[Integer.valueOf(num)]);
+			
+					System.out.print(bloomSet.add(Season.values()[Integer.valueOf(num)]));
 				}
+				
 				bloomtime = bloomSet.toArray(new Season[0]);
+				
+				
+				
+				
 				waterStr = parsedLine.get(8).replaceAll(" ", "").replaceAll("WetMesic", "1").replaceAll("DryMesic", "3")
 						.replaceAll("Wet", "0").replaceAll("Mesic", "2").replaceAll("Dry", "4").split(",");
 				for (String num : waterStr) {
@@ -427,6 +440,9 @@ public class Model {
 
 				plants.put(parsedLine.get(0), new Plant(name, commonNames, duration, type, height, color, bloomtime,
 						waterLevel, light, spread));
+				bloomSet.clear();
+				waterSet.clear();
+				lightSet.clear();
 			}
 
 		} catch (IOException e) {
@@ -496,6 +512,7 @@ public class Model {
 	}
 	
 	public void createSuggestions() {
+		generateRelevantPlants();
 		Iterator<Entry<String,Plant>> it = plants.entrySet().iterator();
 		while(it.hasNext()) {
 			
@@ -508,5 +525,37 @@ public class Model {
 	public ArrayList<Plant> getSuggestedPlants(){
 		return suggestedPlants;
 	}
-
+	public void generateRelevantPlants() {
+		int relate = prefCategoriesCnt;
+		int temp = 0;
+		int cnt = 1;
+		int plantNum = 1;
+		for(Plant p : plants.values()) {
+			System.out.println("Plant Number " +plantNum + " has bloom times of " + p.printSeasons());
+			for(GardenPref gp : gardenPreferences) {
+				if(gp.getUserBloom().equals("Any")) {
+					relate -- ;
+					//System.out.println("IN HERE");
+				}
+				else {
+					for(Season s :p.getBloomtime()) {
+						if(s.toString().equals(gp.getUserBloom())) {
+							relate --;
+							//System.out.println(s.toString());
+						}
+					}
+				}
+				temp = relate;
+				System.out.print("GardenPref" + cnt + " has " + temp + " attributes in common with " + p.getName() + "   ");
+				cnt++;
+				relate = prefCategoriesCnt;
+			}
+			System.out.println();
+			cnt = 0;
+			temp = 0;
+			plantNum++;
+			
+		}
+	}
+	
 }
