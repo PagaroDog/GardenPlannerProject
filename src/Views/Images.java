@@ -35,7 +35,7 @@ public class Images {
 		
 		ImageWithSourceInfo[] imgArr = new ImageWithSourceInfo[2];
 		
-		
+		int maxFilesRead = 10;
 		
 		
 		
@@ -49,7 +49,7 @@ public class Images {
 				FilenameFilter pic = (File dir, String name) -> !(name.endsWith(".txt"));
 				
 				FilenameFilter txt = (File dir, String name) -> name.endsWith(".txt");
-				for (int i = 0; i < file.listFiles().length; i++) {
+				for (int i = 0; i < Math.min(maxFilesRead, file.listFiles().length); i++) {
 					try {
 
 						File currFolder = new File(directory + plant + "/" + i);
