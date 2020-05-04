@@ -87,23 +87,23 @@ public class PreferencesView extends View<PreferencesController> {
 		Label labbloom = new Label("When do you want the plant to bloom?");
 		bloom = new ComboBox<String>();
 		bloom.getItems().addAll(seasons);
-
+/*
 		String[] soils = { "Any", "Clay", "Sand", "Loam" };
 		Label labsoil = new Label("What type of soil?");
 		soil = new ComboBox<String>();
 		soil.getItems().addAll(soils);
-
-		String[] moistures = { "Any", "Dry", "Medium", "Wet" };
+*/
+		String[] moistures = { "Any", "Wet", "Wet Mesic", "Dry Mesic","Dry" };
 		Label labwater = new Label("What is your soil's moisture?");
 		water = new ComboBox<String>();
 		water.getItems().addAll(moistures);
 
-		String[] sunlevels = { "Any", "Full Sun", "Partial Sun", "Partial Shade", "Shade" };
+		String[] sunlevels = { "Any", "Full Sun", "Full Sun to Partial Shade", "Partial Shade", "Partial Shade to Full Shade",  "Full Shade" };
 		Label labsun = new Label("What degree of sunlight?");
 		sun = new ComboBox<String>();
 		sun.getItems().addAll(sunlevels);
 
-		String[] colors = { "Red", "Blue", "Violet", "Pink", "White", "Yellow", "Black" };
+		String[] colors = { "Red", "Blue", "Violet", "Pink", "White", "Yellow", "Black","Brown","Green","Orange" };
 		color = new TilePane();
 		color.setPadding(new Insets(10, 10, 10, 10));
 		Label labcolor = new Label("What color of the bloom?");
@@ -112,11 +112,11 @@ public class PreferencesView extends View<PreferencesController> {
 		}
 
 		bloom.setPrefWidth(250);
-		soil.setPrefWidth(250);
+		//soil.setPrefWidth(250);
 		water.setPrefWidth(250);
 		sun.setPrefWidth(250);
 		color.setPrefWidth(500);
-		vbox.getChildren().addAll(name, labwater, water, labsoil, soil, labsun, sun, labcolor, color,
+		vbox.getChildren().addAll(name, labwater, water,  labsun, sun, labcolor, color,
 				labbloom, bloom);
 		vbox.setPrefWidth(500);
 		return vbox;
