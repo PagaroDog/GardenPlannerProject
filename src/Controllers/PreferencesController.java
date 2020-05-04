@@ -120,6 +120,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 		}
 		view.setDrawing(drawing);
 		view.setupZoneFlips(model.getGardenPreferences());
+		model.setCurrPref(model.getGardenPreferences().get(0));
 	}
 
 	
