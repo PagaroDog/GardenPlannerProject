@@ -1,15 +1,18 @@
 package Controllers;
 
+
 import java.util.ArrayList;
 
 import Model.GardenPref;
 import Model.Model;
 import Model.StageName;
 import Views.PreferencesView;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -81,6 +84,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 		view.getStage().setScene(Main.getScenes().get(StageName.SUGGESTIONS));
 		model.createSuggestions();
 		model.setStageName(StageName.SUGGESTIONS);
+		System.out.println(model.getGardenPreferences().get(0).getUserBloom());
 	}
 
 	/**
@@ -138,10 +142,11 @@ public class PreferencesController extends Controller<PreferencesView> {
 		ObservableList<Node> colorButtons = view.getColor().getChildren();
 		ArrayList<String> colors = new ArrayList<String>();
 		if (model.getCurrPref() != null) {
+			System.out.println("Saving Prefs");
 			model.getCurrPref().setName(view.getName().getText());
 			model.getCurrPref().setUserLight(view.getSun().getValue());
 			model.getCurrPref().setUserBloom(view.getBloom().getValue());
-			model.getCurrPref().setUserSoil(view.getSoil().getValue());
+			//model.getCurrPref().setUserSoil(view.getSoil().getValue());
 			model.getCurrPref().setUserWater(view.getWater().getValue());
 
 			for (int i = 0; i < colorButtons.size(); i++) {
@@ -159,13 +164,14 @@ public class PreferencesController extends Controller<PreferencesView> {
 		if (view.getCurrArea() != null) {
 			view.getCurrArea().setStroke(Color.TRANSPARENT);
 		}
+		
 		rect.setStroke(Color.RED);
 		model.setCurrPref(gardenPref);
 		view.setCurrArea(rect);
 		view.getName().setText(gardenPref.getName());
 		view.getSun().setValue(gardenPref.getUserLight());
 		view.getBloom().setValue(gardenPref.getUserBloom());
-		view.getSoil().setValue(gardenPref.getUserSoil());
+		//view.getSoil().setValue(gardenPref.getUserSoil());
 		view.getWater().setValue(gardenPref.getUserWater());
 		if (gardenPref.getUserColor() != null) {
 			for (String str : gardenPref.getUserColor()) {
@@ -179,5 +185,10 @@ public class PreferencesController extends Controller<PreferencesView> {
 		}
 
 	}
+	
+	
+
+
+	
 
 }
