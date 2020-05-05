@@ -262,6 +262,11 @@ public class SuggestionsView extends View<SuggestionsController> {
 	public GridPane getGrid() {
 		return (GridPane) border.getCenter();
 	}
+	public void refreshPlants() {
+		GridPane cen = center();
+	
+		border.setCenter(cen);
+	}
 	
 	
 

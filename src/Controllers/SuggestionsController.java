@@ -127,5 +127,8 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 	public String getPlantNameAt(int x) {
 		return model.getSuggestedPlants().get(x).getName();
 	}
+	public void update() {
+		view.refreshPlants();
+	}
 
 }
