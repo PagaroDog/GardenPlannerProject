@@ -3,8 +3,10 @@ package Views;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,8 +20,6 @@ import javafx.scene.image.Image;
  */
 public class Images {
 	HashMap<String, ImageWithSourceInfo[]> plantImages;
-	double thumbnailWidth = 100;
-	double thumbnailHeight = 100;
 	/**
 	 * The constructor reads the directory containing the images and source info and
 	 * creates an array of ImageWithSourceInfo objects for each plant and stores
@@ -36,9 +36,6 @@ public class Images {
 		ImageWithSourceInfo[] imgArr = new ImageWithSourceInfo[2];
 		
 		
-		
-		
-		
 		for (File file : files) {
 		
 			arrList.clear();
@@ -49,7 +46,7 @@ public class Images {
 				FilenameFilter pic = (File dir, String name) -> !(name.endsWith(".txt"));
 				
 				FilenameFilter txt = (File dir, String name) -> name.endsWith(".txt");
-				for (int i = 0; i < file.listFiles().length; i++) {
+				for (int i = 0; i < file.listFiles().length && i < 5; i++) {
 					try {
 
 						File currFolder = new File(directory + plant + "/" + i);
@@ -57,19 +54,26 @@ public class Images {
 						String curr = currFolder.listFiles(pic)[0].getPath();
 						
 						
-						Image img = new Image(new FileInputStream(curr),thumbnailHeight,thumbnailWidth,true, false);
+						Image img = new Image(new FileInputStream(curr));
 						BufferedReader br = new BufferedReader(new FileReader(currFolder.listFiles(txt)[0]));
 						br.readLine(); // Ignore empty line
 						source[0] = br.readLine(); // Author
 						source[1] = br.readLine(); // Link
+						br.close();
 						
-						arrList.add(new ImageWithSourceInfo(img, source));
-					} catch (Exception e) {
+						arrList.add(new ImageWithSourceInfo(img, source.clone()));
+					} catch (FileNotFoundException e) {
 						File currFolder = new File(directory + plant + '/' + i);
-						System.out.println("ERROR: " + currFolder);
+						System.out.println("File Not Found Exception: " + currFolder);
+					} catch(IOException e) {
+						File currFolder = new File(directory + plant + '/' + i);
+						System.out.println("IO Exception: " + currFolder);
+					} catch(NullPointerException e) {
+						File currFolder = new File(directory + plant + '/' + i);
+						System.out.println("Null Pointer Exception: " + currFolder);
 					}
 				}
-				plantImages.put(file.getName().replace("_", " "), arrList.toArray(imgArr));
+				plantImages.put(plant.replace("_", " "), arrList.toArray(imgArr).clone());
 			}
 		}
 	}

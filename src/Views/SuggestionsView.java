@@ -87,7 +87,10 @@ public class SuggestionsView extends View<SuggestionsController> {
 				StackPane p = new StackPane();
 				p.setPadding(new Insets(10,10,10,10));
 				plantName = control.getPlantNameAt(count);
-				ImageView plant = new ImageView(images.getPlantImages().get(control.getPlantNameAt(count))[0].getImg());
+				ImageView plant = new ImageView(images.getPlantImages().get(plantName)[0].getImg());
+				plant.setPreserveRatio(true);
+				plant.setFitWidth(thumbnailWidth);
+				plant.setFitHeight(thumbnailHeight);
 				p.setUserData(plantName);
 				
 				p.getChildren().add(plant);
@@ -97,10 +100,10 @@ public class SuggestionsView extends View<SuggestionsController> {
 				//System.out.println(control.getPlantNameAt(count));
 				
 				imgs.add(p);
-				GridPane.setConstraints(imgs.get(imgs.size() - 1), j, i);
-				imgs.get(imgs.size() - 1).setOnMouseEntered(control.gethandleOnMouseEnter());
-				imgs.get(imgs.size() - 1).setOnMouseExited(control.gethandleOnMouseExit());
-				imgs.get(imgs.size() - 1).setOnMouseClicked(control.gethandleOnMouseClick());
+				GridPane.setConstraints(p, j, i);
+				p.setOnMouseEntered(control.gethandleOnMouseEnter());
+				p.setOnMouseExited(control.gethandleOnMouseExit());
+				p.setOnMouseClicked(control.gethandleOnMouseClick());
 				count++;
 			}
 			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
