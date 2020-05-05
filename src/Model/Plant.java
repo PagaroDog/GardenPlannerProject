@@ -28,7 +28,8 @@ public class Plant {
 		this.duration = duration;
 		this.type = type;
 		this.height = height;
-		this.color = color;
+		this.color = new HashSet<String>();
+		this.color.addAll(color);
 		this.bloomtime = bloomtime;
 		this.waterLevel = waterLevel;
 		this.light = light;
