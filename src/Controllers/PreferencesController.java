@@ -1,15 +1,19 @@
 package Controllers;
 
+
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import Model.GardenPref;
 import Model.Model;
 import Model.StageName;
 import Views.PreferencesView;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -77,10 +81,14 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 * @param event
 	 */
 	public void NextButton(MouseEvent event) {
-
+		saveUserPref(false);
 		view.getStage().setScene(Main.getScenes().get(StageName.SUGGESTIONS));
-		model.createSuggestions();
+		
+		model.createSuggestions(false);
+		main.getSuggestionsControl().update();
+		//model.generateRelevantPlants();
 		model.setStageName(StageName.SUGGESTIONS);
+		
 	}
 
 	/**
@@ -116,6 +124,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 		}
 		view.setDrawing(drawing);
 		view.setupZoneFlips(model.getGardenPreferences());
+		model.setCurrPref(model.getGardenPreferences().get(0));
 	}
 
 	
@@ -136,38 +145,22 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 */
 	public void zoneButton(MouseEvent event, Rectangle rect, GardenPref gardenPref) {
 		ObservableList<Node> colorButtons = view.getColor().getChildren();
-		ArrayList<String> colors = new ArrayList<String>();
-		if (model.getCurrPref() != null) {
-			model.getCurrPref().setName(view.getName().getText());
-			model.getCurrPref().setUserLight(view.getSun().getValue());
-			model.getCurrPref().setUserBloom(view.getBloom().getValue());
-			model.getCurrPref().setUserSoil(view.getSoil().getValue());
-			model.getCurrPref().setUserWater(view.getWater().getValue());
 
-			for (int i = 0; i < colorButtons.size(); i++) {
-				RadioButton button = (RadioButton) (colorButtons.get(i));
-				if (button.isSelected()) {
-					colors.add(button.getText());
-					button.setSelected(false);
-				}
-			}
-			String[] strings = new String[colors.size()];
-			for (int i = 0; i < strings.length; i++)
-				strings[i] = colors.get(i);
-			model.getCurrPref().setUserColor(strings);
-		}
+		saveUserPref(true);
 		if (view.getCurrArea() != null) {
 			view.getCurrArea().setStroke(Color.TRANSPARENT);
 		}
+		
 		rect.setStroke(Color.RED);
 		model.setCurrPref(gardenPref);
 		view.setCurrArea(rect);
 		view.getName().setText(gardenPref.getName());
 		view.getSun().setValue(gardenPref.getUserLight());
 		view.getBloom().setValue(gardenPref.getUserBloom());
-		view.getSoil().setValue(gardenPref.getUserSoil());
+		//view.getSoil().setValue(gardenPref.getUserSoil());
 		view.getWater().setValue(gardenPref.getUserWater());
 		if (gardenPref.getUserColor() != null) {
+			
 			for (String str : gardenPref.getUserColor()) {
 				for (int i = 0; i < colorButtons.size(); i++) {
 					RadioButton button = (RadioButton) (colorButtons.get(i));
@@ -179,5 +172,45 @@ public class PreferencesController extends Controller<PreferencesView> {
 		}
 
 	}
+	
+
+	/**
+	 * Called by zoneButton and NextButton. If stay is true, then the radio buttons are reset. If stay is false, then the radio buttons
+	 * remain the same.
+	 * @param stay true -> reset RadioButtons, false -> don't reset RadioButtons
+	 */
+	public void saveUserPref(boolean stay) {
+		ObservableList<Node> colorButtons = view.getColor().getChildren();
+		ArrayList<String> colors = new ArrayList<String>();
+		if (model.getCurrPref() != null) {
+			System.out.println("Saving Prefs");
+			model.getCurrPref().setName(view.getName().getText());
+			model.getCurrPref().setUserLight(view.getSun().getValue());
+			model.getCurrPref().setUserBloom(view.getBloom().getValue());
+			//model.getCurrPref().setUserSoil(view.getSoil().getValue());
+			model.getCurrPref().setUserWater(view.getWater().getValue());
+
+			for (int i = 0; i < colorButtons.size(); i++) {
+				RadioButton button = (RadioButton) (colorButtons.get(i));
+				if (button.isSelected()) {
+					colors.add(button.getText());
+					if(stay) {
+						button.setSelected(false);
+					}
+				}
+			}
+			HashSet<String> strings = new HashSet<String>();
+			for(String col:colors) {
+				strings.add(col);
+			}
+			model.getCurrPref().setUserColor(strings);
+		}
+		
+	}
+	
+	
+
+
+	
 
 }

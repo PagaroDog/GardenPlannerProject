@@ -37,11 +37,12 @@ public class SuggestionsView extends View<SuggestionsController> {
 	private int thumbnailHeight = 100;
 	private final int spaceBetweenLabelsPerRow = 17;
 	int rows = canvasHeight / (thumbnailHeight * 2);
-	int cols = canvasWidth / thumbnailWidth;
+	int cols = (int) (canvasWidth / (thumbnailWidth * 1.75));
 	private ImageView plantCopy;
 	BorderPane border;
 	ArrayList<Pane> imgs;
 	Images images;
+	private String selectedBG = "-fx-background-color: BLACK;";
 
 	public SuggestionsView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -92,7 +93,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 				plant.setFitWidth(thumbnailWidth);
 				plant.setFitHeight(thumbnailHeight);
 				p.setUserData(plantName);
-				
+			
 				p.getChildren().add(plant);
 				p.setAlignment(Pos.CENTER);
 				//p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),
@@ -134,10 +135,10 @@ public class SuggestionsView extends View<SuggestionsController> {
 
 	public void selectImage(MouseEvent event) {
 		Node n = (Node) event.getSource();
-		if (n.getStyle().equals("-fx-background-color: BLACK;")) {
+		if (n.getStyle().equals(selectedBG)) {
 			n.setStyle("-fx-background-color: transparent;");
 		} else {
-			n.setStyle("-fx-background-color: BLACK;");
+			n.setStyle(selectedBG);
 		}
 
 	}
@@ -264,6 +265,25 @@ public class SuggestionsView extends View<SuggestionsController> {
 
 	public GridPane getGrid() {
 		return (GridPane) border.getCenter();
+	}
+	/**
+	 * Called by SuggestionsController. Updates plant images to reflect the change in Model's plantSuggestions ArrayList
+	 */
+	public void refreshPlants() {
+		GridPane cen = center();
+	
+		border.setCenter(cen);
+	}
+
+	public int getRows() {
+		return rows;
+	}
+
+	public int getCols() {
+		return cols;
+	}
+	public String getSelectedBG() {
+		return selectedBG;
 	}
 	
 	

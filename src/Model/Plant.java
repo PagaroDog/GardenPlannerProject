@@ -1,6 +1,8 @@
 
 package Model;
 
+import java.util.HashSet;
+
 /**
  * 
  * @author IanMcCabe
@@ -13,20 +15,22 @@ public class Plant {
 	private String duration;
 	private PlantType type;
 	private int[] height;
-	private String[] color;
+	private HashSet<String> color;
 	private Season[] bloomtime;
 	private Water[] waterLevel;
 	private Sun[] light;
 	private int[] spread;
+	
 
-	public Plant(String name, String[] commonNames, String duration, PlantType type, int[] height, String[] color,
+	public Plant(String name, String[] commonNames, String duration, PlantType type, int[] height, HashSet<String> color,
 			Season[] bloomtime, Water[] waterLevel, Sun[] light, int[] spread) {
 		this.name = name;
 		this.commonNames = commonNames;
 		this.duration = duration;
 		this.type = type;
 		this.height = height;
-		this.color = color;
+		this.color = new HashSet<String>();
+		this.color.addAll(color);
 		this.bloomtime = bloomtime;
 		this.waterLevel = waterLevel;
 		this.light = light;
@@ -65,11 +69,11 @@ public class Plant {
 		this.waterLevel = waterLevel;
 	}
 
-	public String[] getColor() {
+	public HashSet<String> getColor() {
 		return color;
 	}
 
-	public void setColor(String[] color) {
+	public void setColor(HashSet<String> color) {
 		this.color = color;
 	}
 
@@ -112,4 +116,5 @@ public class Plant {
 	public void setSpread(int[] spread) {
 		this.spread = spread;
 	}
+	
 }

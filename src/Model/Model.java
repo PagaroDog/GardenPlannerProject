@@ -23,6 +23,7 @@ import Controllers.StartupController;
 import Controllers.StatisticsController;
 import Controllers.TutorialController;
 import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 
 /**
  * This class stores the data for this software, as well as some methods that
@@ -46,11 +47,15 @@ public class Model {
 	private HashMap<String, Plant> plants = new HashMap<String, Plant>();
 	private ArrayList<GardenPref> gardenPreferences = new ArrayList<GardenPref>();
 	private ArrayList<Plant> suggestedPlants = new ArrayList<Plant>();
+	
+	private HashMap<Integer,ArrayList<Plant>> plantsFromPref = new HashMap<Integer,ArrayList<Plant>>();
+	
 	private GardenPref currPref;
 	private HashMap<Integer, GardenObj> gardenObjects;
 	private ArrayList<Actions> undoActions;
 	private ArrayList<Actions> redoActions;
 	private int year;
+	private int prefCategoriesCnt=4;
 
 	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	int canvasWidth = gd.getDisplayMode().getWidth() - 150;
@@ -348,6 +353,7 @@ public class Model {
 		String[] lightStr;
 		HashSet<Sun> lightSet = new HashSet<Sun>();
 		Sun[] light;
+		HashSet<String> colors = new HashSet<String>();
 		String[] spreadStr = new String[2];
 		int[] spread = new int[2];
 
@@ -388,13 +394,25 @@ public class Model {
 					height[1] *= 12;
 				}
 				color = parsedLine.get(6).replaceAll(" ", "").split(",");
-				bloomtimeStr = parsedLine.get(7).replaceAll(" ", "").replaceAll("Jan|Feb|Mar", "0")
-						.replaceAll("Apr|May|Jun", "1").replaceAll("Jul|Aug|Sep", "2").replaceAll("Oct|Nov|Dec", "3")
+				
+				
+				for (String col: color) {
+					colors.add(col);
+				}
+				
+				
+				bloomtimeStr = parsedLine.get(7).replaceAll(" ", "").replaceAll("Dec|Jan|Feb", "0")
+						.replaceAll("Mar|Apr|May", "1").replaceAll("Jun|Jul|Aug|Sep", "2").replaceAll("Oct|Nov", "3")
 						.split(",");
+			
 				for (String num : bloomtimeStr) {
+			
 					bloomSet.add(Season.values()[Integer.valueOf(num)]);
 				}
+				
 				bloomtime = bloomSet.toArray(new Season[0]);
+				
+				
 				waterStr = parsedLine.get(8).replaceAll(" ", "").replaceAll("WetMesic", "1").replaceAll("DryMesic", "3")
 						.replaceAll("Wet", "0").replaceAll("Mesic", "2").replaceAll("Dry", "4").split(",");
 				for (String num : waterStr) {
@@ -425,14 +443,20 @@ public class Model {
 					}
 				}
 
-				plants.put(parsedLine.get(0), new Plant(name, commonNames, duration, type, height, color, bloomtime,
+				plants.put(parsedLine.get(0), new Plant(name, commonNames, duration, type, height, colors, bloomtime,
 						waterLevel, light, spread));
+				
+				bloomSet.clear();
+				waterSet.clear();
+				lightSet.clear();
+				colors.clear();
+				
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		createSuggestions();
+		createSuggestions(true);
 	}
 
 	/**
@@ -495,18 +519,143 @@ public class Model {
 		return result;
 	}
 	
-	public void createSuggestions() {
-		Iterator<Entry<String,Plant>> it = plants.entrySet().iterator();
-		while(it.hasNext()) {
+	
+	/**
+	 * Takes a boolean. If startup is true, suggestedPlants if filled with plants in a default order. If startup is false, call
+	 * generateRelevantPlants() to use user preferences to order plants most in common. 
+	 * @param startup
+	 */
+	public void createSuggestions(boolean startup) {
+		if(startup) {
+			Iterator<Entry<String,Plant>> it = plants.entrySet().iterator();
+			while(it.hasNext()) {
 			
-			//System.out.println(it.next().getValue().getName());
-			suggestedPlants.add(it.next().getValue());
+				//System.out.println(it.next().getValue().getName());
+				suggestedPlants.add(it.next().getValue());
 			
+			}
 		}
+		else {
+			generateRelevantPlants();
+		}
+		
 		
 	}
 	public ArrayList<Plant> getSuggestedPlants(){
 		return suggestedPlants;
 	}
+	
+	/**
+	 * Checks each plant against every garden preference. The more attributes in common the lower the score. Plant is then placed in
+	 * an ArrayList of plants with the same number of attributes in common. The ArrayList are then appended together in the order of most 
+	 * relevant to least.
+	 */
+	public void generateRelevantPlants() {
+		plantsFromPref.clear();
+		int score = prefCategoriesCnt;
+		int minGardenPrefScore = score;
+		int cnt = 1;
+		int plantNum = 1;
+		for(int i = 0;i<=score;i++) {
+			plantsFromPref.put(i, new ArrayList<Plant>());
+		}
+		
+		
+		for(Plant p : plants.values()) {
+		
+			Object[][] plantData = {p.getBloomtime(),p.getLight(),p.getWaterLevel()};
+			
+			for(GardenPref gp : gardenPreferences) {
+				String[] userData = {gp.getUserBloom(),gp.getUserLight(),gp.getUserWater()};
+				for(int i = 0;i<plantData.length;i++) {
+					if(userCheck(plantData[i],userData[i])){
+						score --;
+					}
+				}
+					HashSet<String> copy = new HashSet<String>(p.getColor());
 
+					Iterator<String> it = copy.iterator();
+					while(it.hasNext()) {
+						if(gp.getUserColor().contains(it.next())) {
+							
+							score--;
+							break;
+						}
+					}
+				
+				
+				if(minGardenPrefScore > score) {
+					minGardenPrefScore = score;
+				}
+				
+				
+				cnt++;
+				score = prefCategoriesCnt;
+			}
+			
+			plantsFromPref.get(minGardenPrefScore).add(p);
+			cnt = 1;
+			minGardenPrefScore = Integer.MAX_VALUE;
+			plantNum++;
+		}
+		
+		suggestedPlants.clear();
+		for(int i =0;i<score;i++) {
+			
+			suggestedPlants.addAll(plantsFromPref.get(i));
+		}
+		
+	}
+	
+	
+	
+	/**
+	 * Called by generateRelevantPlants. Returns true if the userPref is "Any". Otherwise searches the array to see if any toStrings
+	 * equal the userPref, returns true. 
+	 * @param array Object[]
+	 * @param userPref String
+	 * @return true if "Any" or userPref is in array, false otherwise
+	 */
+	public boolean userCheck(Object[] array, String userPref) {
+		if(userPref == null || userPref.equals("Any") ) {
+			return true;
+		}
+		for(Object o: array) {
+			if(o.toString().equals(userPref)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	/**
+	 * Takes a grid, number of rows and columns, and a string that represents a background style. Searches for cells of the grid 
+	 * that have the style equal to the given string. If the cell has the same style, the plant is copied and added to a local arraylist.
+	 * Then all plants that are added are removed from the suggestedPlants, than added back at the front. 
+	 * @param grid Grid of ImageViews
+	 * @param rows	number of rows
+	 * @param cols	number of columns
+	 * @param bg	Background Style
+	 */
+	public void getUserPicks(GridPane grid, int rows, int cols, String bg) {
+		int index = 1;
+		ArrayList<Plant> selected = new ArrayList<Plant>();
+		for(int i = 0; i< rows;i++){
+			for(int j = 0; j<cols;j++) {
+				
+				//System.out.println(index +" has style of " + grid.getChildren().get(index).getStyle());
+				if(grid.getChildren().get(index).getStyle().equals(bg)) {
+					//System.out.println(grid.getChildren().get(index).getStyle());
+					System.out.println(suggestedPlants.get((index-1)).getName()+ " selected at index " + (index));
+					Plant copy = suggestedPlants.get(index-1);
+					selected.add(copy);
+
+				}
+				index++;
+			}
+		}
+		suggestedPlants.removeAll(selected);
+		suggestedPlants.addAll(0, selected);
+
+	}
+	
 }

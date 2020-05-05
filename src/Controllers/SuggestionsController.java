@@ -49,9 +49,12 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 	 * @param event
 	 */
 	public void nextButton(MouseEvent event) {
-
+		
+		
 		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
-
+		model.getUserPicks(view.getGrid(),view.getRows(),view.getCols(),view.getSelectedBG());
+		
+		main.getGardenControl().update();
 		model.setStageName(StageName.DESIGN);
 
 		main.getGardenControl().setDrawing(main.getPrefControl().getDrawing());
@@ -124,8 +127,20 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 		view.selectImage(event);
 
 	}
+	/**
+	 * Gets the scientific name of the plant at position x of the suggestedPlants ArrayList in the Model
+	 * @param x index
+	 * @return String Scientific Name of Plant
+	 */
 	public String getPlantNameAt(int x) {
 		return model.getSuggestedPlants().get(x).getName();
+	}
+	/**
+	 * Called by PreferencesController when the next button is hit. Calls the view to update Plants in the event the 
+	 * suggestedPlants in the Model changed.
+	 */
+	public void update() {
+		view.refreshPlants();
 	}
 
 }

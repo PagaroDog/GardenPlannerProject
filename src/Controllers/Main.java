@@ -99,5 +99,8 @@ public class Main extends Application {
 	public GardenController getGardenControl() {
 		return gardenControl;
 	}
+	public SuggestionsController getSuggestionsControl() {
+		return suggControl;
+	}
 
 }

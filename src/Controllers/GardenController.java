@@ -397,5 +397,21 @@ public class GardenController extends Controller<GardenView> {
 		event.setDropCompleted(success);
 		event.consume();
 	}
+	/**
+	 * Gets the scientific name of the plant at position x of the suggestedPlants ArrayList in the Model
+	 * @param x index
+	 * @return String Scientific Name of Plant
+	 */
+	public String getPlantNameAt(int x) {
+		return model.getSuggestedPlants().get(x).getName();
+	}
+	/**
+	 * Called by SuggestionsController when the next button is hit. Calls the view to update Plants in the event the 
+	 * suggestedPlants in the Model changed.
+	 */
+	public void update() {
+		view.updatePlants();
+		//System.out.println("Updating");
+	}
 
 }
