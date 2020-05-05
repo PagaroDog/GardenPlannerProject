@@ -81,12 +81,12 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 * @param event
 	 */
 	public void NextButton(MouseEvent event) {
-
+		saveUserPref(false);
 		view.getStage().setScene(Main.getScenes().get(StageName.SUGGESTIONS));
 		
 		model.createSuggestions();
 		model.setStageName(StageName.SUGGESTIONS);
-		System.out.println(model.getGardenPreferences().get(0).getUserBloom());
+		
 	}
 
 	/**
@@ -143,28 +143,29 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 */
 	public void zoneButton(MouseEvent event, Rectangle rect, GardenPref gardenPref) {
 		ObservableList<Node> colorButtons = view.getColor().getChildren();
-		ArrayList<String> colors = new ArrayList<String>();
-		if (model.getCurrPref() != null) {
-			System.out.println("Saving Prefs");
-			model.getCurrPref().setName(view.getName().getText());
-			model.getCurrPref().setUserLight(view.getSun().getValue());
-			model.getCurrPref().setUserBloom(view.getBloom().getValue());
-			//model.getCurrPref().setUserSoil(view.getSoil().getValue());
-			model.getCurrPref().setUserWater(view.getWater().getValue());
-
-			for (int i = 0; i < colorButtons.size(); i++) {
-				RadioButton button = (RadioButton) (colorButtons.get(i));
-				if (button.isSelected()) {
-					colors.add(button.getText());
-					button.setSelected(false);
-				}
-			}
-			HashSet<String> strings = new HashSet<String>();
-			for(String col:colors) {
-				strings.add(col);
-			}
-			model.getCurrPref().setUserColor(strings);
-		}
+//		ArrayList<String> colors = new ArrayList<String>();
+//		if (model.getCurrPref() != null) {
+//			System.out.println("Saving Prefs");
+//			model.getCurrPref().setName(view.getName().getText());
+//			model.getCurrPref().setUserLight(view.getSun().getValue());
+//			model.getCurrPref().setUserBloom(view.getBloom().getValue());
+//			//model.getCurrPref().setUserSoil(view.getSoil().getValue());
+//			model.getCurrPref().setUserWater(view.getWater().getValue());
+//
+//			for (int i = 0; i < colorButtons.size(); i++) {
+//				RadioButton button = (RadioButton) (colorButtons.get(i));
+//				if (button.isSelected()) {
+//					colors.add(button.getText());
+//					button.setSelected(false);
+//				}
+//			}
+//			HashSet<String> strings = new HashSet<String>();
+//			for(String col:colors) {
+//				strings.add(col);
+//			}
+//			model.getCurrPref().setUserColor(strings);
+//		}
+		saveUserPref(true);
 		if (view.getCurrArea() != null) {
 			view.getCurrArea().setStroke(Color.TRANSPARENT);
 		}
@@ -178,6 +179,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 		//view.getSoil().setValue(gardenPref.getUserSoil());
 		view.getWater().setValue(gardenPref.getUserWater());
 		if (gardenPref.getUserColor() != null) {
+			
 			for (String str : gardenPref.getUserColor()) {
 				for (int i = 0; i < colorButtons.size(); i++) {
 					RadioButton button = (RadioButton) (colorButtons.get(i));
@@ -188,6 +190,36 @@ public class PreferencesController extends Controller<PreferencesView> {
 			}
 		}
 
+	}
+	
+
+	public void saveUserPref(boolean stay) {
+		ObservableList<Node> colorButtons = view.getColor().getChildren();
+		ArrayList<String> colors = new ArrayList<String>();
+		if (model.getCurrPref() != null) {
+			System.out.println("Saving Prefs");
+			model.getCurrPref().setName(view.getName().getText());
+			model.getCurrPref().setUserLight(view.getSun().getValue());
+			model.getCurrPref().setUserBloom(view.getBloom().getValue());
+			//model.getCurrPref().setUserSoil(view.getSoil().getValue());
+			model.getCurrPref().setUserWater(view.getWater().getValue());
+
+			for (int i = 0; i < colorButtons.size(); i++) {
+				RadioButton button = (RadioButton) (colorButtons.get(i));
+				if (button.isSelected()) {
+					colors.add(button.getText());
+					if(stay) {
+						button.setSelected(false);
+					}
+				}
+			}
+			HashSet<String> strings = new HashSet<String>();
+			for(String col:colors) {
+				strings.add(col);
+			}
+			model.getCurrPref().setUserColor(strings);
+		}
+		
 	}
 	
 	
