@@ -84,7 +84,8 @@ public class PreferencesController extends Controller<PreferencesView> {
 		saveUserPref(false);
 		view.getStage().setScene(Main.getScenes().get(StageName.SUGGESTIONS));
 		
-		model.createSuggestions();
+		model.createSuggestions(false);
+		//model.generateRelevantPlants();
 		model.setStageName(StageName.SUGGESTIONS);
 		
 	}
