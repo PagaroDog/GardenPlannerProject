@@ -42,6 +42,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	BorderPane border;
 	ArrayList<Pane> imgs;
 	Images images;
+	private String selectedBG = "-fx-background-color: BLACK;";
 
 	public SuggestionsView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -131,10 +132,10 @@ public class SuggestionsView extends View<SuggestionsController> {
 
 	public void selectImage(MouseEvent event) {
 		Node n = (Node) event.getSource();
-		if (n.getStyle().equals("-fx-background-color: BLACK;")) {
+		if (n.getStyle().equals(selectedBG)) {
 			n.setStyle("-fx-background-color: transparent;");
 		} else {
-			n.setStyle("-fx-background-color: BLACK;");
+			n.setStyle(selectedBG);
 		}
 
 	}
@@ -266,6 +267,17 @@ public class SuggestionsView extends View<SuggestionsController> {
 		GridPane cen = center();
 	
 		border.setCenter(cen);
+	}
+
+	public int getRows() {
+		return rows;
+	}
+
+	public int getCols() {
+		return cols;
+	}
+	public String getSelectedBG() {
+		return selectedBG;
 	}
 	
 	

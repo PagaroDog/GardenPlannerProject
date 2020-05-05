@@ -98,7 +98,7 @@ public class GardenView extends View<GardenController> {
 		tile.setStyle("-fx-background-color: DAE6F3;");
 		tile.setPrefWidth(SIZE);
 		int numberPlants = 50;
-		
+		System.out.println("The first plant in garden View is " + control.getPlantNameAt(0));
 		for(int i = 0;i<numberPlants;i++) {
 			plants.add(imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg());
 			//plantImages.put(control.getPlantNameAt(i), imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg());

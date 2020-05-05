@@ -23,6 +23,7 @@ import Controllers.StartupController;
 import Controllers.StatisticsController;
 import Controllers.TutorialController;
 import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
 
 /**
  * This class stores the data for this software, as well as some methods that
@@ -46,7 +47,7 @@ public class Model {
 	private HashMap<String, Plant> plants = new HashMap<String, Plant>();
 	private ArrayList<GardenPref> gardenPreferences = new ArrayList<GardenPref>();
 	private ArrayList<Plant> suggestedPlants = new ArrayList<Plant>();
-	private HashMap<Integer,Plant> plantsFromPrefs = new HashMap<Integer,Plant>();
+	
 	private HashMap<Integer,ArrayList<Plant>> plantsFromPref = new HashMap<Integer,ArrayList<Plant>>();
 	
 	private GardenPref currPref;
@@ -588,13 +589,13 @@ public class Model {
 			minGardenPrefScore = Integer.MAX_VALUE;
 			plantNum++;
 		}
-		System.out.println("Most similar plants" + plantsFromPref.get(0));
+		//System.out.println("Most similar plants" + plantsFromPref.get(0));
 		suggestedPlants.clear();
 		for(int i =0;i<score;i++) {
 			
 			suggestedPlants.addAll(plantsFromPref.get(i));
 		}
-		System.out.println(suggestedPlants.get(0).getName());
+		//System.out.println(suggestedPlants.get(0).getName());
 	}
 	public boolean userCheck(Object[] array, String userPref) {
 		if(userPref.equals("Any")) {
@@ -606,6 +607,33 @@ public class Model {
 			}
 		}
 		return false;
+	}
+	public void getUserPicks(GridPane grid, int rows, int cols, String bg) {
+		int index = 1;
+		ArrayList<Plant> selected = new ArrayList<Plant>();
+		for(int i = 0; i< rows;i++){
+			for(int j = 0; j<cols;j++) {
+				
+				System.out.println(index +" has style of " + grid.getChildren().get(index).getStyle());
+				if(grid.getChildren().get(index).getStyle().equals(bg)) {
+					//System.out.println(grid.getChildren().get(index).getStyle());
+					System.out.println(suggestedPlants.get((index-1)).getName()+ " selected at index " + (index));
+					Plant copy = suggestedPlants.get(index-1);
+					selected.add(copy);
+					//System.out.println(copy);
+//					suggestedPlants.remove(index);
+//					suggestedPlants.add(0,copy);
+					//index++;
+				}
+				index++;
+			}
+		}
+		suggestedPlants.removeAll(selected);
+		suggestedPlants.addAll(0, selected);
+		System.out.println("The selected plants were " + selected);
+		System.out.println("The first plant in UserPicks method is " + suggestedPlants.get(0).getName());
+		//System.out.println(suggestedPlants.get(1).getName());
+		//System.out.println(suggestedPlants.get(2).getName());
 	}
 	
 }
