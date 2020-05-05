@@ -20,6 +20,7 @@ public class Plant {
 	private Water[] waterLevel;
 	private Sun[] light;
 	private int[] spread;
+	
 
 	public Plant(String name, String[] commonNames, String duration, PlantType type, int[] height, HashSet<String> color,
 			Season[] bloomtime, Water[] waterLevel, Sun[] light, int[] spread) {
@@ -115,11 +116,5 @@ public class Plant {
 	public void setSpread(int[] spread) {
 		this.spread = spread;
 	}
-	public String printSeasons() {
-		String ret = "";
-		for(Season s : bloomtime) {
-			ret = ret + s;
-		}
-		return ret;
-	}
+	
 }
