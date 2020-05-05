@@ -352,6 +352,7 @@ public class Model {
 		String[] lightStr;
 		HashSet<Sun> lightSet = new HashSet<Sun>();
 		Sun[] light;
+		HashSet<String> colors = new HashSet<String>();
 		String[] spreadStr = new String[2];
 		int[] spread = new int[2];
 
@@ -394,18 +395,21 @@ public class Model {
 				color = parsedLine.get(6).replaceAll(" ", "").split(",");
 				
 				
+				for (String col: color) {
+					colors.add(col);
+				}
+				
+				
 				bloomtimeStr = parsedLine.get(7).replaceAll(" ", "").replaceAll("Dec|Jan|Feb", "0")
 						.replaceAll("Mar|Apr|May", "1").replaceAll("Jun|Jul|Aug|Sep", "2").replaceAll("Oct|Nov", "3")
 						.split(",");
 			
 				for (String num : bloomtimeStr) {
 			
-					System.out.print(bloomSet.add(Season.values()[Integer.valueOf(num)]));
+					bloomSet.add(Season.values()[Integer.valueOf(num)]);
 				}
 				
 				bloomtime = bloomSet.toArray(new Season[0]);
-				
-				
 				
 				
 				waterStr = parsedLine.get(8).replaceAll(" ", "").replaceAll("WetMesic", "1").replaceAll("DryMesic", "3")
@@ -438,11 +442,14 @@ public class Model {
 					}
 				}
 
-				plants.put(parsedLine.get(0), new Plant(name, commonNames, duration, type, height, color, bloomtime,
+				plants.put(parsedLine.get(0), new Plant(name, commonNames, duration, type, height, colors, bloomtime,
 						waterLevel, light, spread));
+				
 				bloomSet.clear();
 				waterSet.clear();
 				lightSet.clear();
+				colors.clear();
+				
 			}
 
 		} catch (IOException e) {
@@ -526,36 +533,62 @@ public class Model {
 		return suggestedPlants;
 	}
 	public void generateRelevantPlants() {
-		int relate = prefCategoriesCnt;
-		int temp = 0;
+		int score = prefCategoriesCnt;
+		int minGardenPrefScore = Integer.MAX_VALUE;
 		int cnt = 1;
 		int plantNum = 1;
+		
 		for(Plant p : plants.values()) {
-			System.out.println("Plant Number " +plantNum + " has bloom times of " + p.printSeasons());
+			//System.out.println("Plant Number " +plantNum  +" Colors " + p.getColor());
+		
+			Object[][] plantData = {p.getBloomtime(),p.getLight(),p.getWaterLevel()};
+			
 			for(GardenPref gp : gardenPreferences) {
-				if(gp.getUserBloom().equals("Any")) {
-					relate -- ;
-					//System.out.println("IN HERE");
-				}
-				else {
-					for(Season s :p.getBloomtime()) {
-						if(s.toString().equals(gp.getUserBloom())) {
-							relate --;
-							//System.out.println(s.toString());
-						}
+				String[] userData = {gp.getUserBloom(),gp.getUserLight(),gp.getUserWater()};
+				for(int i = 0;i<plantData.length;i++) {
+					if(userCheck(plantData[i],userData[i])){
+						score --;
 					}
 				}
-				temp = relate;
-				System.out.print("GardenPref" + cnt + " has " + temp + " attributes in common with " + p.getName() + "   ");
+					HashSet<String> copy = new HashSet<String>(p.getColor());
+					System.out.println("Copy = " +copy + " USER = " + gp.getUserColor());
+
+					Iterator<String> it = copy.iterator();
+					while(it.hasNext()) {
+						if(gp.getUserColor().contains(it.next())) {
+							System.out.println("FIRED");
+							score--;
+							break;
+						}
+					}
+				
+				System.out.println("GardenPref" + cnt + " has " + score + " attributes in common with " + p.getName() + "   ");
+				if(minGardenPrefScore > score) {
+					minGardenPrefScore = score;
+				}
+				
+				
 				cnt++;
-				relate = prefCategoriesCnt;
+				score = prefCategoriesCnt;
 			}
-			System.out.println();
-			cnt = 0;
-			temp = 0;
+			//System.out.println();
+			System.out.println(p.getName() + " most closely relates to a garden pref with lowest score " + minGardenPrefScore);
+			cnt = 1;
+			minGardenPrefScore = Integer.MAX_VALUE;
 			plantNum++;
 			
 		}
+	}
+	public boolean userCheck(Object[] array, String userPref) {
+		if(userPref.equals("Any")) {
+			return true;
+		}
+		for(Object o: array) {
+			if(o.toString().equals(userPref)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }
