@@ -102,7 +102,7 @@ public class GardenView extends View<GardenController> {
 		for(int i = 0;i<numberPlants;i++) {
 			plants.add(imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg());
 			//plantImages.put(control.getPlantNameAt(i), imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg());
-			System.out.println(control.getPlantNameAt(i));
+			//System.out.println(control.getPlantNameAt(i));
 		}
 /*
 		plantImages.put("whiteAsh", new Image("/imgs/whiteAsh.png"));
