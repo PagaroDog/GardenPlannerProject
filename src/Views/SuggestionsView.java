@@ -263,6 +263,9 @@ public class SuggestionsView extends View<SuggestionsController> {
 	public GridPane getGrid() {
 		return (GridPane) border.getCenter();
 	}
+	/**
+	 * Called by SuggestionsController. Updates plant images to reflect the change in Model's plantSuggestions ArrayList
+	 */
 	public void refreshPlants() {
 		GridPane cen = center();
 	

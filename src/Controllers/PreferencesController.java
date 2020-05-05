@@ -174,6 +174,11 @@ public class PreferencesController extends Controller<PreferencesView> {
 	}
 	
 
+	/**
+	 * Called by zoneButton and NextButton. If stay is true, then the radio buttons are reset. If stay is false, then the radio buttons
+	 * remain the same.
+	 * @param stay true -> reset RadioButtons, false -> don't reset RadioButtons
+	 */
 	public void saveUserPref(boolean stay) {
 		ObservableList<Node> colorButtons = view.getColor().getChildren();
 		ArrayList<String> colors = new ArrayList<String>();

@@ -101,38 +101,16 @@ public class GardenView extends View<GardenController> {
 		System.out.println("The first plant in garden View is " + control.getPlantNameAt(0));
 		for(int i = 0;i<numberPlants;i++) {
 			plants.add(imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg());
-			//plantImages.put(control.getPlantNameAt(i), imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg());
-			//System.out.println(control.getPlantNameAt(i));
+			
 		}
-/*
-		plantImages.put("whiteAsh", new Image("/imgs/whiteAsh.png"));
-		plantImages.put("commonMilkweed.png", new Image("/imgs/commonMilkweed.png"));
-		plantImages.put("american-elm.jpg", new Image("/imgs/american-elm.jpg"));
-		plantImages.put("american-plum.jpg", new Image("/imgs/american-plum.jpg"));
-		plantImages.put("goldenrod.jpg", new Image("/imgs/goldenrod.jpg"));
-*/
-		// addImageFromFile("/imgs/");
 
-//		for (Image img : plantImages.values()) {
-//			ImageView imageview = new ImageView(img);
-//			imageview.setPreserveRatio(true);
-//			imageview.setFitHeight(SIZE);
-//			imageview.setFitWidth(SIZE);
-//			imageview.setOnDragDetected(control.getHandlerForDragDetected());
-//			// imageview.setOnMouseDragged(control.getHandlerForDrag());
-//			// imageview.setOnMousePressed(control.getHandlerForPress());
-//			// imageview.setOnMouseReleased(control.getHandlerForDragReleased());
-//			tile.getChildren().add(imageview);
-//		}
 		for (Image img : plants) {
 			ImageView imageview = new ImageView(img);
 			imageview.setPreserveRatio(true);
 			imageview.setFitHeight(SIZE);
 			imageview.setFitWidth(SIZE);
 			imageview.setOnDragDetected(control.getHandlerForDragDetected());
-			// imageview.setOnMouseDragged(control.getHandlerForDrag());
-			// imageview.setOnMousePressed(control.getHandlerForPress());
-			// imageview.setOnMouseReleased(control.getHandlerForDragReleased());
+			
 			tile.getChildren().add(imageview);
 		}
 		scrollPane = new ScrollPane();
@@ -323,7 +301,9 @@ public class GardenView extends View<GardenController> {
 	public double getBottomHeight() {
 		return bottomHeight;
 	}
-	
+	/**
+	 * Called by GardenController. Updates plant images to reflect the change in Model's plantSuggestions ArrayList
+	 */
 	public void updatePlants() {
 		left();
 		border.setLeft(scrollPane);

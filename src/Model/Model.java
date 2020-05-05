@@ -519,6 +519,12 @@ public class Model {
 		return result;
 	}
 	
+	
+	/**
+	 * Takes a boolean. If startup is true, suggestedPlants if filled with plants in a default order. If startup is false, call
+	 * generateRelevantPlants() to use user preferences to order plants most in common. 
+	 * @param startup
+	 */
 	public void createSuggestions(boolean startup) {
 		if(startup) {
 			Iterator<Entry<String,Plant>> it = plants.entrySet().iterator();
@@ -538,6 +544,12 @@ public class Model {
 	public ArrayList<Plant> getSuggestedPlants(){
 		return suggestedPlants;
 	}
+	
+	/**
+	 * Checks each plant against every garden preference. The more attributes in common the lower the score. Plant is then placed in
+	 * an ArrayList of plants with the same number of attributes in common. The ArrayList are then appended together in the order of most 
+	 * relevant to least.
+	 */
 	public void generateRelevantPlants() {
 		plantsFromPref.clear();
 		int score = prefCategoriesCnt;
@@ -550,7 +562,6 @@ public class Model {
 		
 		
 		for(Plant p : plants.values()) {
-			//System.out.println("Plant Number " +plantNum  +" Colors " + p.getColor());
 		
 			Object[][] plantData = {p.getBloomtime(),p.getLight(),p.getWaterLevel()};
 			
@@ -562,18 +573,17 @@ public class Model {
 					}
 				}
 					HashSet<String> copy = new HashSet<String>(p.getColor());
-					//System.out.println("Copy = " +copy + " USER = " + gp.getUserColor());
 
 					Iterator<String> it = copy.iterator();
 					while(it.hasNext()) {
 						if(gp.getUserColor().contains(it.next())) {
-							//System.out.println("FIRED");
+							
 							score--;
 							break;
 						}
 					}
 				
-				//System.out.println("GardenPref" + cnt + " has " + score + " attributes in common with " + p.getName() + "   ");
+				
 				if(minGardenPrefScore > score) {
 					minGardenPrefScore = score;
 				}
@@ -582,21 +592,30 @@ public class Model {
 				cnt++;
 				score = prefCategoriesCnt;
 			}
-			//System.out.println();
-			//System.out.println(p.getName() + " most closely relates to a garden pref with lowest score " + minGardenPrefScore);
+			
 			plantsFromPref.get(minGardenPrefScore).add(p);
 			cnt = 1;
 			minGardenPrefScore = Integer.MAX_VALUE;
 			plantNum++;
 		}
-		//System.out.println("Most similar plants" + plantsFromPref.get(0));
+		
 		suggestedPlants.clear();
 		for(int i =0;i<score;i++) {
 			
 			suggestedPlants.addAll(plantsFromPref.get(i));
 		}
-		//System.out.println(suggestedPlants.get(0).getName());
+		
 	}
+	
+	
+	
+	/**
+	 * Called by generateRelevantPlants. Returns true if the userPref is "Any". Otherwise searches the array to see if any toStrings
+	 * equal the userPref, returns true. 
+	 * @param array Object[]
+	 * @param userPref String
+	 * @return true if "Any" or userPref is in array, false otherwise
+	 */
 	public boolean userCheck(Object[] array, String userPref) {
 		if(userPref.equals("Any")) {
 			return true;
@@ -608,32 +627,35 @@ public class Model {
 		}
 		return false;
 	}
+	/**
+	 * Takes a grid, number of rows and columns, and a string that represents a background style. Searches for cells of the grid 
+	 * that have the style equal to the given string. If the cell has the same style, the plant is copied and added to a local arraylist.
+	 * Then all plants that are added are removed from the suggestedPlants, than added back at the front. 
+	 * @param grid Grid of ImageViews
+	 * @param rows	number of rows
+	 * @param cols	number of columns
+	 * @param bg	Background Style
+	 */
 	public void getUserPicks(GridPane grid, int rows, int cols, String bg) {
 		int index = 1;
 		ArrayList<Plant> selected = new ArrayList<Plant>();
 		for(int i = 0; i< rows;i++){
 			for(int j = 0; j<cols;j++) {
 				
-				System.out.println(index +" has style of " + grid.getChildren().get(index).getStyle());
+				//System.out.println(index +" has style of " + grid.getChildren().get(index).getStyle());
 				if(grid.getChildren().get(index).getStyle().equals(bg)) {
 					//System.out.println(grid.getChildren().get(index).getStyle());
 					System.out.println(suggestedPlants.get((index-1)).getName()+ " selected at index " + (index));
 					Plant copy = suggestedPlants.get(index-1);
 					selected.add(copy);
-					//System.out.println(copy);
-//					suggestedPlants.remove(index);
-//					suggestedPlants.add(0,copy);
-					//index++;
+
 				}
 				index++;
 			}
 		}
 		suggestedPlants.removeAll(selected);
 		suggestedPlants.addAll(0, selected);
-		System.out.println("The selected plants were " + selected);
-		System.out.println("The first plant in UserPicks method is " + suggestedPlants.get(0).getName());
-		//System.out.println(suggestedPlants.get(1).getName());
-		//System.out.println(suggestedPlants.get(2).getName());
+
 	}
 	
 }
