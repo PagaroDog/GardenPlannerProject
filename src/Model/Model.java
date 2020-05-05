@@ -617,7 +617,7 @@ public class Model {
 	 * @return true if "Any" or userPref is in array, false otherwise
 	 */
 	public boolean userCheck(Object[] array, String userPref) {
-		if(userPref.equals("Any")) {
+		if(userPref == null || userPref.equals("Any") ) {
 			return true;
 		}
 		for(Object o: array) {
