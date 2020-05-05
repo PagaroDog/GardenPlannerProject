@@ -20,6 +20,8 @@ import javafx.scene.image.Image;
  */
 public class Images {
 	HashMap<String, ImageWithSourceInfo[]> plantImages;
+	private final int maxPlantPics = 5;
+	private final int numSourceFields = 2;
 	/**
 	 * The constructor reads the directory containing the images and source info and
 	 * creates an array of ImageWithSourceInfo objects for each plant and stores
@@ -30,10 +32,10 @@ public class Images {
 	public Images(String directory) {
 		plantImages = new HashMap<String, ImageWithSourceInfo[]>();
 		ArrayList<ImageWithSourceInfo> arrList = new ArrayList<ImageWithSourceInfo>();
-		String[] source = new String[2];
+		String[] source = new String[numSourceFields];
 		File[] files = new File(directory).listFiles();
 		
-		ImageWithSourceInfo[] imgArr = new ImageWithSourceInfo[2];
+		ImageWithSourceInfo[] imgArr = new ImageWithSourceInfo[numSourceFields];
 		
 		
 		for (File file : files) {
@@ -46,7 +48,7 @@ public class Images {
 				FilenameFilter pic = (File dir, String name) -> !(name.endsWith(".txt"));
 				
 				FilenameFilter txt = (File dir, String name) -> name.endsWith(".txt");
-				for (int i = 0; i < file.listFiles().length && i < 5; i++) {
+				for (int i = 0; i < file.listFiles().length && i < maxPlantPics; i++) {
 					try {
 
 						File currFolder = new File(directory + plant + "/" + i);
@@ -57,8 +59,9 @@ public class Images {
 						Image img = new Image(new FileInputStream(curr));
 						BufferedReader br = new BufferedReader(new FileReader(currFolder.listFiles(txt)[0]));
 						br.readLine(); // Ignore empty line
-						source[0] = br.readLine(); // Author
-						source[1] = br.readLine(); // Link
+						for (int j = 0; j < numSourceFields; j++) {
+							source[j] = br.readLine();
+						}
 						br.close();
 						
 						arrList.add(new ImageWithSourceInfo(img, source.clone()));
