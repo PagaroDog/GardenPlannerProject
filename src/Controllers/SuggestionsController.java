@@ -49,7 +49,7 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 	 * @param event
 	 */
 	public void nextButton(MouseEvent event) {
-
+		main.getGardenControl().update();
 		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 
 		model.setStageName(StageName.DESIGN);

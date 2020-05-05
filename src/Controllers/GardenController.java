@@ -397,5 +397,13 @@ public class GardenController extends Controller<GardenView> {
 		event.setDropCompleted(success);
 		event.consume();
 	}
+	
+	public String getPlantNameAt(int x) {
+		return model.getSuggestedPlants().get(x).getName();
+	}
+	public void update() {
+		view.updatePlants();
+		System.out.println("Updating");
+	}
 
 }

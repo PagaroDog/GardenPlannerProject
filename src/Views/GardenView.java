@@ -1,6 +1,7 @@
 package Views;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +31,8 @@ import javafx.stage.Stage;
  */
 public class GardenView extends View<GardenController> {
 	private HashMap<String, Image> plantImages = new HashMap<String, Image>();
+	private ArrayList<Image> plants = new ArrayList<Image>();
+	
 	private FlowPane suggestedFlowPane;
 	private TilePane seasonTilePane;
 	private double bottomHeight = 35;
@@ -86,6 +89,7 @@ public class GardenView extends View<GardenController> {
 	 * Creates a ScrollPane of suggested plants for the left part of the BorderPane
 	 */
 	public void left() {
+		plants.clear();
 		TilePane tile = new TilePane();
 		tile.setPadding(new Insets(5, 0, 5, 0));
 		tile.setVgap(4);
@@ -93,16 +97,34 @@ public class GardenView extends View<GardenController> {
 		tile.setPrefColumns(1);
 		tile.setStyle("-fx-background-color: DAE6F3;");
 		tile.setPrefWidth(SIZE);
-
+		int numberPlants = 50;
+		
+		for(int i = 0;i<numberPlants;i++) {
+			plants.add(imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg());
+			//plantImages.put(control.getPlantNameAt(i), imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg());
+			System.out.println(control.getPlantNameAt(i));
+		}
+/*
 		plantImages.put("whiteAsh", new Image("/imgs/whiteAsh.png"));
 		plantImages.put("commonMilkweed.png", new Image("/imgs/commonMilkweed.png"));
 		plantImages.put("american-elm.jpg", new Image("/imgs/american-elm.jpg"));
 		plantImages.put("american-plum.jpg", new Image("/imgs/american-plum.jpg"));
 		plantImages.put("goldenrod.jpg", new Image("/imgs/goldenrod.jpg"));
-
+*/
 		// addImageFromFile("/imgs/");
 
-		for (Image img : plantImages.values()) {
+//		for (Image img : plantImages.values()) {
+//			ImageView imageview = new ImageView(img);
+//			imageview.setPreserveRatio(true);
+//			imageview.setFitHeight(SIZE);
+//			imageview.setFitWidth(SIZE);
+//			imageview.setOnDragDetected(control.getHandlerForDragDetected());
+//			// imageview.setOnMouseDragged(control.getHandlerForDrag());
+//			// imageview.setOnMousePressed(control.getHandlerForPress());
+//			// imageview.setOnMouseReleased(control.getHandlerForDragReleased());
+//			tile.getChildren().add(imageview);
+//		}
+		for (Image img : plants) {
 			ImageView imageview = new ImageView(img);
 			imageview.setPreserveRatio(true);
 			imageview.setFitHeight(SIZE);
@@ -300,6 +322,11 @@ public class GardenView extends View<GardenController> {
 
 	public double getBottomHeight() {
 		return bottomHeight;
+	}
+	
+	public void updatePlants() {
+		left();
+		border.setLeft(scrollPane);
 	}
 
 }
