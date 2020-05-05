@@ -47,7 +47,7 @@ public class Model {
 	private ArrayList<GardenPref> gardenPreferences = new ArrayList<GardenPref>();
 	private ArrayList<Plant> suggestedPlants = new ArrayList<Plant>();
 	private HashMap<Integer,Plant> plantsFromPrefs = new HashMap<Integer,Plant>();
-	
+	private HashMap<Integer,ArrayList<Plant>> plantsFromPref = new HashMap<Integer,ArrayList<Plant>>();
 	
 	private GardenPref currPref;
 	private HashMap<Integer, GardenObj> gardenObjects;
@@ -455,7 +455,7 @@ public class Model {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		createSuggestions();
+		createSuggestions(true);
 	}
 
 	/**
@@ -518,25 +518,35 @@ public class Model {
 		return result;
 	}
 	
-	public void createSuggestions() {
-		generateRelevantPlants();
-		Iterator<Entry<String,Plant>> it = plants.entrySet().iterator();
-		while(it.hasNext()) {
+	public void createSuggestions(boolean startup) {
+		if(startup) {
+			Iterator<Entry<String,Plant>> it = plants.entrySet().iterator();
+			while(it.hasNext()) {
 			
-			//System.out.println(it.next().getValue().getName());
-			suggestedPlants.add(it.next().getValue());
+				//System.out.println(it.next().getValue().getName());
+				suggestedPlants.add(it.next().getValue());
 			
+			}
 		}
+		else {
+			generateRelevantPlants();
+		}
+		
 		
 	}
 	public ArrayList<Plant> getSuggestedPlants(){
 		return suggestedPlants;
 	}
 	public void generateRelevantPlants() {
+		plantsFromPref.clear();
 		int score = prefCategoriesCnt;
-		int minGardenPrefScore = Integer.MAX_VALUE;
+		int minGardenPrefScore = score;
 		int cnt = 1;
 		int plantNum = 1;
+		for(int i = 0;i<=score;i++) {
+			plantsFromPref.put(i, new ArrayList<Plant>());
+		}
+		
 		
 		for(Plant p : plants.values()) {
 			//System.out.println("Plant Number " +plantNum  +" Colors " + p.getColor());
@@ -551,18 +561,18 @@ public class Model {
 					}
 				}
 					HashSet<String> copy = new HashSet<String>(p.getColor());
-					System.out.println("Copy = " +copy + " USER = " + gp.getUserColor());
+					//System.out.println("Copy = " +copy + " USER = " + gp.getUserColor());
 
 					Iterator<String> it = copy.iterator();
 					while(it.hasNext()) {
 						if(gp.getUserColor().contains(it.next())) {
-							System.out.println("FIRED");
+							//System.out.println("FIRED");
 							score--;
 							break;
 						}
 					}
 				
-				System.out.println("GardenPref" + cnt + " has " + score + " attributes in common with " + p.getName() + "   ");
+				//System.out.println("GardenPref" + cnt + " has " + score + " attributes in common with " + p.getName() + "   ");
 				if(minGardenPrefScore > score) {
 					minGardenPrefScore = score;
 				}
@@ -572,12 +582,19 @@ public class Model {
 				score = prefCategoriesCnt;
 			}
 			//System.out.println();
-			System.out.println(p.getName() + " most closely relates to a garden pref with lowest score " + minGardenPrefScore);
+			//System.out.println(p.getName() + " most closely relates to a garden pref with lowest score " + minGardenPrefScore);
+			plantsFromPref.get(minGardenPrefScore).add(p);
 			cnt = 1;
 			minGardenPrefScore = Integer.MAX_VALUE;
 			plantNum++;
-			
 		}
+		System.out.println("Most similar plants" + plantsFromPref.get(0));
+		suggestedPlants.clear();
+		for(int i =0;i<score;i++) {
+			
+			suggestedPlants.addAll(plantsFromPref.get(i));
+		}
+		System.out.println(suggestedPlants.get(0).getName());
 	}
 	public boolean userCheck(Object[] array, String userPref) {
 		if(userPref.equals("Any")) {
