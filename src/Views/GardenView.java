@@ -20,6 +20,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 import javafx.stage.Stage;
 
 /**
@@ -99,9 +101,11 @@ public class GardenView extends View<GardenController> {
 		tile.setPrefWidth(SIZE);
 		int numberPlants = 50;
 		System.out.println("The first plant in garden View is " + control.getPlantNameAt(0));
+		
+		//TODO: associate names with the images in the left scroll bar
 		for(int i = 0;i<numberPlants;i++) {
 			plants.add(imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg());
-			
+			//((Node) plants.get(i)).setUserData(control.getPlantNameAt(i));
 		}
 
 		for (Image img : plants) {
@@ -201,9 +205,9 @@ public class GardenView extends View<GardenController> {
 	 * @param x     x coordinates of mouse
 	 * @param y     y coordinates of mouse
 	 */
-	public void addIVToFlow(ImageView plant, double x, double y) {
+	public void addIVToFlow(ImageView plant, double x, double y, double size) {
 		System.out.println("Dropping image");
-		this.garden.getChildren().add(plant); // TODO: creates error duplicate children added.
+		this.garden.getChildren().add(plant);
 		List<Node> imageArr = garden.getChildren();
 		int i = imageArr.size() - 1;
 		((ImageView) imageArr.get(i)).setPreserveRatio(true);
@@ -307,6 +311,24 @@ public class GardenView extends View<GardenController> {
 	public void updatePlants() {
 		left();
 		border.setLeft(scrollPane);
+	}
+	
+	/**
+	 * Called when user clicks on the drawing Pane in CIRLCE mode. Creates a new
+	 * Circle object and adds it to the drawing Pane
+	 * 
+	 * @param x The x coordinate of the initial mouse press
+	 * @param y The y coordinate of the initial mouse press
+	 * @return The newly created circle
+	 */
+	public Node addCircle(double x, double y, double ShapeSize, Color color) {
+		Ellipse circle = new Ellipse(x, y, ShapeSize, ShapeSize);
+		circle.setFill(color);
+		circle.setStroke(color);
+//		circle.setOnMouseClicked(control.getHandleOnPressShape());
+//		circle.setOnMouseDragged(control.getHandleOnDragCircle());
+//		drawing.getChildren().add(circle);
+		return circle;
 	}
 
 }

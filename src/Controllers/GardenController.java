@@ -357,6 +357,8 @@ public class GardenController extends Controller<GardenView> {
 	public void imageDrag(MouseEvent event) {
 		System.out.println("Started To Drag");
 		Node n = (Node) event.getSource();
+		//Node n = (Node) event.getSource().
+		//TODO: make n into a circle with the relevent size form the name of the event source img.
 
 		Dragboard db = n.startDragAndDrop(TransferMode.ANY);
 
