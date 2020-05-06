@@ -18,6 +18,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 import javafx.stage.Stage;
 
 /**
@@ -356,15 +358,39 @@ public class GardenController extends Controller<GardenView> {
 
 	public void imageDrag(MouseEvent event) {
 		System.out.println("Started To Drag");
-		Node n = (Node) event.getSource();
-		//Node n = (Node) event.getSource().
-		//TODO: make n into a circle with the relevent size form the name of the event source img.
+		//Node n = (Node) event.getSource();
+		Ellipse circle = new Ellipse();
+		String plantName = (String) ((Node) event.getSource()).getUserData();
+		double minSize = model.getPlants().get(plantName).getSpread()[0];
+		double maxSize = model.getPlants().get(plantName).getSpread()[1];
+		if(model.getYear() == 3) {
+			circle.setRadiusX(maxSize);
+			circle.setRadiusY(maxSize);
+			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+			circle.setStroke(Color.BLUE);
+		}
+		else if(model.getYear() == 2) {
+			circle.setRadiusX((maxSize-minSize)/2);
+			circle.setRadiusY((maxSize-minSize)/2);
+			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+			circle.setStroke(Color.BLUE);
+		}
+		else if(model.getYear() == 1) {
+			circle.setRadiusX(minSize);
+			circle.setRadiusY(minSize);
+			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+			circle.setStroke(Color.BLUE);
+		}
+		else {
+			circle.setRadiusX(minSize);
+			circle.setRadiusY(minSize);
+		}
 
-		Dragboard db = n.startDragAndDrop(TransferMode.ANY);
+		Dragboard db = circle.startDragAndDrop(TransferMode.ANY);
 
 		ClipboardContent content = new ClipboardContent();
 
-		content.putImage(((ImageView) n).getImage());
+		content.putImage(circle);
 		db.setContent(content);
 		event.consume();
 	}

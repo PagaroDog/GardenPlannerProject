@@ -104,19 +104,26 @@ public class GardenView extends View<GardenController> {
 		
 		//TODO: associate names with the images in the left scroll bar
 		for(int i = 0;i<numberPlants;i++) {
-			plants.add(imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg());
-			//((Node) plants.get(i)).setUserData(control.getPlantNameAt(i));
-		}
-
-		for (Image img : plants) {
+			Image img = imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg();
 			ImageView imageview = new ImageView(img);
 			imageview.setPreserveRatio(true);
 			imageview.setFitHeight(SIZE);
 			imageview.setFitWidth(SIZE);
 			imageview.setOnDragDetected(control.getHandlerForDragDetected());
-			
+			imageview.setUserData(control.getPlantNameAt(i));
 			tile.getChildren().add(imageview);
+			//((Node) plants.get(i)).setUserData(control.getPlantNameAt(i));
 		}
+
+//		for (Image img : plants) {
+//			ImageView imageview = new ImageView(img);
+//			imageview.setPreserveRatio(true);
+//			imageview.setFitHeight(SIZE);
+//			imageview.setFitWidth(SIZE);
+//			imageview.setOnDragDetected(control.getHandlerForDragDetected());
+//			
+//			tile.getChildren().add(imageview);
+//		}
 		scrollPane = new ScrollPane();
 		scrollPane.setFitToWidth(true);
 		scrollPane.setContent(tile);
@@ -205,7 +212,7 @@ public class GardenView extends View<GardenController> {
 	 * @param x     x coordinates of mouse
 	 * @param y     y coordinates of mouse
 	 */
-	public void addIVToFlow(ImageView plant, double x, double y, double size) {
+	public void addIVToFlow(ImageView plant, double x, double y) {
 		System.out.println("Dropping image");
 		this.garden.getChildren().add(plant);
 		List<Node> imageArr = garden.getChildren();
