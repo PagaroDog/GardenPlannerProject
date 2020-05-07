@@ -78,8 +78,17 @@ public class Model {
 	private char waterInd = 8;
 	private char lightInd = 9;
 	private char spreadInd = 10;
+	
+	private char minHeightInd = 0;
+	private char maxHeightInd = 1;
+	
+	private char minSpreadInd = 0;
+	private char maxSpreadInd = 1;
+	private char failedSpreadNum = 0;
 
 	private int inchesPerFoot = 12;
+	private int heightArrLen = 2;
+	private int spreadArrLen = 2;
 
 	public Model() {
 		importPlantsFromCSV();
@@ -353,8 +362,8 @@ public class Model {
 		String duration;
 		String typeStr;
 		PlantType type;
-		String[] heightStr = new String[2];
-		int[] height = new int[2];
+		String[] heightStr = new String[heightArrLen];
+		int[] height = new int[heightArrLen];
 		String[] color;
 		HashSet<String> colors = new HashSet<String>();
 		String[] bloomtimeStr;
@@ -366,8 +375,8 @@ public class Model {
 		String[] lightStr;
 		HashSet<Sun> lightSet = new HashSet<Sun>();
 		Sun[] light;
-		String[] spreadStr = new String[2];
-		int[] spread = new int[2];
+		String[] spreadStr = new String[spreadArrLen];
+		int[] spread = new int[spreadArrLen];
 
 		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 			line = br.readLine(); // ignore header
@@ -396,14 +405,14 @@ public class Model {
 				}
 				heightStr = parsedLine.get(heightInd).replaceAll(" ", "").split("-");
 				if (heightStr.length == 1) {
-					height[0] = height[1] = Integer.valueOf(heightStr[0].replaceAll("[^0-9]", "")) * 12;
+					height[minHeightInd] = height[maxHeightInd] = Integer.valueOf(heightStr[minHeightInd].replaceAll("[^0-9]", "")) * inchesPerFoot;
 				} else {
-					height[0] = Integer.valueOf(heightStr[0]);
-					height[1] = Integer.valueOf(heightStr[1].replaceAll("[^0-9]", ""));
+					height[minHeightInd] = Integer.valueOf(heightStr[minHeightInd]);
+					height[maxHeightInd] = Integer.valueOf(heightStr[maxHeightInd].replaceAll("[^0-9]", ""));
 				}
 				if (parsedLine.get(heightInd).contains("ft")) {
-					height[0] *= 12;
-					height[1] *= 12;
+					height[minHeightInd] *= inchesPerFoot;
+					height[maxHeightInd] *= inchesPerFoot;
 				}
 				color = parsedLine.get(colorInd).replaceAll(" ", "").split(",");
 
@@ -445,22 +454,22 @@ public class Model {
 				}
 				light = lightSet.toArray(new Sun[0]);
 				if (parsedLine.get(spreadInd).equals("fail")) {
-					spread[0] = 0;
-					spread[1] = 0;
+					spread[minSpreadInd] = failedSpreadNum;
+					spread[maxSpreadInd] = failedSpreadNum;
 				} else {
-					spreadStr = parsedLine.get(10).replaceAll(" ", "").split("-");
+					spreadStr = parsedLine.get(spreadInd).replaceAll(" ", "").split("-");
 					if (spreadStr.length == 1) {
-						spread[0] = height[1] = Integer.valueOf(spreadStr[0].replaceAll("[^0-9]", "")) * inchesPerFoot;
+						spread[minSpreadInd] = spread[maxSpreadInd] = Integer.valueOf(spreadStr[minSpreadInd].replaceAll("[^0-9]", "")) * inchesPerFoot;
 					} else {
-						spread[0] = Integer.valueOf(spreadStr[0]);
-						spread[1] = Integer.valueOf(spreadStr[1].replaceAll("[^0-9]", ""));
+						spread[minSpreadInd] = Integer.valueOf(spreadStr[minSpreadInd]);
+						spread[maxSpreadInd] = Integer.valueOf(spreadStr[maxSpreadInd].replaceAll("[^0-9]", ""));
 					}
 					if (parsedLine.get(spreadInd).contains("feet")) {
-						spread[0] *= inchesPerFoot;
-						spread[1] *= inchesPerFoot;
+						spread[minSpreadInd] *= inchesPerFoot;
+						spread[maxSpreadInd] *= inchesPerFoot;
 					}
-					System.out.println(spread[0]);
-					System.out.println(spread[1]);
+					System.out.println(spread[minSpreadInd]);
+					System.out.println(spread[maxSpreadInd]);
 				}
 
 				plants.put(name,
