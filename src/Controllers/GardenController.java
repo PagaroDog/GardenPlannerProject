@@ -147,6 +147,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void year1Button(MouseEvent event) {
 		model.setYear(year1int);
+		view.setYear(year1int);
 	}
 
 	/**
@@ -165,6 +166,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void year2Button(MouseEvent event) {
 		model.setYear(year2int);
+		view.setYear(year2int);
 	}
 
 	/**
@@ -183,6 +185,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void year3Button(MouseEvent event) {
 		model.setYear(year3int);
+		view.setYear(year3int);
 	}
 
 	/**
@@ -465,7 +468,7 @@ public class GardenController extends Controller<GardenView> {
 				circle.setRadiusX(minSize);
 				circle.setRadiusY(minSize);
 			}
-			view.addCirlceToFlow(circle, calcX, calcY);
+			view.addCirlceToFlow(circle, calcX, calcY, plantName);
 			success = true;
 		}
 		event.setDropCompleted(success);
@@ -486,6 +489,16 @@ public class GardenController extends Controller<GardenView> {
 	public void update() {
 		view.updatePlants();
 		//System.out.println("Updating");
+	}
+	/*
+	 * @param String plantName
+	 * returns list of spread vals from model.
+	 */
+	public int[] getSpread(String plantName) {
+		System.out.println(plantName);
+		System.out.println(model.getPlants().get(plantName));
+		System.out.println(model.getPlants().get(plantName).getSpread());
+		return model.getPlants().get(plantName).getSpread();
 	}
 
 }

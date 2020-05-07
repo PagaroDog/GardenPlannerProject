@@ -108,7 +108,7 @@ public class GardenView extends View<GardenController> {
 			imageview.setFitWidth(SIZE);
 			imageview.setOnDragDetected(control.getHandlerForDragDetected());
 			imageview.setUserData(control.getPlantNameAt(i));
-			System.out.println(control.getPlantNameAt(i));
+			//System.out.println(control.getPlantNameAt(i));
 			tile.getChildren().add(imageview);
 			//((Node) plants.get(i)).setUserData(control.getPlantNameAt(i));
 		}
@@ -220,7 +220,7 @@ public class GardenView extends View<GardenController> {
 	 * @param x     x coordinates of mouse
 	 * @param y     y coordinates of mouse
 	 */
-	public void addCirlceToFlow(Ellipse plant, double x, double y) {
+	public void addCirlceToFlow(Ellipse plant, double x, double y,String name) {
 		System.out.println("Dropping image");
 		this.garden.getChildren().add(plant);
 		List<Node> imageArr = garden.getChildren();
@@ -228,6 +228,7 @@ public class GardenView extends View<GardenController> {
 		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
 		((Ellipse) garden.getChildren().get(i)).setCenterX(x);
 		((Ellipse) garden.getChildren().get(i)).setCenterY(y);
+		((Ellipse) garden.getChildren().get(i)).setUserData(name);
 	}
 
 	/**
@@ -315,6 +316,50 @@ public class GardenView extends View<GardenController> {
 	public void updatePlants() {
 		left();
 		border.setLeft(scrollPane);
+	}
+	/*
+	 * @param int year
+	 * 
+	 * when a year button is pressed, this updates the size of all the plants in the garden.
+	 */
+	public void setYear(int year) {
+		if(year == 1) {
+			List<Node> gardenList = garden.getChildren();
+			for (Node plant: gardenList) {
+				//(Ellipse) plant.SetX()
+				String plantName = (String) plant.getUserData();
+				System.out.println(plantName);
+				double minSize = control.getSpread(plantName)[0];
+				double maxSize = control.getSpread(plantName)[1];
+				((Ellipse) plant).setRadiusX(minSize);
+				((Ellipse) plant).setRadiusY(minSize);
+			}
+		}
+		
+		else if(year == 2) {
+			List<Node> gardenList = garden.getChildren();
+			for (Node plant: gardenList) {
+				//(Ellipse) plant.SetX()
+				String plantName = (String) plant.getUserData();
+				double minSize = control.getSpread(plantName)[0];
+				double maxSize = control.getSpread(plantName)[1];
+				((Ellipse) plant).setRadiusX((maxSize+minSize)/2);
+				((Ellipse) plant).setRadiusY((maxSize+minSize)/2);
+			}
+		}
+		
+		else if(year == 3) {
+			List<Node> gardenList = garden.getChildren();
+			for (Node plant: gardenList) {
+				//(Ellipse) plant.SetX()
+				String plantName = (String) plant.getUserData();
+				double minSize = control.getSpread(plantName)[0];
+				double maxSize = control.getSpread(plantName)[1];
+				((Ellipse) plant).setRadiusX(maxSize);
+				((Ellipse) plant).setRadiusY(maxSize);
+			}
+		}
+		
 	}
 
 }
