@@ -8,12 +8,10 @@ import Model.GardenPref;
 import Model.Model;
 import Model.StageName;
 import Views.PreferencesView;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.RadioButton;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -86,6 +84,10 @@ public class PreferencesController extends Controller<PreferencesView> {
 		
 		model.createSuggestions(model.getGardenPreferences().size() == 0);
 		main.getSuggestionsControl().update();
+		if (view.getCurrArea() != null) {
+			view.getCurrArea().setStroke(Color.TRANSPARENT);
+		}
+		view.setCurrArea(null);
 		//model.generateRelevantPlants();
 		model.setStageName(StageName.SUGGESTIONS);
 		

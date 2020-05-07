@@ -470,8 +470,6 @@ public class Model {
 						spread[minSpreadInd] *= inchesPerFoot;
 						spread[maxSpreadInd] *= inchesPerFoot;
 					}
-					System.out.println(spread[minSpreadInd]);
-					System.out.println(spread[maxSpreadInd]);
 				}
 
 				plants.put(name,
