@@ -419,6 +419,8 @@ public class Model {
 				for (String col : color) {
 					colors.add(col);
 				}
+				
+				color = colors.toArray(new String[0]);
 
 				bloomtimeStr = parsedLine.get(bloomtimeInd).replaceAll(" ", "")
 						.replaceAll("Dec|Jan|Feb", String.format("%d", Season.WINTER.ordinal()))
@@ -473,7 +475,7 @@ public class Model {
 				}
 
 				plants.put(name,
-						new Plant(name, commonNames, duration, type, height.clone(), (HashSet<String>) colors.clone(),
+						new Plant(name, commonNames, duration, type, height.clone(), color.clone(),
 								bloomtime.clone(), waterLevel.clone(), light.clone(), spread.clone()));
 
 				bloomSet.clear();
