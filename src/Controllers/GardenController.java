@@ -295,7 +295,8 @@ public class GardenController extends Controller<GardenView> {
 //			view.setYs(index, event.getY());
 //			copied = true;
 		Ellipse dragPlant = (Ellipse) event.getSource();
-
+		model.setCurrDrawObj(dragPlant);
+		
 		double calcX = model.calcX(event.getX(), view.getSize(), view.getSize(), event.getX());
 		// System.out.println(view.getGarden().getLayoutX());
 		// System.out.println(dragPlant.getTranslateX());
@@ -303,6 +304,12 @@ public class GardenController extends Controller<GardenView> {
 		double calcY = model.calcY(event.getY(), view.getSize(), view.getBottomHeight(), event.getY());
 		view.movePlant(dragPlant, event.getX(), event.getY());
 
+	}
+	public EventHandler getHandlerForEllipsePressed() {
+		return event -> ellipsePressed((MouseEvent) event);
+	}
+	public void ellipsePressed(MouseEvent event) {
+		model.setCurrDrawObj((Node) event.getSource());
 	}
 
 	/**
@@ -322,6 +329,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void press(MouseEvent event) {
 		Object click = event.getSource();
+		model.setCurrDrawObj((Node) event.getSource());
 		// int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
 	}
 
@@ -423,6 +431,7 @@ public class GardenController extends Controller<GardenView> {
 	}
 
 	public void gardenDragOver(DragEvent event) {
+		//System.out.println("gardenDragOver");
 		event.acceptTransferModes(TransferMode.MOVE);
 		event.consume();
 	}
@@ -472,8 +481,10 @@ public class GardenController extends Controller<GardenView> {
 				circle.setRadiusX(minSize);
 				circle.setRadiusY(minSize);
 			}
+			circle.setOnMouseClicked(this.getHandlerForEllipsePressed());
 			view.addCirlceToFlow(circle, calcX, calcY, plantName);
 			success = true;
+			model.setCurrDrawObj(circle);
 		}
 		event.setDropCompleted(success);
 		event.consume();
@@ -505,6 +516,23 @@ public class GardenController extends Controller<GardenView> {
 		else {
 			return model.getPlants().get(plantName).getSpread();
 		}
+	}
+	
+	/**
+	 * Handles event when user presses delete button, invoking deleteButton()
+	 * 
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler handleOnDeleteButton() {
+		return event -> deleteButton((MouseEvent) event);
+	}
+	
+	/*
+	 * @param MouseEvent event
+	 * called by eventHandler
+	 */
+	public void deleteButton(MouseEvent event) {
+		view.deleteShape(model.getCurrDrawObj());
 	}
 
 }

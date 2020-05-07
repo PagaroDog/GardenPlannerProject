@@ -49,6 +49,7 @@ public class GardenView extends View<GardenController> {
 	private Button summer;
 	private Button fall;
 	private Button winter;
+	private Button delete;
 	private Pane drawing;
 	private ScrollPane scrollPane;
 	private BorderPane border;
@@ -147,6 +148,12 @@ public class GardenView extends View<GardenController> {
 		spring = new Button("Spring");
 		spring.setOnMouseClicked(control.handleOnSpringButton());
 		seasonTilePane.getChildren().addAll(seasonLabel, summer, fall, winter, spring);
+		
+		TilePane toolsTilePane = new TilePane();
+		Label toolsLabel = new Label("Tools");
+		delete = new Button("Delete");
+		delete.setOnMousePressed(control.handleOnDeleteButton());
+		toolsTilePane.getChildren().addAll(toolsLabel,delete);
 
 		yearTilePane = new TilePane();
 		Label yearLabel = new Label("Select Year");
@@ -163,7 +170,7 @@ public class GardenView extends View<GardenController> {
 		save = new Button("Save");
 		save.setOnMouseClicked(control.handleOnSaveButton());
 
-		toolbar.getChildren().addAll(save, seasonTilePane, yearTilePane);
+		toolbar.getChildren().addAll(save, seasonTilePane, yearTilePane, toolsTilePane);
 
 	}
 
@@ -360,6 +367,16 @@ public class GardenView extends View<GardenController> {
 			}
 		}
 		
+	}
+	
+	/**
+	 * Called when user presses the delete button, deleting the currently selected
+	 * object.
+	 * 
+	 * @param node The shape to be deleted.
+	 */
+	public void deleteShape(Node node) {
+		garden.getChildren().remove(node);
 	}
 
 }
