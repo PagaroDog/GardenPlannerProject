@@ -31,7 +31,8 @@ import javafx.stage.Stage;
  */
 public class GardenController extends Controller<GardenView> {
 	boolean copied = false;
-
+	double plantWidthX=0;
+	double plantWidthY=0;
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
 	}
@@ -291,12 +292,12 @@ public class GardenController extends Controller<GardenView> {
 		ImageView dragPlant = (ImageView) event.getSource();
 
 		double x = ((GardenObj) ((ImageView) event.getSource()).getUserData()).getxLoc();
-		double calcX = model.calcX(event.getX(), view.getSize(), view.getSize(), x);
+		double calcX = model.calcX(event.getX(),(int) plantWidthX, view.getSize(), x);
 		// System.out.println(view.getGarden().getLayoutX());
 		// System.out.println(dragPlant.getTranslateX());
 
 		double y = ((GardenObj) ((ImageView) event.getSource()).getUserData()).getyLoc();
-		double calcY = model.calcY(event.getY(), view.getSize(), view.getBottomHeight(), y);
+		double calcY = model.calcY(event.getY(), (int) plantWidthY, view.getBottomHeight(), y);
 		view.movePlant(dragPlant, calcX, calcY);
 
 	}
@@ -358,8 +359,9 @@ public class GardenController extends Controller<GardenView> {
 
 	public void imageDrag(MouseEvent event) {
 		System.out.println("Started To Drag");
-		//Node n = (Node) event.getSource();
+		Node n = (Node) event.getSource();
 		Ellipse circle = new Ellipse();
+		Pane p = new Pane();
 		String plantName = (String) ((Node) event.getSource()).getUserData();
 		double minSize = model.getPlants().get(plantName).getSpread()[0];
 		double maxSize = model.getPlants().get(plantName).getSpread()[1];
@@ -386,11 +388,19 @@ public class GardenController extends Controller<GardenView> {
 			circle.setRadiusY(minSize);
 		}
 
-		Dragboard db = circle.startDragAndDrop(TransferMode.ANY);
-
+		Dragboard db = n.startDragAndDrop(TransferMode.ANY);
+		p.getChildren().add(circle);
+		//Image i = new Image(circle);
+		
+		plantWidthX=100;
+		plantWidthY=100;
+		
+		
 		ClipboardContent content = new ClipboardContent();
-
-		content.putImage(circle);
+		Image im1 = new Image(getClass().getResourceAsStream("/imgs/circle.png"),plantWidthX,plantWidthY,true,false);
+		
+		content.putImage(im1);
+		//content.putImage(p);
 		db.setContent(content);
 		event.consume();
 	}
@@ -416,10 +426,13 @@ public class GardenController extends Controller<GardenView> {
 		if (db.hasImage()) {
 			// view.getTilePane().getChildren().add(view.createImageView(db.getImage()));
 
-			double calcX = model.calcX(event.getX(), view.getSize(), view.getSize(), 0);// magic number?
+			double calcX = model.calcX(event.getX(), (int) plantWidthX, view.getSize(), 0);// magic number?
 
-			double calcY = model.calcY(event.getY(), view.getSize(), view.getBottomHeight(), 0);// magic number?
-			view.addIVToFlow(new ImageView(db.getImage()), calcX, calcY);
+			double calcY = model.calcY(event.getY(), (int) plantWidthY, view.getBottomHeight(), 0);// magic number?
+			ImageView iv = new ImageView(db.getImage());
+			iv.setFitHeight(plantWidthX);
+			iv.setFitWidth(plantWidthY);
+			view.addIVToFlow(iv, calcX, calcY);
 			success = true;
 		}
 		event.setDropCompleted(success);
