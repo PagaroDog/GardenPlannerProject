@@ -365,35 +365,49 @@ public class GardenController extends Controller<GardenView> {
 		String plantName = (String) ((Node) event.getSource()).getUserData();
 		double minSize = model.getPlants().get(plantName).getSpread()[0];
 		double maxSize = model.getPlants().get(plantName).getSpread()[1];
+		System.out.println("Dragging " + plantName);
+		if(maxSize==0) {
+			minSize = model.getPlants().get(plantName).getHeight()[0];
+			maxSize = model.getPlants().get(plantName).getHeight()[1];
+		}
 		if(model.getYear() == 3) {
 			circle.setRadiusX(maxSize);
 			circle.setRadiusY(maxSize);
 			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 			circle.setStroke(Color.BLUE);
+			plantWidthX=maxSize;
+			plantWidthY=maxSize;
+			System.out.println(maxSize);
+			
 		}
 		else if(model.getYear() == 2) {
 			circle.setRadiusX((maxSize-minSize)/2);
 			circle.setRadiusY((maxSize-minSize)/2);
 			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 			circle.setStroke(Color.BLUE);
+			plantWidthX=(maxSize-minSize)/2;
+			plantWidthY=(maxSize-minSize)/2;
 		}
 		else if(model.getYear() == 1) {
 			circle.setRadiusX(minSize);
 			circle.setRadiusY(minSize);
 			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 			circle.setStroke(Color.BLUE);
+			plantWidthX=minSize;
+			plantWidthY=minSize;
 		}
 		else {
 			circle.setRadiusX(minSize);
 			circle.setRadiusY(minSize);
+			plantWidthX=10;
+			plantWidthY=10;
 		}
-
 		Dragboard db = n.startDragAndDrop(TransferMode.ANY);
 		p.getChildren().add(circle);
 		//Image i = new Image(circle);
 		
-		plantWidthX=100;
-		plantWidthY=100;
+//		plantWidthX=100;
+//		plantWidthY=100;
 		
 		
 		ClipboardContent content = new ClipboardContent();
