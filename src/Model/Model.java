@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import Controllers.Controller;
 import Controllers.DrawYardController;
@@ -47,15 +46,15 @@ public class Model {
 	private HashMap<String, Plant> plants = new HashMap<String, Plant>();
 	private ArrayList<GardenPref> gardenPreferences = new ArrayList<GardenPref>();
 	private ArrayList<Plant> suggestedPlants = new ArrayList<Plant>();
-	
-	private HashMap<Integer,ArrayList<Plant>> plantsFromPref = new HashMap<Integer,ArrayList<Plant>>();
-	
+
+	private HashMap<Integer, ArrayList<Plant>> plantsFromPref = new HashMap<Integer, ArrayList<Plant>>();
+
 	private GardenPref currPref;
 	private HashMap<Integer, GardenObj> gardenObjects;
 	private ArrayList<Actions> undoActions;
 	private ArrayList<Actions> redoActions;
 	private int year;
-	private int prefCategoriesCnt=4;
+	private int prefCategoriesCnt = 4;
 
 	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	int canvasWidth = gd.getDisplayMode().getWidth() - 150;
@@ -68,6 +67,19 @@ public class Model {
 	private GardenController gardenControl;
 	private SaveController saveControl;
 	private PreferencesController prefControl;
+
+	private char nameInd = 0;
+	private char commonNamesInd = 1;
+	private char durationInd = 2;
+	private char typeInd = 3;
+	private char heightInd = 5;
+	private char colorInd = 6;
+	private char bloomtimeInd = 7;
+	private char waterInd = 8;
+	private char lightInd = 9;
+	private char spreadInd = 10;
+
+	private int inchesPerFoot = 12;
 
 	public Model() {
 		importPlantsFromCSV();
@@ -344,6 +356,7 @@ public class Model {
 		String[] heightStr = new String[2];
 		int[] height = new int[2];
 		String[] color;
+		HashSet<String> colors = new HashSet<String>();
 		String[] bloomtimeStr;
 		HashSet<Season> bloomSet = new HashSet<Season>();
 		Season[] bloomtime;
@@ -353,7 +366,6 @@ public class Model {
 		String[] lightStr;
 		HashSet<Sun> lightSet = new HashSet<Sun>();
 		Sun[] light;
-		HashSet<String> colors = new HashSet<String>();
 		String[] spreadStr = new String[2];
 		int[] spread = new int[2];
 
@@ -369,10 +381,10 @@ public class Model {
 //						+ ", time: " + parsedLine.get(7) + ", water: " + parsedLine.get(8) + ", light: "
 //						+ parsedLine.get(9) + ", spread: " + parsedLine.get(10));
 
-				name = parsedLine.get(0);
-				commonNames = parsedLine.get(1).split(",");
-				duration = parsedLine.get(2);
-				typeStr = parsedLine.get(3).replaceAll(" ", "");
+				name = parsedLine.get(nameInd);
+				commonNames = parsedLine.get(commonNamesInd).split(",");
+				duration = parsedLine.get(durationInd);
+				typeStr = parsedLine.get(typeInd).replaceAll(" ", "");
 				if (typeStr.contentEquals("Herb")) {
 					type = PlantType.HERB;
 				} else if (typeStr.contentEquals("Shrub")) {
@@ -382,75 +394,84 @@ public class Model {
 				} else {
 					type = PlantType.VINE;
 				}
-				heightStr = parsedLine.get(5).replaceAll(" ", "").split("-");
+				heightStr = parsedLine.get(heightInd).replaceAll(" ", "").split("-");
 				if (heightStr.length == 1) {
 					height[0] = height[1] = Integer.valueOf(heightStr[0].replaceAll("[^0-9]", "")) * 12;
 				} else {
 					height[0] = Integer.valueOf(heightStr[0]);
 					height[1] = Integer.valueOf(heightStr[1].replaceAll("[^0-9]", ""));
 				}
-				if (parsedLine.get(5).contains("ft")) {
+				if (parsedLine.get(heightInd).contains("ft")) {
 					height[0] *= 12;
 					height[1] *= 12;
 				}
-				color = parsedLine.get(6).replaceAll(" ", "").split(",");
-				
-				
-				for (String col: color) {
+				color = parsedLine.get(colorInd).replaceAll(" ", "").split(",");
+
+				for (String col : color) {
 					colors.add(col);
 				}
-				
-				
-				bloomtimeStr = parsedLine.get(7).replaceAll(" ", "").replaceAll("Dec|Jan|Feb", "0")
-						.replaceAll("Mar|Apr|May", "1").replaceAll("Jun|Jul|Aug|Sep", "2").replaceAll("Oct|Nov", "3")
-						.split(",");
-			
+
+				bloomtimeStr = parsedLine.get(bloomtimeInd).replaceAll(" ", "")
+						.replaceAll("Dec|Jan|Feb", String.format("%d", Season.WINTER.ordinal()))
+						.replaceAll("Mar|Apr|May", String.format("%d", Season.SPRING.ordinal()))
+						.replaceAll("Jun|Jul|Aug|Sep", String.format("%d", Season.SUMMER.ordinal()))
+						.replaceAll("Oct|Nov", String.format("%d", Season.FALL.ordinal())).split(",");
+
 				for (String num : bloomtimeStr) {
-			
+
 					bloomSet.add(Season.values()[Integer.valueOf(num)]);
 				}
-				
+
 				bloomtime = bloomSet.toArray(new Season[0]);
-				
-				
-				waterStr = parsedLine.get(8).replaceAll(" ", "").replaceAll("WetMesic", "1").replaceAll("DryMesic", "3")
-						.replaceAll("Wet", "0").replaceAll("Mesic", "2").replaceAll("Dry", "4").split(",");
+
+				waterStr = parsedLine.get(waterInd).replaceAll(" ", "")
+						.replace("WetMesic", String.format("%d", Water.WETMES.ordinal()))
+						.replace("DryMesic", String.format("%d", Water.DRYMES.ordinal()))
+						.replace("Wet", String.format("%d", Water.WET.ordinal()))
+						.replace("Mesic", String.format("%d", Water.MESIC.ordinal()))
+						.replace("Dry", String.format("%d", Water.DRY.ordinal())).split(",");
 				for (String num : waterStr) {
 					waterSet.add(Water.values()[Integer.valueOf(num)]);
 				}
 				waterLevel = waterSet.toArray(new Water[0]);
-				lightStr = parsedLine.get(9).replaceAll(" ", "").replaceAll("FullSuntoPartialShade", "1")
-						.replaceAll("PartialShadetoFullShade", "3").replaceAll("FullSun", "0")
-						.replaceAll("PartialorDappledShade", "2").replaceAll("FullShade", "4").split(",");
+				lightStr = parsedLine.get(lightInd).replaceAll(" ", "")
+						.replace("FullSuntoPartialShade", String.format("%d", Sun.FULL_PARTIAL.ordinal()))
+						.replace("PartialShadetoFullShade", String.format("%d", Sun.PARTIAL_NONE.ordinal()))
+						.replace("FullSun", String.format("%d", Sun.FULL.ordinal()))
+						.replace("PartialorDappledShade", String.format("%d", Sun.PARTIAL.ordinal()))
+						.replace("FullShade", String.format("%d", Sun.NONE.ordinal())).split(",");
 				for (String num : lightStr) {
 					lightSet.add(Sun.values()[Integer.valueOf(num)]);
 				}
 				light = lightSet.toArray(new Sun[0]);
-				if (parsedLine.get(10).equals("fail")) {
+				if (parsedLine.get(spreadInd).equals("fail")) {
 					spread[0] = 0;
 					spread[1] = 0;
 				} else {
 					spreadStr = parsedLine.get(10).replaceAll(" ", "").split("-");
 					if (spreadStr.length == 1) {
-						spread[0] = height[1] = Integer.valueOf(spreadStr[0].replaceAll("[^0-9]", "")) * 12;
+						spread[0] = height[1] = Integer.valueOf(spreadStr[0].replaceAll("[^0-9]", "")) * inchesPerFoot;
 					} else {
 						spread[0] = Integer.valueOf(spreadStr[0]);
 						spread[1] = Integer.valueOf(spreadStr[1].replaceAll("[^0-9]", ""));
 					}
-					if (parsedLine.get(10).contains("feet")) {
-						spread[0] *= 12;
-						spread[1] *= 12;
+					if (parsedLine.get(spreadInd).contains("feet")) {
+						spread[0] *= inchesPerFoot;
+						spread[1] *= inchesPerFoot;
 					}
+					System.out.println(spread[0]);
+					System.out.println(spread[1]);
 				}
 
-				plants.put(parsedLine.get(0), new Plant(name, commonNames, duration, type, height, colors, bloomtime,
-						waterLevel, light, spread));
-				
+				plants.put(name,
+						new Plant(name, commonNames, duration, type, height.clone(), (HashSet<String>) colors.clone(),
+								bloomtime.clone(), waterLevel.clone(), light.clone(), spread.clone()));
+
 				bloomSet.clear();
 				waterSet.clear();
 				lightSet.clear();
 				colors.clear();
-				
+
 			}
 
 		} catch (IOException e) {
@@ -518,37 +539,38 @@ public class Model {
 
 		return result;
 	}
-	
-	
+
 	/**
-	 * Takes a boolean. If startup is true, suggestedPlants if filled with plants in a default order. If startup is false, call
-	 * generateRelevantPlants() to use user preferences to order plants most in common. 
+	 * Takes a boolean. If startup is true, suggestedPlants if filled with plants in
+	 * a default order. If startup is false, call generateRelevantPlants() to use
+	 * user preferences to order plants most in common.
+	 * 
 	 * @param startup
 	 */
 	public void createSuggestions(boolean startup) {
-		if(startup) {
-			Iterator<Entry<String,Plant>> it = plants.entrySet().iterator();
-			while(it.hasNext()) {
-			
-				//System.out.println(it.next().getValue().getName());
+		if (startup) {
+			Iterator<Entry<String, Plant>> it = plants.entrySet().iterator();
+			while (it.hasNext()) {
+
+				// System.out.println(it.next().getValue().getName());
 				suggestedPlants.add(it.next().getValue());
-			
+
 			}
-		}
-		else {
+		} else {
 			generateRelevantPlants();
 		}
-		
-		
+
 	}
-	public ArrayList<Plant> getSuggestedPlants(){
+
+	public ArrayList<Plant> getSuggestedPlants() {
 		return suggestedPlants;
 	}
-	
+
 	/**
-	 * Checks each plant against every garden preference. The more attributes in common the lower the score. Plant is then placed in
-	 * an ArrayList of plants with the same number of attributes in common. The ArrayList are then appended together in the order of most 
-	 * relevant to least.
+	 * Checks each plant against every garden preference. The more attributes in
+	 * common the lower the score. Plant is then placed in an ArrayList of plants
+	 * with the same number of attributes in common. The ArrayList are then appended
+	 * together in the order of most relevant to least.
 	 */
 	public void generateRelevantPlants() {
 		plantsFromPref.clear();
@@ -556,97 +578,99 @@ public class Model {
 		int minGardenPrefScore = score;
 		int cnt = 1;
 		int plantNum = 1;
-		for(int i = 0;i<=score;i++) {
+		for (int i = 0; i <= score; i++) {
 			plantsFromPref.put(i, new ArrayList<Plant>());
 		}
-		
-		
-		for(Plant p : plants.values()) {
-		
-			Object[][] plantData = {p.getBloomtime(),p.getLight(),p.getWaterLevel()};
-			
-			for(GardenPref gp : gardenPreferences) {
-				String[] userData = {gp.getUserBloom(),gp.getUserLight(),gp.getUserWater()};
-				for(int i = 0;i<plantData.length;i++) {
-					if(userCheck(plantData[i],userData[i])){
-						score --;
+
+		for (Plant p : plants.values()) {
+
+			Object[][] plantData = { p.getBloomtime(), p.getLight(), p.getWaterLevel() };
+
+			for (GardenPref gp : gardenPreferences) {
+				String[] userData = { gp.getUserBloom(), gp.getUserLight(), gp.getUserWater() };
+				for (int i = 0; i < plantData.length; i++) {
+					if (userCheck(plantData[i], userData[i])) {
+						score--;
 					}
 				}
-					HashSet<String> copy = new HashSet<String>(p.getColor());
+				HashSet<String> copy = new HashSet<String>(p.getColor());
 
-					Iterator<String> it = copy.iterator();
-					while(it.hasNext()) {
-						if(gp.getUserColor().contains(it.next())) {
-							
-							score--;
-							break;
-						}
+				Iterator<String> it = copy.iterator();
+				while (it.hasNext()) {
+					if (gp.getUserColor().contains(it.next())) {
+
+						score--;
+						break;
 					}
-				
-				
-				if(minGardenPrefScore > score) {
+				}
+
+				if (minGardenPrefScore > score) {
 					minGardenPrefScore = score;
 				}
-				
-				
+
 				cnt++;
 				score = prefCategoriesCnt;
 			}
-			
+
 			plantsFromPref.get(minGardenPrefScore).add(p);
 			cnt = 1;
 			minGardenPrefScore = Integer.MAX_VALUE;
 			plantNum++;
 		}
-		
+
 		suggestedPlants.clear();
-		for(int i =0;i<score;i++) {
-			
+		for (int i = 0; i < score; i++) {
+
 			suggestedPlants.addAll(plantsFromPref.get(i));
 		}
-		
+
 	}
-	
-	
-	
+
 	/**
-	 * Called by generateRelevantPlants. Returns true if the userPref is "Any". Otherwise searches the array to see if any toStrings
-	 * equal the userPref, returns true. 
-	 * @param array Object[]
+	 * Called by generateRelevantPlants. Returns true if the userPref is "Any".
+	 * Otherwise searches the array to see if any toStrings equal the userPref,
+	 * returns true.
+	 * 
+	 * @param array    Object[]
 	 * @param userPref String
 	 * @return true if "Any" or userPref is in array, false otherwise
 	 */
 	public boolean userCheck(Object[] array, String userPref) {
-		if(userPref == null || userPref.equals("Any") ) {
+		if (userPref == null || userPref.equals("Any")) {
 			return true;
 		}
-		for(Object o: array) {
-			if(o.toString().equals(userPref)) {
+		for (Object o : array) {
+			if (o.toString().equals(userPref)) {
 				return true;
 			}
 		}
 		return false;
 	}
+
 	/**
-	 * Takes a grid, number of rows and columns, and a string that represents a background style. Searches for cells of the grid 
-	 * that have the style equal to the given string. If the cell has the same style, the plant is copied and added to a local arraylist.
-	 * Then all plants that are added are removed from the suggestedPlants, than added back at the front. 
+	 * Takes a grid, number of rows and columns, and a string that represents a
+	 * background style. Searches for cells of the grid that have the style equal to
+	 * the given string. If the cell has the same style, the plant is copied and
+	 * added to a local arraylist. Then all plants that are added are removed from
+	 * the suggestedPlants, than added back at the front.
+	 * 
 	 * @param grid Grid of ImageViews
-	 * @param rows	number of rows
-	 * @param cols	number of columns
-	 * @param bg	Background Style
+	 * @param rows number of rows
+	 * @param cols number of columns
+	 * @param bg   Background Style
 	 */
 	public void getUserPicks(GridPane grid, int rows, int cols, String bg) {
 		int index = 1;
 		ArrayList<Plant> selected = new ArrayList<Plant>();
-		for(int i = 0; i< rows;i++){
-			for(int j = 0; j<cols;j++) {
-				
-				//System.out.println(index +" has style of " + grid.getChildren().get(index).getStyle());
-				if(grid.getChildren().get(index).getStyle().equals(bg)) {
-					//System.out.println(grid.getChildren().get(index).getStyle());
-					System.out.println(suggestedPlants.get((index-1)).getName()+ " selected at index " + (index));
-					Plant copy = suggestedPlants.get(index-1);
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+
+				// System.out.println(index +" has style of " +
+				// grid.getChildren().get(index).getStyle());
+				if (grid.getChildren().get(index).getStyle().equals(bg)) {
+					// System.out.println(grid.getChildren().get(index).getStyle());
+					System.out.println(suggestedPlants.get((index - 1)).getName() + " selected at index " + (index));
+					Plant copy = suggestedPlants.get(index - 1);
 					selected.add(copy);
 
 				}
@@ -657,5 +681,5 @@ public class Model {
 		suggestedPlants.addAll(0, selected);
 
 	}
-	
+
 }

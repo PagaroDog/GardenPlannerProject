@@ -29,6 +29,9 @@ public class StartupView extends View<StartupController> {
 	private ImageView iv;
 	private Pane root;
 	private TilePane buttons;
+	private int numButtons = 3;
+	private double titleFontSize = 125;
+	private double buttonFont = 35;
 	private double titleXPos = canvasWidth / 2;
 	private double titleYPos = canvasHeight / 3;
 	private double buttonXPos = canvasWidth / 2;
@@ -46,7 +49,7 @@ public class StartupView extends View<StartupController> {
 	@Override
 	public void setup() {
 		title = new Label("MyNativeGarden");
-		title.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Dandelion.ttf"), 125));
+		title.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Dandelion.ttf"), titleFontSize));
 		iv = new ImageView(new Image(getClass().getResourceAsStream("/imgs/StartupBackground.jpg"), canvasWidth,
 				canvasHeight, false, false));
 		buttons = new TilePane();
@@ -64,7 +67,7 @@ public class StartupView extends View<StartupController> {
 		root.getChildren().addAll(iv, title, buttons);
 
 		for (Node button : buttons.getChildren()) {
-			((Button) button).setFont(new Font(35));
+			((Button) button).setFont(new Font(buttonFont));
 		}
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
@@ -79,7 +82,7 @@ public class StartupView extends View<StartupController> {
 		double buttonWidth = tutorialButton.getWidth();
 		newButton.setPrefWidth(buttonWidth);
 		loadButton.setPrefWidth(buttonWidth);
-		double tileWidth = buttonWidth * 3 + buttonGap * 2;
+		double tileWidth = buttonWidth * numButtons + buttonGap * (numButtons - 1);
 		buttons.setLayoutX(buttonXPos - tileWidth / 2);
 		buttons.setLayoutY(buttonYPos);
 

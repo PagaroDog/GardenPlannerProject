@@ -84,7 +84,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 		saveUserPref(false);
 		view.getStage().setScene(Main.getScenes().get(StageName.SUGGESTIONS));
 		
-		model.createSuggestions(false);
+		model.createSuggestions(model.getGardenPreferences().size() == 0);
 		main.getSuggestionsControl().update();
 		//model.generateRelevantPlants();
 		model.setStageName(StageName.SUGGESTIONS);
@@ -124,7 +124,9 @@ public class PreferencesController extends Controller<PreferencesView> {
 		}
 		view.setDrawing(drawing);
 		view.setupZoneFlips(model.getGardenPreferences());
-		model.setCurrPref(model.getGardenPreferences().get(0));
+		if (model.getGardenPreferences().size() > 0) {
+			model.setCurrPref(model.getGardenPreferences().get(0));
+		}
 	}
 
 	

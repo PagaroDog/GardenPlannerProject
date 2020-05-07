@@ -60,12 +60,15 @@ public class DrawYardView extends View<DrawYardController> {
 	
 	private ImageView background;
 
-	private double labelSize;
+	private double labelSize = 12;
 	private final double labelSizetxtSize = 16;
 	private final double initShapeSize = 10;
 	private final int minRGB = 30;
 	private final double randRGB = 255 - minRGB;
 	private final double opacity = 0.3;
+	private final double minX = 0;
+	private final double minY = 0;
+	private final double minLabelLength = 0;
 
 	private ArrayList<Node> areas = new ArrayList<Node>();
 
@@ -80,7 +83,6 @@ public class DrawYardView extends View<DrawYardController> {
 	 */
 	@Override
 	public void setup() {
-		labelSize = 12;
 		labelSizetxt = new Label("Label Size: " + (int) labelSize);
 		labelSizetxt.setFont(new Font(labelSizetxtSize));
 		selectButton = new Button("Select");
@@ -186,8 +188,8 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y1  The y coordinate of the current mouse position
 	 */
 	public void updateRect(Rectangle rect, double x0, double y0, double x1, double y1) {
-		double topLeftX = Math.max(0, Math.min(x0, x1));
-		double topLeftY = Math.max(0, Math.min(y0, y1));
+		double topLeftX = Math.max(minX, Math.min(x0, x1));
+		double topLeftY = Math.max(minY, Math.min(y0, y1));
 		double width = Math.min(drawing.getWidth() - topLeftX, Math.max(x0, x1) - topLeftX);
 		double height = Math.min(drawing.getHeight() - topLeftY, Math.max(y0, y1) - topLeftY);
 		rect.setX(topLeftX);
@@ -205,8 +207,8 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y    The new y coordinate of the rectangle
 	 */
 	public void moveRectangle(Rectangle rect, double x, double y) {
-		rect.setX(Math.max(0, Math.min(drawing.getWidth() - rect.getWidth(), x)));
-		rect.setY(Math.max(0, Math.min(drawing.getHeight() - rect.getHeight(), y)));
+		rect.setX(Math.max(minX, Math.min(drawing.getWidth() - rect.getWidth(), x)));
+		rect.setY(Math.max(minY, Math.min(drawing.getHeight() - rect.getHeight(), y)));
 	}
 
 	/**
@@ -258,7 +260,7 @@ public class DrawYardView extends View<DrawYardController> {
 	}
 
 	public Node addLabel(double x, double y) {
-		if (labeltxt.getText().length() > 0) {
+		if (labeltxt.getText().length() > minLabelLength) {
 			Label txt = new Label(labeltxt.getText());
 			drawing.getChildren().add(txt);
 			txt.setFont(new Font(labelSize));
@@ -282,8 +284,8 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y     The new y coordinate of the center of the label
 	 */
 	public void moveLabel(Label label, double x, double y) {
-		label.setLayoutX(Math.max(0, Math.min(drawing.getWidth() - label.getWidth(), x)));
-		label.setLayoutY(Math.max(0, Math.min(drawing.getHeight() - label.getHeight(), y)));
+		label.setLayoutX(Math.max(minX, Math.min(drawing.getWidth() - label.getWidth(), x)));
+		label.setLayoutY(Math.max(minY, Math.min(drawing.getHeight() - label.getHeight(), y)));
 	}
 
 	/**

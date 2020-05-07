@@ -31,6 +31,14 @@ public class View<T extends Controller> {
 	private double toolbarHPadding = 15;
 	private double toolbarHGap = 15;
 	private double centerFontSize = 25;
+	private int toolbarRed = 25;
+	private int toolbarGreen = 100;
+	private int toolbarBlue = 255;
+	private double toolbarOpacity = 1;
+	private int navRed = 168;
+	private int navGreen = 158;
+	private int navBlue = 255;
+	private double navOpacity = 1;
 	
 	/**
 	 * Creates an HBox node that can act as the toolbar at the top of a View.
@@ -38,7 +46,7 @@ public class View<T extends Controller> {
 	 */
 	public HBox createToolbar() {
 		HBox toolbar = new HBox();
-		toolbar.setStyle("-fx-background-color: rgba(25,100,255,1);");
+		toolbar.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %f);", toolbarRed, toolbarGreen, toolbarBlue, toolbarOpacity));
 		toolbar.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
 		toolbar.setSpacing(toolbarHGap);
 		
@@ -61,7 +69,7 @@ public class View<T extends Controller> {
 		center.setFont(new Font(centerFontSize));
 
 		BorderPane navigation = new BorderPane();
-		navigation.setStyle("-fx-background-color: rgba(168,158,255,1);");
+		navigation.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %f);", navRed, navGreen, navBlue, navOpacity));
 		navigation.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
 		navigation.setLeft(prevButton);
 		navigation.setCenter(center);

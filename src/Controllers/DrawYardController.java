@@ -25,6 +25,10 @@ public class DrawYardController extends Controller<DrawYardView> {
 
 	private final double minFont = 4;
 	private final double maxFont = 50;
+	private final double fontDecrement = 1;
+	private final double fontIncrement = 1;
+	private final double originalTranslate = 0;
+	private final double originalScale = 1;
 
 	public DrawYardController(Model model, DrawYardView dyv, Main main) {
 		super(model, dyv, main);
@@ -234,7 +238,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the button was pressed
 	 */
 	public void minusButton(MouseEvent event) {
-		view.setLabelSize(Math.max(minFont, view.getLabelSize() - 1));
+		view.setLabelSize(Math.max(minFont, view.getLabelSize() - fontDecrement));
 	}
 
 	/**
@@ -243,7 +247,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the button was pressed
 	 */
 	public void plusButton(MouseEvent event) {
-		view.setLabelSize(Math.min(maxFont, view.getLabelSize() + 1));
+		view.setLabelSize(Math.min(maxFont, view.getLabelSize() + fontIncrement));
 	}
 
 	/**
@@ -455,8 +459,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 		view.getRoot().setCenter(drawing);
 		drawing.setPrefWidth(view.getRoot().getWidth());
 		for (Node child : drawing.getChildren()) {
-			child.setTranslateX(0);
-			child.setScaleX(1);
+			child.setTranslateX(originalTranslate);
+			child.setScaleX(originalScale);
 		}
 	}
 

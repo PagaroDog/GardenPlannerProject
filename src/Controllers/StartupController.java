@@ -1,15 +1,10 @@
 package Controllers;
 
-import Controllers.Main;
 import Model.Model;
 import Model.StageName;
 import Views.StartupView;
-import Views.View;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 /**
  * @author matt cohen this class is the controller for the startup screen.

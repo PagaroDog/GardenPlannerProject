@@ -1,15 +1,12 @@
 package Controllers;
 
 import Model.GardenObj;
-import Model.GardenPref;
 import Model.Model;
 import Model.StageName;
 import Model.Season;
 import Views.GardenView;
-import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -17,8 +14,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
-import javafx.stage.Stage;
 
 /**
  * This class is the controller for the Garden Design screen. It mostly handles
@@ -29,6 +24,12 @@ import javafx.stage.Stage;
  */
 public class GardenController extends Controller<GardenView> {
 	boolean copied = false;
+	private final int year1int = 1;
+	private final int year2int = 2;
+	private final int year3int = 3;
+	private final double originalTranslate = 0;
+	private final double originalScale = 1;
+	private final double newLayoutY = 0;
 
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
@@ -141,7 +142,7 @@ public class GardenController extends Controller<GardenView> {
 	 * @param event
 	 */
 	public void year1Button(MouseEvent event) {
-		model.setYear(1);
+		model.setYear(year1int);
 	}
 
 	/**
@@ -159,7 +160,7 @@ public class GardenController extends Controller<GardenView> {
 	 * @param event
 	 */
 	public void year2Button(MouseEvent event) {
-		model.setYear(2);
+		model.setYear(year2int);
 	}
 
 	/**
@@ -177,7 +178,7 @@ public class GardenController extends Controller<GardenView> {
 	 * @param event
 	 */
 	public void year3Button(MouseEvent event) {
-		model.setYear(3);
+		model.setYear(year3int);
 	}
 
 	/**
@@ -329,8 +330,8 @@ public class GardenController extends Controller<GardenView> {
 		view.setDrawing(drawing);
 		view.getGarden().getChildren().add(drawing);
 		for (Node child : drawing.getChildren()) {
-			child.setTranslateX(0);
-			child.setScaleX(1);
+			child.setTranslateX(originalTranslate);
+			child.setScaleX(originalScale);
 		}
 		double oldWidth = main.getDyControl().getViewWidth();
 		drawing.setPrefWidth(view.getGarden().getWidth());
@@ -342,7 +343,7 @@ public class GardenController extends Controller<GardenView> {
 			double newX = child.getBoundsInParent().getMinX();
 			child.setTranslateX(oldX * ratio - newX);
 		}
-		drawing.setLayoutY(0);
+		drawing.setLayoutY(newLayoutY);
 	}
 
 	/**
