@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import Controllers.GardenController;
-import Model.GardenObj;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -203,20 +202,14 @@ public class GardenView extends View<GardenController> {
 	 */
 	public void addIVToFlow(ImageView plant, double x, double y) {
 		System.out.println("Dropping image");
-		this.garden.getChildren().add(plant); // TODO: creates error duplicate children added.
+		this.garden.getChildren().add(plant);
 		List<Node> imageArr = garden.getChildren();
 		int i = imageArr.size() - 1;
 		((ImageView) imageArr.get(i)).setPreserveRatio(true);
 		((ImageView) imageArr.get(i)).setFitHeight(SIZE);
 		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
-		imageArr.get(i).setUserData(new GardenObj(i, x, y, 0, null));
-		// imageArr.get(i).setOnMouseReleased(control.getHandlerForDragReleased());
 		garden.getChildren().get(i).setLayoutX(x);
 		garden.getChildren().get(i).setLayoutY(y);
-
-		// ((ImageView) imageArr.get(i)).setX(x);
-		// ((ImageView) imageArr.get(i)).setY(y);
-
 	}
 	
 	/**
@@ -233,21 +226,8 @@ public class GardenView extends View<GardenController> {
 		List<Node> imageArr = garden.getChildren();
 		int i = imageArr.size() - 1;
 		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
-		imageArr.get(i).setUserData(new GardenObj(i, x, y, 0, null));
-//		 Lighting lighting = new Lighting();
-//	        lighting.setDiffuseConstant(1.0);
-//	        lighting.setSpecularConstant(0.0);
-//	        lighting.setSpecularExponent(0.0);
-//	        lighting.setSurfaceScale(0.0);
-//	        lighting.setLight(new Light.Distant(45, 45, Color.GREEN));
-//		imageArr.get(i).setEffect(lighting);
-		// imageArr.get(i).setOnMouseReleased(control.getHandlerForDragReleased());
 		((Ellipse) garden.getChildren().get(i)).setCenterX(x);
 		((Ellipse) garden.getChildren().get(i)).setCenterY(y);
-
-		// ((ImageView) imageArr.get(i)).setX(x);
-		// ((ImageView) imageArr.get(i)).setY(y);
-
 	}
 
 	/**
@@ -260,11 +240,8 @@ public class GardenView extends View<GardenController> {
 	 * @param y
 	 */
 	public void movePlant(Ellipse dragPlant, double x, double y) {
-		int i = ((GardenObj) dragPlant.getUserData()).getID();
-		((Ellipse) garden.getChildren().get(i)).setCenterX(x);
-		//((GardenObj) garden.getChildren().get(i).getUserData()).setxLoc(x);
-		((Ellipse) garden.getChildren().get(i)).setCenterY(y);
-		//((GardenObj) garden.getChildren().get(i).getUserData()).setyLoc(y);
+		dragPlant.setCenterX(x);
+		dragPlant.setCenterY(y);
 	}
 
 	/**

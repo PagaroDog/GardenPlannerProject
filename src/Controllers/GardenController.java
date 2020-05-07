@@ -1,6 +1,5 @@
 package Controllers;
 
-import Model.GardenObj;
 import Model.Model;
 import Model.StageName;
 import Model.Season;
@@ -294,13 +293,11 @@ public class GardenController extends Controller<GardenView> {
 //			copied = true;
 		Ellipse dragPlant = (Ellipse) event.getSource();
 
-		double x = ((GardenObj) dragPlant.getUserData()).getxLoc();
-		double calcX = model.calcX(event.getX(), view.getSize(), view.getSize(), x);
+		double calcX = model.calcX(event.getX(), view.getSize(), view.getSize(), event.getX());
 		// System.out.println(view.getGarden().getLayoutX());
 		// System.out.println(dragPlant.getTranslateX());
 
-		double y = ((GardenObj) dragPlant.getUserData()).getyLoc();
-		double calcY = model.calcY(event.getY(), view.getSize(), view.getBottomHeight(), y);
+		double calcY = model.calcY(event.getY(), view.getSize(), view.getBottomHeight(), event.getY());
 		view.movePlant(dragPlant, event.getX(), event.getY());
 
 	}
@@ -379,8 +376,8 @@ public class GardenController extends Controller<GardenView> {
 			plantWidthY=maxSize;
 		}
 		else if(model.getYear() == 2) {
-			circle.setRadiusX((maxSize-minSize)/2);
-			circle.setRadiusY((maxSize-minSize)/2);
+			circle.setRadiusX((maxSize+minSize)/2);
+			circle.setRadiusY((maxSize+minSize)/2);
 			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 			circle.setStroke(Color.BLUE);
 			plantWidthX=(maxSize-minSize)/2;
@@ -438,12 +435,10 @@ public class GardenController extends Controller<GardenView> {
 		System.out.println("in dragDropped");
 
 		if (db.hasImage()) {
-			// view.getTilePane().getChildren().add(view.createImageView(db.getImage()));
 			System.out.println("in db.hasImage");
 			double calcX = model.calcX(event.getX(), (int) plantWidthX, view.getSize(), 0);// magic number?
 			double calcY = model.calcY(event.getY(), (int) plantWidthY, view.getBottomHeight(), 0);// magic number?
 			Ellipse circle = new Ellipse();
-			//String plantName = (String) ((Node) event.getSource()).getUserData();
 			double minSize = model.getPlants().get(plantName).getSpread()[0];
 			double maxSize = model.getPlants().get(plantName).getSpread()[1];
 			System.out.println("Dragging " + plantName);
@@ -453,31 +448,22 @@ public class GardenController extends Controller<GardenView> {
 				circle.setRadiusY(maxSize);
 				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 				circle.setStroke(Color.BLUE);
-				plantWidthX=maxSize;
-				plantWidthY=maxSize;
-				
 			}
 			else if(model.getYear() == 2) {
-				circle.setRadiusX((maxSize-minSize)/2);
-				circle.setRadiusY((maxSize-minSize)/2);
+				circle.setRadiusX((maxSize+minSize)/2);
+				circle.setRadiusY((maxSize+minSize)/2);
 				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 				circle.setStroke(Color.BLUE);
-				plantWidthX=(maxSize-minSize)/2;
-				plantWidthY=(maxSize-minSize)/2;
 			}
 			else if(model.getYear() == 1) {
 				circle.setRadiusX(minSize);
 				circle.setRadiusY(minSize);
 				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 				circle.setStroke(Color.BLUE);
-				plantWidthX=minSize;
-				plantWidthY=minSize;
 			}
 			else {
 				circle.setRadiusX(minSize);
 				circle.setRadiusY(minSize);
-				plantWidthX=10;
-				plantWidthY=10;
 			}
 			view.addCirlceToFlow(circle, calcX, calcY);
 			success = true;

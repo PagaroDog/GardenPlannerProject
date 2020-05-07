@@ -50,7 +50,6 @@ public class Model {
 	private HashMap<Integer, ArrayList<Plant>> plantsFromPref = new HashMap<Integer, ArrayList<Plant>>();
 
 	private GardenPref currPref;
-	private HashMap<Integer, GardenObj> gardenObjects;
 	private ArrayList<Actions> undoActions;
 	private ArrayList<Actions> redoActions;
 	private int year;
@@ -118,13 +117,6 @@ public class Model {
 		this.gardenPreferences = gardenPreferences;
 	}
 
-	public HashMap<Integer, GardenObj> getGardenObjects() {
-		return gardenObjects;
-	}
-
-	public void setGardenObjects(HashMap<Integer, GardenObj> gardenObjects) {
-		this.gardenObjects = gardenObjects;
-	}
 
 	public ArrayList<Actions> getUndoActions() {
 		return undoActions;
@@ -256,7 +248,7 @@ public class Model {
 	 * @param j the garden object being copied
 	 * @param i the integer key value of the garden object
 	 */
-	public void copy(GardenObj j, int i) {
+	public void copy(int i) {
 
 	}
 
