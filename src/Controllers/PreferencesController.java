@@ -88,6 +88,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 			view.getCurrArea().setStroke(Color.TRANSPARENT);
 		}
 		view.setCurrArea(null);
+		model.setCurrPref(null);
 		//model.generateRelevantPlants();
 		model.setStageName(StageName.SUGGESTIONS);
 		
