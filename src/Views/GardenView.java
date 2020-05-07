@@ -238,6 +238,37 @@ public class GardenView extends View<GardenController> {
 		// ((ImageView) imageArr.get(i)).setY(y);
 
 	}
+	
+	/**
+	 * Adds an ImageView to the garden Pane when the user releases a drag over the
+	 * pane. Uses the SIZE to center images around mouse.
+	 * 
+	 * @param plant ImageView of plant from ScrollPane that was dragged by user
+	 * @param x     x coordinates of mouse
+	 * @param y     y coordinates of mouse
+	 */
+	public void addCirlceToFlow(Ellipse plant, double x, double y) {
+		System.out.println("Dropping image");
+		this.garden.getChildren().add(plant);
+		List<Node> imageArr = garden.getChildren();
+		int i = imageArr.size() - 1;
+		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
+		imageArr.get(i).setUserData(new GardenObj(i, x, y, 0, null));
+		 Lighting lighting = new Lighting();
+	        lighting.setDiffuseConstant(1.0);
+	        lighting.setSpecularConstant(0.0);
+	        lighting.setSpecularExponent(0.0);
+	        lighting.setSurfaceScale(0.0);
+	        lighting.setLight(new Light.Distant(45, 45, Color.GREEN));
+		imageArr.get(i).setEffect(lighting);
+		// imageArr.get(i).setOnMouseReleased(control.getHandlerForDragReleased());
+		garden.getChildren().get(i).setLayoutX(x);
+		garden.getChildren().get(i).setLayoutY(y);
+
+		// ((ImageView) imageArr.get(i)).setX(x);
+		// ((ImageView) imageArr.get(i)).setY(y);
+
+	}
 
 	/**
 	 * Called to move an already placed plant. Places the plant at the given (x,y)
