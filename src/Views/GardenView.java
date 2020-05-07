@@ -100,18 +100,15 @@ public class GardenView extends View<GardenController> {
 		int numberPlants = 50;
 		System.out.println("The first plant in garden View is " + control.getPlantNameAt(0));
 		for(int i = 0;i<numberPlants;i++) {
-			plants.add(imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg());
-			
-		}
-
-		for (Image img : plants) {
+			Image img = imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg();
 			ImageView imageview = new ImageView(img);
 			imageview.setPreserveRatio(true);
 			imageview.setFitHeight(SIZE);
 			imageview.setFitWidth(SIZE);
 			imageview.setOnDragDetected(control.getHandlerForDragDetected());
-			
+			imageview.setUserData(control.getPlantNameAt(i));
 			tile.getChildren().add(imageview);
+			//((Node) plants.get(i)).setUserData(control.getPlantNameAt(i));
 		}
 		scrollPane = new ScrollPane();
 		scrollPane.setFitToWidth(true);
