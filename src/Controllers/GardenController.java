@@ -444,6 +444,10 @@ public class GardenController extends Controller<GardenView> {
 			Ellipse circle = new Ellipse();
 			double minSize = model.getPlants().get(plantName).getSpread()[0];
 			double maxSize = model.getPlants().get(plantName).getSpread()[1];
+			if(maxSize == 0) {
+				minSize = model.getPlants().get(plantName).getHeight()[0];
+				maxSize = model.getPlants().get(plantName).getHeight()[1];
+			}
 			System.out.println("Dragging " + plantName);
 			System.out.print("maxSize: " + maxSize);
 			if(model.getYear() == 3) {
@@ -492,13 +496,15 @@ public class GardenController extends Controller<GardenView> {
 	}
 	/*
 	 * @param String plantName
-	 * returns list of spread vals from model.
+	 * returns list of spread vals from model, if spread is zero returns height list.
 	 */
 	public int[] getSpread(String plantName) {
-		System.out.println(plantName);
-		System.out.println(model.getPlants().get(plantName));
-		System.out.println(model.getPlants().get(plantName).getSpread());
-		return model.getPlants().get(plantName).getSpread();
+		if(model.getPlants().get(plantName).getSpread()[1] == 0) {
+			return model.getPlants().get(plantName).getHeight();
+		}
+		else {
+			return model.getPlants().get(plantName).getSpread();
+		}
 	}
 
 }
