@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -20,6 +21,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.shape.Ellipse;
 import javafx.stage.Stage;
 
 /**
@@ -107,6 +109,7 @@ public class GardenView extends View<GardenController> {
 			imageview.setFitWidth(SIZE);
 			imageview.setOnDragDetected(control.getHandlerForDragDetected());
 			imageview.setUserData(control.getPlantNameAt(i));
+			System.out.println(control.getPlantNameAt(i));
 			tile.getChildren().add(imageview);
 			//((Node) plants.get(i)).setUserData(control.getPlantNameAt(i));
 		}
@@ -215,22 +218,53 @@ public class GardenView extends View<GardenController> {
 		// ((ImageView) imageArr.get(i)).setY(y);
 
 	}
+	
+	/**
+	 * Adds an ImageView to the garden Pane when the user releases a drag over the
+	 * pane. Uses the SIZE to center images around mouse.
+	 * 
+	 * @param plant ImageView of plant from ScrollPane that was dragged by user
+	 * @param x     x coordinates of mouse
+	 * @param y     y coordinates of mouse
+	 */
+	public void addCirlceToFlow(Ellipse plant, double x, double y) {
+		System.out.println("Dropping image");
+		this.garden.getChildren().add(plant);
+		List<Node> imageArr = garden.getChildren();
+		int i = imageArr.size() - 1;
+		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
+		imageArr.get(i).setUserData(new GardenObj(i, x, y, 0, null));
+//		 Lighting lighting = new Lighting();
+//	        lighting.setDiffuseConstant(1.0);
+//	        lighting.setSpecularConstant(0.0);
+//	        lighting.setSpecularExponent(0.0);
+//	        lighting.setSurfaceScale(0.0);
+//	        lighting.setLight(new Light.Distant(45, 45, Color.GREEN));
+//		imageArr.get(i).setEffect(lighting);
+		// imageArr.get(i).setOnMouseReleased(control.getHandlerForDragReleased());
+		((Ellipse) garden.getChildren().get(i)).setCenterX(x);
+		((Ellipse) garden.getChildren().get(i)).setCenterY(y);
+
+		// ((ImageView) imageArr.get(i)).setX(x);
+		// ((ImageView) imageArr.get(i)).setY(y);
+
+	}
 
 	/**
 	 * Called to move an already placed plant. Places the plant at the given (x,y)
 	 * coordinates and changes the plants xLoc and yLoc values carried by the
 	 * ImageView's User Data
 	 * 
-	 * @param plant
+	 * @param dragPlant
 	 * @param x
 	 * @param y
 	 */
-	public void movePlant(ImageView plant, double x, double y) {
-		int i = ((GardenObj) plant.getUserData()).getID();
-		garden.getChildren().get(i).setLayoutX(x);
-		((GardenObj) garden.getChildren().get(i).getUserData()).setxLoc(x);
-		garden.getChildren().get(i).setLayoutY(y);
-		((GardenObj) garden.getChildren().get(i).getUserData()).setyLoc(y);
+	public void movePlant(Ellipse dragPlant, double x, double y) {
+		int i = ((GardenObj) dragPlant.getUserData()).getID();
+		((Ellipse) garden.getChildren().get(i)).setCenterX(x);
+		//((GardenObj) garden.getChildren().get(i).getUserData()).setxLoc(x);
+		((Ellipse) garden.getChildren().get(i)).setCenterY(y);
+		//((GardenObj) garden.getChildren().get(i).getUserData()).setyLoc(y);
 	}
 
 	/**
@@ -249,7 +283,7 @@ public class GardenView extends View<GardenController> {
 	 * @param x     the new x value of the specified imagView in garden
 	 */
 	public void setXs(int index, double x) {
-		garden.getChildren().get(index).setTranslateX(garden.getChildren().get(index).getLayoutX() + x);
+		garden.getChildren().get(index).setTranslateX(((Ellipse) garden.getChildren().get(index)).getCenterX() + x);
 	}
 
 	/**
@@ -259,7 +293,7 @@ public class GardenView extends View<GardenController> {
 	 * @param y     the new y value of the specified ImageView in garden
 	 */
 	public void setYs(int index, double y) {
-		garden.getChildren().get(index).setTranslateY(garden.getChildren().get(index).getLayoutY() + y);
+		garden.getChildren().get(index).setTranslateY(((Ellipse) garden.getChildren().get(index)).getCenterY() + y);
 	}
 
 	/**

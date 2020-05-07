@@ -14,6 +14,8 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 
 /**
  * This class is the controller for the Garden Design screen. It mostly handles
@@ -30,6 +32,9 @@ public class GardenController extends Controller<GardenView> {
 	private final double originalTranslate = 0;
 	private final double originalScale = 1;
 	private final double newLayoutY = 0;
+	double plantWidthX=0;
+	double plantWidthY=0;
+	String plantName = "";
 
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
@@ -287,16 +292,16 @@ public class GardenController extends Controller<GardenView> {
 //			view.setXs(view.getXs().size -1, event.getX());
 //			view.setYs(index, event.getY());
 //			copied = true;
-		ImageView dragPlant = (ImageView) event.getSource();
+		Ellipse dragPlant = (Ellipse) event.getSource();
 
-		double x = ((GardenObj) ((ImageView) event.getSource()).getUserData()).getxLoc();
+		double x = ((GardenObj) dragPlant.getUserData()).getxLoc();
 		double calcX = model.calcX(event.getX(), view.getSize(), view.getSize(), x);
 		// System.out.println(view.getGarden().getLayoutX());
 		// System.out.println(dragPlant.getTranslateX());
 
-		double y = ((GardenObj) ((ImageView) event.getSource()).getUserData()).getyLoc();
+		double y = ((GardenObj) dragPlant.getUserData()).getyLoc();
 		double calcY = model.calcY(event.getY(), view.getSize(), view.getBottomHeight(), y);
-		view.movePlant(dragPlant, calcX, calcY);
+		view.movePlant(dragPlant, event.getX(), event.getY());
 
 	}
 
@@ -355,18 +360,63 @@ public class GardenController extends Controller<GardenView> {
 		return event -> imageDrag((MouseEvent) event);
 	}
 
+
 	public void imageDrag(MouseEvent event) {
 		System.out.println("Started To Drag");
 		Node n = (Node) event.getSource();
+		System.out.println(n.getUserData());
+		Ellipse circle = new Ellipse();
+		Pane p = new Pane();
+		plantName = (String) ((Node) event.getSource()).getUserData();
+		double minSize = model.getPlants().get(plantName).getSpread()[0];
+		double maxSize = model.getPlants().get(plantName).getSpread()[1];
+		if(model.getYear() == 3) {
+			circle.setRadiusX(maxSize);
+			circle.setRadiusY(maxSize);
+			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+			circle.setStroke(Color.BLUE);
+			plantWidthX=maxSize;
+			plantWidthY=maxSize;
+		}
+		else if(model.getYear() == 2) {
+			circle.setRadiusX((maxSize-minSize)/2);
+			circle.setRadiusY((maxSize-minSize)/2);
+			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+			circle.setStroke(Color.BLUE);
+			plantWidthX=(maxSize-minSize)/2;
+			plantWidthY=(maxSize-minSize)/2;
+		}
+		else if(model.getYear() == 1) {
+			circle.setRadiusX(minSize);
+			circle.setRadiusY(minSize);
+			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+			circle.setStroke(Color.BLUE);
+			plantWidthX=minSize;
+			plantWidthY=minSize;
+		}
+		else {
+			circle.setRadiusX(minSize);
+			circle.setRadiusY(minSize);
+			plantWidthX=10;
+			plantWidthY=10;
+		}
 
 		Dragboard db = n.startDragAndDrop(TransferMode.ANY);
-
+		p.getChildren().add(circle);
+		//Image i = new Image(circle);
+		
+		plantWidthX=100;
+		plantWidthY=100;
+		
+		
 		ClipboardContent content = new ClipboardContent();
-
-		content.putImage(((ImageView) n).getImage());
+		
+		content.putImage(((ImageView) event.getSource()).getImage());
+		//content.putImage(p);
 		db.setContent(content);
 		event.consume();
 	}
+
 
 	public EventHandler getHandlerForDragOver() {
 		return event -> gardenDragOver((DragEvent) event);
@@ -385,14 +435,51 @@ public class GardenController extends Controller<GardenView> {
 		Node n = (Node) event.getSource();
 		Dragboard db = event.getDragboard();
 		boolean success = false;
+		System.out.println("in dragDropped");
 
 		if (db.hasImage()) {
 			// view.getTilePane().getChildren().add(view.createImageView(db.getImage()));
-
-			double calcX = model.calcX(event.getX(), view.getSize(), view.getSize(), 0);// magic number?
-
-			double calcY = model.calcY(event.getY(), view.getSize(), view.getBottomHeight(), 0);// magic number?
-			view.addIVToFlow(new ImageView(db.getImage()), calcX, calcY);
+			System.out.println("in db.hasImage");
+			double calcX = model.calcX(event.getX(), (int) plantWidthX, view.getSize(), 0);// magic number?
+			double calcY = model.calcY(event.getY(), (int) plantWidthY, view.getBottomHeight(), 0);// magic number?
+			Ellipse circle = new Ellipse();
+			//String plantName = (String) ((Node) event.getSource()).getUserData();
+			double minSize = model.getPlants().get(plantName).getSpread()[0];
+			double maxSize = model.getPlants().get(plantName).getSpread()[1];
+			System.out.println("Dragging " + plantName);
+			System.out.print("maxSize: " + maxSize);
+			if(model.getYear() == 3) {
+				circle.setRadiusX(maxSize);
+				circle.setRadiusY(maxSize);
+				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+				circle.setStroke(Color.BLUE);
+				plantWidthX=maxSize;
+				plantWidthY=maxSize;
+				
+			}
+			else if(model.getYear() == 2) {
+				circle.setRadiusX((maxSize-minSize)/2);
+				circle.setRadiusY((maxSize-minSize)/2);
+				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+				circle.setStroke(Color.BLUE);
+				plantWidthX=(maxSize-minSize)/2;
+				plantWidthY=(maxSize-minSize)/2;
+			}
+			else if(model.getYear() == 1) {
+				circle.setRadiusX(minSize);
+				circle.setRadiusY(minSize);
+				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+				circle.setStroke(Color.BLUE);
+				plantWidthX=minSize;
+				plantWidthY=minSize;
+			}
+			else {
+				circle.setRadiusX(minSize);
+				circle.setRadiusY(minSize);
+				plantWidthX=10;
+				plantWidthY=10;
+			}
+			view.addCirlceToFlow(circle, calcX, calcY);
 			success = true;
 		}
 		event.setDropCompleted(success);
