@@ -31,8 +31,8 @@ public class View<T extends Controller> {
 	private double toolbarHPadding = 15;
 	private double toolbarHGap = 15;
 	private double centerFontSize = 25;
-	private int toolbarRed = 25;
-	private int toolbarGreen = 100;
+	private int toolbarRed = 105;
+	private int toolbarGreen = 197;
 	private int toolbarBlue = 255;
 	private double toolbarOpacity = 1;
 	private int navRed = 168;
@@ -104,4 +104,8 @@ public class View<T extends Controller> {
 	public Stage getStage() {return stage;}
 
 	public void setup() {}
+	
+	public void styleScene() {
+		scene.getStylesheets().add("Views/stylesheet.css");
+	}
 }

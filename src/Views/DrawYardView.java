@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import Controllers.DrawYardController;
+import Model.DrawMode;
 import Model.StageName;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -16,7 +17,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -93,7 +96,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 */
 	@Override
 	public void setup() {
-
+		
 		selectButton = new Button("Select");
 		selectButton.setOnMouseClicked(control.getHandleOnSelectButton());
 		deleteButton = new Button("Delete");
@@ -150,6 +153,8 @@ public class DrawYardView extends View<DrawYardController> {
 		root.setBottom(navigationDraw);
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
+		scene.setOnKeyPressed(control.getHandleOnKeyPressed());
+		styleScene();
 	}
 
 	public double getLabelSize() {
@@ -417,5 +422,35 @@ public class DrawYardView extends View<DrawYardController> {
 
 	public void removeBackground() {
 		drawing.getChildren().remove(background);
+	}
+
+	/**
+	 * Changes the id of the button of the current drawing mode,
+	 * so that the button changes appearance.
+	 * @param newMode The newly update drawing mode
+	 */
+	public void updateMode(DrawMode newMode) {
+		selectButton.setId("");
+		rectButton.setId("");
+		circleButton.setId("");
+		labelButton.setId("");
+		newAreaButton.setId("");
+		if (newMode != null) {
+			switch(newMode) {
+				case CIRCLE:
+					circleButton.setId("selected-button");
+					break;
+				case LABEL:
+					labelButton.setId("selected-button");
+					break;
+				case RECTANGLE:
+					rectButton.setId("selected-button");
+					newAreaButton.setId("selected-button");
+					break;
+				case SELECT:
+					selectButton.setId("selected-button");
+					break;
+			}
+		}
 	}
 }
