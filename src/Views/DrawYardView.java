@@ -19,6 +19,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -41,6 +43,9 @@ public class DrawYardView extends View<DrawYardController> {
 	private BorderPane navigationCond;
 
 	private Label labelSizetxt;
+	private Label widthTxt;
+	private Label heightTxt;
+	private Label heightUnit;
 
 	Font font;
 
@@ -54,10 +59,14 @@ public class DrawYardView extends View<DrawYardController> {
 	private Button importButton;
 	private Button newAreaButton;
 
+	Region emptyCenter;
+
 	private TextField labeltxt;
-	
+	private TextField widthField;
+	private TextField heightField;
+
 	private FileChooser fileChooser;
-	
+
 	private ImageView background;
 
 	private double labelSize = 12;
@@ -83,8 +92,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 */
 	@Override
 	public void setup() {
-		labelSizetxt = new Label("Label Size: " + (int) labelSize);
-		labelSizetxt.setFont(new Font(labelSizetxtSize));
+
 		selectButton = new Button("Select");
 		selectButton.setOnMouseClicked(control.getHandleOnSelectButton());
 		deleteButton = new Button("Delete");
@@ -95,22 +103,39 @@ public class DrawYardView extends View<DrawYardController> {
 		circleButton.setOnMouseClicked(control.getHandleOnCircleButton());
 		labelButton = new Button("Label");
 		labelButton.setOnMouseClicked(control.getHandleOnLabelButton());
+		labeltxt = new TextField();
 		minusButton = new Button("-");
 		minusButton.setOnMouseClicked(control.getHandleOnMinusButton());
 		plusButton = new Button("+");
 		plusButton.setOnMouseClicked(control.getHandleOnPlusButton());
+		labelSizetxt = new Label("Label Size: " + (int) labelSize);
+		labelSizetxt.setFont(new Font(labelSizetxtSize));
 		importButton = new Button("Import Drawing");
 		importButton.setOnMouseClicked(control.getHandleOnImportButton());
+		emptyCenter = new Region();
+		HBox.setHgrow(emptyCenter, Priority.ALWAYS);
+		widthTxt = new Label("Width: ");
+		widthTxt.setFont(new Font(labelSizetxtSize));
+		widthField = new TextField();
+		heightTxt = new Label("ft.   Height: ");
+		heightTxt.setFont(new Font(labelSizetxtSize));
+		heightField = new TextField();
+		heightUnit = new Label("ft.");
+		heightUnit.setFont(new Font(labelSizetxtSize));
+
 		newAreaButton = new Button("New Conditions Area");
 		newAreaButton.setOnMousePressed(control.getHandleOnNewAreaButton());
-		labeltxt = new TextField();
 
 		toolbar = createToolbar();
 		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
-				minusButton, plusButton, labelSizetxt, importButton);
+				minusButton, plusButton, labelSizetxt, importButton, emptyCenter, widthTxt, widthField, heightTxt,
+				heightField, heightUnit);
 
-		navigationDraw = createNavigationBar("Main Menu", "Create Areas", "Draw An Outline of Your Property", control.getHandlePrevButton(), control.getHandleNextButton());
-		navigationCond = createNavigationBar("Draw Yard", "Set Preferences", "Mark Different Areas with Different Conditions", control.getHandlePrevButton(), control.getHandleNextButton());
+		navigationDraw = createNavigationBar("Main Menu", "Create Areas", "Draw An Outline of Your Property",
+				control.getHandlePrevButton(), control.getHandleNextButton());
+		navigationCond = createNavigationBar("Draw Yard", "Set Preferences",
+				"Mark Different Areas with Different Conditions", control.getHandlePrevButton(),
+				control.getHandleNextButton());
 
 		drawing = new Pane();
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
@@ -148,6 +173,15 @@ public class DrawYardView extends View<DrawYardController> {
 	public FileChooser getFileChooser() {
 		return fileChooser;
 	}
+	
+	public TextField getWidthField() {
+		return widthField;
+	}
+
+	public TextField getHeightField() {
+		return heightField;
+	}
+
 
 	/**
 	 * Called when user clicks on the drawing Pane in RECTANGLE mode. Creates a new
@@ -334,7 +368,8 @@ public class DrawYardView extends View<DrawYardController> {
 	public void drawMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
 		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
-				minusButton, plusButton, labelSizetxt, importButton);
+				minusButton, plusButton, labelSizetxt, importButton, emptyCenter, widthTxt, widthField, heightTxt,
+				heightField, heightUnit);
 		ObservableList<Node> drawObjs = drawing.getChildren();
 		for (int i = drawObjs.size() - 1; i >= 0 && drawObjs.get(i).getUserData() == StageName.CONDITIONS; i--) {
 			areas.add(drawObjs.get(i));
@@ -362,16 +397,19 @@ public class DrawYardView extends View<DrawYardController> {
 	}
 
 	/**
-	 * Set the background ImageView to the image found at path 
+	 * Set the background ImageView to the image found at path
+	 * 
 	 * @param path The file system path to the image
 	 */
 	public void setBackground(String path) {
 		try {
-			background = new ImageView(new Image(new FileInputStream(path), drawing.getWidth(), drawing.getHeight(), false, false));
+			background = new ImageView(
+					new Image(new FileInputStream(path), drawing.getWidth(), drawing.getHeight(), false, false));
 			if (!drawing.getChildren().contains(background)) {
 				drawing.getChildren().add(background);
 				background.toBack();
 			}
-		} catch (FileNotFoundException e) { }
+		} catch (FileNotFoundException e) {
+		}
 	}
 }

@@ -41,6 +41,9 @@ public class Model {
 	private double drawPressX;
 	private double drawPressY;
 	private Node currDrawObj;
+	
+	private int propertyHeightInches = 1200;
+	private int propertyWidthInches = 2400;
 
 	// make a constructor to do this
 	private HashMap<String, Plant> plants = new HashMap<String, Plant>();
@@ -248,6 +251,26 @@ public class Model {
 
 	public void setPrefControl(PreferencesController prefControl) {
 		this.prefControl = prefControl;
+	}
+
+	public int getPropertyHeightInches() {
+		return propertyHeightInches;
+	}
+
+	public void setPropertyHeightInches(int propertyHeightInches) {
+		this.propertyHeightInches = propertyHeightInches;
+	}
+
+	public int getPropertyWidthInches() {
+		return propertyWidthInches;
+	}
+
+	public void setPropertyWidthInches(int propertyWidthInches) {
+		this.propertyWidthInches = propertyWidthInches;
+	}
+
+	public int getInchesPerFoot() {
+		return inchesPerFoot;
 	}
 
 	/**

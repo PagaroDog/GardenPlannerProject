@@ -325,12 +325,19 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the button was pressed
 	 */
 	public void nextButton(MouseEvent event) {
-		System.out.println(view.getDrawing().getHeight());
 		view.deselect(model.getCurrDrawObj());
 		model.setCurrDrawObj(null);
 		if (model.getStageName() == StageName.DRAW) {
 			model.setStageName(StageName.CONDITIONS);
 			view.condMode();
+			String widthStr = view.getHeightField().getText();
+			if (widthStr.matches("[0-9]+")) {
+				model.setPropertyWidthInches(Integer.valueOf(widthStr) * model.getInchesPerFoot());
+			}
+			String heightStr = view.getHeightField().getText();
+			if (heightStr.matches("[0-9]+")) {
+				model.setPropertyHeightInches(Integer.valueOf(heightStr) * model.getInchesPerFoot());
+			}
 		} else {
 			view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
 			model.setStageName(StageName.PREFERENCES);
