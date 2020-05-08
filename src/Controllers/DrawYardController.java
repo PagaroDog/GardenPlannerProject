@@ -7,9 +7,12 @@ import Model.DrawMode;
 import Model.Model;
 import Model.StageName;
 import Views.DrawYardView;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
@@ -40,7 +43,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnSelectButton() {
-		return event -> selectButton((MouseEvent) event);
+		return event -> selectButton();
 	}
 
 	/**
@@ -49,7 +52,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnRectButton() {
-		return event -> rectButton((MouseEvent) event);
+		return event -> rectButton();
 	}
 
 	/**
@@ -58,7 +61,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnCircleButton() {
-		return event -> circleButton((MouseEvent) event);
+		return event -> circleButton();
 	}
 
 	/**
@@ -67,7 +70,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnLabelButton() {
-		return event -> labelButton((MouseEvent) event);
+		return event -> labelButton();
 	}
 
 	/**
@@ -76,7 +79,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnMinusButton() {
-		return event -> minusButton((MouseEvent) event);
+		return event -> minusButton();
 	}
 
 	/**
@@ -85,7 +88,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnPlusButton() {
-		return event -> plusButton((MouseEvent) event);
+		return event -> plusButton();
 	}
 
 	/**
@@ -94,7 +97,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnDeleteButton() {
-		return event -> deleteButton((MouseEvent) event);
+		return event -> deleteButton();
 	}
 
 	/**
@@ -105,6 +108,15 @@ public class DrawYardController extends Controller<DrawYardView> {
 	public EventHandler getHandleOnImportButton() {
 		return event -> importButton((MouseEvent) event);
 	}
+	
+	/**
+	 * Handles event when user presses remove import button, invoking removeImportButton()
+	 * 
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandleOnRemoveImportButton() {
+		return event -> removeImportButton((MouseEvent) event);
+	}
 
 	/**
 	 * Handles event when user presses new area button, invoking newAreaButton()
@@ -112,7 +124,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleOnNewAreaButton() {
-		return event -> rectButton((MouseEvent) event);
+		return event -> rectButton();
 	}
 
 	/**
@@ -195,67 +207,93 @@ public class DrawYardController extends Controller<DrawYardView> {
 	public EventHandler getHandleOnDragLabel() {
 		return event -> dragLabel((MouseEvent) event);
 	}
+	
+	/**
+	 * Handles event when user presses a key
+	 * 
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandleOnKeyPressed() {
+		return new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent e) {
+				switch (e.getCode()) {
+					case S:
+						selectButton();
+						break;
+					case DELETE:
+						deleteButton();
+						break;
+					case R:
+						rectButton();
+						break;
+					case C:
+						circleButton();
+						break;
+					case L:
+						labelButton();
+						break;
+					case EQUALS:
+						plusButton();
+						break;
+					case MINUS:
+						minusButton();
+						break;
+	    		}
+	    	}
+		};
+	}
 
 	/**
 	 * Sets drawing mode to select
-	 * 
-	 * @param event The MouseEvent generated when the button was pressed
 	 */
-	public void selectButton(MouseEvent event) {
+	public void selectButton() {
+		view.updateMode(DrawMode.SELECT);
 		model.setDrawMode(DrawMode.SELECT);
 	}
 
 	/**
 	 * Sets drawing mode to rectangle
-	 * 
-	 * @param event The MouseEvent generated when the button was pressed
 	 */
-	public void rectButton(MouseEvent event) {
+	public void rectButton() {
+		System.out.println("press");
+		view.updateMode(DrawMode.RECTANGLE);
 		model.setDrawMode(DrawMode.RECTANGLE);
 	}
 
 	/**
 	 * Sets drawing mode to circle
-	 * 
-	 * @param event The MouseEvent generated when the button was pressed
 	 */
-	public void circleButton(MouseEvent event) {
+	public void circleButton() {
+		view.updateMode(DrawMode.CIRCLE);
 		model.setDrawMode(DrawMode.CIRCLE);
 	}
 
 	/**
 	 * Sets drawing mode to label
-	 * 
-	 * @param event The MouseEvent generated when the button was pressed
 	 */
-	public void labelButton(MouseEvent event) {
+	public void labelButton() {
+		view.updateMode(DrawMode.LABEL);
 		model.setDrawMode(DrawMode.LABEL);
 	}
 
 	/**
 	 * Decreases the label font by 1, with a minimum of 4
-	 * 
-	 * @param event The MouseEvent generated when the button was pressed
 	 */
-	public void minusButton(MouseEvent event) {
+	public void minusButton() {
 		view.setLabelSize(Math.max(minFont, view.getLabelSize() - fontDecrement));
 	}
 
 	/**
 	 * Increased the label font by 1, with a maximum of 50
-	 * 
-	 * @param event The MouseEvent generated when the button was pressed
 	 */
-	public void plusButton(MouseEvent event) {
+	public void plusButton() {
 		view.setLabelSize(Math.min(maxFont, view.getLabelSize() + fontIncrement));
 	}
 
 	/**
 	 * Deletes currently selected object, if any
-	 * 
-	 * @param event The MouseEvent generated when the button was pressed
 	 */
-	public void deleteButton(MouseEvent event) {
+	public void deleteButton() {
 		view.deleteShape(model.getCurrDrawObj());
 	}
 
@@ -271,6 +309,15 @@ public class DrawYardController extends Controller<DrawYardView> {
          }
 	}
 
+	/**
+	 * Allows user to import picture file of lawn layout
+	 * 
+	 * @param event The MouseEvent generated when the button was pressed
+	 */
+	private void removeImportButton(MouseEvent event) {
+		view.removeBackground();
+	}
+	
 	/**
 	 * Shows current state of objects being drawn, if in the correct mode
 	 * 
@@ -325,12 +372,21 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the button was pressed
 	 */
 	public void nextButton(MouseEvent event) {
-		System.out.println(view.getDrawing().getHeight());
 		view.deselect(model.getCurrDrawObj());
 		model.setCurrDrawObj(null);
+		model.setDrawMode(null);
+		view.updateMode(null);
 		if (model.getStageName() == StageName.DRAW) {
 			model.setStageName(StageName.CONDITIONS);
 			view.condMode();
+			String widthStr = view.getHeightField().getText();
+			if (widthStr.matches("[0-9]+")) {
+				model.setPropertyWidthInches(Integer.valueOf(widthStr) * model.getInchesPerFoot());
+			}
+			String heightStr = view.getHeightField().getText();
+			if (heightStr.matches("[0-9]+")) {
+				model.setPropertyHeightInches(Integer.valueOf(heightStr) * model.getInchesPerFoot());
+			}
 		} else {
 			view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
 			model.setStageName(StageName.PREFERENCES);
@@ -347,6 +403,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the button was pressed
 	 */
 	public void prevButton(MouseEvent event) {
+		model.setDrawMode(null);
+		view.updateMode(null);
 		view.deselect(model.getCurrDrawObj());
 		model.setCurrDrawObj(null);
 		if (model.getStageName() == StageName.DRAW) {

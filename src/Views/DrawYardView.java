@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import Controllers.DrawYardController;
+import Model.DrawMode;
 import Model.StageName;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -16,9 +17,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -41,8 +46,11 @@ public class DrawYardView extends View<DrawYardController> {
 	private BorderPane navigationCond;
 
 	private Label labelSizetxt;
+	private Label widthTxt;
+	private Label heightTxt;
+	private Label heightUnit;
 
-	Font font;
+	private Font font;
 
 	private Button selectButton;
 	private Button deleteButton;
@@ -52,12 +60,17 @@ public class DrawYardView extends View<DrawYardController> {
 	private Button minusButton;
 	private Button plusButton;
 	private Button importButton;
+	private Button removeImportButton;
 	private Button newAreaButton;
 
+	private Region emptyCenter;
+
 	private TextField labeltxt;
-	
+	private TextField widthField;
+	private TextField heightField;
+
 	private FileChooser fileChooser;
-	
+
 	private ImageView background;
 
 	private double labelSize = 12;
@@ -83,8 +96,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 */
 	@Override
 	public void setup() {
-		labelSizetxt = new Label("Label Size: " + (int) labelSize);
-		labelSizetxt.setFont(new Font(labelSizetxtSize));
+		
 		selectButton = new Button("Select");
 		selectButton.setOnMouseClicked(control.getHandleOnSelectButton());
 		deleteButton = new Button("Delete");
@@ -95,22 +107,41 @@ public class DrawYardView extends View<DrawYardController> {
 		circleButton.setOnMouseClicked(control.getHandleOnCircleButton());
 		labelButton = new Button("Label");
 		labelButton.setOnMouseClicked(control.getHandleOnLabelButton());
+		labeltxt = new TextField();
 		minusButton = new Button("-");
 		minusButton.setOnMouseClicked(control.getHandleOnMinusButton());
 		plusButton = new Button("+");
 		plusButton.setOnMouseClicked(control.getHandleOnPlusButton());
+		labelSizetxt = new Label("Label Size: " + (int) labelSize);
+		labelSizetxt.setFont(new Font(labelSizetxtSize));
 		importButton = new Button("Import Drawing");
 		importButton.setOnMouseClicked(control.getHandleOnImportButton());
+		removeImportButton = new Button("Remove Imported Drawing");
+		removeImportButton.setOnMouseClicked(control.getHandleOnRemoveImportButton());
+		emptyCenter = new Region();
+		HBox.setHgrow(emptyCenter, Priority.ALWAYS);
+		widthTxt = new Label("Width: ");
+		widthTxt.setFont(new Font(labelSizetxtSize));
+		widthField = new TextField();
+		heightTxt = new Label("ft.   Height: ");
+		heightTxt.setFont(new Font(labelSizetxtSize));
+		heightField = new TextField();
+		heightUnit = new Label("ft.");
+		heightUnit.setFont(new Font(labelSizetxtSize));
+
 		newAreaButton = new Button("New Conditions Area");
 		newAreaButton.setOnMousePressed(control.getHandleOnNewAreaButton());
-		labeltxt = new TextField();
 
 		toolbar = createToolbar();
 		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
-				minusButton, plusButton, labelSizetxt, importButton);
+				minusButton, plusButton, labelSizetxt, importButton, removeImportButton, emptyCenter, widthTxt,
+				widthField, heightTxt, heightField, heightUnit);
 
-		navigationDraw = createNavigationBar("Main Menu", "Create Areas", "Draw An Outline of Your Property", control.getHandlePrevButton(), control.getHandleNextButton());
-		navigationCond = createNavigationBar("Draw Yard", "Set Preferences", "Mark Different Areas with Different Conditions", control.getHandlePrevButton(), control.getHandleNextButton());
+		navigationDraw = createNavigationBar("Main Menu", "Create Areas", "Draw An Outline of Your Property",
+				control.getHandlePrevButton(), control.getHandleNextButton());
+		navigationCond = createNavigationBar("Draw Yard", "Set Preferences",
+				"Mark Different Areas with Different Conditions", control.getHandlePrevButton(),
+				control.getHandleNextButton());
 
 		drawing = new Pane();
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
@@ -122,6 +153,8 @@ public class DrawYardView extends View<DrawYardController> {
 		root.setBottom(navigationDraw);
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
+		scene.setOnKeyPressed(control.getHandleOnKeyPressed());
+		styleScene();
 	}
 
 	public double getLabelSize() {
@@ -147,6 +180,14 @@ public class DrawYardView extends View<DrawYardController> {
 
 	public FileChooser getFileChooser() {
 		return fileChooser;
+	}
+
+	public TextField getWidthField() {
+		return widthField;
+	}
+
+	public TextField getHeightField() {
+		return heightField;
 	}
 
 	/**
@@ -334,7 +375,8 @@ public class DrawYardView extends View<DrawYardController> {
 	public void drawMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
 		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
-				minusButton, plusButton, labelSizetxt, importButton);
+				minusButton, plusButton, labelSizetxt, importButton, removeImportButton, emptyCenter, widthTxt,
+				widthField, heightTxt, heightField, heightUnit);
 		ObservableList<Node> drawObjs = drawing.getChildren();
 		for (int i = drawObjs.size() - 1; i >= 0 && drawObjs.get(i).getUserData() == StageName.CONDITIONS; i--) {
 			areas.add(drawObjs.get(i));
@@ -362,16 +404,53 @@ public class DrawYardView extends View<DrawYardController> {
 	}
 
 	/**
-	 * Set the background ImageView to the image found at path 
+	 * Set the background ImageView to the image found at path
+	 * 
 	 * @param path The file system path to the image
 	 */
 	public void setBackground(String path) {
 		try {
-			background = new ImageView(new Image(new FileInputStream(path), drawing.getWidth(), drawing.getHeight(), false, false));
+			background = new ImageView(
+					new Image(new FileInputStream(path), drawing.getWidth(), drawing.getHeight(), false, false));
 			if (!drawing.getChildren().contains(background)) {
 				drawing.getChildren().add(background);
 				background.toBack();
 			}
-		} catch (FileNotFoundException e) { }
+		} catch (FileNotFoundException e) {
+		}
+	}
+
+	public void removeBackground() {
+		drawing.getChildren().remove(background);
+	}
+
+	/**
+	 * Changes the id of the button of the current drawing mode,
+	 * so that the button changes appearance.
+	 * @param newMode The newly update drawing mode
+	 */
+	public void updateMode(DrawMode newMode) {
+		selectButton.setId("");
+		rectButton.setId("");
+		circleButton.setId("");
+		labelButton.setId("");
+		newAreaButton.setId("");
+		if (newMode != null) {
+			switch(newMode) {
+				case CIRCLE:
+					circleButton.setId("selected-button");
+					break;
+				case LABEL:
+					labelButton.setId("selected-button");
+					break;
+				case RECTANGLE:
+					rectButton.setId("selected-button");
+					newAreaButton.setId("selected-button");
+					break;
+				case SELECT:
+					selectButton.setId("selected-button");
+					break;
+			}
+		}
 	}
 }

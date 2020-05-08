@@ -43,6 +43,7 @@ public class SaveView extends View<SaveController> {
 
 		tp.getChildren().addAll(txt, prevButton, fileButton, PNGButton);
 		scene = new Scene(tp, canvasWidth, canvasHeight);
+		styleScene();
 
 	}
 }

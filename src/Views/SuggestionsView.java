@@ -62,6 +62,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 		border.setBottom(nav);
 		border.setCenter(cen);
 		scene = new Scene(border, canvasWidth, canvasHeight);
+		styleScene();
 	}
 
 	/**

@@ -75,7 +75,7 @@ public class TutorialView extends View<TutorialController> {
 		border.setCenter(slide);
 
 		scene = new Scene(border, canvasWidth, canvasHeight);
-
+		styleScene();
 	}
 
 	public StackPane getSlide() {

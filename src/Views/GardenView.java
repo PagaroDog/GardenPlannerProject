@@ -83,7 +83,7 @@ public class GardenView extends View<GardenController> {
 		border.setCenter(garden);
 
 		scene = new Scene(border, canvasWidth, canvasHeight);
-
+		styleScene();
 	}
 
 	/**

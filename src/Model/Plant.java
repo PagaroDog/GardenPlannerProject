@@ -15,14 +15,14 @@ public class Plant {
 	private String duration;
 	private PlantType type;
 	private int[] height;
-	private HashSet<String> color;
+	private HashSet<String> color = new HashSet<String>();
 	private Season[] bloomtime;
 	private Water[] waterLevel;
 	private Sun[] light;
 	private int[] spread;
 	
 
-	public Plant(String name, String[] commonNames, String duration, PlantType type, int[] height, HashSet<String> color,
+	public Plant(String name, String[] commonNames, String duration, PlantType type, int[] height, String[] color,
 			Season[] bloomtime, Water[] waterLevel, Sun[] light, int[] spread) {
 		this.name = name;
 		this.commonNames = commonNames;
@@ -30,7 +30,9 @@ public class Plant {
 		this.type = type;
 		this.height = height;
 		this.color = new HashSet<String>();
-		this.color.addAll(color);
+		for (String col : color) {
+			this.color.add(col);
+		}
 		this.bloomtime = bloomtime;
 		this.waterLevel = waterLevel;
 		this.light = light;

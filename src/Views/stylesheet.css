@@ -1,0 +1,19 @@
+.button {
+	-fx-background-color: rgba(244, 255, 242, 1);
+	-fx-text-fill: rgba(50, 50, 50, 1);
+}
+
+.button:hover {
+	-fx-background-color: rgba(225, 235, 225, 1);
+	-fx-text-fill: rgba(50, 50, 50, 1);
+}
+
+#selected-button {
+	-fx-background-color: rgba(50, 50, 50, 1);
+	-fx-text-fill: rgba(225, 235, 225, 1);
+}
+
+#selected-button:hover {
+	-fx-background-color: rgba(80, 80, 80, 1);
+	-fx-text-fill: rgba(225, 235, 225, 1);
+}

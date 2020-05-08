@@ -14,7 +14,7 @@ public class GardenPref {
 	private String userLight;
 	private String userBloom;
 	private String userSoil;
-	private HashSet<String> userColor;
+	private HashSet<String> userColor = new HashSet<String>();
 	private String userWater;
 	private double xLoc;
 	private double yLoc;
