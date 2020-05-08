@@ -457,8 +457,8 @@ public class GardenController extends Controller<GardenView> {
 			double minSize = model.getPlants().get(plantName).getSpread()[0];
 			double maxSize = model.getPlants().get(plantName).getSpread()[1];
 			if(maxSize == 0) {
-				minSize = model.getPlants().get(plantName).getHeight()[0];
-				maxSize = model.getPlants().get(plantName).getHeight()[1];
+				minSize = (model.getPlants().get(plantName).getHeight()[0])/4;
+				maxSize = (model.getPlants().get(plantName).getHeight()[1])/4;
 			}
 			System.out.println("Dragging " + plantName);
 			System.out.print("maxSize: " + maxSize);
