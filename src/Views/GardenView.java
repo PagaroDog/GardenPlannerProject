@@ -39,6 +39,10 @@ public class GardenView extends View{
 	private Button stats;
 	private Button pref;
 	private Button save;
+	
+	private Button undo; 
+	private Button redo; 
+	
 	private Button year1;
 	private Button year2;
 	private Button year3;
@@ -120,6 +124,7 @@ public class GardenView extends View{
 		garden = new Pane();
 		garden.setOnDragOver(control.getHandlerForDragOver());
 		garden.setOnDragDropped(control.getHandlerForDragDropped());
+		garden.setOnDragDone(control.getHandlerForDragDone());
 //		ImageView background = new ImageView(new Image("/imgs/lawn.jpg"));
 //		background.fitWidthProperty().bind(garden.widthProperty()); 
 //		background.fitHeightProperty().bind(garden.heightProperty());
@@ -141,7 +146,14 @@ public class GardenView extends View{
 		pref = new Button("Pref");
 		pref.setOnMouseClicked(control.handleOnPrefButton());
 		
-		navigation.getChildren().addAll(txt,pref,stats,save);
+		Label spacing = new Label("    ");
+		undo = new Button("Undo"); 
+		undo.setOnMouseClicked(control.handleOnUndoButton());
+		redo = new Button("Redo"); 
+		redo.setOnMouseClicked(control.handleOnRedoButton());
+		
+		
+		navigation.getChildren().addAll(txt,pref,stats,save,spacing, undo, redo);
 	
 	}
 /**
@@ -224,10 +236,11 @@ public class GardenView extends View{
     	((ImageView) imageArr.get(i)).setFitHeight(SIZE);
     	imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
     	imageArr.get(i).setUserData(new GardenObj(i, x, y, 0, null));
-    	//imageArr.get(i).setOnMouseReleased(control.getHandlerForDragReleased());
+    	imageArr.get(i).setOnMouseReleased(control.getHandlerForDragReleased());
     	garden.getChildren().get(i).setLayoutX(x);
     	garden.getChildren().get(i).setLayoutY(y);
-    
+    	
+    	
     	//((ImageView) imageArr.get(i)).setX(x);
     	//((ImageView) imageArr.get(i)).setY(y);
     
@@ -240,11 +253,14 @@ public class GardenView extends View{
 	 * @param y
 	 */
 	public void movePlant(ImageView plant, double x, double y) {
+		System.out.println("MovePlant called with x, y as:" +x +" ,"+ y); 
 		int i =  ((GardenObj)plant.getUserData()).getID();
 		garden.getChildren().get(i).setLayoutX(x);
 		((GardenObj)garden.getChildren().get(i).getUserData()).setxLoc(x);
 		garden.getChildren().get(i).setLayoutY(y);
 		((GardenObj)garden.getChildren().get(i).getUserData()).setyLoc(y);
+		System.out.println("Plant x:" + x + "Plant y:" + y); 
+		//System.out.println("Plant moved"); 
 	}
 
 	

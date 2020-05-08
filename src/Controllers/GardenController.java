@@ -1,5 +1,7 @@
 package Controllers;
 
+import java.util.LinkedList;
+
 import Model.GardenObj;
 import Model.GardenPref;
 import Model.Model;
@@ -26,6 +28,10 @@ import javafx.stage.Stage;
 */
 public class GardenController extends Controller<GardenView>{
 	boolean copied = false;
+	
+	//LinkedList<GardenAction> GardenActs = new LinkedList<GardenAction>(); 
+	GardenAction GA = new GardenAction(); 
+	
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
 	}
@@ -220,8 +226,35 @@ public class GardenController extends Controller<GardenView>{
 	 * @param event
 	 */
 	public void dragReleased(MouseEvent event) {
-		ImageView dragPlant = (ImageView) event.getSource();
-		System.out.println(dragPlant.getX());
+		//ImageView dragPlant = (ImageView) event.getSource();
+		//System.out.println(dragPlant.getX()); 
+		//Node n =(Node)event.getSource();
+		
+		
+		ImageView source = (ImageView)event.getSource(); 
+		
+		/*
+		double lastX = event.getSceneX();
+		double lastY = event.getSceneY(); 
+		double newX = lastX - 302;
+		double newY = lastY - 127;
+		System.out.println("X is: " + newX + "Y is: " + newY + "Using just getSceneX");
+		*/
+		double x = ((GardenObj)((ImageView) event.getSource()).getUserData()).getxLoc();
+		double calcX = model.calcX(event.getX(),view.getSize(),view.getSize(),x);
+		//System.out.println(view.getGarden().getLayoutX());
+		//System.out.println(dragPlant.getTranslateX());
+		
+		
+		double y = ((GardenObj)((ImageView) event.getSource()).getUserData()).getyLoc();
+		double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight(),y);
+		
+		String sGA = "MoveImage"; 
+		
+		//System.out.println("X is: " + calcX + "Y is: " + calcY + "Using calcX w/ source"); 
+		
+		GA.addAction(new GardenAction(source, calcX , calcY, sGA));
+		System.out.println("In Drag Released"); 
 	}
 	
 	/**
@@ -248,7 +281,7 @@ public class GardenController extends Controller<GardenView>{
 //			view.setXs(view.getXs().size -1, event.getX());
 //			view.setYs(index, event.getY());
 //			copied = true;
-		ImageView dragPlant = (ImageView) event.getSource();
+		ImageView dragPlant = (ImageView)event.getSource();
 		
 		double x = ((GardenObj)((ImageView) event.getSource()).getUserData()).getxLoc();
 		double calcX = model.calcX(event.getX(),view.getSize(),view.getSize(),x);
@@ -258,8 +291,7 @@ public class GardenController extends Controller<GardenView>{
 		
 		double y = ((GardenObj)((ImageView) event.getSource()).getUserData()).getyLoc();
 		double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight(),y);
-		view.movePlant(dragPlant,calcX,calcY);
-		
+		view.movePlant(dragPlant,calcX,calcY); 
 	
 		}
 		
@@ -340,6 +372,8 @@ public class GardenController extends Controller<GardenView>{
 			Node n =(Node)event.getSource();
 			Dragboard db = event.getDragboard();
 			boolean success = false;
+			ImageView image = new ImageView(db.getImage());
+			
 			
 			if(db.hasImage()){
 				//view.getTilePane().getChildren().add(view.createImageView(db.getImage()));
@@ -347,11 +381,45 @@ public class GardenController extends Controller<GardenView>{
 				double calcX = model.calcX(event.getX(),view.getSize(),view.getSize(),0);//magic number?
 				
 				double calcY = model.calcY(event.getY(),view.getSize(),view.getBottomHeight(),0);//magic number?
-				view.addIVToFlow(new ImageView(db.getImage()), calcX,calcY);
+				view.addIVToFlow(image, calcX,calcY);
 				success = true;
 			}
+			
+			//ImageView gaImage = new ImageView(db.getImage()); 
+			double xGA = model.calcX(event.getX(),view.getSize(),view.getSize(),0);
+			double yGA = model.calcY(event.getY(),view.getSize(),view.getBottomHeight(),0);
+			String sGA = "AddIV"; 
+			
+			GA.addAction(new GardenAction(image, xGA, yGA, sGA));  
+			
 			event.setDropCompleted(success);
 			event.consume();
+			System.out.println("Drag dropped"); 
+			 
+		}
+		
+		public EventHandler getHandlerForDragDone() {
+			return event -> dragDone((DragEvent)event); 
+		}
+		
+		public void dragDone(DragEvent event) {
+			System.out.println("DragCompleted"); 
+		}
+		
+		public EventHandler handleOnUndoButton() {
+			return event -> undo((MouseEvent) event); 
+		}
+		
+		public void undo(MouseEvent event) {
+			GA.undo(view);
+		}
+		
+		public EventHandler handleOnRedoButton() {
+			return event -> redo((MouseEvent) event);
+		}
+		
+		public void redo(MouseEvent event) {
+			GA.redo(view); 
 		}
 
 		
