@@ -47,7 +47,7 @@ public class DrawYardView extends View<DrawYardController> {
 	private Label heightTxt;
 	private Label heightUnit;
 
-	Font font;
+	private Font font;
 
 	private Button selectButton;
 	private Button deleteButton;
@@ -57,9 +57,10 @@ public class DrawYardView extends View<DrawYardController> {
 	private Button minusButton;
 	private Button plusButton;
 	private Button importButton;
+	private Button removeImportButton;
 	private Button newAreaButton;
 
-	Region emptyCenter;
+	private Region emptyCenter;
 
 	private TextField labeltxt;
 	private TextField widthField;
@@ -112,6 +113,8 @@ public class DrawYardView extends View<DrawYardController> {
 		labelSizetxt.setFont(new Font(labelSizetxtSize));
 		importButton = new Button("Import Drawing");
 		importButton.setOnMouseClicked(control.getHandleOnImportButton());
+		removeImportButton = new Button("Remove Imported Drawing");
+		removeImportButton.setOnMouseClicked(control.getHandleOnRemoveImportButton());
 		emptyCenter = new Region();
 		HBox.setHgrow(emptyCenter, Priority.ALWAYS);
 		widthTxt = new Label("Width: ");
@@ -128,8 +131,8 @@ public class DrawYardView extends View<DrawYardController> {
 
 		toolbar = createToolbar();
 		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
-				minusButton, plusButton, labelSizetxt, importButton, emptyCenter, widthTxt, widthField, heightTxt,
-				heightField, heightUnit);
+				minusButton, plusButton, labelSizetxt, importButton, removeImportButton, emptyCenter, widthTxt,
+				widthField, heightTxt, heightField, heightUnit);
 
 		navigationDraw = createNavigationBar("Main Menu", "Create Areas", "Draw An Outline of Your Property",
 				control.getHandlePrevButton(), control.getHandleNextButton());
@@ -173,7 +176,7 @@ public class DrawYardView extends View<DrawYardController> {
 	public FileChooser getFileChooser() {
 		return fileChooser;
 	}
-	
+
 	public TextField getWidthField() {
 		return widthField;
 	}
@@ -181,7 +184,6 @@ public class DrawYardView extends View<DrawYardController> {
 	public TextField getHeightField() {
 		return heightField;
 	}
-
 
 	/**
 	 * Called when user clicks on the drawing Pane in RECTANGLE mode. Creates a new
@@ -368,8 +370,8 @@ public class DrawYardView extends View<DrawYardController> {
 	public void drawMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
 		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
-				minusButton, plusButton, labelSizetxt, importButton, emptyCenter, widthTxt, widthField, heightTxt,
-				heightField, heightUnit);
+				minusButton, plusButton, labelSizetxt, importButton, removeImportButton, emptyCenter, widthTxt,
+				widthField, heightTxt, heightField, heightUnit);
 		ObservableList<Node> drawObjs = drawing.getChildren();
 		for (int i = drawObjs.size() - 1; i >= 0 && drawObjs.get(i).getUserData() == StageName.CONDITIONS; i--) {
 			areas.add(drawObjs.get(i));
@@ -411,5 +413,9 @@ public class DrawYardView extends View<DrawYardController> {
 			}
 		} catch (FileNotFoundException e) {
 		}
+	}
+
+	public void removeBackground() {
+		drawing.getChildren().remove(background);
 	}
 }

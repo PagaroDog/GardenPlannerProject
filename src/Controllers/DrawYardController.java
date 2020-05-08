@@ -105,6 +105,15 @@ public class DrawYardController extends Controller<DrawYardView> {
 	public EventHandler getHandleOnImportButton() {
 		return event -> importButton((MouseEvent) event);
 	}
+	
+	/**
+	 * Handles event when user presses remove import button, invoking removeImportButton()
+	 * 
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandleOnRemoveImportButton() {
+		return event -> removeImportButton((MouseEvent) event);
+	}
 
 	/**
 	 * Handles event when user presses new area button, invoking newAreaButton()
@@ -271,6 +280,15 @@ public class DrawYardController extends Controller<DrawYardView> {
          }
 	}
 
+	/**
+	 * Allows user to import picture file of lawn layout
+	 * 
+	 * @param event The MouseEvent generated when the button was pressed
+	 */
+	private void removeImportButton(MouseEvent event) {
+		view.removeBackground();
+	}
+	
 	/**
 	 * Shows current state of objects being drawn, if in the correct mode
 	 * 
@@ -490,4 +508,5 @@ public class DrawYardController extends Controller<DrawYardView> {
 	public double getViewWidth() {
 		return view.getRoot().getWidth();
 	}
+
 }
