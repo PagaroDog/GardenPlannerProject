@@ -49,7 +49,9 @@ public class GardenView extends View<GardenController> {
 	private Button summer;
 	private Button fall;
 	private Button winter;
+	private Button delete;
 	private Pane drawing;
+	private Button copy;
 	private ScrollPane scrollPane;
 	private BorderPane border;
 	private BorderPane navigation;
@@ -108,7 +110,7 @@ public class GardenView extends View<GardenController> {
 			imageview.setFitWidth(SIZE);
 			imageview.setOnDragDetected(control.getHandlerForDragDetected());
 			imageview.setUserData(control.getPlantNameAt(i));
-			System.out.println(control.getPlantNameAt(i));
+			//System.out.println(control.getPlantNameAt(i));
 			tile.getChildren().add(imageview);
 			//((Node) plants.get(i)).setUserData(control.getPlantNameAt(i));
 		}
@@ -147,6 +149,14 @@ public class GardenView extends View<GardenController> {
 		spring = new Button("Spring");
 		spring.setOnMouseClicked(control.handleOnSpringButton());
 		seasonTilePane.getChildren().addAll(seasonLabel, summer, fall, winter, spring);
+		
+		TilePane toolsTilePane = new TilePane();
+		Label toolsLabel = new Label("Tools");
+		delete = new Button("Delete");
+		delete.setOnMousePressed(control.handleOnDeleteButton());
+		copy = new Button("Copy");
+		copy.setOnMousePressed(control.handleOnCopyButton());
+		toolsTilePane.getChildren().addAll(toolsLabel,delete, copy);
 
 		yearTilePane = new TilePane();
 		Label yearLabel = new Label("Select Year");
@@ -163,7 +173,7 @@ public class GardenView extends View<GardenController> {
 		save = new Button("Save");
 		save.setOnMouseClicked(control.handleOnSaveButton());
 
-		toolbar.getChildren().addAll(save, seasonTilePane, yearTilePane);
+		toolbar.getChildren().addAll(save, seasonTilePane, yearTilePane, toolsTilePane);
 
 	}
 
@@ -220,7 +230,7 @@ public class GardenView extends View<GardenController> {
 	 * @param x     x coordinates of mouse
 	 * @param y     y coordinates of mouse
 	 */
-	public void addCirlceToFlow(Ellipse plant, double x, double y) {
+	public void addCirlceToFlow(Ellipse plant, double x, double y,String name) {
 		System.out.println("Dropping image");
 		this.garden.getChildren().add(plant);
 		List<Node> imageArr = garden.getChildren();
@@ -228,6 +238,7 @@ public class GardenView extends View<GardenController> {
 		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
 		((Ellipse) garden.getChildren().get(i)).setCenterX(x);
 		((Ellipse) garden.getChildren().get(i)).setCenterY(y);
+		((Ellipse) garden.getChildren().get(i)).setUserData(name);
 	}
 
 	/**
@@ -315,6 +326,64 @@ public class GardenView extends View<GardenController> {
 	public void updatePlants() {
 		left();
 		border.setLeft(scrollPane);
+	}
+	/*
+	 * @param int year
+	 * 
+	 * when a year button is pressed, this updates the size of all the plants in the garden.
+	 */
+	public void setYear(int year) {
+		if(year == 1) {
+			List<Node> gardenList = garden.getChildren();
+			for (Node plant: gardenList) {
+				//(Ellipse) plant.SetX()
+				String plantName = (String) plant.getUserData();
+				System.out.println(plantName);
+				double minSize = control.getSpread(plantName)[0];
+				double maxSize = control.getSpread(plantName)[1];
+				((Ellipse) plant).setRadiusX(minSize);
+				((Ellipse) plant).setRadiusY(minSize);
+			}
+		}
+		
+		else if(year == 2) {
+			List<Node> gardenList = garden.getChildren();
+			for (Node plant: gardenList) {
+				//(Ellipse) plant.SetX()
+				String plantName = (String) plant.getUserData();
+				double minSize = control.getSpread(plantName)[0];
+				double maxSize = control.getSpread(plantName)[1];
+				((Ellipse) plant).setRadiusX((maxSize+minSize)/2);
+				((Ellipse) plant).setRadiusY((maxSize+minSize)/2);
+			}
+		}
+		
+		else if(year == 3) {
+			List<Node> gardenList = garden.getChildren();
+			for (Node plant: gardenList) {
+				//(Ellipse) plant.SetX()
+				String plantName = (String) plant.getUserData();
+				double minSize = control.getSpread(plantName)[0];
+				double maxSize = control.getSpread(plantName)[1];
+				((Ellipse) plant).setRadiusX(maxSize);
+				((Ellipse) plant).setRadiusY(maxSize);
+			}
+		}
+		
+	}
+	
+	/**
+	 * Called when user presses the delete button, deleting the currently selected
+	 * object.
+	 * 
+	 * @param node The shape to be deleted.
+	 */
+	public void deleteShape(Node node) {
+		garden.getChildren().remove(node);
+	}
+	
+	public void addShape(Ellipse ellipse) {
+		garden.getChildren().add(ellipse);
 	}
 
 }

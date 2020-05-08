@@ -1,6 +1,7 @@
 package Controllers;
 
 import Model.Model;
+import Model.Plant;
 import Model.StageName;
 import Model.Season;
 import Views.GardenView;
@@ -15,6 +16,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Shape;
 
 /**
  * This class is the controller for the Garden Design screen. It mostly handles
@@ -147,6 +149,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void year1Button(MouseEvent event) {
 		model.setYear(year1int);
+		view.setYear(year1int);
 	}
 
 	/**
@@ -165,6 +168,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void year2Button(MouseEvent event) {
 		model.setYear(year2int);
+		view.setYear(year2int);
 	}
 
 	/**
@@ -183,6 +187,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void year3Button(MouseEvent event) {
 		model.setYear(year3int);
+		view.setYear(year3int);
 	}
 
 	/**
@@ -219,6 +224,7 @@ public class GardenController extends Controller<GardenView> {
 	 * @param event
 	 */
 	public void prefButton(MouseEvent event) {
+		model.setCurrDrawObj(null);
 		view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
 		model.setStageName(StageName.PREFERENCES);
 		main.getPrefControl().setDrawing(view.getDrawing());
@@ -292,7 +298,8 @@ public class GardenController extends Controller<GardenView> {
 //			view.setYs(index, event.getY());
 //			copied = true;
 		Ellipse dragPlant = (Ellipse) event.getSource();
-
+		model.setCurrDrawObj(dragPlant);
+		
 		double calcX = model.calcX(event.getX(), view.getSize(), view.getSize(), event.getX());
 		// System.out.println(view.getGarden().getLayoutX());
 		// System.out.println(dragPlant.getTranslateX());
@@ -300,6 +307,12 @@ public class GardenController extends Controller<GardenView> {
 		double calcY = model.calcY(event.getY(), view.getSize(), view.getBottomHeight(), event.getY());
 		view.movePlant(dragPlant, event.getX(), event.getY());
 
+	}
+	public EventHandler getHandlerForEllipsePressed() {
+		return event -> ellipsePressed((MouseEvent) event);
+	}
+	public void ellipsePressed(MouseEvent event) {
+		model.setCurrDrawObj((Node) event.getSource());
 	}
 
 	/**
@@ -319,6 +332,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void press(MouseEvent event) {
 		Object click = event.getSource();
+		model.setCurrDrawObj((Node) event.getSource());
 		// int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
 	}
 
@@ -420,6 +434,7 @@ public class GardenController extends Controller<GardenView> {
 	}
 
 	public void gardenDragOver(DragEvent event) {
+		//System.out.println("gardenDragOver");
 		event.acceptTransferModes(TransferMode.MOVE);
 		event.consume();
 	}
@@ -441,6 +456,10 @@ public class GardenController extends Controller<GardenView> {
 			Ellipse circle = new Ellipse();
 			double minSize = model.getPlants().get(plantName).getSpread()[0];
 			double maxSize = model.getPlants().get(plantName).getSpread()[1];
+			if(maxSize == 0) {
+				minSize = (model.getPlants().get(plantName).getHeight()[0])/4;
+				maxSize = (model.getPlants().get(plantName).getHeight()[1])/4;
+			}
 			System.out.println("Dragging " + plantName);
 			System.out.print("maxSize: " + maxSize);
 			if(model.getYear() == 3) {
@@ -465,8 +484,10 @@ public class GardenController extends Controller<GardenView> {
 				circle.setRadiusX(minSize);
 				circle.setRadiusY(minSize);
 			}
-			view.addCirlceToFlow(circle, calcX, calcY);
+			
+			view.addCirlceToFlow(circle, calcX, calcY, plantName);
 			success = true;
+			model.setCurrDrawObj(circle);
 		}
 		event.setDropCompleted(success);
 		event.consume();
@@ -487,5 +508,60 @@ public class GardenController extends Controller<GardenView> {
 		view.updatePlants();
 		//System.out.println("Updating");
 	}
+	/*
+	 * @param String plantName
+	 * returns list of spread vals from model, if spread is zero returns height list.
+	 */
+	public int[] getSpread(String plantName) {
+		if(model.getPlants().get(plantName).getSpread()[1] == 0) {
+			return model.getPlants().get(plantName).getHeight();
+		}
+		else {
+			return model.getPlants().get(plantName).getSpread();
+		}
+	}
+	
+	/**
+	 * Handles event when user presses delete button, invoking deleteButton()
+	 * 
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler handleOnDeleteButton() {
+		return event -> deleteButton((MouseEvent) event);
+	}
+	
+	/*
+	 * @param MouseEvent event
+	 * called by eventHandler
+	 */
+	public void deleteButton(MouseEvent event) {
+		view.deleteShape(model.getCurrDrawObj());
+	}
+	
+	/**
+	 * Handles event when user presses delete button, invoking deleteButton()
+	 * 
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler handleOnCopyButton() {
+		return event -> copyButton((MouseEvent) event);
+	}
+	
+	/*
+	 * @param MouseEvent event
+	 * called by eventHandler
+	 */
+	public void copyButton(MouseEvent event) {
+		Ellipse oldEllipse = new Ellipse();
+		oldEllipse = (Ellipse) model.getCurrDrawObj();
+		Ellipse copy = new Ellipse(oldEllipse.getRadiusX(), oldEllipse.getRadiusY());
+		copy.setUserData(oldEllipse.getUserData());
+		copy.setOnMouseClicked(this.getHandlerForEllipsePressed());
+		copy.setOnMouseDragged(this.getHandlerForDrag());
+		((Ellipse) copy).setFill(oldEllipse.getFill());
+		view.addShape(copy);
+	}
+	
+	
 
 }
