@@ -28,8 +28,8 @@ public class TutorialView extends View<TutorialController> {
 
 	private StackPane slide;
 	private ArrayList<Image> tutorialSlides = new ArrayList<Image>();
-	private ImageView background = new ImageView("/TutorialSlides/Slide1.PNG");;
-	private int currentSlide = 1;
+	private ImageView background = new ImageView("/TutorialSlides/Slide1.PNG");
+	private int currentSlide = 0;
 
 	public TutorialView(Stage stage) {
 		this.stage = stage;
@@ -45,7 +45,7 @@ public class TutorialView extends View<TutorialController> {
 		tutorialSlides.add(new Image("/TutorialSlides/Slide1.PNG"));// 0
 		tutorialSlides.add(new Image("/TutorialSlides/Slide2.PNG"));// 1
 		tutorialSlides.add(new Image("/TutorialSlides/Slide3.PNG"));// 2
-		tutorialSlides.add(null);// 3
+		//tutorialSlides.add(null);// 3
 
 		border = new BorderPane();
 
@@ -66,6 +66,8 @@ public class TutorialView extends View<TutorialController> {
 
 		slide = new StackPane();
 
+		background.fitHeightProperty().bind(border.heightProperty());
+		background.setPreserveRatio(true);
 		slide.getChildren().add(background);// sets up initial slide
 
 		BorderPane bottom = createNavigationBar("Main Menu", "Draw Yard", "Tutorial", control.getHandleOnPrevButton(), control.getHandleOnNextButton());
