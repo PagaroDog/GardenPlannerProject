@@ -7,6 +7,7 @@ import org.junit.Test;
 import Model.GardenPref;
 import Model.Model;
 import Model.Plant;
+import Model.Season;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -31,6 +32,19 @@ public class ModelTests {
 	@Test
 	public void redoTest() {
 		fail("method not made");
+	}
+	@Test
+	public void userCheckTest() {
+		Model test = new Model();
+		Season[] seasons = {Season.WINTER,Season.FALL};
+		String pass = "Winter";
+		String fail = "Summer";
+		String any = "Any";
+		String nu = null;
+		assertEquals(true, test.userCheck(seasons, pass));
+		assertEquals(true, test.userCheck(seasons, any));
+		assertEquals(true, test.userCheck(seasons, nu));
+		assertEquals(false, test.userCheck(seasons, fail));
 	}
 	@Test
 	public void getUserPicksTest() {
