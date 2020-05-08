@@ -71,6 +71,7 @@ public class StartupView extends View<StartupController> {
 		}
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
+		styleScene();
 	}
 
 	/**

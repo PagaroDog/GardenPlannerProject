@@ -77,6 +77,7 @@ public class PreferencesView extends View<PreferencesController> {
 		border.setTop(zoneButtons);
 
 		scene = new Scene(border, canvasWidth, canvasHeight);
+		styleScene();
 	}
 
 	public VBox addVBox() {

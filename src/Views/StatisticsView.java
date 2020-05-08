@@ -76,6 +76,7 @@ public class StatisticsView extends View<StatisticsController> {
 		border.setCenter(vBox);
 
 		scene = new Scene(border, canvasWidth, canvasHeight);
+		styleScene();
 
 	}
 
