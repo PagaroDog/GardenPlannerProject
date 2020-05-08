@@ -105,6 +105,9 @@ public class View<T extends Controller> {
 
 	public void setup() {}
 	
+	/**
+	 * Adds the CSS stylesheet to the scene.
+	 */
 	public void styleScene() {
 		scene.getStylesheets().add("Views/stylesheet.css");
 	}
