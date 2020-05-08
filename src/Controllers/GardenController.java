@@ -224,6 +224,7 @@ public class GardenController extends Controller<GardenView> {
 	 * @param event
 	 */
 	public void prefButton(MouseEvent event) {
+		model.setCurrDrawObj(null);
 		view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
 		model.setStageName(StageName.PREFERENCES);
 		main.getPrefControl().setDrawing(view.getDrawing());
@@ -483,7 +484,7 @@ public class GardenController extends Controller<GardenView> {
 				circle.setRadiusX(minSize);
 				circle.setRadiusY(minSize);
 			}
-			circle.setOnMouseClicked(this.getHandlerForEllipsePressed());
+			
 			view.addCirlceToFlow(circle, calcX, calcY, plantName);
 			success = true;
 			model.setCurrDrawObj(circle);
