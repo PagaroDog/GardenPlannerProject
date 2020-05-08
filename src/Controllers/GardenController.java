@@ -1,6 +1,7 @@
 package Controllers;
 
 import Model.Model;
+import Model.Plant;
 import Model.StageName;
 import Model.Season;
 import Views.GardenView;
@@ -15,6 +16,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Shape;
 
 /**
  * This class is the controller for the Garden Design screen. It mostly handles
@@ -534,5 +536,31 @@ public class GardenController extends Controller<GardenView> {
 	public void deleteButton(MouseEvent event) {
 		view.deleteShape(model.getCurrDrawObj());
 	}
+	
+	/**
+	 * Handles event when user presses delete button, invoking deleteButton()
+	 * 
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler handleOnCopyButton() {
+		return event -> copyButton((MouseEvent) event);
+	}
+	
+	/*
+	 * @param MouseEvent event
+	 * called by eventHandler
+	 */
+	public void copyButton(MouseEvent event) {
+		Ellipse oldEllipse = new Ellipse();
+		oldEllipse = (Ellipse) model.getCurrDrawObj();
+		Ellipse copy = new Ellipse(oldEllipse.getRadiusX(), oldEllipse.getRadiusY());
+		copy.setUserData(oldEllipse.getUserData());
+		copy.setOnMouseClicked(this.getHandlerForEllipsePressed());
+		copy.setOnMouseDragged(this.getHandlerForDrag());
+		((Ellipse) copy).setFill(oldEllipse.getFill());
+		view.addShape(copy);
+	}
+	
+	
 
 }

@@ -51,6 +51,7 @@ public class GardenView extends View<GardenController> {
 	private Button winter;
 	private Button delete;
 	private Pane drawing;
+	private Button copy;
 	private ScrollPane scrollPane;
 	private BorderPane border;
 	private BorderPane navigation;
@@ -153,7 +154,9 @@ public class GardenView extends View<GardenController> {
 		Label toolsLabel = new Label("Tools");
 		delete = new Button("Delete");
 		delete.setOnMousePressed(control.handleOnDeleteButton());
-		toolsTilePane.getChildren().addAll(toolsLabel,delete);
+		copy = new Button("Copy");
+		copy.setOnMousePressed(control.handleOnCopyButton());
+		toolsTilePane.getChildren().addAll(toolsLabel,delete, copy);
 
 		yearTilePane = new TilePane();
 		Label yearLabel = new Label("Select Year");
@@ -377,6 +380,10 @@ public class GardenView extends View<GardenController> {
 	 */
 	public void deleteShape(Node node) {
 		garden.getChildren().remove(node);
+	}
+	
+	public void addShape(Ellipse ellipse) {
+		garden.getChildren().add(ellipse);
 	}
 
 }
