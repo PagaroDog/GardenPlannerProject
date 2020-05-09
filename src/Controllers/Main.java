@@ -88,6 +88,10 @@ public class Main extends Application {
 		launch(args);
 	}
 
+	public TutorialController getTutControl() {
+		return tutControl;
+	}
+
 	public DrawYardController getDyControl() {
 		return dyControl;
 	}

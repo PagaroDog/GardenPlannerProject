@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -86,14 +87,8 @@ public class TutorialController extends Controller<TutorialView> {
 		if(view.getCurrentSlide()+1 < view.getTutorialSlides().size()) {
 			ImageView iv= new
 			ImageView(view.getTutorialSlides().get(view.getCurrentSlide()+1));
-			if(view.getBorder().getHeight() < view.getBorder().getWidth()) {
-				iv.fitHeightProperty().bind(view.getBorder().heightProperty());
-				iv.setPreserveRatio(true);
-			}
-			else {
-				iv.fitWidthProperty().bind(view.getBorder().widthProperty());
-				iv.setPreserveRatio(true);
-			}
+			iv.setPreserveRatio(true);
+			iv.setFitHeight(((StackPane) view.getBorder().getCenter()).getHeight());
 			view.setBackground(iv);
 			//view.setBackground(new ImageView(view.getTutorialSlides().get(view.getCurrentSlide()+1)));
 			view.getSlide().getChildren().add(view.getBackground());
@@ -118,14 +113,8 @@ public class TutorialController extends Controller<TutorialView> {
 		if (view.getCurrentSlide() - 1 >= 0) {
 			ImageView iv=new
 			ImageView(view.getTutorialSlides().get(view.getCurrentSlide() - 1));
-			if(view.getBorder().getHeight() < view.getBorder().getWidth()) {
-				iv.fitHeightProperty().bind(view.getBorder().heightProperty());
-				iv.setPreserveRatio(true);
-			}
-			else {
-				iv.fitWidthProperty().bind(view.getBorder().widthProperty());
-				iv.setPreserveRatio(true);
-			}
+			iv.setPreserveRatio(true);
+			iv.setFitHeight(((StackPane) view.getBorder().getCenter()).getHeight());
 			view.setBackground(iv);
 			//view.setBackground(new ImageView(view.getTutorialSlides().get(view.getCurrentSlide() - 1)));
 			view.getSlide().getChildren().add(view.getBackground());

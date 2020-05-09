@@ -66,10 +66,6 @@ public class TutorialView extends View<TutorialController> {
 
 		slide = new StackPane();
 
-		background.fitHeightProperty().bind(border.heightProperty());
-		background.setPreserveRatio(true);
-		slide.getChildren().add(background);// sets up initial slide
-
 		BorderPane bottom = createNavigationBar("Main Menu", "Draw Yard", "Tutorial", control.getHandleOnPrevButton(), control.getHandleOnNextButton());
 
 		border.setBottom(bottom);
@@ -118,6 +114,12 @@ public class TutorialView extends View<TutorialController> {
 
 	public void setBorder(BorderPane border) {
 		this.border = border;
+	}
+	
+	public void initSlide() {
+		background.setFitHeight(((StackPane) border.getCenter()).getHeight());
+		background.setPreserveRatio(true);
+		slide.getChildren().add(background);
 	}
 
 }
