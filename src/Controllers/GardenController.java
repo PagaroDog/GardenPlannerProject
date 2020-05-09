@@ -453,7 +453,7 @@ public class GardenController extends Controller<GardenView> {
 			
 			Ellipse circle = new Ellipse();
 			double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
-			double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;
+			double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;		//divide by two bc radius and not diameter
 			double propertyWidth = model.getPropertyWidthInches();
 			double propertyHeight = model.getPropertyHeightInches();
 			minxRad = minSize/propertyWidth * (view.getGarden().getWidth());
@@ -533,7 +533,7 @@ public class GardenController extends Controller<GardenView> {
 	 * returns list of spread vals from model, if spread is zero returns height list.
 	 */
 	public int[] getSpread(String plantName) {
-		System.out.println("plantName from getSpread" + plantName);
+		System.out.println("plantName from getSpread " + plantName);
 		//System.out.println(model.getPlants().get(plantName).getSpread());
 		if(model.getPlants().get(plantName).getSpread()[1] == 0) {
 			return model.getPlants().get(plantName).getHeight();
