@@ -17,7 +17,7 @@ public class SuggestionsControllerTest {
 
 	@Test
 	public void test() {
-		Model model = new Model();
+		/*Model model = new Model();
 		SuggestionsView sv = new SuggestionsView(new Stage());
 		Main main = new Main();
 		SuggestionsController sc = new SuggestionsController(model, sv, main);
@@ -26,7 +26,8 @@ public class SuggestionsControllerTest {
 		assertEquals(model.getStageName(), StageName.PREFERENCES);
 
 		sc.gethandleOnBackButton();
-		assertEquals(model.getStageName(), StageName.DESIGN);
+		assertEquals(model.getStageName(), StageName.DESIGN);*/
+		fail("Test not available");
 
 	}
 
