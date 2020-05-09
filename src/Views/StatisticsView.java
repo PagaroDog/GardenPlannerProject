@@ -1,6 +1,9 @@
 package Views;
 
+import java.util.HashSet;
+
 import Controllers.StatisticsController;
+import Model.Season;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -22,6 +25,15 @@ public class StatisticsView extends View<StatisticsController> {
 	private double hboxSpacing = 70;
 	private double vboxSpacing = 50;
 	private double fontSize = 25;
+	private Label totPlants = new Label();
+	private Label trees = new Label();
+	private Label flowers = new Label();
+	private Label shrubs = new Label();
+	private Label colors = new Label();
+	private Label bloomingSeasons = new Label();
+	private Label pollinators = new Label();
+	private Label numAnimal = new Label();
+	private Label animalTypes = new Label();
 
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
@@ -40,14 +52,6 @@ public class StatisticsView extends View<StatisticsController> {
 
 		VBox vBox = new VBox();
 
-		Label totPlants = new Label("Total Plants: ");
-
-		Label trees = new Label("Trees: ");
-
-		Label flowers = new Label("Flowers: ");
-
-		Label shrubs = new Label("Shrubs: ");
-
 		HBox plants = new HBox(totPlants, trees, flowers, shrubs);
 		plants.setSpacing(hboxSpacing);
 
@@ -55,15 +59,7 @@ public class StatisticsView extends View<StatisticsController> {
 			((Label) plants.getChildren().get(i)).setFont(new Font(fontSize));
 		}
 
-		Label keyPlants = new Label("Keystone Plants: ");
-
-		Label pollinators = new Label("Estimated Pollinators Supported: ");
-
-		Label numAnimal = new Label("Estimated Animals Fed: ");
-
-		Label animalTypes = new Label("Types of Animals Fed: ");
-
-		vBox.getChildren().addAll(plants, keyPlants, pollinators, numAnimal, animalTypes);
+		vBox.getChildren().addAll(plants, pollinators, colors, bloomingSeasons, numAnimal, animalTypes);
 
 		for (int i = 1; i < vBox.getChildren().size(); i++) {
 			((Label) vBox.getChildren().get(i)).setFont(new Font(fontSize));
@@ -77,7 +73,61 @@ public class StatisticsView extends View<StatisticsController> {
 
 		scene = new Scene(border, canvasWidth, canvasHeight);
 		styleScene();
+	}
 
+	/**
+	 * Modifies the labels to show statistics. Does some calculations.
+	 * @param numTrees The number of trees in the garden
+	 * @param numShrubs The number of shrubs in the garden
+	 * @param numHerbs The number of herbs in the garden
+	 * @param pollinatorsPerTree The number of pollinators attracted by a tree
+	 * @param pollinatorsPerShrub The number of pollinators attracted by a shrub
+	 * @param pollinatorsPerHerb The number of pollinators attracted by a herb
+	 * @param animalsPerTree The number of animals attracted by a tree
+	 * @param animalsPerShrub The number of animals attracted by a shrub
+	 * @param animalsPerHerb The number of animals attracted by a herb
+	 * @param beeMin The minimum number of plants needed to attract bees
+	 * @param butterflyMin The minimum number of plants needed to attract butterflies
+	 * @param birdMin The minimum number of plants needed to attract birds
+	 * @param mammalMin The minimum number of plants needed to attract small mammals
+	 */
+	public void updateStats(int numTrees, int numShrubs, int numHerbs, HashSet<String> colorSet, HashSet<Season> seasons, int pollinatorsPerTree, int pollinatorsPerShrub,
+			int pollinatorsPerHerb, int animalsPerTree, int animalsPerShrub, int animalsPerHerb, int beeMin,
+			int butterflyMin, int birdMin, int mammalMin) {
+		int total = numTrees + numShrubs + numHerbs;
+		totPlants.setText("Total Plants: " + total);
+		trees.setText("Trees: " + numTrees);
+		shrubs.setText("Shrubs: " + numShrubs);
+		flowers.setText("Herbs: " + numHerbs);
+		
+		colors.setText("Colors: ");
+		for (String color : colorSet) {
+			colors.setText(colors.getText() + color + ", ");
+		}
+		colors.setText(colors.getText().substring(0, colors.getText().length() - 2));
+		
+		bloomingSeasons.setText("Blooming seasons: ");
+		for (Season season : seasons) {
+			bloomingSeasons.setText(bloomingSeasons.getText() + season + ", ");
+		}
+		bloomingSeasons.setText(bloomingSeasons.getText().substring(0, bloomingSeasons.getText().length() - 2));
+
+		pollinators.setText("Estimated Pollinators Supported: "
+				+ (numTrees * pollinatorsPerTree + numShrubs * pollinatorsPerShrub + numHerbs * pollinatorsPerHerb));
+		numAnimal.setText("Estimated Animals Attracted: "
+				+ (numTrees * animalsPerTree + numShrubs * animalsPerShrub + numHerbs * animalsPerHerb));
+
+		if (total > mammalMin) {
+			animalTypes.setText("Possible Animal Types: Bees, Butterflies, Birds, Small mammals");
+		} else if (total > birdMin) {
+			animalTypes.setText("Possible Animal Types: Bees, Butterflies, Birds");
+		} else if (total > butterflyMin) {
+			animalTypes.setText("Possible Animal Types: Bees, Butterflies");
+		} else if (total > beeMin) {
+			animalTypes.setText("Possible Animal Types: Bees");
+		} else {
+			animalTypes.setText("Possible Animal Types: None (Add more plants to you garden!)");
+		}
 	}
 
 }

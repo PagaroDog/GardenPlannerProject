@@ -143,6 +143,37 @@ public class GardenController extends Controller<GardenView> {
 	public void statsButton(MouseEvent event) {
 		view.getStage().setScene(Main.getScenes().get(StageName.STATS));
 		model.setStageName(StageName.STATS);
+		model.setNumTrees(0);
+		model.setNumShrubs(0);
+		model.setNumHerbs(0);
+		model.getAllColors().clear();
+		model.getAllSeasons().clear();
+		for (Node node : view.getGarden().getChildren()) {
+			String plantName = (String) node.getUserData();
+			if (plantName != null) {
+				Plant plant = model.getPlants().get(plantName);
+				switch (plant.getType()) {
+				case HERB:
+					model.setNumHerbs(model.getNumHerbs() + 1);
+					break;
+				case SHRUB:
+					model.setNumShrubs(model.getNumShrubs() + 1);
+					break;
+				case TREE:
+					model.setNumTrees(model.getNumTrees() + 1);
+					break;
+				case VINE:
+					break;
+				}
+				for (String color : plant.getColor()) {
+					model.getAllColors().add(color);
+				}
+				for (Season season : plant.getBloomtime()) {
+					model.getAllSeasons().add(season);
+				}
+			}
+		}
+		main.getStatControl().updateStats();
 	}
 
 	/**

@@ -3,10 +3,8 @@ package Controllers;
 import Model.Model;
 import Model.StageName;
 import Views.StatisticsView;
-import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 /**
  * @author Tommy White
@@ -18,8 +16,8 @@ public class StatisticsController extends Controller<StatisticsView> {
 	}
 
 	/**
-	 * Handles event when user presses rectangle button, bringing the user back to
-	 * the design stage.
+	 * Handles event when user presses Back button, bringing the user back to the
+	 * design stage.
 	 * 
 	 * @return EventHandler object for this action
 	 */
@@ -30,6 +28,17 @@ public class StatisticsController extends Controller<StatisticsView> {
 	public void backButton(MouseEvent event) {
 		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 		model.setStageName(StageName.DESIGN);
+	}
+
+	/**
+	 * Updates the statistics view based on the stats stored in model
+	 */
+	public void updateStats() {
+		view.updateStats(model.getNumTrees(), model.getNumShrubs(), model.getNumHerbs(), model.getAllColors(),
+				model.getAllSeasons(), model.getPollinatorsPerTree(), model.getPollinatorsPerShrub(),
+				model.getPollinatorsPerHerb(), model.getAnimalsPerTree(), model.getAnimalsPerShrub(),
+				model.getAnimalsPerHerb(), model.getBeeMin(), model.getButterflyMin(), model.getBirdMin(),
+				model.getMammalMin());
 	}
 
 }
