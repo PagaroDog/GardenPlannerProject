@@ -30,6 +30,9 @@ public class StatisticsController extends Controller<StatisticsView> {
 		model.setStageName(StageName.DESIGN);
 	}
 
+	/**
+	 * Updates the statistics view based on the stats stored in model
+	 */
 	public void updateStats() {
 		view.updateStats(model.getNumTrees(), model.getNumShrubs(), model.getNumHerbs(), model.getPollinatorsPerTree(),
 				model.getPollinatorsPerShrub(), model.getPollinatorsPerHerb(), model.getAnimalsPerTree(),

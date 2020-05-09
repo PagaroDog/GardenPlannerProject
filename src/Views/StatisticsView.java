@@ -70,6 +70,22 @@ public class StatisticsView extends View<StatisticsController> {
 		styleScene();
 	}
 
+	/**
+	 * Modifies the labels to show statistics. Does some calculations.
+	 * @param numTrees The number of trees in the garden
+	 * @param numShrubs The number of shrubs in the garden
+	 * @param numHerbs The number of herbs in the garden
+	 * @param pollinatorsPerTree The number of pollinators attracted by a tree
+	 * @param pollinatorsPerShrub The number of pollinators attracted by a shrub
+	 * @param pollinatorsPerHerb The number of pollinators attracted by a herb
+	 * @param animalsPerTree The number of animals attracted by a tree
+	 * @param animalsPerShrub The number of animals attracted by a shrub
+	 * @param animalsPerHerb The number of animals attracted by a herb
+	 * @param beeMin The minimum number of plants needed to attract bees
+	 * @param butterflyMin The minimum number of plants needed to attract butterflies
+	 * @param birdMin The minimum number of plants needed to attract birds
+	 * @param mammalMin The minimum number of plants needed to attract small mammals
+	 */
 	public void updateStats(int numTrees, int numShrubs, int numHerbs, int pollinatorsPerTree, int pollinatorsPerShrub,
 			int pollinatorsPerHerb, int animalsPerTree, int animalsPerShrub, int animalsPerHerb, int beeMin,
 			int butterflyMin, int birdMin, int mammalMin) {
