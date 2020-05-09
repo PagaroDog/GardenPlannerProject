@@ -1,5 +1,7 @@
 package Controllers;
 
+import Model.ActionEnum;
+import Model.GardenAction;
 import Model.Model;
 import Model.Plant;
 import Model.StageName;
@@ -40,6 +42,8 @@ public class GardenController extends Controller<GardenView> {
 	double minyRad;
 	double maxxRad;
 	double maxyRad;
+	
+	GardenAction GA = new GardenAction(); 
 
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
@@ -446,10 +450,10 @@ public class GardenController extends Controller<GardenView> {
 		boolean success = false;
 		double calcX =0;
 		double calcY =0;
-		System.out.println("in dragDropped");
+		//System.out.println("in dragDropped");
 
 		if (db.hasImage()) {
-			System.out.println("in db.hasImage");
+			//System.out.println("in db.hasImage");
 			
 			Ellipse circle = new Ellipse();
 			double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
@@ -470,8 +474,8 @@ public class GardenController extends Controller<GardenView> {
 				maxxRad = maxSize/propertyWidth * (view.getGarden().getWidth());
 				maxyRad = maxSize/propertyHeight * (view.getGarden().getHeight());
 			}
-			System.out.println("Dragging " + plantName);
-			System.out.print("maxSize: " + maxSize);
+			//System.out.println("Dragging " + plantName);
+			//System.out.print("maxSize: " + maxSize);
 			if(model.getYear() == 3) {
 				circle.setRadiusX(maxxRad);
 				circle.setRadiusY(maxyRad);
@@ -503,7 +507,13 @@ public class GardenController extends Controller<GardenView> {
 				calcY = model.calcY(event.getY(), minSize, view.getBottomHeight());
 			}
 			circle.setUserData(plantName);
-			System.out.println("plantName in gardenDragDropped " + circle.getUserData());
+			//System.out.println("plantName in gardenDragDropped " + circle.getUserData());
+			
+			
+			
+			//ActionEnum a = ActionEnum.ADDPLANT; 
+			
+			GA.addAction(new GardenAction(circle, calcX, calcY, plantName, ActionEnum.ADDPLANT ));
 			
 			view.addCirlceToFlow(circle, calcX, calcY, plantName);
 			success = true;
@@ -596,6 +606,17 @@ public class GardenController extends Controller<GardenView> {
 	public int getPropertyHeightInches() {
 		return model.getPropertyHeightInches();
 	}
+	
+	public EventHandler handleOnUndoButton() {
+		return event -> undo((MouseEvent) event);
+	}
+	
+	public void undo(MouseEvent event) {
+		GA.undo(view);
+	}
+	
+	
+	
 	
 	
 

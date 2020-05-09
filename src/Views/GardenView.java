@@ -52,6 +52,10 @@ public class GardenView extends View<GardenController> {
 	private Button delete;
 	private Pane drawing;
 	private Button copy;
+	
+	private Button undo; 
+	private Button redo; 
+	
 	private ScrollPane scrollPane;
 	private BorderPane border;
 	private BorderPane navigation;
@@ -160,7 +164,12 @@ public class GardenView extends View<GardenController> {
 		delete.setOnMousePressed(control.handleOnDeleteButton());
 		copy = new Button("Copy");
 		copy.setOnMousePressed(control.handleOnCopyButton());
-		toolsTilePane.getChildren().addAll(toolsLabel, delete, copy);
+		
+		undo = new Button("Undo"); 
+		undo.setOnMouseClicked(control.handleOnUndoButton()); 
+		redo = new Button("Redo"); 
+		
+		toolsTilePane.getChildren().addAll(toolsLabel, delete, copy, undo);
 
 		yearTilePane = new TilePane();
 		Label yearLabel = new Label("Select Year");
