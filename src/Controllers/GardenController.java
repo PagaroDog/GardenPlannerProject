@@ -360,6 +360,7 @@ public class GardenController extends Controller<GardenView> {
 			child.setTranslateX(oldX * ratio - newX);
 		}
 		drawing.setLayoutY(newLayoutY);
+		drawing.toBack();
 	}
 
 	/**
