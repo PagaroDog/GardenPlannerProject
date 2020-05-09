@@ -55,6 +55,7 @@ public class StartupController extends Controller<StartupView> {
 	public void tutorialButton(MouseEvent event) {
 		view.getStage().setScene(Main.getScenes().get(StageName.TUTORIAL));
 		model.setStageName(StageName.TUTORIAL);
+		main.getTutControl().getView().initSlide();
 	}
 
 }
