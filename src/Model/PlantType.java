@@ -19,4 +19,9 @@ public enum PlantType {
 	public String toString() {
 		return plantType;
 	}
+	
+	public static String[] getVals() {
+		String[] arr =  {"Herb", "Shrub", "Tree", "Vine"};
+		return arr;
+	}
 }

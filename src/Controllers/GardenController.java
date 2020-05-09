@@ -1,5 +1,10 @@
 package Controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Random;
+
 import Model.Model;
 import Model.Plant;
 import Model.StageName;
@@ -61,6 +66,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void springButton(MouseEvent event) {
 		model.setSeason(Season.SPRING);
+		view.changeSeason(Season.SPRING);
 	}
 
 	/**
@@ -79,7 +85,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void summerButton(MouseEvent event) {
 		model.setSeason(Season.SUMMER);
-
+		view.changeSeason(Season.SUMMER);
 	}
 
 	/**
@@ -98,6 +104,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void fallButton(MouseEvent event) {
 		model.setSeason(Season.FALL);
+		view.changeSeason(Season.FALL);
 	}
 
 	/**
@@ -116,6 +123,7 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public void winterButton(MouseEvent event) {
 		model.setSeason(Season.WINTER);
+		view.changeSeason(Season.WINTER);
 	}
 
 	/**
@@ -295,8 +303,6 @@ public class GardenController extends Controller<GardenView> {
 		model.setCurrDrawObj(dragPlant);
 		
 		double calcX = model.calcX(event.getX(), dragPlant.getRadiusX(), view.getSize());
-		// System.out.println(view.getGarden().getLayoutX());
-		// System.out.println(dragPlant.getTranslateX());
 
 		double calcY = model.calcY(event.getY(), dragPlant.getRadiusY(), view.getBottomHeight());
 		view.movePlant(dragPlant, calcX, calcY);
@@ -370,11 +376,9 @@ public class GardenController extends Controller<GardenView> {
 	public void imageDrag(MouseEvent event) {
 		System.out.println("Started To Drag");
 		Node n = (Node) event.getSource();
-		System.out.println(n.getUserData());
 		Ellipse circle = new Ellipse();
 		Pane p = new Pane();
 		plantName = (String) ((Node) event.getSource()).getUserData();
-		System.out.println("plantName in imageDrag " + plantName);
 		
 		double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
 		double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;
@@ -382,7 +386,6 @@ public class GardenController extends Controller<GardenView> {
 			circle.setRadiusX(maxSize);
 			circle.setRadiusY(maxSize);
 			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
-			circle.setStroke(Color.BLUE);
 			plantWidthX=maxSize;
 			plantWidthY=maxSize;
 		}
@@ -390,7 +393,6 @@ public class GardenController extends Controller<GardenView> {
 			circle.setRadiusX((maxSize+minSize)/2);
 			circle.setRadiusY((maxSize+minSize)/2);
 			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
-			circle.setStroke(Color.BLUE);
 			plantWidthX=(maxSize-minSize)/2;
 			plantWidthY=(maxSize-minSize)/2;
 		}
@@ -398,7 +400,6 @@ public class GardenController extends Controller<GardenView> {
 			circle.setRadiusX(minSize);
 			circle.setRadiusY(minSize);
 			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
-			circle.setStroke(Color.BLUE);
 			plantWidthX=minSize;
 			plantWidthY=minSize;
 		}
@@ -431,7 +432,6 @@ public class GardenController extends Controller<GardenView> {
 	}
 
 	public void gardenDragOver(DragEvent event) {
-		//System.out.println("gardenDragOver");
 		event.acceptTransferModes(TransferMode.MOVE);
 		event.consume();
 	}
@@ -449,7 +449,6 @@ public class GardenController extends Controller<GardenView> {
 		System.out.println("in dragDropped");
 
 		if (db.hasImage()) {
-			System.out.println("in db.hasImage");
 			
 			Ellipse circle = new Ellipse();
 			double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
@@ -475,24 +474,18 @@ public class GardenController extends Controller<GardenView> {
 			if(model.getYear() == 3) {
 				circle.setRadiusX(maxxRad);
 				circle.setRadiusY(maxyRad);
-				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
-				circle.setStroke(Color.BLUE);
 				calcX = model.calcX(event.getX(), maxxRad, view.getSize());
 				calcY = model.calcY(event.getY(), maxyRad, view.getBottomHeight());
 			}
 			else if(model.getYear() == 2) {
 				circle.setRadiusX((maxxRad+minxRad)/2);
 				circle.setRadiusY((maxyRad+minyRad)/2);
-				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
-				circle.setStroke(Color.BLUE);
 				calcX = model.calcX(event.getX(), (maxxRad+minxRad)/2, view.getSize());
 				calcY = model.calcY(event.getY(), (maxyRad+minyRad)/2, view.getBottomHeight());
 			}
 			else if(model.getYear() == 1) {
 				circle.setRadiusX(minxRad);
 				circle.setRadiusY(minyRad);
-				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
-				circle.setStroke(Color.BLUE);
 				calcX = model.calcX(event.getX(), minxRad, view.getSize());
 				calcY = model.calcY(event.getY(), minyRad, view.getBottomHeight());
 			}
@@ -503,7 +496,43 @@ public class GardenController extends Controller<GardenView> {
 				calcY = model.calcY(event.getY(), minSize, view.getBottomHeight());
 			}
 			circle.setUserData(plantName);
-			System.out.println("plantName in gardenDragDropped " + circle.getUserData());
+			
+			ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(this.getBloomTime(plantName)));
+			Season season = model.getSeason();
+			if (plantName != null) {
+				if(season == Season.FALL) {
+					if(seasonList.contains(season)) {
+						circle.setFill(this.getBloomColor(plantName));
+					}
+					else {
+						circle.setFill(Color.GREEN);
+					}
+				}
+				if(season == Season.WINTER) {
+					if(seasonList.contains(season)) {
+						circle.setFill(this.getBloomColor(plantName));
+					}
+					else {
+						circle.setFill(Color.GRAY);
+					}
+				}
+				if(season == Season.SPRING) {
+					if(seasonList.contains(season)) {
+						circle.setFill(this.getBloomColor(plantName));
+					}
+					else {
+						circle.setFill(Color.GREEN);
+					}
+				}
+				if(season == Season.SUMMER) {
+					if(seasonList.contains(season)) {
+						circle.setFill(this.getBloomColor(plantName));
+					}
+					else {
+						circle.setFill(Color.GREEN);
+					}
+				}
+			}
 			
 			view.addCirlceToFlow(circle, calcX, calcY, plantName);
 			success = true;
@@ -533,8 +562,6 @@ public class GardenController extends Controller<GardenView> {
 	 * returns list of spread vals from model, if spread is zero returns height list.
 	 */
 	public int[] getSpread(String plantName) {
-		System.out.println("plantName from getSpread " + plantName);
-		//System.out.println(model.getPlants().get(plantName).getSpread());
 		if(model.getPlants().get(plantName).getSpread()[1] == 0) {
 			return model.getPlants().get(plantName).getHeight();
 		}
@@ -595,6 +622,26 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public int getPropertyHeightInches() {
 		return model.getPropertyHeightInches();
+	}
+	
+	public Season[] getBloomTime(String plantName) {
+		return model.getPlants().get(plantName).getBloomtime();
+	}
+	
+	public Color getBloomColor(String plantName) {
+		HashSet<String> hashset = model.getPlants().get(plantName).getColor();
+		int size = hashset.size();
+		int item = new Random().nextInt(size); // In real life, the Random object should be rather more shared than this
+		int i = 0;
+		for(String colorName : hashset)
+		{
+		    if (i == item)
+		        return Color.web(colorName);
+		    i++;
+		}
+		System.out.println("setting as BLACK");
+		return Color.BLACK;
+		
 	}
 	
 	

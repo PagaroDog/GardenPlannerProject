@@ -1,17 +1,23 @@
 package Views;
 
+import javafx.scene.paint.Color;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import Controllers.GardenController;
+import Model.PlantType;
+import Model.Season;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,6 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 /**
@@ -104,6 +111,14 @@ public class GardenView extends View<GardenController> {
 		tile.setPrefColumns(1);
 		tile.setStyle("-fx-background-color: DAE6F3;");
 		tile.setPrefWidth(SIZE);
+		
+		TabPane tabpane = new TabPane();
+		for(String type: PlantType.getVals()) {
+			Tab tab = new Tab();
+			tab.setText(type);
+			
+		}
+		
 		int numberPlants = 50;
 		System.out.println("The first plant in garden View is " + control.getPlantNameAt(0));
 		for (int i = 0; i < numberPlants; i++) {
@@ -243,9 +258,7 @@ public class GardenView extends View<GardenController> {
 		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
 		((Ellipse) garden.getChildren().get(i)).setCenterX(x);
 		((Ellipse) garden.getChildren().get(i)).setCenterY(y);
-		System.out.println("UserDAta in addCircleToFlow " + name);
 		((Ellipse) garden.getChildren().get(i)).setUserData(name);
-		System.out.println(plant.getUserData());
 	}
 
 	/**
@@ -349,8 +362,6 @@ public class GardenView extends View<GardenController> {
 			String plantName = (String) plant.getUserData();
 			if (plantName != null) {
 				if (year == 1) {
-					System.out.println("UserData in setYear(1) " + (String) plant.getUserData());
-					System.out.println("plantName in setYear(1)" + plantName);
 					double minSize = control.getSpread(plantName)[0] / 2;
 					double maxSize = control.getSpread(plantName)[1] / 2;
 					double propertyWidth = control.getPropertyWidthInches();
@@ -388,6 +399,48 @@ public class GardenView extends View<GardenController> {
 					maxyRad = maxSize / propertyHeight * (this.getGarden().getHeight());
 					((Ellipse) plant).setRadiusX(maxxRad);
 					((Ellipse) plant).setRadiusY(maxyRad);
+				}
+			}
+		}
+	}
+	
+	public void changeSeason(Season season) {
+		List<Node> gardenList = garden.getChildren();
+		for (Node plant : gardenList) {
+			String plantName = (String) plant.getUserData();
+			ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(control.getBloomTime(plantName)));
+			if (plantName != null) {
+				if(season == Season.FALL) {
+					if(seasonList.contains(season)) {
+						((Ellipse) plant).setFill(control.getBloomColor(plantName));
+					}
+					else {
+						((Ellipse) plant).setFill(Color.GREEN);
+					}
+				}
+				if(season == Season.WINTER) {
+					if(seasonList.contains(season)) {
+						((Shape) plant).setFill(control.getBloomColor(plantName));
+					}
+					else {
+						((Ellipse) plant).setFill(Color.GRAY);
+					}
+				}
+				if(season == Season.SPRING) {
+					if(seasonList.contains(season)) {
+						((Shape) plant).setFill(control.getBloomColor(plantName));
+					}
+					else {
+						((Ellipse) plant).setFill(Color.GREEN);
+					}
+				}
+				if(season == Season.SUMMER) {
+					if(seasonList.contains(season)) {
+						((Shape) plant).setFill(control.getBloomColor(plantName));
+					}
+					else {
+						((Ellipse) plant).setFill(Color.GREEN);
+					}
 				}
 			}
 		}

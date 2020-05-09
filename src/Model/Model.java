@@ -34,7 +34,7 @@ import javafx.scene.layout.GridPane;
  */
 
 public class Model {
-	private Season season;
+	private Season season = Season.SUMMER;
 	private StageName stageName = StageName.WELCOME;
 
 	private DrawMode drawMode;
@@ -91,6 +91,7 @@ public class Model {
 	private int inchesPerFoot = 12;
 	private int heightArrLen = 2;
 	private int spreadArrLen = 2;
+	
 
 	public Model() {
 		importPlantsFromCSV();
