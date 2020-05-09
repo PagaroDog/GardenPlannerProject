@@ -370,8 +370,8 @@ public class GardenController extends Controller<GardenView> {
 		Ellipse circle = new Ellipse();
 		Pane p = new Pane();
 		plantName = (String) ((Node) event.getSource()).getUserData();
-		double minSize = model.getPlants().get(plantName).getSpread()[0];
-		double maxSize = model.getPlants().get(plantName).getSpread()[1];
+		double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
+		double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;
 		if(model.getYear() == 3) {
 			circle.setRadiusX(maxSize);
 			circle.setRadiusY(maxSize);
@@ -446,8 +446,8 @@ public class GardenController extends Controller<GardenView> {
 			System.out.println("in db.hasImage");
 			
 			Ellipse circle = new Ellipse();
-			double minSize = model.getPlants().get(plantName).getSpread()[0];
-			double maxSize = model.getPlants().get(plantName).getSpread()[1];
+			double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
+			double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;
 			if(maxSize == 0) {
 				minSize = (model.getPlants().get(plantName).getHeight()[0])/4;
 				maxSize = (model.getPlants().get(plantName).getHeight()[1])/4;

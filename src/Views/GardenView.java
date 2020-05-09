@@ -341,6 +341,8 @@ public class GardenView extends View<GardenController> {
 				System.out.println(plantName);
 				double minSize = control.getSpread(plantName)[0];
 				double maxSize = control.getSpread(plantName)[1];
+				minSize = minSize/2;
+				maxSize = maxSize/2;
 				((Ellipse) plant).setRadiusX(minSize);
 				((Ellipse) plant).setRadiusY(minSize);
 			}
