@@ -11,6 +11,7 @@ import Model.GardenPref;
 import Model.Model;
 import Model.Plant;
 import Model.Season;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -38,33 +39,53 @@ public class ModelTests {
 	}
 	@Test 
 	public void calcXTest() {
+		Model test = new Model();
+		
+		double center = test.calcX(250, 100, 100);
+		assertEquals(250,center,0.01);
+		
+		double left = test.calcX(30, 50, 100);
+		assertEquals(50,left,0.01);
+		
+		double right = test.calcX(test.getCanvasWidth(), 50, 100);
+		assertEquals(test.getCanvasWidth()-50-100,right,0.01);
 		
 	}
 	@Test
 	public void calcYTest() {
+		Model test = new Model();
 		
+		double center = test.calcY(250, 40, 100);
+		assertEquals(250,center,0.01);
+		
+		double top = test.calcY(0, 50, 100);
+		assertEquals(50,top,0.01);
+		
+		double bottom = test.calcY(100000, 100, 100);
+		assertEquals(test.getCanvasHeight()-100-200,bottom,0.01);
 	}
 	@Test
 	public void createSuggestionsTest() {
 		Model test = new Model();
 		ArrayList<Plant> startUp = new ArrayList<Plant>();
+		//StartUp
 		test.createSuggestions(true);
 		startUp.addAll(test.getSuggestedPlants());
 		int index = 0;
 		for(Plant p: test.getSuggestedPlants()) {
 			assertEquals(startUp.get(index),p);
 			index++;
-			System.out.println("JUNK");
+			
 		}
-		
-	}
-	@Test
-	public void generateRelevantPlantsTest() {
-		
-		
+		//No GardenPrefs
+		test.createSuggestions(false);
+		index = 0;
+		for(Plant p: test.getSuggestedPlants()) {
+			assertEquals(startUp.get(index),p);
+			index++;
+		}
+		//One gardenPref
 		GardenPref gp = new GardenPref();
-		
-		
 		gp.setUserBloom("Winter");
 		HashSet<String> colors = new HashSet<String>();
 		colors.add("Blue");
@@ -72,6 +93,34 @@ public class ModelTests {
 		gp.setUserColor(colors);
 		gp.setUserLight("Any");
 		gp.setUserSoil("Wet");
+		ArrayList<GardenPref> testPref = new ArrayList<GardenPref>();
+		testPref.add(gp);
+		test.setGardenPreferences(testPref);
+		test.setCurrPref(gp);
+		test.createSuggestions(false);
+		assertNotEquals(startUp,test.getSuggestedPlants());
+		
+		
+	}
+	@Test
+	public void generateRelevantPlantsTest() {
+		
+		Model test = new Model();
+		ArrayList<Plant> startUp = new ArrayList<Plant>();
+		GardenPref gp = new GardenPref();
+		gp.setUserBloom("Winter");
+		HashSet<String> colors = new HashSet<String>();
+		colors.add("Blue");
+		colors.add("Pink");
+		gp.setUserColor(colors);
+		gp.setUserLight("Any");
+		gp.setUserSoil("Wet");
+		ArrayList<GardenPref> testPref = new ArrayList<GardenPref>();
+		testPref.add(gp);
+		test.setGardenPreferences(testPref);
+		test.setCurrPref(gp);
+		test.createSuggestions(false);
+		assertNotEquals(startUp,test.getSuggestedPlants());
 		
 	}
 	@Test
