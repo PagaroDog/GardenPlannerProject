@@ -2,6 +2,9 @@ package Tests;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import org.junit.Test;
 
 import Model.GardenPref;
@@ -32,6 +35,44 @@ public class ModelTests {
 	@Test
 	public void redoTest() {
 		fail("method not made");
+	}
+	@Test 
+	public void calcXTest() {
+		
+	}
+	@Test
+	public void calcYTest() {
+		
+	}
+	@Test
+	public void createSuggestionsTest() {
+		Model test = new Model();
+		ArrayList<Plant> startUp = new ArrayList<Plant>();
+		test.createSuggestions(true);
+		startUp.addAll(test.getSuggestedPlants());
+		int index = 0;
+		for(Plant p: test.getSuggestedPlants()) {
+			assertEquals(startUp.get(index),p);
+			index++;
+			System.out.println("JUNK");
+		}
+		
+	}
+	@Test
+	public void generateRelevantPlantsTest() {
+		
+		
+		GardenPref gp = new GardenPref();
+		
+		
+		gp.setUserBloom("Winter");
+		HashSet<String> colors = new HashSet<String>();
+		colors.add("Blue");
+		colors.add("Pink");
+		gp.setUserColor(colors);
+		gp.setUserLight("Any");
+		gp.setUserSoil("Wet");
+		
 	}
 	@Test
 	public void userCheckTest() {

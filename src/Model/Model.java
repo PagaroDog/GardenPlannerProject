@@ -605,7 +605,7 @@ public class Model {
 		for (int i = 0; i <= score; i++) {
 			plantsFromPref.put(i, new ArrayList<Plant>());
 		}
-
+		
 		for (Plant p : plants.values()) {
 
 			Object[][] plantData = { p.getBloomtime(), p.getLight(), p.getWaterLevel() };
@@ -635,10 +635,10 @@ public class Model {
 				cnt++;
 				score = prefCategoriesCnt;
 			}
-
+			
 			plantsFromPref.get(minGardenPrefScore).add(p);
 			cnt = 1;
-			minGardenPrefScore = Integer.MAX_VALUE;
+			minGardenPrefScore = prefCategoriesCnt;
 			plantNum++;
 		}
 
