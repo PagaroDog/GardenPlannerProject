@@ -4,13 +4,18 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
 import Model.GardenPref;
 import Model.Model;
 import Model.Plant;
+import Model.PlantType;
 import Model.Season;
+import Model.Sun;
+import Model.Water;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -64,6 +69,145 @@ public class ModelTests {
 		double bottom = test.calcY(100000, 100, 100);
 		assertEquals(test.getCanvasHeight()-100-200,bottom,0.01);
 	}
+	
+	@Test
+	public void importPlantsFromCSVTest() {
+		Model test = new Model();
+		
+		test.importPlantsFromCSV("test.csv");
+		
+		Plant plant0 = test.getPlants().get("ScienceName0");
+		Plant plant1 = test.getPlants().get("ScienceName1");
+		Plant plant2 = test.getPlants().get("ScienceName2");
+		Plant plant3 = test.getPlants().get("ScienceName3");
+		Plant plant4 = test.getPlants().get("ScienceName4");
+		
+		assertEquals("CommonName0", plant0.getCommonNames()[0]);
+		assertEquals("CommonName0", plant1.getCommonNames()[0]);
+		assertEquals("CommonName1", plant1.getCommonNames()[1]);
+		assertEquals("CommonName2", plant1.getCommonNames()[2]);
+		assertEquals("CommonName0", plant2.getCommonNames()[0]);
+		assertEquals("CommonName1", plant2.getCommonNames()[1]);
+		assertEquals("CommonName0", plant3.getCommonNames()[0]);
+		assertEquals("CommonName1", plant3.getCommonNames()[1]);
+		assertEquals("CommonName2", plant3.getCommonNames()[2]);
+		assertEquals("CommonName3", plant3.getCommonNames()[3]);
+		assertEquals("CommonName0", plant4.getCommonNames()[0]);
+		
+		assertEquals("Perennial", plant0.getDuration());
+		assertEquals("Annual", plant1.getDuration());
+		assertEquals("Perennial", plant2.getDuration());
+		assertEquals("Perennial", plant3.getDuration());
+		assertEquals("Perennial", plant4.getDuration());
+		
+		assertEquals(PlantType.HERB, plant0.getType());
+		assertEquals(PlantType.VINE, plant1.getType());
+		assertEquals(PlantType.TREE, plant2.getType());
+		assertEquals(PlantType.SHRUB, plant3.getType());
+		assertEquals(PlantType.HERB, plant4.getType());
+		
+		assertEquals(12, plant0.getHeight()[0]);
+		assertEquals(36, plant0.getHeight()[1]);
+		assertEquals(144, plant1.getHeight()[0]);
+		assertEquals(864, plant1.getHeight()[1]);
+		assertEquals(864, plant2.getHeight()[0]);
+		assertEquals(1200, plant2.getHeight()[1]);
+		assertEquals(72, plant3.getHeight()[0]);
+		assertEquals(144, plant3.getHeight()[1]);
+		assertEquals(12, plant4.getHeight()[0]);
+		assertEquals(36, plant4.getHeight()[1]);
+		
+		assertEquals(true, plant0.getColor().contains("White"));
+		assertEquals(true, plant0.getColor().contains("Pink"));
+		assertEquals(true, plant1.getColor().contains("Red"));
+		assertEquals(true, plant1.getColor().contains("Orange"));
+		assertEquals(true, plant1.getColor().contains("Yellow"));
+		assertEquals(true, plant2.getColor().contains("Yellow"));
+		assertEquals(true, plant3.getColor().contains("White"));
+		assertEquals(true, plant4.getColor().contains("Pink"));
+		assertEquals(true, plant4.getColor().contains("Purple"));
+		
+		System.out.println(plant0.getBloomtime()[0]);
+		System.out.println(plant0.getBloomtime()[1]);
+
+		assertEquals(Season.SPRING, plant0.getBloomtime()[0]);
+		assertEquals(Season.SUMMER, plant0.getBloomtime()[1]);
+		assertEquals(Season.SUMMER, plant1.getBloomtime()[0]);		
+		assertEquals(Season.SPRING, plant2.getBloomtime()[0]);
+		assertEquals(Season.SPRING, plant3.getBloomtime()[0]);
+		assertEquals(Season.SUMMER, plant3.getBloomtime()[1]);	
+		assertEquals(Season.WINTER, plant4.getBloomtime()[0]);		
+		assertEquals(Season.SPRING, plant4.getBloomtime()[1]);
+		assertEquals(Season.SUMMER, plant4.getBloomtime()[2]);	
+		assertEquals(Season.FALL, plant4.getBloomtime()[3]);
+
+		assertEquals(Water.MESIC, plant0.getWaterLevel()[0]);
+		assertEquals(Water.DRYMES, plant0.getWaterLevel()[1]);
+		assertEquals(Water.DRY, plant0.getWaterLevel()[2]);
+		assertEquals(Water.MESIC, plant1.getWaterLevel()[0]);
+		assertEquals(Water.DRYMES, plant1.getWaterLevel()[1]);
+		assertEquals(Water.DRY, plant1.getWaterLevel()[2]);
+		assertEquals(Water.WET, plant2.getWaterLevel()[0]);
+		assertEquals(Water.WETMES, plant2.getWaterLevel()[1]);
+		assertEquals(Water.MESIC, plant2.getWaterLevel()[2]);
+		assertEquals(Water.MESIC, plant3.getWaterLevel()[0]);
+		assertEquals(Water.DRYMES, plant3.getWaterLevel()[1]);
+		assertEquals(Water.DRY, plant3.getWaterLevel()[2]);
+		assertEquals(Water.MESIC, plant4.getWaterLevel()[0]);
+		assertEquals(Water.DRYMES, plant4.getWaterLevel()[1]);
+		assertEquals(Water.DRY, plant4.getWaterLevel()[2]);
+
+		assertEquals(Sun.FULL, plant0.getLight()[0]);
+		assertEquals(Sun.FULL, plant1.getLight()[0]);
+		assertEquals(Sun.FULL_PARTIAL, plant1.getLight()[1]);
+		assertEquals(Sun.FULL, plant2.getLight()[0]);
+		assertEquals(Sun.FULL_PARTIAL, plant2.getLight()[1]);
+		assertEquals(Sun.PARTIAL, plant2.getLight()[2]);
+		assertEquals(Sun.PARTIAL_NONE, plant2.getLight()[3]);
+		assertEquals(Sun.NONE, plant2.getLight()[4]);
+		assertEquals(Sun.PARTIAL, plant3.getLight()[0]);
+		assertEquals(Sun.FULL, plant4.getLight()[0]);
+		assertEquals(Sun.FULL_PARTIAL, plant4.getLight()[1]);
+		
+		assertEquals(24, plant0.getSpread()[0]);
+		assertEquals(36, plant0.getSpread()[1]);
+		assertEquals(360, plant1.getSpread()[0]);
+		assertEquals(360, plant1.getSpread()[1]);
+		assertEquals(300, plant2.getSpread()[0]);
+		assertEquals(420, plant2.getSpread()[1]);
+		assertEquals(0, plant3.getSpread()[0]);
+		assertEquals(0, plant3.getSpread()[1]);
+		assertEquals(12, plant4.getSpread()[0]);
+		assertEquals(36, plant4.getSpread()[1]);
+	}
+	
+	@Test
+	public void parseLineTest0() {
+		List<String> results = Model.parseLine("result0,result1,result2,result3");
+		assertEquals("result0", results.get(0));
+		assertEquals("result1", results.get(1));
+		assertEquals("result2", results.get(2));
+		assertEquals("result3", results.get(3));
+	}
+	
+	@Test
+	public void parseLineTest1() {
+		List<String> results = Model.parseLine("result0,\"result1-0, result1-1\",result2,result3");
+		assertEquals("result0", results.get(0));
+		assertEquals("result1-0, result1-1", results.get(1));
+		assertEquals("result2", results.get(2));
+		assertEquals("result3", results.get(3));
+	}
+	
+	@Test
+	public void parseLineTest2() {
+		List<String> results = Model.parseLine("\"result0-0, result0-1\",result1,result2,\"result3-0, result3-1, result3-2, result3-3\"");
+		assertEquals("result0-0, result0-1", results.get(0));
+		assertEquals("result1", results.get(1));
+		assertEquals("result2", results.get(2));
+		assertEquals("result3-0, result3-1, result3-2, result3-3", results.get(3));
+	}
+	
 	@Test
 	public void createSuggestionsTest() {
 		Model test = new Model();
