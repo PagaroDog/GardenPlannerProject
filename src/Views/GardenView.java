@@ -36,7 +36,7 @@ public class GardenView extends View<GardenController> {
 	
 	private FlowPane suggestedFlowPane;
 	private TilePane seasonTilePane;
-	private double bottomHeight = 35;
+	private double bottomHeight;
 	private TilePane yearTilePane;
 	private TilePane statsTilePane;
 	private HBox toolbar;
@@ -318,7 +318,7 @@ public class GardenView extends View<GardenController> {
 	}
 
 	public double getBottomHeight() {
-		return bottomHeight;
+		return border.getBottom().getLayoutBounds().getHeight();
 	}
 	/**
 	 * Called by GardenController. Updates plant images to reflect the change in Model's plantSuggestions ArrayList
