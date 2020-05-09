@@ -379,7 +379,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 		if (model.getStageName() == StageName.DRAW) {
 			model.setStageName(StageName.CONDITIONS);
 			view.condMode();
-			String widthStr = view.getHeightField().getText();
+			String widthStr = view.getWidthField().getText();
 			if (widthStr.matches("[0-9]+")) {
 				model.setPropertyWidthInches(Integer.valueOf(widthStr) * model.getInchesPerFoot());
 			}

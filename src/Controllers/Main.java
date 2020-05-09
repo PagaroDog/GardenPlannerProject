@@ -46,6 +46,7 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 
 		model = new Model();
+		model.importPlantsFromCSV("plantInfo.csv");
 		imgs = new Images("Resources/imgs/");
 		startView = new StartupView(stage);
 		tutView = new TutorialView(stage);

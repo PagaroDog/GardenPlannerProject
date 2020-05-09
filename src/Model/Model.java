@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -91,10 +92,6 @@ public class Model {
 	private int inchesPerFoot = 12;
 	private int heightArrLen = 2;
 	private int spreadArrLen = 2;
-
-	public Model() {
-		importPlantsFromCSV();
-	}
 
 	public Season getSeason() {
 		return season;
@@ -371,8 +368,7 @@ public class Model {
 	 * Reads the plantInfo.csv file and adds a Plant object to the plants HashMap
 	 * for every plant in the csv.
 	 */
-	public void importPlantsFromCSV() {
-		String csvFile = "plantInfo.csv";
+	public void importPlantsFromCSV(String csvFile) {
 		String line = "";
 		List<String> parsedLine;
 
@@ -384,15 +380,14 @@ public class Model {
 		String[] heightStr = new String[heightArrLen];
 		int[] height = new int[heightArrLen];
 		String[] color;
-		HashSet<String> colors = new HashSet<String>();
 		String[] bloomtimeStr;
-		HashSet<Season> bloomSet = new HashSet<Season>();
+		LinkedHashSet<Season> bloomSet = new LinkedHashSet<Season>();
 		Season[] bloomtime;
 		String[] waterStr;
-		HashSet<Water> waterSet = new HashSet<Water>();
+		LinkedHashSet<Water> waterSet = new LinkedHashSet<Water>();
 		Water[] waterLevel;
 		String[] lightStr;
-		HashSet<Sun> lightSet = new HashSet<Sun>();
+		LinkedHashSet<Sun> lightSet = new LinkedHashSet<Sun>();
 		Sun[] light;
 		String[] spreadStr = new String[spreadArrLen];
 		int[] spread = new int[spreadArrLen];
@@ -411,13 +406,16 @@ public class Model {
 
 				name = parsedLine.get(nameInd);
 				commonNames = parsedLine.get(commonNamesInd).split(",");
+				for (int i = 0; i < commonNames.length; i++) {
+					commonNames[i] = commonNames[i].trim();
+				}
 				duration = parsedLine.get(durationInd);
-				typeStr = parsedLine.get(typeInd).replaceAll(" ", "");
-				if (typeStr.contentEquals("Herb")) {
+				typeStr = parsedLine.get(typeInd).trim();
+				if (typeStr.equals("Herb")) {
 					type = PlantType.HERB;
-				} else if (typeStr.contentEquals("Shrub")) {
+				} else if (typeStr.equals("Shrub")) {
 					type = PlantType.SHRUB;
-				} else if (typeStr.contentEquals("Tree")) {
+				} else if (typeStr.equals("Tree")) {
 					type = PlantType.TREE;
 				} else {
 					type = PlantType.VINE;
@@ -428,18 +426,12 @@ public class Model {
 				} else {
 					height[minHeightInd] = Integer.valueOf(heightStr[minHeightInd]);
 					height[maxHeightInd] = Integer.valueOf(heightStr[maxHeightInd].replaceAll("[^0-9]", ""));
-				}
-				if (parsedLine.get(heightInd).contains("ft")) {
-					height[minHeightInd] *= inchesPerFoot;
-					height[maxHeightInd] *= inchesPerFoot;
+					if (parsedLine.get(heightInd).contains("ft")) {
+						height[minHeightInd] *= inchesPerFoot;
+						height[maxHeightInd] *= inchesPerFoot;
+					}
 				}
 				color = parsedLine.get(colorInd).replaceAll(" ", "").split(",");
-
-				for (String col : color) {
-					colors.add(col);
-				}
-				
-				color = colors.toArray(new String[0]);
 
 				bloomtimeStr = parsedLine.get(bloomtimeInd).replaceAll(" ", "")
 						.replaceAll("Dec|Jan|Feb", String.format("%d", Season.WINTER.ordinal()))
@@ -484,10 +476,10 @@ public class Model {
 					} else {
 						spread[minSpreadInd] = Integer.valueOf(spreadStr[minSpreadInd]);
 						spread[maxSpreadInd] = Integer.valueOf(spreadStr[maxSpreadInd].replaceAll("[^0-9]", ""));
-					}
-					if (parsedLine.get(spreadInd).contains("feet")) {
-						spread[minSpreadInd] *= inchesPerFoot;
-						spread[maxSpreadInd] *= inchesPerFoot;
+						if (parsedLine.get(spreadInd).contains("feet")) {
+							spread[minSpreadInd] *= inchesPerFoot;
+							spread[maxSpreadInd] *= inchesPerFoot;
+						}
 					}
 				}
 
@@ -498,7 +490,6 @@ public class Model {
 				bloomSet.clear();
 				waterSet.clear();
 				lightSet.clear();
-				colors.clear();
 
 			}
 
