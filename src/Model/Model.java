@@ -326,17 +326,17 @@ public class Model {
 	 * @param left the size of the ScrollPane of images
 	 * @return ret
 	 */
-	public double calcX(double x, int size, double left, double initX) {
+	public double calcX(double x, double size, double left) {
 		double rightBorder = canvasWidth - size - left;
+		double leftBorder = size;
+		double ret = x ;
 
-		double ret = (x + initX) - size / 2;
-
-		if (ret < 0) {
-			System.out.println("Returning 0");
-			return 0;
+		if (ret < leftBorder) {
+			//System.out.println("Returning 0");
+			return leftBorder;
 		}
 		if (ret > rightBorder) {
-			System.out.println("Returning rightBorder");
+			//System.out.println("Returning rightBorder");
 			return rightBorder;
 		}
 
@@ -352,12 +352,16 @@ public class Model {
 	 * @param bottom the size of the bottom border of the BorderPane
 	 * @return ret
 	 */
-	public double calcY(double y, int size, double bottom, double initY) {
-		double bottomBorder = canvasHeight - size - bottom * 1.5;
-		double ret = (y + initY) - size / 2;
-		if (ret < 0) {
-			return 0;
-		} else if (ret > bottomBorder) {
+	public double calcY(double y, double size, double bottom) {
+		
+		double bottomBorder = canvasHeight - size - bottom*2;
+		System.out.println(size);
+		double topBorder = size;
+		double ret = y ;
+		if (ret < topBorder) {
+			return topBorder;
+		} 
+		else if (ret > bottomBorder) {
 			return bottomBorder;
 		}
 		return ret;
@@ -605,7 +609,7 @@ public class Model {
 		for (int i = 0; i <= score; i++) {
 			plantsFromPref.put(i, new ArrayList<Plant>());
 		}
-
+		
 		for (Plant p : plants.values()) {
 
 			Object[][] plantData = { p.getBloomtime(), p.getLight(), p.getWaterLevel() };
@@ -635,10 +639,10 @@ public class Model {
 				cnt++;
 				score = prefCategoriesCnt;
 			}
-
+			
 			plantsFromPref.get(minGardenPrefScore).add(p);
 			cnt = 1;
-			minGardenPrefScore = Integer.MAX_VALUE;
+			minGardenPrefScore = prefCategoriesCnt;
 			plantNum++;
 		}
 

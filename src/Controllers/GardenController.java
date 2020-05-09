@@ -286,26 +286,16 @@ public class GardenController extends Controller<GardenView> {
 	 * @param event the drag event that occurred
 	 */
 	public void drag(MouseEvent event) {
-//		//TODO: figure out how to add plant objects in the model
-//		System.out.println("in drag");
-//		if (event.getX() > view.getTPWidth() && !copied) {
-//			System.out.println("in if");
-//			Object plant = event.getSource();
-//			//int index = view.addIVToFlow(new ImageView(((ImageView) plant).getImage()));	//TODO: creates the multiple children error. figure out way to clone imageview.
-////			model.addX(0);
-////			model.addY(event.getY());
-//			view.setXs(view.getXs().size -1, event.getX());
-//			view.setYs(index, event.getY());
-//			copied = true;
+
 		Ellipse dragPlant = (Ellipse) event.getSource();
 		model.setCurrDrawObj(dragPlant);
 		
-		double calcX = model.calcX(event.getX(), view.getSize(), view.getSize(), event.getX());
+		double calcX = model.calcX(event.getX(), dragPlant.getRadiusX(), view.getSize());
 		// System.out.println(view.getGarden().getLayoutX());
 		// System.out.println(dragPlant.getTranslateX());
 
-		double calcY = model.calcY(event.getY(), view.getSize(), view.getBottomHeight(), event.getY());
-		view.movePlant(dragPlant, event.getX(), event.getY());
+		double calcY = model.calcY(event.getY(), dragPlant.getRadiusY(), view.getBottomHeight());
+		view.movePlant(dragPlant, calcX, calcY);
 
 	}
 	public EventHandler getHandlerForEllipsePressed() {
@@ -445,15 +435,16 @@ public class GardenController extends Controller<GardenView> {
 	}
 
 	public void gardenDragDropped(DragEvent event) {
-		Node n = (Node) event.getSource();
+		
 		Dragboard db = event.getDragboard();
 		boolean success = false;
+		double calcX =0;
+		double calcY =0;
 		System.out.println("in dragDropped");
 
 		if (db.hasImage()) {
 			System.out.println("in db.hasImage");
-			double calcX = model.calcX(event.getX(), (int) plantWidthX, view.getSize(), 0);// magic number?
-			double calcY = model.calcY(event.getY(), (int) plantWidthY, view.getBottomHeight(), 0);// magic number?
+			
 			Ellipse circle = new Ellipse();
 			double minSize = model.getPlants().get(plantName).getSpread()[0];
 			double maxSize = model.getPlants().get(plantName).getSpread()[1];
@@ -468,22 +459,30 @@ public class GardenController extends Controller<GardenView> {
 				circle.setRadiusY(maxSize);
 				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 				circle.setStroke(Color.BLUE);
+				calcX = model.calcX(event.getX(), maxSize, view.getSize());
+				calcY = model.calcY(event.getY(), maxSize, view.getBottomHeight());
 			}
 			else if(model.getYear() == 2) {
 				circle.setRadiusX((maxSize+minSize)/2);
 				circle.setRadiusY((maxSize+minSize)/2);
 				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 				circle.setStroke(Color.BLUE);
+				calcX = model.calcX(event.getX(), (maxSize+minSize)/2, view.getSize());
+				calcY = model.calcY(event.getY(), (maxSize+minSize)/2, view.getBottomHeight());
 			}
 			else if(model.getYear() == 1) {
 				circle.setRadiusX(minSize);
 				circle.setRadiusY(minSize);
 				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 				circle.setStroke(Color.BLUE);
+				calcX = model.calcX(event.getX(), minSize, view.getSize());
+				calcY = model.calcY(event.getY(), minSize, view.getBottomHeight());
 			}
 			else {
 				circle.setRadiusX(minSize);
 				circle.setRadiusY(minSize);
+				calcX = model.calcX(event.getX(), minSize, view.getSize());
+				calcY = model.calcY(event.getY(), minSize, view.getBottomHeight());
 			}
 			
 			view.addCirlceToFlow(circle, calcX, calcY, plantName);

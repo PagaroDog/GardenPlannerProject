@@ -10,7 +10,6 @@ import org.junit.Test;
 import Controllers.GardenController;
 import Controllers.Main;
 import Controllers.StartupController;
-import Model.GardenObj;
 import Model.Model;
 import Model.Season;
 import Model.StageName;
@@ -28,8 +27,8 @@ import javafx.stage.Stage;
 public class GardenControllerTests {
 
 	@Test
-	public void test() {
-		Model model = new Model();
+	public void buttonTest() {
+		/*Model model = new Model();
 		GardenView gv = new GardenView(new Stage());
 		Main main = new Main();
 		GardenController gc = new GardenController(model, gv, main);
@@ -76,7 +75,8 @@ public class GardenControllerTests {
 		assertEquals(model.getSeason(), Season.FALL);
 
 		gc.handleOnPrefButton();
-		assertEquals(model.getStageName(), StageName.STATS);
+		assertEquals(model.getStageName(), StageName.STATS);*/
+		fail("Test not available");
 	}
 
 }
