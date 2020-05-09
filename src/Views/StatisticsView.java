@@ -22,6 +22,13 @@ public class StatisticsView extends View<StatisticsController> {
 	private double hboxSpacing = 70;
 	private double vboxSpacing = 50;
 	private double fontSize = 25;
+	private Label totPlants = new Label();
+	private Label trees = new Label();
+	private Label flowers = new Label();
+	private Label shrubs = new Label();
+	private Label pollinators = new Label();
+	private Label numAnimal = new Label();
+	private Label animalTypes = new Label();
 
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
@@ -40,14 +47,6 @@ public class StatisticsView extends View<StatisticsController> {
 
 		VBox vBox = new VBox();
 
-		Label totPlants = new Label("Total Plants: ");
-
-		Label trees = new Label("Trees: ");
-
-		Label flowers = new Label("Flowers: ");
-
-		Label shrubs = new Label("Shrubs: ");
-
 		HBox plants = new HBox(totPlants, trees, flowers, shrubs);
 		plants.setSpacing(hboxSpacing);
 
@@ -55,15 +54,7 @@ public class StatisticsView extends View<StatisticsController> {
 			((Label) plants.getChildren().get(i)).setFont(new Font(fontSize));
 		}
 
-		Label keyPlants = new Label("Keystone Plants: ");
-
-		Label pollinators = new Label("Estimated Pollinators Supported: ");
-
-		Label numAnimal = new Label("Estimated Animals Fed: ");
-
-		Label animalTypes = new Label("Types of Animals Fed: ");
-
-		vBox.getChildren().addAll(plants, keyPlants, pollinators, numAnimal, animalTypes);
+		vBox.getChildren().addAll(plants, pollinators, numAnimal, animalTypes);
 
 		for (int i = 1; i < vBox.getChildren().size(); i++) {
 			((Label) vBox.getChildren().get(i)).setFont(new Font(fontSize));
@@ -77,7 +68,33 @@ public class StatisticsView extends View<StatisticsController> {
 
 		scene = new Scene(border, canvasWidth, canvasHeight);
 		styleScene();
+	}
 
+	public void updateStats(int numTrees, int numShrubs, int numHerbs, int pollinatorsPerTree, int pollinatorsPerShrub,
+			int pollinatorsPerHerb, int animalsPerTree, int animalsPerShrub, int animalsPerHerb, int beeMin,
+			int butterflyMin, int birdMin, int mammalMin) {
+		int total = numTrees + numShrubs + numHerbs;
+		totPlants.setText("Total Plants: " + total);
+		trees.setText("Trees: " + numTrees);
+		shrubs.setText("Shrubs: " + numShrubs);
+		flowers.setText("Herbs: " + numHerbs);
+
+		pollinators.setText("Estimated Pollinators Supported: "
+				+ (numTrees * pollinatorsPerTree + numShrubs * pollinatorsPerShrub + numHerbs * pollinatorsPerHerb));
+		numAnimal.setText("Estimated Animals Fed: "
+				+ (numTrees * animalsPerTree + numShrubs * animalsPerShrub + numHerbs * animalsPerHerb));
+
+		if (total > mammalMin) {
+			animalTypes.setText("Possible Animal Types: Bees, Butterflies, Birds, Small mammals");
+		} else if (total > birdMin) {
+			animalTypes.setText("Possible Animal Types: Bees, Butterflies, Birds");
+		} else if (total > butterflyMin) {
+			animalTypes.setText("Possible Animal Types: Bees, Butterflies");
+		} else if (total > beeMin) {
+			animalTypes.setText("Possible Animal Types: Bees");
+		} else {
+			animalTypes.setText("Possible Animal Types: None (Add more plants to you garden!)");
+		}
 	}
 
 }

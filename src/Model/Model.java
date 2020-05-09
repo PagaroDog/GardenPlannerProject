@@ -92,6 +92,21 @@ public class Model {
 	private int inchesPerFoot = 12;
 	private int heightArrLen = 2;
 	private int spreadArrLen = 2;
+	
+	private int numTrees = 0;
+	private int numShrubs = 0;
+	private int numHerbs = 0;
+	
+	private final int pollinatorsPerTree = 72;
+	private final int pollinatorsPerShrub = 17;
+	private final int pollinatorsPerHerb = 4;
+	private final int animalsPerTree = 19;
+	private final int animalsPerShrub = 4;
+	private final int animalsPerHerb = 1;
+	private final int beeMin = 2;
+	private final int butterflyMin = 8;
+	private final int birdMin = 15;
+	private final int mammalMin = 40;
 
 	public Season getSeason() {
 		return season;
@@ -260,6 +275,70 @@ public class Model {
 
 	public int getInchesPerFoot() {
 		return inchesPerFoot;
+	}
+	
+	public int getNumTrees() {
+		return numTrees;
+	}
+
+	public void setNumTrees(int numTrees) {
+		this.numTrees = numTrees;
+	}
+
+	public int getNumShrubs() {
+		return numShrubs;
+	}
+
+	public void setNumShrubs(int numShrubs) {
+		this.numShrubs = numShrubs;
+	}
+
+	public int getNumHerbs() {
+		return numHerbs;
+	}
+
+	public void setNumHerbs(int numHerbs) {
+		this.numHerbs = numHerbs;
+	}
+
+	public int getPollinatorsPerTree() {
+		return pollinatorsPerTree;
+	}
+
+	public int getPollinatorsPerShrub() {
+		return pollinatorsPerShrub;
+	}
+
+	public int getPollinatorsPerHerb() {
+		return pollinatorsPerHerb;
+	}
+
+	public int getAnimalsPerTree() {
+		return animalsPerTree;
+	}
+
+	public int getAnimalsPerShrub() {
+		return animalsPerShrub;
+	}
+
+	public int getAnimalsPerHerb() {
+		return animalsPerHerb;
+	}
+
+	public int getBeeMin() {
+		return beeMin;
+	}
+
+	public int getButterflyMin() {
+		return butterflyMin;
+	}
+
+	public int getBirdMin() {
+		return birdMin;
+	}
+
+	public int getMammalMin() {
+		return mammalMin;
 	}
 
 	/**

@@ -108,4 +108,8 @@ public class Main extends Application {
 		return suggControl;
 	}
 
+	public StatisticsController getStatControl() {
+		return statControl;
+	}
+
 }
