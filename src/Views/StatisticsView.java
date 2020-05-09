@@ -1,6 +1,9 @@
 package Views;
 
+import java.util.HashSet;
+
 import Controllers.StatisticsController;
+import Model.Season;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -26,6 +29,8 @@ public class StatisticsView extends View<StatisticsController> {
 	private Label trees = new Label();
 	private Label flowers = new Label();
 	private Label shrubs = new Label();
+	private Label colors = new Label();
+	private Label bloomingSeasons = new Label();
 	private Label pollinators = new Label();
 	private Label numAnimal = new Label();
 	private Label animalTypes = new Label();
@@ -54,7 +59,7 @@ public class StatisticsView extends View<StatisticsController> {
 			((Label) plants.getChildren().get(i)).setFont(new Font(fontSize));
 		}
 
-		vBox.getChildren().addAll(plants, pollinators, numAnimal, animalTypes);
+		vBox.getChildren().addAll(plants, pollinators, colors, bloomingSeasons, numAnimal, animalTypes);
 
 		for (int i = 1; i < vBox.getChildren().size(); i++) {
 			((Label) vBox.getChildren().get(i)).setFont(new Font(fontSize));
@@ -86,7 +91,7 @@ public class StatisticsView extends View<StatisticsController> {
 	 * @param birdMin The minimum number of plants needed to attract birds
 	 * @param mammalMin The minimum number of plants needed to attract small mammals
 	 */
-	public void updateStats(int numTrees, int numShrubs, int numHerbs, int pollinatorsPerTree, int pollinatorsPerShrub,
+	public void updateStats(int numTrees, int numShrubs, int numHerbs, HashSet<String> colorSet, HashSet<Season> seasons, int pollinatorsPerTree, int pollinatorsPerShrub,
 			int pollinatorsPerHerb, int animalsPerTree, int animalsPerShrub, int animalsPerHerb, int beeMin,
 			int butterflyMin, int birdMin, int mammalMin) {
 		int total = numTrees + numShrubs + numHerbs;
@@ -94,10 +99,22 @@ public class StatisticsView extends View<StatisticsController> {
 		trees.setText("Trees: " + numTrees);
 		shrubs.setText("Shrubs: " + numShrubs);
 		flowers.setText("Herbs: " + numHerbs);
+		
+		colors.setText("Colors: ");
+		for (String color : colorSet) {
+			colors.setText(colors.getText() + color + ", ");
+		}
+		colors.setText(colors.getText().substring(0, colors.getText().length() - 2));
+		
+		bloomingSeasons.setText("Blooming seasons: ");
+		for (Season season : seasons) {
+			bloomingSeasons.setText(bloomingSeasons.getText() + season + ", ");
+		}
+		bloomingSeasons.setText(bloomingSeasons.getText().substring(0, bloomingSeasons.getText().length() - 2));
 
 		pollinators.setText("Estimated Pollinators Supported: "
 				+ (numTrees * pollinatorsPerTree + numShrubs * pollinatorsPerShrub + numHerbs * pollinatorsPerHerb));
-		numAnimal.setText("Estimated Animals Fed: "
+		numAnimal.setText("Estimated Animals Attracted: "
 				+ (numTrees * animalsPerTree + numShrubs * animalsPerShrub + numHerbs * animalsPerHerb));
 
 		if (total > mammalMin) {

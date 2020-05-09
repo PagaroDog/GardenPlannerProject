@@ -138,10 +138,13 @@ public class GardenController extends Controller<GardenView> {
 		model.setNumTrees(0);
 		model.setNumShrubs(0);
 		model.setNumHerbs(0);
+		model.getAllColors().clear();
+		model.getAllSeasons().clear();
 		for (Node node : view.getGarden().getChildren()) {
 			String plantName = (String) node.getUserData();
 			if (plantName != null) {
-				switch (model.getPlants().get(plantName).getType()) {
+				Plant plant = model.getPlants().get(plantName);
+				switch (plant.getType()) {
 				case HERB:
 					model.setNumHerbs(model.getNumHerbs() + 1);
 					break;
@@ -153,6 +156,12 @@ public class GardenController extends Controller<GardenView> {
 					break;
 				case VINE:
 					break;
+				}
+				for (String color : plant.getColor()) {
+					model.getAllColors().add(color);
+				}
+				for (Season season : plant.getBloomtime()) {
+					model.getAllSeasons().add(season);
 				}
 			}
 		}

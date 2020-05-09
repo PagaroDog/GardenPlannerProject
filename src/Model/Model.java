@@ -107,6 +107,9 @@ public class Model {
 	private final int butterflyMin = 8;
 	private final int birdMin = 15;
 	private final int mammalMin = 40;
+	
+	private HashSet<String> AllColors = new HashSet<String>();
+	private HashSet<Season> AllSeasons = new HashSet<Season>();
 
 	public Season getSeason() {
 		return season;
@@ -339,6 +342,22 @@ public class Model {
 
 	public int getMammalMin() {
 		return mammalMin;
+	}
+
+	public HashSet<String> getAllColors() {
+		return AllColors;
+	}
+
+	public void setAllColors(HashSet<String> allColors) {
+		AllColors = allColors;
+	}
+
+	public HashSet<Season> getAllSeasons() {
+		return AllSeasons;
+	}
+
+	public void setAllSeasons(HashSet<Season> allSeasons) {
+		AllSeasons = allSeasons;
 	}
 
 	/**
