@@ -58,6 +58,10 @@ public class GardenView extends View<GardenController> {
 	int SIZE = 200;
 	int TILE_PANE_WIDTH = 1000;
 	Images imgs;
+	double minxRad;
+	double minyRad;
+	double maxxRad;
+	double maxyRad;
 
 	public GardenView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -336,39 +340,53 @@ public class GardenView extends View<GardenController> {
 		if(year == 1) {
 			List<Node> gardenList = garden.getChildren();
 			for (Node plant: gardenList) {
-				//(Ellipse) plant.SetX()
 				String plantName = (String) plant.getUserData();
-				System.out.println(plantName);
-				double minSize = control.getSpread(plantName)[0];
-				double maxSize = control.getSpread(plantName)[1];
-				minSize = minSize/2;
-				maxSize = maxSize/2;
-				((Ellipse) plant).setRadiusX(minSize);
-				((Ellipse) plant).setRadiusY(minSize);
+				System.out.println("UserData in setYear(1) " +(String) plant.getUserData() );
+				System.out.println("plantName in setYear(1)" + plantName);
+				double minSize = control.getSpread(plantName)[0]/2;
+				double maxSize = control.getSpread(plantName)[1]/2;
+				double propertyWidth = control.getPropertyWidthInches();
+				double propertyHeight = control.getPropertyHeightInches();
+				minxRad = minSize/propertyWidth * (this.getGarden().getWidth());
+				minyRad = minSize/propertyHeight * (this.getGarden().getHeight());
+				maxxRad = maxSize/propertyWidth * (this.getGarden().getWidth());
+				maxyRad = maxSize/propertyHeight * (this.getGarden().getHeight());
+				((Ellipse) plant).setRadiusX(minxRad);
+				((Ellipse) plant).setRadiusY(minyRad);
 			}
 		}
 		
 		else if(year == 2) {
 			List<Node> gardenList = garden.getChildren();
 			for (Node plant: gardenList) {
-				//(Ellipse) plant.SetX()
 				String plantName = (String) plant.getUserData();
-				double minSize = control.getSpread(plantName)[0];
-				double maxSize = control.getSpread(plantName)[1];
-				((Ellipse) plant).setRadiusX((maxSize+minSize)/2);
-				((Ellipse) plant).setRadiusY((maxSize+minSize)/2);
+				double minSize = control.getSpread(plantName)[0]/2;
+				double maxSize = control.getSpread(plantName)[1]/2;
+				double propertyWidth = control.getPropertyWidthInches();
+				double propertyHeight = control.getPropertyHeightInches();
+				minxRad = minSize/propertyWidth * (this.getGarden().getWidth());
+				minyRad = minSize/propertyHeight * (this.getGarden().getHeight());
+				maxxRad = maxSize/propertyWidth * (this.getGarden().getWidth());
+				maxyRad = maxSize/propertyHeight * (this.getGarden().getHeight());
+				((Ellipse) plant).setRadiusX((maxxRad+minxRad)/2);
+				((Ellipse) plant).setRadiusY((maxyRad+minyRad)/2);
 			}
 		}
 		
 		else if(year == 3) {
 			List<Node> gardenList = garden.getChildren();
 			for (Node plant: gardenList) {
-				//(Ellipse) plant.SetX()
 				String plantName = (String) plant.getUserData();
-				double minSize = control.getSpread(plantName)[0];
-				double maxSize = control.getSpread(plantName)[1];
-				((Ellipse) plant).setRadiusX(maxSize);
-				((Ellipse) plant).setRadiusY(maxSize);
+				double minSize = control.getSpread(plantName)[0]/2;
+				double maxSize = control.getSpread(plantName)[1]/2;
+				double propertyWidth = control.getPropertyWidthInches();
+				double propertyHeight = control.getPropertyHeightInches();
+				minxRad = minSize/propertyWidth * (this.getGarden().getWidth());
+				minyRad = minSize/propertyHeight * (this.getGarden().getHeight());
+				maxxRad = maxSize/propertyWidth * (this.getGarden().getWidth());
+				maxyRad = maxSize/propertyHeight * (this.getGarden().getHeight());
+				((Ellipse) plant).setRadiusX(maxxRad);
+				((Ellipse) plant).setRadiusY(maxyRad);
 			}
 		}
 		

@@ -36,6 +36,10 @@ public class GardenController extends Controller<GardenView> {
 	double plantWidthX=0;
 	double plantWidthY=0;
 	String plantName = "";
+	double minxRad;
+	double minyRad;
+	double maxxRad;
+	double maxyRad;
 
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
@@ -370,6 +374,8 @@ public class GardenController extends Controller<GardenView> {
 		Ellipse circle = new Ellipse();
 		Pane p = new Pane();
 		plantName = (String) ((Node) event.getSource()).getUserData();
+		System.out.println("plantName in imageDrag " + plantName);
+		
 		double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
 		double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;
 		if(model.getYear() == 3) {
@@ -448,42 +454,56 @@ public class GardenController extends Controller<GardenView> {
 			Ellipse circle = new Ellipse();
 			double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
 			double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;
+			double propertyWidth = model.getPropertyWidthInches();
+			double propertyHeight = model.getPropertyHeightInches();
+			minxRad = minSize/propertyWidth * (view.getGarden().getWidth());
+			minyRad = minSize/propertyHeight * (view.getGarden().getHeight());
+			maxxRad = maxSize/propertyWidth * (view.getGarden().getWidth());
+			maxyRad = maxSize/propertyHeight * (view.getGarden().getHeight());
 			if(maxSize == 0) {
 				minSize = (model.getPlants().get(plantName).getHeight()[0])/4;
 				maxSize = (model.getPlants().get(plantName).getHeight()[1])/4;
+				propertyWidth = model.getPropertyWidthInches();
+				propertyHeight = model.getPropertyHeightInches();
+				minxRad = minSize/propertyWidth * (view.getGarden().getWidth());
+				minyRad = minSize/propertyHeight * (view.getGarden().getHeight());
+				maxxRad = maxSize/propertyWidth * (view.getGarden().getWidth());
+				maxyRad = maxSize/propertyHeight * (view.getGarden().getHeight());
 			}
 			System.out.println("Dragging " + plantName);
 			System.out.print("maxSize: " + maxSize);
 			if(model.getYear() == 3) {
-				circle.setRadiusX(maxSize);
-				circle.setRadiusY(maxSize);
+				circle.setRadiusX(maxxRad);
+				circle.setRadiusY(maxyRad);
 				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 				circle.setStroke(Color.BLUE);
-				calcX = model.calcX(event.getX(), maxSize, view.getSize());
-				calcY = model.calcY(event.getY(), maxSize, view.getBottomHeight());
+				calcX = model.calcX(event.getX(), maxxRad, view.getSize());
+				calcY = model.calcY(event.getY(), maxyRad, view.getBottomHeight());
 			}
 			else if(model.getYear() == 2) {
-				circle.setRadiusX((maxSize+minSize)/2);
-				circle.setRadiusY((maxSize+minSize)/2);
+				circle.setRadiusX((maxxRad+minxRad)/2);
+				circle.setRadiusY((maxyRad+minyRad)/2);
 				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 				circle.setStroke(Color.BLUE);
-				calcX = model.calcX(event.getX(), (maxSize+minSize)/2, view.getSize());
-				calcY = model.calcY(event.getY(), (maxSize+minSize)/2, view.getBottomHeight());
+				calcX = model.calcX(event.getX(), (maxxRad+minxRad)/2, view.getSize());
+				calcY = model.calcY(event.getY(), (maxyRad+minyRad)/2, view.getBottomHeight());
 			}
 			else if(model.getYear() == 1) {
-				circle.setRadiusX(minSize);
-				circle.setRadiusY(minSize);
+				circle.setRadiusX(minxRad);
+				circle.setRadiusY(minyRad);
 				circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
 				circle.setStroke(Color.BLUE);
-				calcX = model.calcX(event.getX(), minSize, view.getSize());
-				calcY = model.calcY(event.getY(), minSize, view.getBottomHeight());
+				calcX = model.calcX(event.getX(), minxRad, view.getSize());
+				calcY = model.calcY(event.getY(), minyRad, view.getBottomHeight());
 			}
 			else {
-				circle.setRadiusX(minSize);
-				circle.setRadiusY(minSize);
+				circle.setRadiusX(minxRad);
+				circle.setRadiusY(minyRad);
 				calcX = model.calcX(event.getX(), minSize, view.getSize());
 				calcY = model.calcY(event.getY(), minSize, view.getBottomHeight());
 			}
+			circle.setUserData(plantName);
+			System.out.println("plantName in gardenDragDropped " + circle.getUserData());
 			
 			view.addCirlceToFlow(circle, calcX, calcY, plantName);
 			success = true;
@@ -513,6 +533,8 @@ public class GardenController extends Controller<GardenView> {
 	 * returns list of spread vals from model, if spread is zero returns height list.
 	 */
 	public int[] getSpread(String plantName) {
+		System.out.println("plantName from getSpread" + plantName);
+		//System.out.println(model.getPlants().get(plantName).getSpread());
 		if(model.getPlants().get(plantName).getSpread()[1] == 0) {
 			return model.getPlants().get(plantName).getHeight();
 		}
@@ -560,6 +582,19 @@ public class GardenController extends Controller<GardenView> {
 		copy.setOnMouseDragged(this.getHandlerForDrag());
 		((Ellipse) copy).setFill(oldEllipse.getFill());
 		view.addShape(copy);
+	}
+
+	/*
+	 * returns the width of the property.
+	 */
+	public int getPropertyWidthInches() {
+		return model.getPropertyWidthInches();
+	}
+	/*
+	 * returns the width of the property
+	 */
+	public int getPropertyHeightInches() {
+		return model.getPropertyHeightInches();
 	}
 	
 	
