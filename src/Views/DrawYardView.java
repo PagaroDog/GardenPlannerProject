@@ -75,10 +75,10 @@ public class DrawYardView extends View<DrawYardController> {
 	private double labelSize = 12;
 	private double expectedWidth = 1770;
 	private double expectedHeight = 930;
-	private double buttonFontSize = 12 * canvasWidth/expectedWidth;
-	private double fieldWidth = 139 * canvasWidth/expectedWidth;
-	private double fieldHeight = 25 * canvasHeight/expectedHeight;
-	private final double labelFontSize = 16 * canvasWidth/expectedWidth;
+	private double buttonFontSize = Math.min(12, 12 * canvasWidth/expectedWidth);
+	private double fieldWidth = Math.min(139, 139 * canvasWidth/expectedWidth);
+	private double fieldHeight = Math.min(25, 25 * canvasHeight/expectedHeight);
+	private final double labelFontSize = Math.min(16, 16 * canvasWidth/expectedWidth);
 	private final double initShapeSize = 10;
 	private final int minRGB = 30;
 	private final double randRGB = 255 - minRGB;
