@@ -10,6 +10,7 @@ import java.util.List;
 import Controllers.GardenController;
 import Model.PlantType;
 import Model.Season;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -21,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,10 +30,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -46,10 +51,7 @@ public class GardenView extends View<GardenController> {
 	private ArrayList<Image> plants = new ArrayList<Image>();
 
 	private FlowPane suggestedFlowPane;
-	private TilePane seasonTilePane;
 	private double bottomHeight;
-	private TilePane yearTilePane;
-	private TilePane statsTilePane;
 	private HBox toolbar;
 	private Pane garden;
 	private Button save;
@@ -78,6 +80,9 @@ public class GardenView extends View<GardenController> {
 	double minyRad;
 	double maxxRad;
 	double maxyRad;
+	
+	private double buttonFontSize = Math.min(12, 18 * canvasWidth / expectedWidth);
+	private final double labelFontSize = Math.min(16, 21 * canvasWidth / expectedWidth);
 
 	public GardenView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -113,6 +118,7 @@ public class GardenView extends View<GardenController> {
 	 */
 	public void left() {
 		tabPane = new TabPane();
+		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		plants.clear();
 		int numberPlants = control.getNumPlants();
 		for (PlantType type : PlantType.values()) {
@@ -172,48 +178,38 @@ public class GardenView extends View<GardenController> {
 	 * preferences.
 	 */
 	public void top() {
-		seasonTilePane = new TilePane();
+		save = createButton("Save", control.handleOnSaveButton());
+		
+		Region empty1 = new Region();
+		HBox.setHgrow(empty1, Priority.ALWAYS);
+		Region empty2 = new Region();
+		HBox.setHgrow(empty2, Priority.ALWAYS);
+		Region empty3 = new Region();
+		HBox.setHgrow(empty3, Priority.ALWAYS);
+		
 		Label seasonLabel = new Label("Select Season");
-		summer = new Button("Summer");
-		summer.setOnMouseClicked(control.handleOnSummerButton());
-		fall = new Button("Fall");
-		fall.setOnMouseClicked(control.handleOnFallButton());
-		winter = new Button("Winter");
-		winter.setOnMouseClicked(control.handleOnWinterButton());
-		spring = new Button("Spring");
-		spring.setOnMouseClicked(control.handleOnSpringButton());
-		seasonTilePane.getChildren().addAll(seasonLabel, summer, fall, winter, spring);
+		seasonLabel.setFont(new Font(labelFontSize));
+		summer = createButton("Summer", control.handleOnSummerButton());
+		fall = createButton("Fall", control.handleOnFallButton());
+		winter = createButton("Winter", control.handleOnWinterButton());
+		spring = createButton("Spring", control.handleOnSpringButton());
+		
+		Label yearLabel = new Label("Select Estimated Size");
+		yearLabel.setFont(new Font(labelFontSize));
+		year1 = createButton("Small", control.handleOnYear1Button());
+		year2 = createButton("Medium", control.handleOnYear2Button());
+		year3 = createButton("Large", control.handleOnYear3Button());
 
-		TilePane toolsTilePane = new TilePane();
 		Label toolsLabel = new Label("Tools");
-		delete = new Button("Delete");
-		delete.setOnMousePressed(control.handleOnDeleteButton());
-		copy = new Button("Copy");
-		copy.setOnMousePressed(control.handleOnCopyButton());
-		
-		undo = new Button("Undo"); 
-		undo.setOnMouseClicked(control.handleOnUndoButton()); 
-		redo = new Button("Redo"); 
-		redo.setOnMouseClicked(control.handleOnRedoButton());
-		
-		toolsTilePane.getChildren().addAll(toolsLabel, delete, copy, undo, redo);
-
-		yearTilePane = new TilePane();
-		Label yearLabel = new Label("Select Year");
-		year1 = new Button("Year: 1");
-		year1.setOnMouseClicked(control.handleOnYear1Button());
-		year2 = new Button("Year: 2");
-		year2.setOnMouseClicked(control.handleOnYear2Button());
-		year3 = new Button("Year: 3");
-		year3.setOnMouseClicked(control.handleOnYear3Button());
-		yearTilePane.getChildren().addAll(yearLabel, year1, year2, year3);
+		toolsLabel.setFont(new Font(labelFontSize));
+		delete = createButton("Delete", control.handleOnDeleteButton());
+		copy = createButton("Copy", control.handleOnCopyButton());
+		undo = createButton("Undo", control.handleOnUndoButton()); 
+		redo = createButton("Redo", control.handleOnRedoButton()); 
 
 		toolbar = createToolbar();
 
-		save = new Button("Save");
-		save.setOnMouseClicked(control.handleOnSaveButton());
-
-		toolbar.getChildren().addAll(save, seasonTilePane, yearTilePane, toolsTilePane);
+		toolbar.getChildren().addAll(save, empty1, toolsLabel, delete, copy, undo, redo, empty2, seasonLabel, summer, fall, winter, spring, empty3, yearLabel, year1, year2, year3);
 
 	}
 
@@ -481,6 +477,20 @@ public class GardenView extends View<GardenController> {
 
 	public void addShape(Ellipse ellipse) {
 		garden.getChildren().add(ellipse);
+	}
+	
+	/**
+	 * Creates a button to be used in the toolbar.
+	 * 
+	 * @param text The text shown on the button
+	 * @param eh   The EventHandler for when the button is pressed
+	 * @return A Button object with the Font size defined by buttonFontSize
+	 */
+	public Button createButton(String text, EventHandler eh) {
+		Button newButton = new Button(text);
+		newButton.setOnMouseClicked(eh);
+		newButton.setFont(new Font(buttonFontSize));
+		return newButton;
 	}
 
 }

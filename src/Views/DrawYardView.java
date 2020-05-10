@@ -73,12 +73,10 @@ public class DrawYardView extends View<DrawYardController> {
 	private ImageView background;
 
 	private double labelSize = 12;
-	private double expectedWidth = 1770;
-	private double expectedHeight = 930;
-	private double buttonFontSize = Math.min(12, 12 * canvasWidth/expectedWidth);
-	private double fieldWidth = Math.min(139, 139 * canvasWidth/expectedWidth);
-	private double fieldHeight = Math.min(25, 25 * canvasHeight/expectedHeight);
-	private final double labelFontSize = Math.min(16, 16 * canvasWidth/expectedWidth);
+	private double buttonFontSize = Math.min(12, 14 * canvasWidth / expectedWidth);
+	private double fieldWidth = Math.min(139, 139 * canvasWidth / expectedWidth);
+	private double fieldHeight = Math.min(25, 25 * canvasHeight / expectedHeight);
+	private final double labelFontSize = Math.min(16, 18 * canvasWidth / expectedWidth);
 	private final double initShapeSize = 10;
 	private final int minRGB = 30;
 	private final double randRGB = 255 - minRGB;
@@ -100,7 +98,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 */
 	@Override
 	public void setup() {
-		
+
 		selectButton = createButton("Select", control.getHandleOnSelectButton());
 		deleteButton = createButton("Delete", control.getHandleOnDeleteButton());
 		rectButton = createButton("Rectangle", control.getHandleOnRectButton());
@@ -417,8 +415,9 @@ public class DrawYardView extends View<DrawYardController> {
 	}
 
 	/**
-	 * Changes the id of the button of the current drawing mode,
-	 * so that the button changes appearance.
+	 * Changes the id of the button of the current drawing mode, so that the button
+	 * changes appearance.
+	 * 
 	 * @param newMode The newly update drawing mode
 	 */
 	public void updateMode(DrawMode newMode) {
@@ -428,31 +427,44 @@ public class DrawYardView extends View<DrawYardController> {
 		labelButton.setId("");
 		newAreaButton.setId("");
 		if (newMode != null) {
-			switch(newMode) {
-				case CIRCLE:
-					circleButton.setId("selected-button");
-					break;
-				case LABEL:
-					labelButton.setId("selected-button");
-					break;
-				case RECTANGLE:
-					rectButton.setId("selected-button");
-					newAreaButton.setId("selected-button");
-					break;
-				case SELECT:
-					selectButton.setId("selected-button");
-					break;
+			switch (newMode) {
+			case CIRCLE:
+				circleButton.setId("selected-button");
+				break;
+			case LABEL:
+				labelButton.setId("selected-button");
+				break;
+			case RECTANGLE:
+				rectButton.setId("selected-button");
+				newAreaButton.setId("selected-button");
+				break;
+			case SELECT:
+				selectButton.setId("selected-button");
+				break;
 			}
 		}
 	}
-	
+
+	/**
+	 * Creates a button to be used in the toolbar.
+	 * 
+	 * @param text The text shown on the button
+	 * @param eh   The EventHandler for when the button is pressed
+	 * @return A Button object with the Font size defined by buttonFontSize
+	 */
 	public Button createButton(String text, EventHandler eh) {
 		Button newButton = new Button(text);
 		newButton.setOnMouseClicked(eh);
 		newButton.setFont(new Font(buttonFontSize));
 		return newButton;
 	}
-	
+
+	/**
+	 * Creates a text field to be used in the toolbar.
+	 * 
+	 * @return A TextField object with the width, height, and font size defined at
+	 *         the top of this file
+	 */
 	public TextField createField() {
 		TextField field = new TextField();
 		field.setPrefWidth(fieldWidth);

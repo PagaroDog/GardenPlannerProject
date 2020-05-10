@@ -24,12 +24,14 @@ public class View<T extends Controller> {
 	private GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	protected int canvasWidth = gd.getDisplayMode().getWidth() - 150;
 	protected int canvasHeight = gd.getDisplayMode().getHeight() - 150;
+	protected double expectedWidth = 1770;
+	protected double expectedHeight = 930;
 	protected Scene scene;
 	protected Stage stage;
 	protected T control;
 	private double toolbarVPadding = 15;
 	private double toolbarHPadding = 15;
-	private double toolbarHGap = 15;
+	private double toolbarHGap = Math.min(15, 18 * canvasWidth / expectedWidth);
 	private double centerFontSize = 25;
 	private int toolbarRed = 105;
 	private int toolbarGreen = 197;
