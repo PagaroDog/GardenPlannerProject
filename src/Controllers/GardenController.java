@@ -1,9 +1,14 @@
 package Controllers;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
+
+
+import Model.ActionEnum;
+import Model.GardenAction;
 
 import Model.Model;
 import Model.Plant;
@@ -46,6 +51,8 @@ public class GardenController extends Controller<GardenView> {
 	double minyRad;
 	double maxxRad;
 	double maxyRad;
+	
+	GardenAction GA = new GardenAction(); 
 
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
@@ -478,7 +485,7 @@ public class GardenController extends Controller<GardenView> {
 		boolean success = false;
 		double calcX =0;
 		double calcY =0;
-		System.out.println("in dragDropped");
+		//System.out.println("in dragDropped");
 
 		if (db.hasImage()) {
 			
@@ -501,8 +508,8 @@ public class GardenController extends Controller<GardenView> {
 				maxxRad = maxSize/propertyWidth * (view.getGarden().getWidth());
 				maxyRad = maxSize/propertyHeight * (view.getGarden().getHeight());
 			}
-			System.out.println("Dragging " + plantName);
-			System.out.print("maxSize: " + maxSize);
+			//System.out.println("Dragging " + plantName);
+			//System.out.print("maxSize: " + maxSize);
 			if(model.getYear() == 3) {
 				circle.setRadiusX(maxxRad);
 				circle.setRadiusY(maxyRad);
@@ -566,6 +573,8 @@ public class GardenController extends Controller<GardenView> {
 				}
 			}
 			
+			GA.addAction(new GardenAction(circle, calcX, calcY, plantName, ActionEnum.ADDPLANT ));
+	
 			view.addCirlceToFlow(circle, calcX, calcY, plantName);
 			success = true;
 			model.setCurrDrawObj(circle);
@@ -616,6 +625,10 @@ public class GardenController extends Controller<GardenView> {
 	 * called by eventHandler
 	 */
 	public void deleteButton(MouseEvent event) {
+		Ellipse e = (Ellipse)model.getCurrDrawObj();
+		
+		GA.addAction(new GardenAction(e, 0, 0, e.getUserData().toString(), ActionEnum.DELETE));
+		
 		view.deleteShape(model.getCurrDrawObj());
 	}
 	
@@ -639,7 +652,12 @@ public class GardenController extends Controller<GardenView> {
 		copy.setUserData(oldEllipse.getUserData());
 		copy.setOnMouseClicked(this.getHandlerForEllipsePressed());
 		copy.setOnMouseDragged(this.getHandlerForDrag());
+		copy.setOnMouseReleased(this.handleOnMouseReleased()); 
 		((Ellipse) copy).setFill(oldEllipse.getFill());
+		
+		System.out.println("In copyButton"); 
+		GA.addAction(new GardenAction(copy, 0, 0, copy.getUserData().toString(), ActionEnum.COPY));
+		
 		view.addShape(copy);
 	}
 
@@ -656,6 +674,7 @@ public class GardenController extends Controller<GardenView> {
 		return model.getPropertyHeightInches();
 	}
 	
+
 	public Season[] getBloomTime(String plantName) {
 		return model.getPlants().get(plantName).getBloomtime();
 	}
@@ -678,6 +697,42 @@ public class GardenController extends Controller<GardenView> {
 	
 	public PlantType getPlantType(String name) {
 		return model.getPlants().get(name).getType();
+	}
+	
+
+	public EventHandler handleOnMouseReleased() {
+		return event -> mouseReleased((MouseEvent) event); 
+	}
+	
+	public void mouseReleased(MouseEvent event) {
+		Ellipse dragPlant = (Ellipse) event.getSource();
+		model.setCurrDrawObj(dragPlant);
+		
+		double calcX = model.calcX(event.getX(), dragPlant.getRadiusX(), view.getSize());
+		// System.out.println(view.getGarden().getLayoutX());
+		// System.out.println(dragPlant.getTranslateX());
+
+		double calcY = model.calcY(event.getY(), dragPlant.getRadiusY(), view.getBottomHeight());
+		System.out.println("Drag released at x:" + calcX + ", y:" + calcY); 
+		
+		GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getUserData().toString(), ActionEnum.MOVEPLANT));
+		
+	}
+	
+	public EventHandler handleOnUndoButton() {
+		return event -> undo((MouseEvent) event);
+	}
+	
+	public void undo(MouseEvent event) {
+		GA.undo(view);
+	}
+	
+	public EventHandler handleOnRedoButton() {
+		return event -> redo((MouseEvent) event);
+	}
+	
+	public void redo(MouseEvent event) {
+		GA.redo(view); 
 	}
 	
 	
