@@ -68,6 +68,7 @@ public class GardenView extends View<GardenController> {
 	
 	private Button undo; 
 	private Button redo; 
+	private BorderPane info; 
 	
 	private ScrollPane scrollPane;
 	private BorderPane border;
@@ -274,6 +275,8 @@ public class GardenView extends View<GardenController> {
 		int i = imageArr.size() - 1;
 		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
 		imageArr.get(i).setOnMouseReleased(control.handleOnMouseReleased());
+		imageArr.get(i).setOnMouseEntered(control.handleOnMouseEntered());
+		imageArr.get(i).setOnMouseExited(control.handleOnMouseExited());
 		((Ellipse) garden.getChildren().get(i)).setCenterX(x);
 		((Ellipse) garden.getChildren().get(i)).setCenterY(y);
 		((Ellipse) garden.getChildren().get(i)).setUserData(name);
@@ -491,6 +494,34 @@ public class GardenView extends View<GardenController> {
 		newButton.setOnMouseClicked(eh);
 		newButton.setFont(new Font(buttonFontSize));
 		return newButton;
+	}
+	
+	public void displayInfo(Ellipse e) {
+		//Image img = imgs.getPlantImages().get(key)
+		
+		System.out.println("Trying to add shit to the garden"); 
+		BorderPane bp = new BorderPane(); 
+		
+		bp.setStyle("-fx-background-color: DAE6F3;"); 
+		Label topLabel = new Label(e.getUserData().toString());
+		bp.setTop(topLabel);
+		
+		info = bp; 
+		
+		this.garden.getChildren().add(bp); 
+		/*
+		ImageView imageview = new ImageView(img);
+		imageview.setPreserveRatio(true);
+		imageview.setFitHeight(SIZE);
+		imageview.setFitWidth(SIZE);
+		imageview.setOnDragDetected(control.getHandlerForDragDetected());
+		imageview.setUserData(control.getPlantNameAt(i));
+		//e.getChildren().add(imageview);
+		*/
+	}
+	
+	public void removeInfo() {
+		this.garden.getChildren().remove(info); 
 	}
 
 }

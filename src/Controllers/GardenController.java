@@ -741,5 +741,24 @@ public class GardenController extends Controller<GardenView> {
 	}
 	
 	
+	
+	public EventHandler handleOnMouseEntered() {
+		return event -> displayInfo((MouseEvent) event); 
+	}
+	
+	public void displayInfo(MouseEvent event) {
+		System.out.println("Mouse Over"); 
+		Ellipse plant = (Ellipse) event.getSource();
+		view.displayInfo(plant); 
+	}
+	
+	public EventHandler handleOnMouseExited() {
+		return event -> removeInfo((MouseEvent) event); 
+	}
+	
+	public void removeInfo(MouseEvent event) {
+		view.removeInfo(); 
+		System.out.println("Mouse Exited"); 
+	}
 
 }
