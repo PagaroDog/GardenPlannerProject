@@ -12,6 +12,7 @@ import Model.PlantType;
 import Model.Season;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -113,7 +114,8 @@ public class GardenView extends View<GardenController> {
 			Tab tab = new Tab(type.toString());
 			//tab.setText(type.toString());
 			//Label label = new Label(type.toString());
-			VBox tile = new VBox();
+			VBox tile = new VBox(10);
+			tile.setAlignment(Pos.CENTER);
 			tile.setPadding(new Insets(5, 0, 5, 0));
 //			tile.setVgap(4);
 //			tile.setHgap(4);
