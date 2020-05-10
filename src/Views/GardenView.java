@@ -14,6 +14,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -262,7 +263,7 @@ public class GardenView extends View<GardenController> {
 	 * @param y     y coordinates of mouse
 	 */
 	public void addCirlceToFlow(Ellipse plant, double x, double y, String name) {
-		System.out.println("Dropping image");
+		System.out.println("Dropping image " + name);
 		this.garden.getChildren().add(plant);
 		List<Node> imageArr = garden.getChildren();
 		int i = imageArr.size() - 1;
@@ -371,6 +372,7 @@ public class GardenView extends View<GardenController> {
 		List<Node> gardenList = garden.getChildren();
 		for (Node plant : gardenList) {
 			String plantName = (String) plant.getUserData();
+			
 			if (plantName != null) {
 				if (year == 1) {
 					double minSize = control.getSpread(plantName)[0] / 2;
@@ -418,9 +420,12 @@ public class GardenView extends View<GardenController> {
 	public void changeSeason(Season season) {
 		List<Node> gardenList = garden.getChildren();
 		for (Node plant : gardenList) {
+			
 			String plantName = (String) plant.getUserData();
-			ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(control.getBloomTime(plantName)));
+
+			
 			if (plantName != null) {
+				ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(control.getBloomTime(plantName)));
 				if (season == Season.FALL) {
 					if (seasonList.contains(season)) {
 						((Ellipse) plant).setFill(control.getBloomColor(plantName));
