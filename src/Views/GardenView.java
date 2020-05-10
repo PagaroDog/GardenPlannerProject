@@ -499,25 +499,29 @@ public class GardenView extends View<GardenController> {
 	public void displayInfo(Ellipse e) {
 		//Image img = imgs.getPlantImages().get(key)
 		
+		ImageWithSourceInfo[] img = imgs.getPlantImages().get(e.getUserData()); 
+		Image i = img[0].getImg();
+		
+		ImageView plantImage = new ImageView(i); 
+		plantImage.setPreserveRatio(true);
+		plantImage.setFitHeight(SIZE);
+		plantImage.setFitWidth(SIZE);
 		System.out.println("Trying to add shit to the garden"); 
 		BorderPane bp = new BorderPane(); 
 		
 		bp.setStyle("-fx-background-color: DAE6F3;"); 
+		
 		Label topLabel = new Label(e.getUserData().toString());
+		topLabel.setStyle("-fx-font-size:20px;"); 
+		
 		bp.setTop(topLabel);
+		
+		bp.setCenter(plantImage);
 		
 		info = bp; 
 		
 		this.garden.getChildren().add(bp); 
-		/*
-		ImageView imageview = new ImageView(img);
-		imageview.setPreserveRatio(true);
-		imageview.setFitHeight(SIZE);
-		imageview.setFitWidth(SIZE);
-		imageview.setOnDragDetected(control.getHandlerForDragDetected());
-		imageview.setUserData(control.getPlantNameAt(i));
-		//e.getChildren().add(imageview);
-		*/
+		
 	}
 	
 	public void removeInfo() {
