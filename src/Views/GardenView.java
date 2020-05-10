@@ -358,7 +358,7 @@ public class GardenView extends View<GardenController> {
 	 */
 	public void updatePlants() {
 		left();
-		border.setLeft(scrollPane);
+		border.setLeft(tabPane);
 	}
 
 	/*
