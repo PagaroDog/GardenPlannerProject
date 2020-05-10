@@ -677,7 +677,7 @@ public class GardenController extends Controller<GardenView> {
 	}
 	
 	public PlantType getPlantType(String name) {
-		return model.getPlants().get(plantName).getType();
+		return model.getPlants().get(name).getType();
 	}
 	
 	

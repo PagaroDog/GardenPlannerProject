@@ -11,6 +11,7 @@ import Controllers.GardenController;
 import Model.PlantType;
 import Model.Season;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -62,6 +63,7 @@ public class GardenView extends View<GardenController> {
 	private ScrollPane scrollPane;
 	private BorderPane border;
 	private BorderPane navigation;
+	private TabPane tabPane;
 	int SIZE = 200;
 	int TILE_PANE_WIDTH = 1000;
 	Images imgs;
@@ -90,7 +92,7 @@ public class GardenView extends View<GardenController> {
 		border.setTop(toolbar);
 
 		left();
-		border.setLeft(scrollPane);
+		border.setLeft(tabPane);
 
 		gard();
 		border.setCenter(garden);
@@ -103,14 +105,14 @@ public class GardenView extends View<GardenController> {
 	 * Creates a ScrollPane of suggested plants for the left part of the BorderPane
 	 */
 	public void left() {
+		tabPane = new TabPane();
 		plants.clear();
 		int numberPlants = 50;
-		TabPane tabpane = new TabPane();
 		for (PlantType type : PlantType.values()) {
-			TabPane tabPane = new TabPane();
-			Tab tab = new Tab();
-			tab.setText(type.toString());
-			TilePane tile = new TilePane();
+			Tab tab = new Tab(type.toString());
+			//tab.setText(type.toString());
+			//Label label = new Label(type.toString());
+			TilePane tile = new TilePane(Orientation.VERTICAL);
 			tile.setPadding(new Insets(5, 0, 5, 0));
 			tile.setVgap(4);
 			tile.setHgap(4);
@@ -118,6 +120,7 @@ public class GardenView extends View<GardenController> {
 			tile.setStyle("-fx-background-color: DAE6F3;");
 			tile.setPrefWidth(SIZE);
 			for (int i = 0; i < numberPlants; i++) {
+				System.out.println(control.getPlantNameAt(i));
 				if (control.getPlantType(control.getPlantNameAt(i)) == type) {
 					Image img = imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg();
 					ImageView imageview = new ImageView(img);
@@ -128,12 +131,14 @@ public class GardenView extends View<GardenController> {
 					imageview.setUserData(control.getPlantNameAt(i));
 					tile.getChildren().add(imageview);
 				}
-				scrollPane = new ScrollPane();
-				scrollPane.setFitToWidth(true);
-				scrollPane.setContent(tile);
-				tab.setContent(scrollPane);
-				tabPane.getTabs().add(tab);
+				
 			}
+			scrollPane = new ScrollPane();
+			scrollPane.setFitToWidth(true);
+			scrollPane.setContent(tile);
+			//tab.setContent(label);
+			tab.setContent(scrollPane);
+			tabPane.getTabs().add(tab);
 		}
 
 		System.out.println("The first plant in garden View is " + control.getPlantNameAt(0));
