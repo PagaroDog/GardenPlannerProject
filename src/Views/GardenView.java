@@ -104,38 +104,41 @@ public class GardenView extends View<GardenController> {
 	 */
 	public void left() {
 		plants.clear();
-		TilePane tile = new TilePane();
-		tile.setPadding(new Insets(5, 0, 5, 0));
-		tile.setVgap(4);
-		tile.setHgap(4);
-		tile.setPrefColumns(1);
-		tile.setStyle("-fx-background-color: DAE6F3;");
-		tile.setPrefWidth(SIZE);
-		
-		TabPane tabpane = new TabPane();
-		for(String type: PlantType.getVals()) {
-			Tab tab = new Tab();
-			tab.setText(type);
-			
-		}
-		
 		int numberPlants = 50;
-		System.out.println("The first plant in garden View is " + control.getPlantNameAt(0));
-		for (int i = 0; i < numberPlants; i++) {
-			Image img = imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg();
-			ImageView imageview = new ImageView(img);
-			imageview.setPreserveRatio(true);
-			imageview.setFitHeight(SIZE);
-			imageview.setFitWidth(SIZE);
-			imageview.setOnDragDetected(control.getHandlerForDragDetected());
-			imageview.setUserData(control.getPlantNameAt(i));
-			// System.out.println(control.getPlantNameAt(i));
-			tile.getChildren().add(imageview);
-			// ((Node) plants.get(i)).setUserData(control.getPlantNameAt(i));
+		TabPane tabpane = new TabPane();
+		for (PlantType type : PlantType.values()) {
+			TabPane tabPane = new TabPane();
+			Tab tab = new Tab();
+			tab.setText(type.toString());
+			TilePane tile = new TilePane();
+			tile.setPadding(new Insets(5, 0, 5, 0));
+			tile.setVgap(4);
+			tile.setHgap(4);
+			tile.setPrefColumns(1);
+			tile.setStyle("-fx-background-color: DAE6F3;");
+			tile.setPrefWidth(SIZE);
+			for (int i = 0; i < numberPlants; i++) {
+				if (control.getPlantType(control.getPlantNameAt(i)) == type) {
+					Image img = imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg();
+					ImageView imageview = new ImageView(img);
+					imageview.setPreserveRatio(true);
+					imageview.setFitHeight(SIZE);
+					imageview.setFitWidth(SIZE);
+					imageview.setOnDragDetected(control.getHandlerForDragDetected());
+					imageview.setUserData(control.getPlantNameAt(i));
+					tile.getChildren().add(imageview);
+				}
+				scrollPane = new ScrollPane();
+				scrollPane.setFitToWidth(true);
+				scrollPane.setContent(tile);
+				tab.setContent(scrollPane);
+				tabPane.getTabs().add(tab);
+			}
 		}
-		scrollPane = new ScrollPane();
-		scrollPane.setFitToWidth(true);
-		scrollPane.setContent(tile);
+
+		System.out.println("The first plant in garden View is " + control.getPlantNameAt(0));
+
+		
 	}
 
 	/**
@@ -403,42 +406,38 @@ public class GardenView extends View<GardenController> {
 			}
 		}
 	}
-	
+
 	public void changeSeason(Season season) {
 		List<Node> gardenList = garden.getChildren();
 		for (Node plant : gardenList) {
 			String plantName = (String) plant.getUserData();
 			ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(control.getBloomTime(plantName)));
 			if (plantName != null) {
-				if(season == Season.FALL) {
-					if(seasonList.contains(season)) {
+				if (season == Season.FALL) {
+					if (seasonList.contains(season)) {
 						((Ellipse) plant).setFill(control.getBloomColor(plantName));
-					}
-					else {
+					} else {
 						((Ellipse) plant).setFill(Color.GREEN);
 					}
 				}
-				if(season == Season.WINTER) {
-					if(seasonList.contains(season)) {
+				if (season == Season.WINTER) {
+					if (seasonList.contains(season)) {
 						((Shape) plant).setFill(control.getBloomColor(plantName));
-					}
-					else {
+					} else {
 						((Ellipse) plant).setFill(Color.GRAY);
 					}
 				}
-				if(season == Season.SPRING) {
-					if(seasonList.contains(season)) {
+				if (season == Season.SPRING) {
+					if (seasonList.contains(season)) {
 						((Shape) plant).setFill(control.getBloomColor(plantName));
-					}
-					else {
+					} else {
 						((Ellipse) plant).setFill(Color.GREEN);
 					}
 				}
-				if(season == Season.SUMMER) {
-					if(seasonList.contains(season)) {
+				if (season == Season.SUMMER) {
+					if (seasonList.contains(season)) {
 						((Shape) plant).setFill(control.getBloomColor(plantName));
-					}
-					else {
+					} else {
 						((Ellipse) plant).setFill(Color.GREEN);
 					}
 				}

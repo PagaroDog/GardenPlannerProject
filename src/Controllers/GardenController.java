@@ -7,6 +7,7 @@ import java.util.Random;
 
 import Model.Model;
 import Model.Plant;
+import Model.PlantType;
 import Model.StageName;
 import Model.Season;
 import Views.GardenView;
@@ -673,6 +674,10 @@ public class GardenController extends Controller<GardenView> {
 		System.out.println("setting as BLACK");
 		return Color.BLACK;
 		
+	}
+	
+	public PlantType getPlantType(String name) {
+		return model.getPlants().get(plantName).getType();
 	}
 	
 	
