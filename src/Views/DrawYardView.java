@@ -10,6 +10,7 @@ import Controllers.DrawYardController;
 import Model.DrawMode;
 import Model.StageName;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -17,9 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -74,7 +73,12 @@ public class DrawYardView extends View<DrawYardController> {
 	private ImageView background;
 
 	private double labelSize = 12;
-	private final double labelSizetxtSize = 16;
+	private double expectedWidth = 1770;
+	private double expectedHeight = 930;
+	private double buttonFontSize = 12 * canvasWidth/expectedWidth;
+	private double fieldWidth = 139 * canvasWidth/expectedWidth;
+	private double fieldHeight = 25 * canvasHeight/expectedHeight;
+	private final double labelFontSize = 16 * canvasWidth/expectedWidth;
 	private final double initShapeSize = 10;
 	private final int minRGB = 30;
 	private final double randRGB = 255 - minRGB;
@@ -97,40 +101,30 @@ public class DrawYardView extends View<DrawYardController> {
 	@Override
 	public void setup() {
 		
-		selectButton = new Button("Select");
-		selectButton.setOnMouseClicked(control.getHandleOnSelectButton());
-		deleteButton = new Button("Delete");
-		deleteButton.setOnMousePressed(control.getHandleOnDeleteButton());
-		rectButton = new Button("Rectangle");
-		rectButton.setOnMouseClicked(control.getHandleOnRectButton());
-		circleButton = new Button("Circle");
-		circleButton.setOnMouseClicked(control.getHandleOnCircleButton());
-		labelButton = new Button("Label");
-		labelButton.setOnMouseClicked(control.getHandleOnLabelButton());
-		labeltxt = new TextField();
-		minusButton = new Button("-");
-		minusButton.setOnMouseClicked(control.getHandleOnMinusButton());
-		plusButton = new Button("+");
-		plusButton.setOnMouseClicked(control.getHandleOnPlusButton());
+		selectButton = createButton("Select", control.getHandleOnSelectButton());
+		deleteButton = createButton("Delete", control.getHandleOnDeleteButton());
+		rectButton = createButton("Rectangle", control.getHandleOnRectButton());
+		circleButton = createButton("Circle", control.getHandleOnCircleButton());
+		labelButton = createButton("Label", control.getHandleOnLabelButton());
+		labeltxt = createField();
+		minusButton = createButton("-", control.getHandleOnMinusButton());
+		plusButton = createButton("+", control.getHandleOnPlusButton());
 		labelSizetxt = new Label("Label Size: " + (int) labelSize);
-		labelSizetxt.setFont(new Font(labelSizetxtSize));
-		importButton = new Button("Import Drawing");
-		importButton.setOnMouseClicked(control.getHandleOnImportButton());
-		removeImportButton = new Button("Remove Imported Drawing");
-		removeImportButton.setOnMouseClicked(control.getHandleOnRemoveImportButton());
+		labelSizetxt.setFont(new Font(labelFontSize));
+		importButton = createButton("Import Drawing", control.getHandleOnImportButton());
+		removeImportButton = createButton("Remove Imported Drawing", control.getHandleOnRemoveImportButton());
 		emptyCenter = new Region();
 		HBox.setHgrow(emptyCenter, Priority.ALWAYS);
 		widthTxt = new Label("Width: ");
-		widthTxt.setFont(new Font(labelSizetxtSize));
-		widthField = new TextField();
+		widthTxt.setFont(new Font(labelFontSize));
+		widthField = createField();
 		heightTxt = new Label("ft.   Height: ");
-		heightTxt.setFont(new Font(labelSizetxtSize));
-		heightField = new TextField();
+		heightTxt.setFont(new Font(labelFontSize));
+		heightField = createField();
 		heightUnit = new Label("ft.");
-		heightUnit.setFont(new Font(labelSizetxtSize));
+		heightUnit.setFont(new Font(labelFontSize));
 
-		newAreaButton = new Button("New Conditions Area");
-		newAreaButton.setOnMousePressed(control.getHandleOnNewAreaButton());
+		newAreaButton = createButton("New Conditions Area", control.getHandleOnNewAreaButton());
 
 		toolbar = createToolbar();
 		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
@@ -199,8 +193,6 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @return The newly created rectangle
 	 */
 	public Node addRectangle(StageName mode, double x, double y) {
-
-		System.out.println(drawing.getWidth());
 		Rectangle rect = new Rectangle(x, y, initShapeSize, initShapeSize);
 		if (mode == StageName.DRAW) {
 			rect.setFill(Color.TRANSPARENT);
@@ -452,5 +444,20 @@ public class DrawYardView extends View<DrawYardController> {
 					break;
 			}
 		}
+	}
+	
+	public Button createButton(String text, EventHandler eh) {
+		Button newButton = new Button(text);
+		newButton.setOnMouseClicked(eh);
+		newButton.setFont(new Font(buttonFontSize));
+		return newButton;
+	}
+	
+	public TextField createField() {
+		TextField field = new TextField();
+		field.setPrefWidth(fieldWidth);
+		field.setPrefHeight(fieldHeight);
+		field.setFont(new Font(buttonFontSize));
+		return field;
 	}
 }

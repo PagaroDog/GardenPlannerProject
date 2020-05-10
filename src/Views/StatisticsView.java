@@ -7,6 +7,7 @@ import Model.Season;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -51,6 +52,9 @@ public class StatisticsView extends View<StatisticsController> {
 		border.setBottom(bottom);
 
 		VBox vBox = new VBox();
+		ScrollPane scroll = new ScrollPane(vBox);
+		scroll.setFitToWidth(true);
+		scroll.setFitToHeight(true);
 
 		HBox plants = new HBox(totPlants, trees, flowers, shrubs);
 		plants.setSpacing(hboxSpacing);
@@ -69,7 +73,7 @@ public class StatisticsView extends View<StatisticsController> {
 		vBox.setSpacing(vboxSpacing);
 		vBox.setStyle("-fx-background-color: rgba(158,255,174,1);");
 
-		border.setCenter(vBox);
+		border.setCenter(scroll);
 
 		scene = new Scene(border, canvasWidth, canvasHeight);
 		styleScene();
