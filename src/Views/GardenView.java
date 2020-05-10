@@ -27,6 +27,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
@@ -112,11 +113,11 @@ public class GardenView extends View<GardenController> {
 			Tab tab = new Tab(type.toString());
 			//tab.setText(type.toString());
 			//Label label = new Label(type.toString());
-			TilePane tile = new TilePane(Orientation.VERTICAL);
+			VBox tile = new VBox();
 			tile.setPadding(new Insets(5, 0, 5, 0));
-			tile.setVgap(4);
-			tile.setHgap(4);
-			tile.setPrefColumns(1);
+//			tile.setVgap(4);
+//			tile.setHgap(4);
+//			tile.setPrefColumns(1);
 			tile.setStyle("-fx-background-color: DAE6F3;");
 			tile.setPrefWidth(SIZE);
 			for (int i = 0; i < numberPlants; i++) {
