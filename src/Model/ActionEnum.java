@@ -1,7 +1,7 @@
 package Model;
 
 public enum ActionEnum {
-	ADDPLANT("AddPlant"), MOVEPLANT("MovePlant") ;
+	ADDPLANT("AddPlant"), MOVEPLANT("MovePlant"), DELETE("Delete"), COPY("Copy");
 	
 	private String action = null; 
 	

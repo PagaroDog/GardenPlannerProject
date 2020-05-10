@@ -514,7 +514,7 @@ public class GardenController extends Controller<GardenView> {
 			//ActionEnum a = ActionEnum.ADDPLANT; 
 			
 			GA.addAction(new GardenAction(circle, calcX, calcY, plantName, ActionEnum.ADDPLANT ));
-			
+	
 			view.addCirlceToFlow(circle, calcX, calcY, plantName);
 			success = true;
 			model.setCurrDrawObj(circle);
@@ -567,6 +567,10 @@ public class GardenController extends Controller<GardenView> {
 	 * called by eventHandler
 	 */
 	public void deleteButton(MouseEvent event) {
+		Ellipse e = (Ellipse)model.getCurrDrawObj();
+		
+		GA.addAction(new GardenAction(e, 0, 0, e.getUserData().toString(), ActionEnum.DELETE));
+		
 		view.deleteShape(model.getCurrDrawObj());
 	}
 	
@@ -590,7 +594,12 @@ public class GardenController extends Controller<GardenView> {
 		copy.setUserData(oldEllipse.getUserData());
 		copy.setOnMouseClicked(this.getHandlerForEllipsePressed());
 		copy.setOnMouseDragged(this.getHandlerForDrag());
+		copy.setOnMouseReleased(this.handleOnMouseReleased()); 
 		((Ellipse) copy).setFill(oldEllipse.getFill());
+		
+		System.out.println("In copyButton"); 
+		GA.addAction(new GardenAction(copy, 0, 0, copy.getUserData().toString(), ActionEnum.COPY));
+		
 		view.addShape(copy);
 	}
 
@@ -607,6 +616,25 @@ public class GardenController extends Controller<GardenView> {
 		return model.getPropertyHeightInches();
 	}
 	
+	public EventHandler handleOnMouseReleased() {
+		return event -> mouseReleased((MouseEvent) event); 
+	}
+	
+	public void mouseReleased(MouseEvent event) {
+		Ellipse dragPlant = (Ellipse) event.getSource();
+		model.setCurrDrawObj(dragPlant);
+		
+		double calcX = model.calcX(event.getX(), dragPlant.getRadiusX(), view.getSize());
+		// System.out.println(view.getGarden().getLayoutX());
+		// System.out.println(dragPlant.getTranslateX());
+
+		double calcY = model.calcY(event.getY(), dragPlant.getRadiusY(), view.getBottomHeight());
+		System.out.println("Drag released at x:" + calcX + ", y:" + calcY); 
+		
+		GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getUserData().toString(), ActionEnum.MOVEPLANT));
+		
+	}
+	
 	public EventHandler handleOnUndoButton() {
 		return event -> undo((MouseEvent) event);
 	}
@@ -615,6 +643,13 @@ public class GardenController extends Controller<GardenView> {
 		GA.undo(view);
 	}
 	
+	public EventHandler handleOnRedoButton() {
+		return event -> redo((MouseEvent) event);
+	}
+	
+	public void redo(MouseEvent event) {
+		GA.redo(view); 
+	}
 	
 	
 	

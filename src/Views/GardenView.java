@@ -168,8 +168,9 @@ public class GardenView extends View<GardenController> {
 		undo = new Button("Undo"); 
 		undo.setOnMouseClicked(control.handleOnUndoButton()); 
 		redo = new Button("Redo"); 
+		redo.setOnMouseClicked(control.handleOnRedoButton());
 		
-		toolsTilePane.getChildren().addAll(toolsLabel, delete, copy, undo);
+		toolsTilePane.getChildren().addAll(toolsLabel, delete, copy, undo, redo);
 
 		yearTilePane = new TilePane();
 		Label yearLabel = new Label("Select Year");
@@ -250,6 +251,7 @@ public class GardenView extends View<GardenController> {
 		List<Node> imageArr = garden.getChildren();
 		int i = imageArr.size() - 1;
 		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
+		imageArr.get(i).setOnMouseReleased(control.handleOnMouseReleased());
 		((Ellipse) garden.getChildren().get(i)).setCenterX(x);
 		((Ellipse) garden.getChildren().get(i)).setCenterY(y);
 		System.out.println("UserDAta in addCircleToFlow " + name);
@@ -269,6 +271,7 @@ public class GardenView extends View<GardenController> {
 	public void movePlant(Ellipse dragPlant, double x, double y) {
 		dragPlant.setCenterX(x);
 		dragPlant.setCenterY(y);
+		System.out.println("Moving plant at x:" + x + ", y:" + y); 
 	}
 
 	/**

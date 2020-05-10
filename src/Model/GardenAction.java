@@ -3,7 +3,6 @@ package Model;
 import java.util.LinkedList;
 
 import Views.GardenView;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 
 /**
@@ -64,6 +63,7 @@ public class GardenAction {
 		this.redoList = redoList;
 	} 
 	
+	
 	public String toString() {
 		return action.toString(); 
 	}
@@ -91,23 +91,46 @@ public class GardenAction {
 		if(actionList.size() == 0) {
 			return; 
 		}
+		
 		redoList.push(actionList.removeLast());
 		
 		if(actionList.size()== 0) {
 			gv.getGarden().getChildren().clear(); 
 		}
 		else {
-			gv.getGarden().getChildren().clear(); 
-			for(GardenAction ga : actionList) {
-				switch(ga.getAction()) {
-					case ADDPLANT:
-						gv.addCirlceToFlow(ga.getPlant(), ga.getX(), ga.getY(), ga.getName());
-						break; 
-						
-					case MOVEPLANT:
-						break; 
-				}
+			actionIterate(gv);
+		}
+	}
+	
+	public void redo(GardenView gv) {
+		if(actionList.size() == 0) {
+			return; 
+		}
+		else {
+			actionList.add(redoList.pop());
+			actionIterate(gv); 
+		}
+	}
+	
+	public void actionIterate(GardenView gv) {
+		gv.getGarden().getChildren().clear(); 
+		for(GardenAction ga : actionList) {
+			switch(ga.getAction()) {
+				case ADDPLANT:
+					gv.addCirlceToFlow(ga.getPlant(), ga.getX(), ga.getY(), ga.getName());
+					break; 
+					
+				case MOVEPLANT:
+					gv.movePlant(ga.getPlant(), ga.getX(), ga.getY());
+					break; 
+				
+				case DELETE:
+					gv.deleteShape(ga.getPlant());
+					
+				case COPY:
+					gv.addShape(ga.getPlant());
 			}
 		}
 	}
+	
 }
