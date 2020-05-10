@@ -35,10 +35,10 @@ public class StatisticsController extends Controller<StatisticsView> {
 	 */
 	public void updateStats() {
 		view.updateStats(model.getNumTrees(), model.getNumShrubs(), model.getNumHerbs(), model.getAllColors(),
-				model.getAllSeasons(), model.getPollinatorsPerTree(), model.getPollinatorsPerShrub(),
-				model.getPollinatorsPerHerb(), model.getAnimalsPerTree(), model.getAnimalsPerShrub(),
-				model.getAnimalsPerHerb(), model.getBeeMin(), model.getButterflyMin(), model.getBirdMin(),
-				model.getMammalMin());
+				model.getAllSeasons(), model.getAllNames(), model.getPollinatorsPerTree(),
+				model.getPollinatorsPerShrub(), model.getPollinatorsPerHerb(), model.getAnimalsPerTree(),
+				model.getAnimalsPerShrub(), model.getAnimalsPerHerb(), model.getBeeMin(), model.getButterflyMin(),
+				model.getBirdMin(), model.getMammalMin());
 	}
 
 }

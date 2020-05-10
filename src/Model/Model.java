@@ -108,8 +108,9 @@ public class Model {
 	private final int birdMin = 15;
 	private final int mammalMin = 40;
 	
-	private HashSet<String> AllColors = new HashSet<String>();
-	private HashSet<Season> AllSeasons = new HashSet<Season>();
+	private HashSet<String> allColors = new HashSet<String>();
+	private HashSet<Season> allSeasons = new HashSet<Season>();
+	private HashSet<String> allNames = new HashSet<String>();
 
 	public Season getSeason() {
 		return season;
@@ -345,19 +346,15 @@ public class Model {
 	}
 
 	public HashSet<String> getAllColors() {
-		return AllColors;
-	}
-
-	public void setAllColors(HashSet<String> allColors) {
-		AllColors = allColors;
+		return allColors;
 	}
 
 	public HashSet<Season> getAllSeasons() {
-		return AllSeasons;
+		return allSeasons;
 	}
 
-	public void setAllSeasons(HashSet<Season> allSeasons) {
-		AllSeasons = allSeasons;
+	public HashSet<String> getAllNames() {
+		return allNames;
 	}
 
 	/**
@@ -520,14 +517,14 @@ public class Model {
 				}
 				heightStr = parsedLine.get(heightInd).replaceAll(" ", "").split("-");
 				if (heightStr.length == 1) {
-					height[minHeightInd] = height[maxHeightInd] = Integer.valueOf(heightStr[minHeightInd].replaceAll("[^0-9]", "")) * inchesPerFoot;
+					height[minHeightInd] = height[maxHeightInd] = Integer.valueOf(heightStr[minHeightInd].replaceAll("[^0-9]", ""));
 				} else {
 					height[minHeightInd] = Integer.valueOf(heightStr[minHeightInd]);
 					height[maxHeightInd] = Integer.valueOf(heightStr[maxHeightInd].replaceAll("[^0-9]", ""));
-					if (parsedLine.get(heightInd).contains("ft")) {
-						height[minHeightInd] *= inchesPerFoot;
-						height[maxHeightInd] *= inchesPerFoot;
-					}
+				}
+				if (parsedLine.get(heightInd).contains("ft")) {
+					height[minHeightInd] *= inchesPerFoot;
+					height[maxHeightInd] *= inchesPerFoot;
 				}
 				color = parsedLine.get(colorInd).replaceAll(" ", "").split(",");
 
@@ -570,14 +567,14 @@ public class Model {
 				} else {
 					spreadStr = parsedLine.get(spreadInd).replaceAll(" ", "").split("-");
 					if (spreadStr.length == 1) {
-						spread[minSpreadInd] = spread[maxSpreadInd] = Integer.valueOf(spreadStr[minSpreadInd].replaceAll("[^0-9]", "")) * inchesPerFoot;
+						spread[minSpreadInd] = spread[maxSpreadInd] = Integer.valueOf(spreadStr[minSpreadInd].replaceAll("[^0-9]", ""));
 					} else {
 						spread[minSpreadInd] = Integer.valueOf(spreadStr[minSpreadInd]);
 						spread[maxSpreadInd] = Integer.valueOf(spreadStr[maxSpreadInd].replaceAll("[^0-9]", ""));
-						if (parsedLine.get(spreadInd).contains("feet")) {
-							spread[minSpreadInd] *= inchesPerFoot;
-							spread[maxSpreadInd] *= inchesPerFoot;
-						}
+					}
+					if (parsedLine.get(spreadInd).contains("feet")) {
+						spread[minSpreadInd] *= inchesPerFoot;
+						spread[maxSpreadInd] *= inchesPerFoot;
 					}
 				}
 

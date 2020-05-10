@@ -114,7 +114,7 @@ public class GardenView extends View<GardenController> {
 	public void left() {
 		tabPane = new TabPane();
 		plants.clear();
-		int numberPlants = 50;
+		int numberPlants = control.getNumPlants();
 		for (PlantType type : PlantType.values()) {
 			Tab tab = new Tab(type.toString());
 			//tab.setText(type.toString());
@@ -128,7 +128,6 @@ public class GardenView extends View<GardenController> {
 			tile.setStyle("-fx-background-color: DAE6F3;");
 			tile.setPrefWidth(SIZE);
 			for (int i = 0; i < numberPlants; i++) {
-				System.out.println(control.getPlantNameAt(i));
 				if (control.getPlantType(control.getPlantNameAt(i)) == type) {
 					Image img = imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg();
 					ImageView imageview = new ImageView(img);

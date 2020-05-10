@@ -179,6 +179,7 @@ public class GardenController extends Controller<GardenView> {
 				for (Season season : plant.getBloomtime()) {
 					model.getAllSeasons().add(season);
 				}
+				model.getAllNames().add(plantName);
 			}
 		}
 		main.getStatControl().updateStats();
@@ -589,6 +590,10 @@ public class GardenController extends Controller<GardenView> {
 	 */
 	public String getPlantNameAt(int x) {
 		return model.getSuggestedPlants().get(x).getName();
+	}
+	
+	public int getNumPlants() {
+		return model.getPlants().size();
 	}
 	/**
 	 * Called by SuggestionsController when the next button is hit. Calls the view to update Plants in the event the 

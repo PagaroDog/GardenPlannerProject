@@ -35,6 +35,7 @@ public class StatisticsView extends View<StatisticsController> {
 	private Label pollinators = new Label();
 	private Label numAnimal = new Label();
 	private Label animalTypes = new Label();
+	private Label plantList = new Label();
 
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
@@ -61,12 +62,14 @@ public class StatisticsView extends View<StatisticsController> {
 
 		for (int i = 0; i < plants.getChildren().size(); i++) {
 			((Label) plants.getChildren().get(i)).setFont(new Font(fontSize));
+			((Label) plants.getChildren().get(i)).setWrapText(true);
 		}
 
-		vBox.getChildren().addAll(plants, pollinators, colors, bloomingSeasons, numAnimal, animalTypes);
+		vBox.getChildren().addAll(plants, pollinators, colors, bloomingSeasons, numAnimal, animalTypes, plantList);
 
 		for (int i = 1; i < vBox.getChildren().size(); i++) {
 			((Label) vBox.getChildren().get(i)).setFont(new Font(fontSize));
+			((Label) vBox.getChildren().get(i)).setWrapText(true);
 		}
 
 		vBox.setPadding(new Insets(vboxSpacing, vboxSpacing, vboxSpacing, vboxSpacing));
@@ -81,21 +84,27 @@ public class StatisticsView extends View<StatisticsController> {
 
 	/**
 	 * Modifies the labels to show statistics. Does some calculations.
-	 * @param numTrees The number of trees in the garden
-	 * @param numShrubs The number of shrubs in the garden
-	 * @param numHerbs The number of herbs in the garden
-	 * @param pollinatorsPerTree The number of pollinators attracted by a tree
+	 * 
+	 * @param numTrees            The number of trees in the garden
+	 * @param numShrubs           The number of shrubs in the garden
+	 * @param numHerbs            The number of herbs in the garden
+	 * @param pollinatorsPerTree  The number of pollinators attracted by a tree
 	 * @param pollinatorsPerShrub The number of pollinators attracted by a shrub
-	 * @param pollinatorsPerHerb The number of pollinators attracted by a herb
-	 * @param animalsPerTree The number of animals attracted by a tree
-	 * @param animalsPerShrub The number of animals attracted by a shrub
-	 * @param animalsPerHerb The number of animals attracted by a herb
-	 * @param beeMin The minimum number of plants needed to attract bees
-	 * @param butterflyMin The minimum number of plants needed to attract butterflies
-	 * @param birdMin The minimum number of plants needed to attract birds
-	 * @param mammalMin The minimum number of plants needed to attract small mammals
+	 * @param pollinatorsPerHerb  The number of pollinators attracted by a herb
+	 * @param animalsPerTree      The number of animals attracted by a tree
+	 * @param animalsPerShrub     The number of animals attracted by a shrub
+	 * @param animalsPerHerb      The number of animals attracted by a herb
+	 * @param beeMin              The minimum number of plants needed to attract
+	 *                            bees
+	 * @param butterflyMin        The minimum number of plants needed to attract
+	 *                            butterflies
+	 * @param birdMin             The minimum number of plants needed to attract
+	 *                            birds
+	 * @param mammalMin           The minimum number of plants needed to attract
+	 *                            small mammals
 	 */
-	public void updateStats(int numTrees, int numShrubs, int numHerbs, HashSet<String> colorSet, HashSet<Season> seasons, int pollinatorsPerTree, int pollinatorsPerShrub,
+	public void updateStats(int numTrees, int numShrubs, int numHerbs, HashSet<String> colorSet,
+			HashSet<Season> seasons, HashSet<String> allNames, int pollinatorsPerTree, int pollinatorsPerShrub,
 			int pollinatorsPerHerb, int animalsPerTree, int animalsPerShrub, int animalsPerHerb, int beeMin,
 			int butterflyMin, int birdMin, int mammalMin) {
 		int total = numTrees + numShrubs + numHerbs;
@@ -103,13 +112,13 @@ public class StatisticsView extends View<StatisticsController> {
 		trees.setText("Trees: " + numTrees);
 		shrubs.setText("Shrubs: " + numShrubs);
 		flowers.setText("Herbs: " + numHerbs);
-		
+
 		colors.setText("Colors: ");
 		for (String color : colorSet) {
 			colors.setText(colors.getText() + color + ", ");
 		}
 		colors.setText(colors.getText().substring(0, colors.getText().length() - 2));
-		
+
 		bloomingSeasons.setText("Blooming seasons: ");
 		for (Season season : seasons) {
 			bloomingSeasons.setText(bloomingSeasons.getText() + season + ", ");
@@ -132,6 +141,12 @@ public class StatisticsView extends View<StatisticsController> {
 		} else {
 			animalTypes.setText("Possible Animal Types: None (Add more plants to you garden!)");
 		}
+
+		plantList.setText("List of Plants in your Garden: ");
+		for (String name : allNames) {
+			plantList.setText(plantList.getText() + name + ", ");
+		}
+		plantList.setText(plantList.getText().substring(0, plantList.getText().length() - 2));
 	}
 
 }
