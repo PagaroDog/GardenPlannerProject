@@ -102,33 +102,31 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 * @param drawing The drawing Pane from DrawYard
 	 */
 	public void setDrawing(Pane drawing) {
-		view.getBorder().setLeft(drawing);
-		for (Node child : drawing.getChildren()) {
-			child.setTranslateX(0);
-			child.setScaleX(1);
-		}
-		double oldWidth = main.getDyControl().getViewWidth();
-		System.out.println(oldWidth);
-		double newWidth = view.getBorder().getWidth() - view.getVBox().getWidth();
-		System.out.println(newWidth);
-		drawing.setPrefWidth(newWidth);
-		double ratio = newWidth / oldWidth;
-		model.getGardenPreferences().clear();
-		for (Node child : drawing.getChildren()) {
-			if (child.getUserData() == StageName.CONDITIONS) {
-				model.getGardenPreferences().add(new GardenPref());
+		if (drawing != null) {
+			view.getBorder().setLeft(drawing);
+			for (Node child : drawing.getChildren()) {
+				child.setTranslateX(0);
+				child.setScaleX(1);
 			}
-			double oldX = child.getBoundsInParent().getMinX();
-			System.out.println(oldX);
-			child.setScaleX(ratio);
-			double newX = child.getBoundsInParent().getMinX();
-			System.out.println(newX);
-			child.setTranslateX(oldX * ratio - newX);
-		}
-		view.setDrawing(drawing);
-		view.setupZoneFlips(model.getGardenPreferences());
-		if (model.getGardenPreferences().size() > 0) {
-			model.setCurrPref(model.getGardenPreferences().get(0));
+			double oldWidth = main.getDyControl().getViewWidth();
+			double newWidth = view.getBorder().getWidth() - view.getVBox().getWidth();
+			drawing.setPrefWidth(newWidth);
+			double ratio = newWidth / oldWidth;
+			model.getGardenPreferences().clear();
+			for (Node child : drawing.getChildren()) {
+				if (child.getUserData() == StageName.CONDITIONS) {
+					model.getGardenPreferences().add(new GardenPref());
+				}
+				double oldX = child.getBoundsInParent().getMinX();
+				child.setScaleX(ratio);
+				double newX = child.getBoundsInParent().getMinX();
+				child.setTranslateX(oldX * ratio - newX);
+			}
+			view.setDrawing(drawing);
+			view.setupZoneFlips(model.getGardenPreferences());
+			if (model.getGardenPreferences().size() > 0) {
+				model.setCurrPref(model.getGardenPreferences().get(0));
+			}
 		}
 	}
 

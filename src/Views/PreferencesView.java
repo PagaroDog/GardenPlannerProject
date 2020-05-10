@@ -3,12 +3,8 @@ package Views;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import Controllers.PreferencesController;
 import Model.GardenPref;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -83,7 +79,7 @@ public class PreferencesView extends View<PreferencesController> {
 	public VBox addVBox() {
 		vbox = new VBox();
 		vbox.setPadding(new Insets(15, 12, 15, 12));
-		vbox.setSpacing(25);
+		vbox.setSpacing(15);
 		vbox.setStyle("-fx-background-color: rgba(158,255,174,1);");
 
 		name = new TextField();
@@ -121,14 +117,14 @@ public class PreferencesView extends View<PreferencesController> {
 			color.getChildren().add(new RadioButton(c));
 		}
 
-		bloom.setPrefWidth(250);
+//		bloom.setPrefWidth(250);
 		//soil.setPrefWidth(250);
-		water.setPrefWidth(250);
-		sun.setPrefWidth(250);
-		color.setPrefWidth(500);
+//		water.setPrefWidth(250);
+//		sun.setPrefWidth(250);
+//		color.setPrefWidth(500);
 		vbox.getChildren().addAll(name, labwater, water,  labsun, sun, labcolor, color,
 				labbloom, bloom);
-		vbox.setPrefWidth(500);
+//		vbox.setPrefWidth(500);
 		return vbox;
 	}
 

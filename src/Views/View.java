@@ -39,6 +39,7 @@ public class View<T extends Controller> {
 	private int navGreen = 158;
 	private int navBlue = 255;
 	private double navOpacity = 1;
+	private double toolbarPrefHeight = 55;
 	
 	/**
 	 * Creates an HBox node that can act as the toolbar at the top of a View.
@@ -49,6 +50,7 @@ public class View<T extends Controller> {
 		toolbar.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %f);", toolbarRed, toolbarGreen, toolbarBlue, toolbarOpacity));
 		toolbar.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
 		toolbar.setSpacing(toolbarHGap);
+		toolbar.setPrefHeight(toolbarPrefHeight);
 		
 		return toolbar;
 	}
