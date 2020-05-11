@@ -114,6 +114,7 @@ public class GardenAction {
 	
 	public void actionIterate(GardenView gv) {
 		gv.getGarden().getChildren().clear(); 
+		gv.getGarden().getChildren().add(gv.getDrawing());
 		for(GardenAction ga : actionList) {
 			switch(ga.getAction()) {
 				case ADDPLANT:
