@@ -68,6 +68,7 @@ public class DrawYardView extends View<DrawYardController> {
 	private TextField widthField;
 	private TextField heightField;
 
+
 	private FileChooser fileChooser;
 
 	private ImageView background;
@@ -90,6 +91,7 @@ public class DrawYardView extends View<DrawYardController> {
 	public DrawYardView(Stage stage) {
 		this.stage = stage;
 		fileChooser = new FileChooser();
+		
 	}
 
 	/**
@@ -472,4 +474,6 @@ public class DrawYardView extends View<DrawYardController> {
 		field.setFont(new Font(buttonFontSize));
 		return field;
 	}
+
+
 }
