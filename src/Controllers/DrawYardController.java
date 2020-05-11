@@ -30,6 +30,10 @@ public class DrawYardController extends Controller<DrawYardView> {
 	private final double fontIncrement = 1;
 	private final double originalTranslate = 0;
 	private final double originalScale = 1;
+	private final int xInd = 0;
+	private final int yInd = 1;
+	private final int widthInd = 2;
+	private final int heightInd = 3;
 
 	public DrawYardController(Model model, DrawYardView dyv, Main main) {
 		super(model, dyv, main);
@@ -106,9 +110,10 @@ public class DrawYardController extends Controller<DrawYardView> {
 	public EventHandler getHandleOnImportButton() {
 		return event -> importButton((MouseEvent) event);
 	}
-	
+
 	/**
-	 * Handles event when user presses remove import button, invoking removeImportButton()
+	 * Handles event when user presses remove import button, invoking
+	 * removeImportButton()
 	 * 
 	 * @return EventHandler object for this action
 	 */
@@ -205,7 +210,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	public EventHandler getHandleOnDragLabel() {
 		return event -> dragLabel((MouseEvent) event);
 	}
-	
+
 	/**
 	 * Handles event when user presses a key
 	 * 
@@ -215,29 +220,29 @@ public class DrawYardController extends Controller<DrawYardView> {
 		return new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
-					case S:
-						selectButton();
-						break;
-					case DELETE:
-						deleteButton();
-						break;
-					case R:
-						rectButton();
-						break;
-					case C:
-						circleButton();
-						break;
-					case L:
-						labelButton();
-						break;
-					case EQUALS:
-						plusButton();
-						break;
-					case MINUS:
-						minusButton();
-						break;
-	    		}
-	    	}
+				case S:
+					selectButton();
+					break;
+				case DELETE:
+					deleteButton();
+					break;
+				case R:
+					rectButton();
+					break;
+				case C:
+					circleButton();
+					break;
+				case L:
+					labelButton();
+					break;
+				case EQUALS:
+					plusButton();
+					break;
+				case MINUS:
+					minusButton();
+					break;
+				}
+			}
 		};
 	}
 
@@ -253,7 +258,6 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * Sets drawing mode to rectangle
 	 */
 	public void rectButton() {
-		System.out.println("press");
 		view.updateMode(DrawMode.RECTANGLE);
 		model.setDrawMode(DrawMode.RECTANGLE);
 	}
@@ -303,8 +307,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 	public void importButton(MouseEvent event) {
 		File file = view.getFileChooser().showOpenDialog(view.getStage());
 		if (file != null) {
-            view.setBackground(file.getPath());
-         }
+			view.setBackground(file.getPath());
+		}
 	}
 
 	/**
@@ -315,7 +319,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	private void removeImportButton(MouseEvent event) {
 		view.removeBackground();
 	}
-	
+
 	/**
 	 * Shows current state of objects being drawn, if in the correct mode
 	 * 
@@ -325,11 +329,16 @@ public class DrawYardController extends Controller<DrawYardView> {
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case RECTANGLE:
-				view.updateRect((Rectangle) model.getCurrDrawObj(), model.getDrawPressX(), model.getDrawPressY(),
-						event.getX(), event.getY());
+				double[] newCoords = model.updateRectCoordinates(model.getDrawPressX(), model.getDrawPressY(),
+						event.getX(), event.getY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
+				view.updateRect((Rectangle) model.getCurrDrawObj(), newCoords[xInd], newCoords[yInd],
+						newCoords[widthInd], newCoords[heightInd]);
 				break;
 			case CIRCLE:
-				view.updateCircle((Ellipse) model.getCurrDrawObj(), event.getX(), event.getY());
+				Ellipse circle = (Ellipse) model.getCurrDrawObj();
+				double[] newRadii = model.updateCircleCoordinates(event.getX(), event.getY(), circle.getCenterX(),
+						circle.getCenterY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
+				view.updateCircle(circle, newRadii[xInd], newRadii[yInd]);
 			}
 		}
 	}
@@ -420,7 +429,6 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the shape was pressed
 	 */
 	public void pressShape(MouseEvent event) {
-		System.out.println("rect");
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case SELECT:
@@ -458,12 +466,14 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the rectangle was dragged
 	 */
 	public void dragRectangle(MouseEvent event) {
-		System.out.println("drag");
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case SELECT:
-				if (((Rectangle) event.getSource()).getUserData() == model.getStageName())
-					view.moveRectangle((Rectangle) event.getSource(), event.getX(), event.getY());
+				Rectangle rect = (Rectangle) event.getSource();
+				double[] newCoords = model.moveRectCoordinates(event.getX(), event.getY(), rect.getWidth(),
+						rect.getHeight(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
+				if (rect.getUserData() == model.getStageName())
+					view.moveRectangle(rect, newCoords[xInd], newCoords[yInd]);
 			}
 		}
 	}
@@ -474,12 +484,15 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the circle was dragged
 	 */
 	public void dragCircle(MouseEvent event) {
-		System.out.println("drag");
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case SELECT:
-				if (model.getStageName() == StageName.DRAW)
-					view.moveCircle((Ellipse) event.getSource(), event.getX(), event.getY());
+				if (model.getStageName() == StageName.DRAW) {
+					Ellipse circle = (Ellipse) event.getSource();
+					double[] newCenters = model.moveCircleCoordinates(event.getX(), event.getY(), circle.getRadiusX(),
+							circle.getRadiusY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
+					view.moveCircle(circle, newCenters[xInd], newCenters[yInd]);
+				}
 			}
 		}
 	}
@@ -490,14 +503,15 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the button was pressed
 	 */
 	public void dragLabel(MouseEvent event) {
-		System.out.println("drag");
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case SELECT:
-				event.getX();
+				Label label = (Label) event.getSource();
+				double[] newCoords = model.moveRectCoordinates(event.getSceneX(),
+						event.getSceneY() - view.getToolbarHeight(), view.getDrawing().getWidth(),
+						view.getDrawing().getHeight(), label.getWidth(), label.getHeight());
 				if (model.getStageName() == StageName.DRAW)
-					view.moveLabel((Label) event.getSource(), event.getSceneX(),
-							event.getSceneY() - view.getToolbarHeight());
+					view.moveLabel(label, newCoords[xInd], newCoords[yInd]);
 			}
 		}
 	}

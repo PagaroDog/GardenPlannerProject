@@ -81,8 +81,6 @@ public class DrawYardView extends View<DrawYardController> {
 	private final int minRGB = 30;
 	private final double randRGB = 255 - minRGB;
 	private final double opacity = 0.3;
-	private final double minX = 0;
-	private final double minY = 0;
 	private final double minLabelLength = 0;
 
 	private ArrayList<Node> areas = new ArrayList<Node>();
@@ -218,11 +216,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param x1  The x coordinate of the current mouse position
 	 * @param y1  The y coordinate of the current mouse position
 	 */
-	public void updateRect(Rectangle rect, double x0, double y0, double x1, double y1) {
-		double topLeftX = Math.max(minX, Math.min(x0, x1));
-		double topLeftY = Math.max(minY, Math.min(y0, y1));
-		double width = Math.min(drawing.getWidth() - topLeftX, Math.max(x0, x1) - topLeftX);
-		double height = Math.min(drawing.getHeight() - topLeftY, Math.max(y0, y1) - topLeftY);
+	public void updateRect(Rectangle rect, double topLeftX, double topLeftY, double width, double height) {
 		rect.setX(topLeftX);
 		rect.setY(topLeftY);
 		rect.setWidth(width);
@@ -238,8 +232,8 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y    The new y coordinate of the rectangle
 	 */
 	public void moveRectangle(Rectangle rect, double x, double y) {
-		rect.setX(Math.max(minX, Math.min(drawing.getWidth() - rect.getWidth(), x)));
-		rect.setY(Math.max(minY, Math.min(drawing.getHeight() - rect.getHeight(), y)));
+		rect.setX(x);
+		rect.setY(y);
 	}
 
 	/**
@@ -268,11 +262,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param x      The x coordinate of the current mouse position
 	 * @param y      The y coordinate of the current mouse position
 	 */
-	public void updateCircle(Ellipse circle, double x, double y) {
-		double maxRadiusX = Math.min(circle.getCenterX(), drawing.getWidth() - circle.getCenterX());
-		double maxRadiusY = Math.min(circle.getCenterY(), drawing.getHeight() - circle.getCenterY());
-		double radiusX = Math.min(maxRadiusX, Math.abs(circle.getCenterX() - x));
-		double radiusY = Math.min(maxRadiusY, Math.abs(circle.getCenterY() - y));
+	public void updateCircle(Ellipse circle, double radiusX, double radiusY) {
 		circle.setRadiusX(radiusX);
 		circle.setRadiusY(radiusY);
 	}
@@ -286,8 +276,8 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y    The new y coordinate of the center of the circle
 	 */
 	public void moveCircle(Ellipse circle, double x, double y) {
-		circle.setCenterX(Math.max(circle.getRadiusX(), Math.min(drawing.getWidth() - circle.getRadiusX(), x)));
-		circle.setCenterY(Math.max(circle.getRadiusY(), Math.min(drawing.getHeight() - circle.getRadiusY(), y)));
+		circle.setCenterX(x);
+		circle.setCenterY(y);
 	}
 
 	public Node addLabel(double x, double y) {
@@ -315,8 +305,8 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y     The new y coordinate of the center of the label
 	 */
 	public void moveLabel(Label label, double x, double y) {
-		label.setLayoutX(Math.max(minX, Math.min(drawing.getWidth() - label.getWidth(), x)));
-		label.setLayoutY(Math.max(minY, Math.min(drawing.getHeight() - label.getHeight(), y)));
+		label.setLayoutX(x);
+		label.setLayoutY(y);
 	}
 
 	/**

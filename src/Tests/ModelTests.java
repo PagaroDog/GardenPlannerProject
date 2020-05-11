@@ -16,7 +16,6 @@ import Model.PlantType;
 import Model.Season;
 import Model.Sun;
 import Model.Water;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -303,5 +302,92 @@ public class ModelTests {
 		}
 		assertEquals(plant, test.getSuggestedPlants().get(0));
 	}
+	
+	@Test
+	public void updateRectCoordinatesTest() {
+		Model test = new Model();
+		
+		double[] coords = test.updateRectCoordinates(10, 20, 110, 220, 1000, 1000);
+		assertEquals(10, coords[0], 0.01);
+		assertEquals(20, coords[1], 0.01);
+		assertEquals(100, coords[2], 0.01);
+		assertEquals(200, coords[3], 0.01);
 
+		coords = test.updateRectCoordinates(110, 220, 10, 20, 1000, 1000);
+		assertEquals(10, coords[0], 0.01);
+		assertEquals(20, coords[1], 0.01);
+		assertEquals(100, coords[2], 0.01);
+		assertEquals(200, coords[3], 0.01);
+		
+		coords = test.updateRectCoordinates(-1, -1, 100, 200, 1000, 1000);
+		assertEquals(0, coords[0], 0.01);
+		assertEquals(0, coords[1], 0.01);
+		assertEquals(100, coords[2], 0.01);
+		assertEquals(200, coords[3], 0.01);
+		
+		coords = test.updateRectCoordinates(10, 20, 1001, 1001, 1000, 1000);
+		assertEquals(10, coords[0], 0.01);
+		assertEquals(20, coords[1], 0.01);
+		assertEquals(990, coords[2], 0.01);
+		assertEquals(980, coords[3], 0.01);
+	}
+
+	@Test
+	public void moveRectCoordinatesTest() {
+		Model test = new Model();
+		
+		double[] coords = test.moveRectCoordinates(10, 20, 110, 220, 1000, 1000);
+		assertEquals(10, coords[0], 0.01);
+		assertEquals(20, coords[1], 0.01);
+		
+		coords = test.moveRectCoordinates(-1, -1, 100, 200, 1000, 1000);
+		assertEquals(0, coords[0], 0.01);
+		assertEquals(0, coords[1], 0.01);
+		
+		coords = test.moveRectCoordinates(1001, 1001, 100, 200, 1000, 1000);
+		assertEquals(900, coords[0], 0.01);
+		assertEquals(800, coords[1], 0.01);
+	}
+	
+	@Test
+	public void updateCircleCoordinatesTest() {
+		Model test = new Model();
+		
+		double[] radii = test.updateCircleCoordinates(10, 20, 110, 220, 1000, 1000);
+		assertEquals(100, radii[0], 0.01);
+		assertEquals(200, radii[1], 0.01);
+
+		radii = test.updateCircleCoordinates(110, 220, 10, 20, 1000, 1000);
+		assertEquals(10, radii[0], 0.01);
+		assertEquals(20, radii[1], 0.01);
+		
+		radii = test.updateCircleCoordinates(-1, -1, 100, 200, 1000, 1000);
+		assertEquals(100, radii[0], 0.01);
+		assertEquals(200, radii[1], 0.01);
+		
+		radii = test.updateCircleCoordinates(1001, 1001, 400, 550, 1000, 1000);
+		assertEquals(400, radii[0], 0.01);
+		assertEquals(450, radii[1], 0.01);
+	}
+	
+	@Test
+	public void moveCircleCoordinatesTest() {
+		Model test = new Model();
+		
+		double[] coords = test.moveCircleCoordinates(10, 20, 110, 220, 1000, 1000);
+		assertEquals(110, coords[0], 0.01);
+		assertEquals(220, coords[1], 0.01);
+
+		coords = test.moveCircleCoordinates(110, 220, 10, 20, 1000, 1000);
+		assertEquals(110, coords[0], 0.01);
+		assertEquals(220, coords[1], 0.01);
+		
+		coords = test.moveCircleCoordinates(-1, -1, 100, 200, 1000, 1000);
+		assertEquals(100, coords[0], 0.01);
+		assertEquals(200, coords[1], 0.01);
+		
+		coords = test.moveCircleCoordinates(1001, 1001, 400, 450, 1000, 1000);
+		assertEquals(600, coords[0], 0.01);
+		assertEquals(550, coords[1], 0.01);
+	}
 }
