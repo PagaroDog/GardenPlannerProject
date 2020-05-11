@@ -103,7 +103,7 @@ public class GardenAction {
 	}
 	
 	public void redo(GardenView gv) {
-		if(actionList.size() == 0) {
+		if(redoList.size() == 0) {
 			return; 
 		}
 		else {
