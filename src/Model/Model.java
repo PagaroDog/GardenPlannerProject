@@ -25,6 +25,7 @@ import Controllers.TutorialController;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Ellipse;
 
 /**
  * This class stores the data for this software, as well as some methods that
@@ -44,8 +45,8 @@ public class Model {
 	private double drawPressY;
 	private Node currDrawObj;
 	
-	private int propertyHeightInches = 1200;
-	private int propertyWidthInches = 2400;
+	private double propertyHeightInches = 1200;
+	private double propertyWidthInches = 2400;
 
 	// make a constructor to do this
 	private HashMap<String, Plant> plants = new HashMap<String, Plant>();
@@ -97,6 +98,8 @@ public class Model {
 	private int numTrees = 0;
 	private int numShrubs = 0;
 	private int numHerbs = 0;
+	private int numVine = 0;
+	private double gardenCovered = 0;
 	
 	private final int pollinatorsPerTree = 72;
 	private final int pollinatorsPerShrub = 17;
@@ -262,19 +265,19 @@ public class Model {
 		this.prefControl = prefControl;
 	}
 
-	public int getPropertyHeightInches() {
+	public double getPropertyHeightInches() {
 		return propertyHeightInches;
 	}
 
-	public void setPropertyHeightInches(int propertyHeightInches) {
+	public void setPropertyHeightInches(double propertyHeightInches) {
 		this.propertyHeightInches = propertyHeightInches;
 	}
 
-	public int getPropertyWidthInches() {
+	public double getPropertyWidthInches() {
 		return propertyWidthInches;
 	}
 
-	public void setPropertyWidthInches(int propertyWidthInches) {
+	public void setPropertyWidthInches(double propertyWidthInches) {
 		this.propertyWidthInches = propertyWidthInches;
 	}
 
@@ -734,10 +737,12 @@ public class Model {
 		}
 
 		suggestedPlants.clear();
-		for (int i = 0; i < score; i++) {
-
+		
+		for (int i = 0; i <score; i++) {
+			
 			suggestedPlants.addAll(plantsFromPref.get(i));
 		}
+		
 
 	}
 
@@ -792,15 +797,18 @@ public class Model {
 				index++;
 			}
 		}
+		
 		suggestedPlants.removeAll(selected);
 		suggestedPlants.addAll(0, selected);
-
+		
 	}
 	
 	public void generateStats(ObservableList<Node> garden) {
 		numTrees = 0;
 		numShrubs = 0;
 		numHerbs = 0;
+		numVine = 0;
+		double plantSurfaceArea =0;
 		allColors.clear();
 		allSeasons.clear();
 		for (Node node : garden) {
@@ -818,6 +826,7 @@ public class Model {
 					numTrees++;
 					break;
 				case VINE:
+					numVine++;
 					break;
 				}
 				for (String color : plant.getColor()) {
@@ -827,8 +836,17 @@ public class Model {
 					allSeasons.add(season);
 				}
 				allNames.add(plantName);
+				System.out.println("Area of " + plantName+ " " +Math.PI * ((Ellipse)node).getRadiusX() * ((Ellipse)node).getRadiusY() );
+				plantSurfaceArea += Math.PI * ((Ellipse)node).getRadiusX() * ((Ellipse)node).getRadiusY();
 			}
 		}
+		System.out.println(propertyHeightInches);
+		gardenCovered = plantSurfaceArea / (propertyHeightInches * propertyWidthInches);
+	}
+
+	public double getGardenCoveredPercent() {
+		
+		return gardenCovered;
 	}
 
 }
