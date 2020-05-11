@@ -265,7 +265,7 @@ public class Model {
 		this.prefControl = prefControl;
 	}
 
-	public double getPropertyHeightInches() {
+	public int getPropertyHeightInches() {
 		return propertyHeightInches;
 	}
 
