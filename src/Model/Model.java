@@ -738,7 +738,7 @@ public class Model {
 
 		suggestedPlants.clear();
 		
-		for (int i = 0; i <score; i++) {
+		for (int i = 0; i <=score; i++) {
 			
 			suggestedPlants.addAll(plantsFromPref.get(i));
 		}
@@ -847,6 +847,11 @@ public class Model {
 	public double getGardenCoveredPercent() {
 		
 		return gardenCovered;
+	}
+
+	public int getNumVines() {
+		
+		return numVine;
 	}
 
 }
