@@ -45,8 +45,8 @@ public class Model {
 	private double drawPressY;
 	private Node currDrawObj;
 	
-	private double propertyHeightInches = 1200;
-	private double propertyWidthInches = 2400;
+	private int propertyHeightInches = 1200;
+	private int propertyWidthInches = 2400;
 
 	// make a constructor to do this
 	private HashMap<String, Plant> plants = new HashMap<String, Plant>();
@@ -269,15 +269,15 @@ public class Model {
 		return propertyHeightInches;
 	}
 
-	public void setPropertyHeightInches(double propertyHeightInches) {
+	public void setPropertyHeightInches(int propertyHeightInches) {
 		this.propertyHeightInches = propertyHeightInches;
 	}
 
-	public double getPropertyWidthInches() {
+	public int getPropertyWidthInches() {
 		return propertyWidthInches;
 	}
 
-	public void setPropertyWidthInches(double propertyWidthInches) {
+	public void setPropertyWidthInches(int propertyWidthInches) {
 		this.propertyWidthInches = propertyWidthInches;
 	}
 
