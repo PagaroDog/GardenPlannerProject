@@ -30,9 +30,10 @@ public class StatisticsView extends View<StatisticsController> {
 	private Label trees = new Label();
 	private Label flowers = new Label();
 	private Label shrubs = new Label();
+	private Label vines = new Label();
 	private Label colors = new Label();
 	private Label bloomingSeasons = new Label();
-	private Label pollinators = new Label();
+	private Label gardenCover = new Label();
 	private Label numAnimal = new Label();
 	private Label animalTypes = new Label();
 	private Label plantList = new Label();
@@ -57,7 +58,7 @@ public class StatisticsView extends View<StatisticsController> {
 		scroll.setFitToWidth(true);
 		scroll.setFitToHeight(true);
 
-		HBox plants = new HBox(totPlants, trees, flowers, shrubs);
+		HBox plants = new HBox(totPlants, trees, flowers, shrubs,vines);
 		plants.setSpacing(hboxSpacing);
 
 		for (int i = 0; i < plants.getChildren().size(); i++) {
@@ -65,7 +66,7 @@ public class StatisticsView extends View<StatisticsController> {
 			((Label) plants.getChildren().get(i)).setWrapText(true);
 		}
 
-		vBox.getChildren().addAll(plants, pollinators, colors, bloomingSeasons, numAnimal, animalTypes, plantList);
+		vBox.getChildren().addAll(plants, gardenCover, colors, bloomingSeasons, numAnimal, animalTypes, plantList);
 
 		for (int i = 1; i < vBox.getChildren().size(); i++) {
 			((Label) vBox.getChildren().get(i)).setFont(new Font(fontSize));
@@ -103,15 +104,14 @@ public class StatisticsView extends View<StatisticsController> {
 	 * @param mammalMin           The minimum number of plants needed to attract
 	 *                            small mammals
 	 */
-	public void updateStats(int numTrees, int numShrubs, int numHerbs, HashSet<String> colorSet,
-			HashSet<Season> seasons, HashSet<String> allNames, int pollinatorsPerTree, int pollinatorsPerShrub,
-			int pollinatorsPerHerb, int animalsPerTree, int animalsPerShrub, int animalsPerHerb, int beeMin,
-			int butterflyMin, int birdMin, int mammalMin) {
-		int total = numTrees + numShrubs + numHerbs;
+	public void updateStats(int numTrees, int numShrubs, int numHerbs, int numVines, HashSet<String> colorSet,
+		HashSet<Season> seasons, HashSet<String> allNames, double gardenCoveredPercent) {
+		int total = numTrees + numShrubs + numHerbs + numVines;
 		totPlants.setText("Total Plants: " + total);
 		trees.setText("Trees: " + numTrees);
 		shrubs.setText("Shrubs: " + numShrubs);
 		flowers.setText("Herbs: " + numHerbs);
+		vines.setText("Vines: " + numVines);
 
 		colors.setText("Colors: ");
 		for (String color : colorSet) {
@@ -124,23 +124,25 @@ public class StatisticsView extends View<StatisticsController> {
 			bloomingSeasons.setText(bloomingSeasons.getText() + season + ", ");
 		}
 		bloomingSeasons.setText(bloomingSeasons.getText().substring(0, bloomingSeasons.getText().length() - 2));
-
-		pollinators.setText("Estimated Pollinators Supported: "
-				+ (numTrees * pollinatorsPerTree + numShrubs * pollinatorsPerShrub + numHerbs * pollinatorsPerHerb));
-		numAnimal.setText("Estimated Animals Attracted: "
-				+ (numTrees * animalsPerTree + numShrubs * animalsPerShrub + numHerbs * animalsPerHerb));
-
-		if (total > mammalMin) {
-			animalTypes.setText("Possible Animal Types: Bees, Butterflies, Birds, Small mammals");
-		} else if (total > birdMin) {
-			animalTypes.setText("Possible Animal Types: Bees, Butterflies, Birds");
-		} else if (total > butterflyMin) {
-			animalTypes.setText("Possible Animal Types: Bees, Butterflies");
-		} else if (total > beeMin) {
-			animalTypes.setText("Possible Animal Types: Bees");
-		} else {
-			animalTypes.setText("Possible Animal Types: None (Add more plants to you garden!)");
-		}
+		gardenCover.setText("Garden Covered: " + gardenCoveredPercent);
+		/*
+		 * pollinators.setText("Estimated Pollinators Supported: " + (numTrees *
+		 * pollinatorsPerTree + numShrubs * pollinatorsPerShrub + numHerbs *
+		 * pollinatorsPerHerb)); numAnimal.setText("Estimated Animals Attracted: " +
+		 * (numTrees * animalsPerTree + numShrubs * animalsPerShrub + numHerbs *
+		 * animalsPerHerb));
+		 */
+		/*
+		 * if (total > mammalMin) { animalTypes.
+		 * setText("Possible Animal Types: Bees, Butterflies, Birds, Small mammals"); }
+		 * else if (total > birdMin) {
+		 * animalTypes.setText("Possible Animal Types: Bees, Butterflies, Birds"); }
+		 * else if (total > butterflyMin) {
+		 * animalTypes.setText("Possible Animal Types: Bees, Butterflies"); } else if
+		 * (total > beeMin) { animalTypes.setText("Possible Animal Types: Bees"); } else
+		 * { animalTypes.
+		 * setText("Possible Animal Types: None (Add more plants to you garden!)"); }
+		 */
 
 		plantList.setText("List of Plants in your Garden: ");
 		for (String name : allNames) {
