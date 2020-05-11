@@ -22,6 +22,7 @@ import Controllers.SaveController;
 import Controllers.StartupController;
 import Controllers.StatisticsController;
 import Controllers.TutorialController;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 
@@ -794,6 +795,40 @@ public class Model {
 		suggestedPlants.removeAll(selected);
 		suggestedPlants.addAll(0, selected);
 
+	}
+	
+	public void generateStats(ObservableList<Node> garden) {
+		numTrees = 0;
+		numShrubs = 0;
+		numHerbs = 0;
+		allColors.clear();
+		allSeasons.clear();
+		for (Node node : garden) {
+			String plantName = (String) node.getUserData();
+			if (plantName != null) {
+				Plant plant = plants.get(plantName);
+				switch (plant.getType()) {
+				case HERB:
+					numHerbs++;
+					break;
+				case SHRUB:
+					numShrubs++;
+					break;
+				case TREE:
+					numTrees++;
+					break;
+				case VINE:
+					break;
+				}
+				for (String color : plant.getColor()) {
+					allColors.add(color);
+				}
+				for (Season season : plant.getBloomtime()) {
+					allSeasons.add(season);
+				}
+				allNames.add(plantName);
+			}
+		}
 	}
 
 }
