@@ -27,7 +27,6 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Shape;
 
 /**
  * This class is the controller for the Garden Design screen. It mostly handles

@@ -111,6 +111,9 @@ public class Model {
 	private HashSet<String> allColors = new HashSet<String>();
 	private HashSet<Season> allSeasons = new HashSet<Season>();
 	private HashSet<String> allNames = new HashSet<String>();
+	
+	private final double rectMinX = 0;
+	private final double rectMinY = 0;
 
 	public Season getSeason() {
 		return season;
@@ -794,6 +797,78 @@ public class Model {
 		suggestedPlants.removeAll(selected);
 		suggestedPlants.addAll(0, selected);
 
+	}
+	
+	/**
+	 * Calculates the coordinates of a rectangle as it is being created.
+	 * @param x0 The x coordinate of one corner
+	 * @param y0 The y coordinate of one corner
+	 * @param x1 The x coordinate of the other corner
+	 * @param y1 The y coordinate of the other corner
+	 * @param drawingWidth The width of the drawing in which the rectangle is contained
+	 * @param drawingHeight The height of the drawing in which the rectangle is contained 
+	 * @return An array of doubles containing the top left x-coordinate, top left y-coordinate, the width of the rectangle, and the height of the rectangle
+	 */
+	public double[] updateRectCoordinates(double x0, double y0, double x1, double y1, double drawingWidth, double drawingHeight) {
+		double topLeftX = Math.max(rectMinX, Math.min(x0, x1));
+		double topLeftY = Math.max(rectMinY, Math.min(y0, y1));
+		double width = Math.min(drawingWidth - topLeftX, Math.max(x0, x1) - topLeftX);
+		double height = Math.min(drawingHeight - topLeftY, Math.max(y0, y1) - topLeftY);
+		double[] coords = {topLeftX, topLeftY, width, height};
+		return coords;
+	}
+	
+	/**
+	 * Calculates the coordinates of a rectangle or label as it is being dragged. 
+	 * @param x The x-coordinate of the mouse
+	 * @param y The y-coordinate of the mouse
+	 * @param drawingWidth The width of the drawing in which the rectangle is contained 
+	 * @param drawingHeight The height of the drawing in which the rectangle is contained
+	 * @param rectWidth The width of the rectangle
+	 * @param rectHeight The width of the rectangle
+	 * @return An array of doubles containing the top left x-coordinate and top left y-coordinate
+	 */
+	public double[] moveRectCoordinates(double x, double y, double rectWidth, double rectHeight, double drawingWidth, double drawingHeight) {
+		double newX = Math.max(rectMinX, Math.min(drawingWidth - rectWidth, x));
+		double newY = Math.max(rectMinY, Math.min(drawingHeight - rectHeight, y));
+		double[] coords = {newX, newY};
+		return coords;
+	}
+	
+	/**
+	 * Calculates the radii of an ellipse as it is being created.
+	 * @param x The x-coordinate of the mouse
+	 * @param y The y-coordinate of the mouse
+	 * @param centerX The x-coordinate of the center of the circle
+	 * @param centerY The y-coordinate of the center of the circle
+	 * @param drawingWidth The width of the drawing in which the circle is contained 
+	 * @param drawingHeight The height of the drawing in which the circle is contained
+	 * @return An array of doubles containing the radiusX and radiusY
+	 */
+	public double[] updateCircleCoordinates(double x, double y, double centerX, double centerY, double drawingWidth, double drawingHeight) {
+		double maxRadiusX = Math.min(centerX, drawingWidth - centerX);
+		double maxRadiusY = Math.min(centerY, drawingHeight - centerY);
+		double radiusX = Math.min(maxRadiusX, Math.abs(centerX - x));
+		double radiusY = Math.min(maxRadiusY, Math.abs(centerY - y));
+		double[] radii = {radiusX, radiusY};
+		return radii;
+	}
+	
+	/**
+	 * 
+	 * @param x The x-coordinate of the mouse
+	 * @param y The y-coordinate of the mouse
+	 * @param radiusX The radiusX of the ellipse
+	 * @param radiusY The radiusY of the ellipse
+	 * @param drawingWidth The width of the drawing in which the circle is contained 
+	 * @param drawingHeight The height of the drawing in which the circle is contained
+	 * @return An array of doubles containing the center x-coordinate and center y-coordinate
+	 */
+	public double[] moveCircleCoordinates(double x, double y, double radiusX, double radiusY, double drawingWidth, double drawingHeight) {
+		double centerX = Math.max(radiusX, Math.min(drawingWidth - radiusX, x));
+		double centerY = Math.max(radiusY, Math.min(drawingHeight - radiusY, y));
+		double[] centers = {centerX, centerY};
+		return centers;
 	}
 
 }
