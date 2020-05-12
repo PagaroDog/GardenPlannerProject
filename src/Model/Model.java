@@ -947,6 +947,13 @@ public class Model {
 		return centers;
 	}
 
+	/**
+	 * Checks if a plant matches the preferences of the area it has been placed in
+	 * @param plantName The name of the plant
+	 * @param x The x-coordinate of the mouse
+	 * @param y The y-coordinate of the mouse
+	 * @return A string that describes how well the plant matches
+	 */
 	public String isPlantMatch(String plantName, double x, double y) {
 		for (GardenPref gp : gardenPreferences) {
 			if (gp.getArea() != null) {
@@ -987,9 +994,16 @@ public class Model {
 		return "No preferences in this area.";
 	}
 
+	/**
+	 * Determines if the given x and y coordinates are inside the given rectangle
+	 * @param x The x-coordinate of the mouse
+	 * @param y The y-coordinate of the mouse
+	 * @param area The rectangle to check if the mouse is inside
+	 * @return true if the mouse is in the rectangle, false otherwise
+	 */
 	public boolean isInArea(double x, double y, Rectangle area) {
-		boolean inX = x < area.getBoundsInParent().getMaxX() && x > area.getBoundsInParent().getMinX();
-		boolean inY = y < area.getBoundsInParent().getMaxY() && y > area.getBoundsInParent().getMinY();
+		boolean inX = x <= area.getBoundsInParent().getMaxX() && x >= area.getBoundsInParent().getMinX();
+		boolean inY = y <= area.getBoundsInParent().getMaxY() && y >= area.getBoundsInParent().getMinY();
 		return inX && inY;
 	}
 
