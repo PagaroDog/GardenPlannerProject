@@ -90,7 +90,10 @@ public class GardenView extends View<GardenController> {
 
 	private double buttonFontSize = Math.min(12, 18 * canvasWidth / expectedWidth);
 	private final double labelFontSize = Math.min(16, 21 * canvasWidth / expectedWidth);
-	private final double plantStrokeWidth = 5;
+	private final double treeStrokeWidth = 7;
+	private final double shrubStrokeWidth = 7;
+	private final double herbStrokeWidth = 1;
+	private final double vineStrokeWidth = 1;
 
 	public GardenView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -282,7 +285,23 @@ public class GardenView extends View<GardenController> {
 		Image img = imgs.getPlantImages().get(name)[0].getImg();
 		System.out.println("Dropping image " + name);
 		plant.setStrokeType(StrokeType.INSIDE);
-		plant.setStrokeWidth(plantStrokeWidth);
+		PlantType pT = control.getPlantType(name);
+		switch(pT) {
+			case HERB:
+				plant.setStrokeWidth(herbStrokeWidth);
+				break;
+			case VINE:
+				plant.setStrokeWidth(vineStrokeWidth);
+				break;
+			case TREE:
+				plant.setStrokeWidth(treeStrokeWidth);
+				break;
+			case SHRUB:
+				plant.setStrokeWidth(shrubStrokeWidth);
+				break;
+			
+		}
+		plant.setStrokeWidth(1);
 		this.garden.getChildren().add(plant);
 		List<Node> imageArr = garden.getChildren();
 		int i = imageArr.size() - 1;
