@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  *
  */
 public class PreferencesControllerTests {
-
+/*
 	@Test
 	public void nextButtonTest() {
 		Model Mod = new Model();
@@ -52,6 +52,6 @@ public class PreferencesControllerTests {
 		pc.gethandleOnBackButton();
 		assertEquals(StageName.DRAW, Mod.getStageName());
 
-	}
+	}*/
 
 }
