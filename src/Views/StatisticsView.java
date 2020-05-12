@@ -106,6 +106,10 @@ public class StatisticsView extends View<StatisticsController> {
  * @param seasons set of the seasons the plants bloom in the garden
  * @param allNames set of all scientific names of the plants in the garden
  * @param gardenCoveredPercent percent of garden covered by plants in percent form (EX. 1.23 = 1.23%)
+ * @param uTrees number of unique trees in garden
+ * @param uShrubs number of unique shrubs in garden
+ * @param uHerbs number of unique herbs in garden
+ * @param uVines number of unique vine plants in garden
  */
 	public void updateStats(int numTrees, int numShrubs, int numHerbs, int numVines, HashSet<String> colorSet,
 		HashSet<Season> seasons, HashSet<String> allNames, double gardenCoveredPercent,int uTrees, int uShrubs, int uHerbs, int uVines) {

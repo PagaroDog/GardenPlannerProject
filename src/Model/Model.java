@@ -760,7 +760,12 @@ public class Model {
 		suggestedPlants.addAll(0, selected);
 		
 	}
-	
+	/**
+	 * Takes in an observable list of nodes from the GardenController. Iterates through the nodes counting the total number of trees, herbs, vines, and shrubs and counting
+	 * the number of unique plants of each plant type. Also uses the property height and width to calculate the coverage of the garden by the plants. Sets all attributes
+	 * to their appropriate values.  
+	 * @param garden
+	 */
 	public void generateStats(ObservableList<Node> garden) {
 		numTrees = 0;
 		numShrubs = 0;
