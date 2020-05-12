@@ -3,6 +3,7 @@ package Tests;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +20,8 @@ import Model.Water;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Ellipse;
 
 /**
  * 
@@ -211,6 +214,7 @@ public class ModelTests {
 	@Test
 	public void createSuggestionsTest() {
 		Model test = new Model();
+		test.importPlantsFromCSV("plantInfo.csv");
 		ArrayList<Plant> startUp = new ArrayList<Plant>();
 		//StartUp
 		test.createSuggestions(true);
@@ -250,6 +254,7 @@ public class ModelTests {
 	public void generateRelevantPlantsTest() {
 		
 		Model test = new Model();
+		test.importPlantsFromCSV("plantInfo.csv");
 		ArrayList<Plant> startUp = new ArrayList<Plant>();
 		GardenPref gp = new GardenPref();
 		gp.setUserBloom("Winter");
@@ -283,6 +288,7 @@ public class ModelTests {
 	@Test
 	public void getUserPicksTest() {
 		Model test  = new Model();
+		test.importPlantsFromCSV("plantInfo.csv");
 		int rows = 3;
 		int cols = 7;
 		int pick = (int)Math.random()*(rows*cols);
@@ -302,6 +308,77 @@ public class ModelTests {
 			}
 		}
 		assertEquals(plant, test.getSuggestedPlants().get(0));
+	}
+	
+	@Test
+	public void generateStatsTest() {
+		Model test = new Model();
+		test.importPlantsFromCSV("plantInfo.csv");
+		Pane garden = new Pane();
+		double defaultRadius =10;
+		HashSet<String> expectedNames = new HashSet<String>();
+		//Herb, Herb, Tree, Tree, Shrub, Vine, Shrub
+		String[] plants = {"Achillea millefolium","Achillea millefolium","Acer negundo","Acer spicatum","Ceanothus americanus","Lonicera sempervirens","Staphylea trifolia"};
+		
+		for(String s : plants) {
+			Ellipse p = new Ellipse();
+			p.setRadiusX(defaultRadius);
+			p.setRadiusY(defaultRadius);
+			garden.getChildren().add(p);
+			garden.getChildren().get(garden.getChildren().size()-1).setUserData(s);
+			expectedNames.add(s);
+		}
+		HashSet<String> expectedColors = new HashSet<String>();
+		expectedColors.add("White");expectedColors.add("Pink");
+		expectedColors.add("Yellow");expectedColors.add("Green");expectedColors.add("Brown");
+		expectedColors.add("Red");expectedColors.add("Brown");
+		expectedColors.add("Brown");
+		expectedColors.add("Red");expectedColors.add("Yellow");
+		expectedColors.add("White");
+		
+		HashSet<Season> expectedSeasons = new HashSet<Season>();
+		expectedSeasons.add(Season.SUMMER);
+		expectedSeasons.add(Season.SPRING);
+		
+		HashSet<String> expectedPlantsRemoved = new HashSet<String>();
+		expectedPlantsRemoved.addAll(test.getPlants().keySet());
+		expectedPlantsRemoved.removeAll(expectedNames);
+		
+		
+		
+		double expectedCoverage = Math.pow(defaultRadius,2) * Math.PI * plants.length / test.getPropertyHeightInches()/test.getPropertyWidthInches()*100;
+		
+		test.generateStats(garden.getChildren());
+		
+		assertEquals(2,test.getNumHerbs());
+		assertEquals(2,test.getNumTrees());
+		assertEquals(2,test.getNumShrubs());
+		assertEquals(1,test.getNumVines());
+		
+		assertEquals(1,test.getUniqueHerbs());
+		assertEquals(2,test.getUniqueTrees());
+		assertEquals(2,test.getUniqueShrubs());
+		assertEquals(1,test.getUniqueVines());
+		
+		assertEquals(true,expectedColors.containsAll(test.getAllColors()));
+		assertEquals(false,test.getAllColors().contains("Blue"));
+		assertEquals(false,test.getAllColors().contains("Purple"));
+		assertEquals(false,test.getAllColors().contains("Orange"));
+		assertEquals(false,test.getAllColors().contains("Black"));
+		
+		assertEquals(true,expectedSeasons.containsAll(test.getAllSeasons()));
+		assertEquals(false,test.getAllSeasons().contains(Season.FALL));
+		assertEquals(false,test.getAllSeasons().contains(Season.WINTER));
+		
+		assertEquals(true,expectedNames.containsAll(test.getAllNames()));
+		for(String p: expectedPlantsRemoved) {
+			assertEquals(false,test.getAllNames().contains(p));
+		}
+		
+		
+		assertEquals(expectedCoverage,test.getGardenCoveredPercent(),0.01);
+		
+		
 	}
 
 }
