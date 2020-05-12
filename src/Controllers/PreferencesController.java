@@ -52,7 +52,10 @@ public class PreferencesController extends Controller<PreferencesView> {
 	public void BackButton(MouseEvent event) {
 		view.getStage().setScene(Main.getScenes().get(StageName.DRAW));
 		model.setStageName(StageName.CONDITIONS);
-		main.getDyControl().setDrawing(view.getDrawing());
+//		if (view.getDrawing() != null) {
+			main.getDyControl().setDrawing(view.getDrawing());
+//		}
+		main.getDyControl().getView().condMode();
 	}
 
 	/**
@@ -191,6 +194,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 			model.getCurrPref().setUserBloom(view.getBloom().getValue());
 			//model.getCurrPref().setUserSoil(view.getSoil().getValue());
 			model.getCurrPref().setUserWater(view.getWater().getValue());
+			model.getCurrPref().setArea(view.getCurrArea());
 
 			for (int i = 0; i < colorButtons.size(); i++) {
 				RadioButton button = (RadioButton) (colorButtons.get(i));

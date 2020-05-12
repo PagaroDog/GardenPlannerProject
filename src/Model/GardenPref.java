@@ -2,6 +2,9 @@ package Model;
 
 import java.util.HashSet;
 
+import javafx.scene.Node;
+import javafx.scene.shape.Rectangle;
+
 /**
  * GardenPref is used to organize user preferences with types of soil, bloom
  * times, light strength, the location, and how large the zone is.
@@ -16,32 +19,9 @@ public class GardenPref {
 	private String userSoil;
 	private HashSet<String> userColor = new HashSet<String>();
 	private String userWater;
-	private double xLoc;
-	private double yLoc;
-	private double height;
-	private double width;
+	private Rectangle area;
 
 	public GardenPref() {
-	}
-
-	/**
-	 * Creates a GardenPref that is called by the Conditions Controller when the
-	 * user chooses to move on to the PreferencesView. Establishes name/Id of the
-	 * zone, the location of a zone and the dimensions. The user attributes are set
-	 * to null.
-	 * 
-	 * @param name
-	 * @param xLoc
-	 * @param yLoc
-	 * @param height
-	 * @param width
-	 */
-	public GardenPref(String name, double xLoc, double yLoc, double height, double width) {
-		this.xLoc = xLoc;
-		this.yLoc = yLoc;
-		this.height = height;
-		this.width = width;
-		this.name = name;
 	}
 
 	/**
@@ -57,17 +37,13 @@ public class GardenPref {
 	 * @param height
 	 * @param width
 	 */
-	public GardenPref(String name, String userLight, String userBloom, String userSoil, HashSet<String> userColor, double xLoc,
-			double yLoc, double height, double width) {
+	public GardenPref(String name, String userLight, String userBloom, String userSoil, HashSet<String> userColor, Rectangle area) {
 		this.name = name;
 		this.userLight = userLight;
 		this.userBloom = userBloom;
 		this.userSoil = userSoil;
 		this.userColor = userColor;
-		this.xLoc = xLoc;
-		this.yLoc = yLoc;
-		this.height = height;
-		this.width = width;
+		this.area = area;
 	}
 
 	public String getName() {
@@ -93,21 +69,9 @@ public class GardenPref {
 	public String getUserWater() {
 		return userWater;
 	}
-
-	public double getxLoc() {
-		return xLoc;
-	}
-
-	public double getyLoc() {
-		return yLoc;
-	}
-
-	public double getHeight() {
-		return height;
-	}
-
-	public double getWidth() {
-		return width;
+	
+	public Rectangle getArea() {
+		return area;
 	}
 
 	public void setName(String name) {
@@ -134,19 +98,7 @@ public class GardenPref {
 		this.userWater = userWater;
 	}
 
-	public void setxLoc(double xLoc) {
-		this.xLoc = xLoc;
-	}
-
-	public void setyLoc(double yLoc) {
-		this.yLoc = yLoc;
-	}
-
-	public void setHeight(double height) {
-		this.height = height;
-	}
-
-	public void setWidth(double width) {
-		this.width = width;
+	public void setArea(Rectangle area) {
+		this.area = area;
 	}
 }

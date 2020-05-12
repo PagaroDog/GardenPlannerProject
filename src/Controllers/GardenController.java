@@ -746,9 +746,9 @@ public class GardenController extends Controller<GardenView> {
 	}
 	
 	public void displayInfo(MouseEvent event) {
-		System.out.println("Mouse Over"); 
+		System.out.println("Mouse Over: " + event.getY()); 
 		Ellipse plant = (Ellipse) event.getSource();
-		view.displayInfo(plant); 
+		view.displayInfo(plant, event.getX(), event.getY(), model.isPlantMatch(plant.getUserData().toString(), event.getX(), event.getY())); 
 	}
 	
 	public EventHandler handleOnMouseExited() {

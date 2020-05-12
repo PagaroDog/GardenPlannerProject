@@ -8,8 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import Controllers.GardenController;
+import Model.GardenPref;
 import Model.PlantType;
 import Model.Season;
+import Model.StageName;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -35,6 +38,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -65,23 +69,22 @@ public class GardenView extends View<GardenController> {
 	private Button delete;
 	private Pane drawing;
 	private Button copy;
-	
-	private Button undo; 
-	private Button redo; 
-	private BorderPane info; 
-	
+
+	private Button undo;
+	private Button redo;
+	private VBox info;
+
 	private ScrollPane scrollPane;
 	private BorderPane border;
 	private BorderPane navigation;
 	private TabPane tabPane;
-	int SIZE = 200;
-	int TILE_PANE_WIDTH = 1000;
+	private int SIZE = 200;
 	Images imgs;
 	double minxRad;
 	double minyRad;
 	double maxxRad;
 	double maxyRad;
-	
+
 	private double buttonFontSize = Math.min(12, 18 * canvasWidth / expectedWidth);
 	private final double labelFontSize = Math.min(16, 21 * canvasWidth / expectedWidth);
 
@@ -124,8 +127,8 @@ public class GardenView extends View<GardenController> {
 		int numberPlants = control.getNumPlants();
 		for (PlantType type : PlantType.values()) {
 			Tab tab = new Tab(type.toString());
-			//tab.setText(type.toString());
-			//Label label = new Label(type.toString());
+			// tab.setText(type.toString());
+			// Label label = new Label(type.toString());
 			VBox tile = new VBox(10);
 			tile.setAlignment(Pos.CENTER);
 			tile.setPadding(new Insets(5, 0, 5, 0));
@@ -145,19 +148,18 @@ public class GardenView extends View<GardenController> {
 					imageview.setUserData(control.getPlantNameAt(i));
 					tile.getChildren().add(imageview);
 				}
-				
+
 			}
 			scrollPane = new ScrollPane();
 			scrollPane.setFitToWidth(true);
 			scrollPane.setContent(tile);
-			//tab.setContent(label);
+			// tab.setContent(label);
 			tab.setContent(scrollPane);
 			tabPane.getTabs().add(tab);
 		}
 
 		System.out.println("The first plant in garden View is " + control.getPlantNameAt(0));
 
-		
 	}
 
 	/**
@@ -180,21 +182,21 @@ public class GardenView extends View<GardenController> {
 	 */
 	public void top() {
 		save = createButton("Save", control.handleOnSaveButton());
-		
+
 		Region empty1 = new Region();
 		HBox.setHgrow(empty1, Priority.ALWAYS);
 		Region empty2 = new Region();
 		HBox.setHgrow(empty2, Priority.ALWAYS);
 		Region empty3 = new Region();
 		HBox.setHgrow(empty3, Priority.ALWAYS);
-		
+
 		Label seasonLabel = new Label("Select Season");
 		seasonLabel.setFont(new Font(labelFontSize));
 		summer = createButton("Summer", control.handleOnSummerButton());
 		fall = createButton("Fall", control.handleOnFallButton());
 		winter = createButton("Winter", control.handleOnWinterButton());
 		spring = createButton("Spring", control.handleOnSpringButton());
-		
+
 		Label yearLabel = new Label("Select Estimated Size");
 		yearLabel.setFont(new Font(labelFontSize));
 		year1 = createButton("Small", control.handleOnYear1Button());
@@ -205,12 +207,13 @@ public class GardenView extends View<GardenController> {
 		toolsLabel.setFont(new Font(labelFontSize));
 		delete = createButton("Delete", control.handleOnDeleteButton());
 		copy = createButton("Copy", control.handleOnCopyButton());
-		undo = createButton("Undo", control.handleOnUndoButton()); 
-		redo = createButton("Redo", control.handleOnRedoButton()); 
+		undo = createButton("Undo", control.handleOnUndoButton());
+		redo = createButton("Redo", control.handleOnRedoButton());
 
 		toolbar = createToolbar();
 
-		toolbar.getChildren().addAll(save, empty1, toolsLabel, delete, copy, undo, redo, empty2, seasonLabel, summer, fall, winter, spring, empty3, yearLabel, year1, year2, year3);
+		toolbar.getChildren().addAll(save, empty1, toolsLabel, delete, copy, undo, redo, empty2, seasonLabel, summer,
+				fall, winter, spring, empty3, yearLabel, year1, year2, year3);
 
 	}
 
@@ -294,7 +297,7 @@ public class GardenView extends View<GardenController> {
 	public void movePlant(Ellipse dragPlant, double x, double y) {
 		dragPlant.setCenterX(x);
 		dragPlant.setCenterY(y);
-		System.out.println("Moving plant at x:" + x + ", y:" + y); 
+		System.out.println("Moving plant at x:" + x + ", y:" + y);
 	}
 
 	/**
@@ -382,7 +385,7 @@ public class GardenView extends View<GardenController> {
 		List<Node> gardenList = garden.getChildren();
 		for (Node plant : gardenList) {
 			String plantName = (String) plant.getUserData();
-			
+
 			if (plantName != null) {
 				if (year == 1) {
 					double minSize = control.getSpread(plantName)[0] / 2;
@@ -430,10 +433,9 @@ public class GardenView extends View<GardenController> {
 	public void changeSeason(Season season) {
 		List<Node> gardenList = garden.getChildren();
 		for (Node plant : gardenList) {
-			
+
 			String plantName = (String) plant.getUserData();
 
-			
 			if (plantName != null) {
 				ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(control.getBloomTime(plantName)));
 				if (season == Season.FALL) {
@@ -481,7 +483,7 @@ public class GardenView extends View<GardenController> {
 	public void addShape(Ellipse ellipse) {
 		garden.getChildren().add(ellipse);
 	}
-	
+
 	/**
 	 * Creates a button to be used in the toolbar.
 	 * 
@@ -495,37 +497,39 @@ public class GardenView extends View<GardenController> {
 		newButton.setFont(new Font(buttonFontSize));
 		return newButton;
 	}
-	
-	public void displayInfo(Ellipse e) {
-		//Image img = imgs.getPlantImages().get(key)
-		
-		ImageWithSourceInfo[] img = imgs.getPlantImages().get(e.getUserData()); 
+
+	public void displayInfo(Ellipse e, double mouseX, double mouseY, String plantMatch) {
+		ImageWithSourceInfo[] img = imgs.getPlantImages().get(e.getUserData());
 		Image i = img[0].getImg();
-		
-		ImageView plantImage = new ImageView(i); 
+
+		ImageView plantImage = new ImageView(i);
 		plantImage.setPreserveRatio(true);
 		plantImage.setFitHeight(SIZE);
 		plantImage.setFitWidth(SIZE);
-		System.out.println("Trying to add shit to the garden"); 
-		BorderPane bp = new BorderPane(); 
-		
-		bp.setStyle("-fx-background-color: DAE6F3;"); 
-		
+		VBox vb = new VBox();
+
+		vb.setStyle("-fx-background-color: DAE6F3;");
+
 		Label topLabel = new Label(e.getUserData().toString());
-		topLabel.setStyle("-fx-font-size:20px;"); 
-		
-		bp.setTop(topLabel);
-		
-		bp.setCenter(plantImage);
-		
-		info = bp; 
-		
-		this.garden.getChildren().add(bp); 
-		
+		topLabel.setStyle("-fx-font-size:20px;");
+
+		Label match = new Label(plantMatch);
+		match.setStyle("-fx-font-size:20px;");
+
+		vb.getChildren().addAll(topLabel, plantImage, match);
+
+		info = vb;
+
+		this.garden.getChildren().add(vb);
+
+		if (mouseY < garden.getHeight() / 2) {
+			vb.setLayoutY(garden.getHeight() / 2);
+		}
+
 	}
-	
+
 	public void removeInfo() {
-		this.garden.getChildren().remove(info); 
+		this.garden.getChildren().remove(info);
 	}
 
 }

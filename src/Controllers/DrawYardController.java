@@ -326,6 +326,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the Pane was dragged
 	 */
 	public void dragPane(MouseEvent event) {
+//		System.out.println(model.getDrawMode());
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case RECTANGLE:

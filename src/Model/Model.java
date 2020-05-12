@@ -24,6 +24,7 @@ import Controllers.StatisticsController;
 import Controllers.TutorialController;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
 
 /**
  * This class stores the data for this software, as well as some methods that
@@ -42,7 +43,7 @@ public class Model {
 	private double drawPressX;
 	private double drawPressY;
 	private Node currDrawObj;
-	
+
 	private int propertyHeightInches = 1200;
 	private int propertyWidthInches = 2400;
 
@@ -81,10 +82,10 @@ public class Model {
 	private char waterInd = 8;
 	private char lightInd = 9;
 	private char spreadInd = 10;
-	
+
 	private char minHeightInd = 0;
 	private char maxHeightInd = 1;
-	
+
 	private char minSpreadInd = 0;
 	private char maxSpreadInd = 1;
 	private char failedSpreadNum = 0;
@@ -92,11 +93,11 @@ public class Model {
 	private int inchesPerFoot = 12;
 	private int heightArrLen = 2;
 	private int spreadArrLen = 2;
-	
+
 	private int numTrees = 0;
 	private int numShrubs = 0;
 	private int numHerbs = 0;
-	
+
 	private final int pollinatorsPerTree = 72;
 	private final int pollinatorsPerShrub = 17;
 	private final int pollinatorsPerHerb = 4;
@@ -107,11 +108,11 @@ public class Model {
 	private final int butterflyMin = 8;
 	private final int birdMin = 15;
 	private final int mammalMin = 40;
-	
+
 	private HashSet<String> allColors = new HashSet<String>();
 	private HashSet<Season> allSeasons = new HashSet<Season>();
 	private HashSet<String> allNames = new HashSet<String>();
-	
+
 	private final double rectMinX = 0;
 	private final double rectMinY = 0;
 
@@ -138,7 +139,6 @@ public class Model {
 	public void setGardenPreferences(ArrayList<GardenPref> gardenPreferences) {
 		this.gardenPreferences = gardenPreferences;
 	}
-
 
 	public ArrayList<Actions> getUndoActions() {
 		return undoActions;
@@ -283,7 +283,7 @@ public class Model {
 	public int getInchesPerFoot() {
 		return inchesPerFoot;
 	}
-	
+
 	public int getNumTrees() {
 		return numTrees;
 	}
@@ -424,14 +424,14 @@ public class Model {
 	public double calcX(double x, double size, double left) {
 		double rightBorder = canvasWidth - size - left;
 		double leftBorder = size;
-		double ret = x ;
+		double ret = x;
 
 		if (ret < leftBorder) {
-			//System.out.println("Returning 0");
+			// System.out.println("Returning 0");
 			return leftBorder;
 		}
 		if (ret > rightBorder) {
-			//System.out.println("Returning rightBorder");
+			// System.out.println("Returning rightBorder");
 			return rightBorder;
 		}
 
@@ -448,15 +448,14 @@ public class Model {
 	 * @return ret
 	 */
 	public double calcY(double y, double size, double bottom) {
-		
-		double bottomBorder = canvasHeight - size - bottom*2;
+
+		double bottomBorder = canvasHeight - size - bottom * 2;
 		System.out.println(size);
 		double topBorder = size;
-		double ret = y ;
+		double ret = y;
 		if (ret < topBorder) {
 			return topBorder;
-		} 
-		else if (ret > bottomBorder) {
+		} else if (ret > bottomBorder) {
 			return bottomBorder;
 		}
 		return ret;
@@ -520,7 +519,8 @@ public class Model {
 				}
 				heightStr = parsedLine.get(heightInd).replaceAll(" ", "").split("-");
 				if (heightStr.length == 1) {
-					height[minHeightInd] = height[maxHeightInd] = Integer.valueOf(heightStr[minHeightInd].replaceAll("[^0-9]", ""));
+					height[minHeightInd] = height[maxHeightInd] = Integer
+							.valueOf(heightStr[minHeightInd].replaceAll("[^0-9]", ""));
 				} else {
 					height[minHeightInd] = Integer.valueOf(heightStr[minHeightInd]);
 					height[maxHeightInd] = Integer.valueOf(heightStr[maxHeightInd].replaceAll("[^0-9]", ""));
@@ -570,7 +570,8 @@ public class Model {
 				} else {
 					spreadStr = parsedLine.get(spreadInd).replaceAll(" ", "").split("-");
 					if (spreadStr.length == 1) {
-						spread[minSpreadInd] = spread[maxSpreadInd] = Integer.valueOf(spreadStr[minSpreadInd].replaceAll("[^0-9]", ""));
+						spread[minSpreadInd] = spread[maxSpreadInd] = Integer
+								.valueOf(spreadStr[minSpreadInd].replaceAll("[^0-9]", ""));
 					} else {
 						spread[minSpreadInd] = Integer.valueOf(spreadStr[minSpreadInd]);
 						spread[maxSpreadInd] = Integer.valueOf(spreadStr[maxSpreadInd].replaceAll("[^0-9]", ""));
@@ -581,9 +582,8 @@ public class Model {
 					}
 				}
 
-				plants.put(name,
-						new Plant(name, commonNames, duration, type, height.clone(), color.clone(),
-								bloomtime.clone(), waterLevel.clone(), light.clone(), spread.clone()));
+				plants.put(name, new Plant(name, commonNames, duration, type, height.clone(), color.clone(),
+						bloomtime.clone(), waterLevel.clone(), light.clone(), spread.clone()));
 
 				bloomSet.clear();
 				waterSet.clear();
@@ -698,7 +698,7 @@ public class Model {
 		for (int i = 0; i <= score; i++) {
 			plantsFromPref.put(i, new ArrayList<Plant>());
 		}
-		
+
 		for (Plant p : plants.values()) {
 
 			Object[][] plantData = { p.getBloomtime(), p.getLight(), p.getWaterLevel() };
@@ -728,7 +728,7 @@ public class Model {
 				cnt++;
 				score = prefCategoriesCnt;
 			}
-			
+
 			plantsFromPref.get(minGardenPrefScore).add(p);
 			cnt = 1;
 			minGardenPrefScore = prefCategoriesCnt;
@@ -798,77 +798,144 @@ public class Model {
 		suggestedPlants.addAll(0, selected);
 
 	}
-	
+
 	/**
 	 * Calculates the coordinates of a rectangle as it is being created.
-	 * @param x0 The x coordinate of one corner
-	 * @param y0 The y coordinate of one corner
-	 * @param x1 The x coordinate of the other corner
-	 * @param y1 The y coordinate of the other corner
-	 * @param drawingWidth The width of the drawing in which the rectangle is contained
-	 * @param drawingHeight The height of the drawing in which the rectangle is contained 
-	 * @return An array of doubles containing the top left x-coordinate, top left y-coordinate, the width of the rectangle, and the height of the rectangle
+	 * 
+	 * @param x0            The x coordinate of one corner
+	 * @param y0            The y coordinate of one corner
+	 * @param x1            The x coordinate of the other corner
+	 * @param y1            The y coordinate of the other corner
+	 * @param drawingWidth  The width of the drawing in which the rectangle is
+	 *                      contained
+	 * @param drawingHeight The height of the drawing in which the rectangle is
+	 *                      contained
+	 * @return An array of doubles containing the top left x-coordinate, top left
+	 *         y-coordinate, the width of the rectangle, and the height of the
+	 *         rectangle
 	 */
-	public double[] updateRectCoordinates(double x0, double y0, double x1, double y1, double drawingWidth, double drawingHeight) {
+	public double[] updateRectCoordinates(double x0, double y0, double x1, double y1, double drawingWidth,
+			double drawingHeight) {
 		double topLeftX = Math.max(rectMinX, Math.min(x0, x1));
 		double topLeftY = Math.max(rectMinY, Math.min(y0, y1));
 		double width = Math.min(drawingWidth - topLeftX, Math.max(x0, x1) - topLeftX);
 		double height = Math.min(drawingHeight - topLeftY, Math.max(y0, y1) - topLeftY);
-		double[] coords = {topLeftX, topLeftY, width, height};
+		double[] coords = { topLeftX, topLeftY, width, height };
 		return coords;
 	}
-	
+
 	/**
-	 * Calculates the coordinates of a rectangle or label as it is being dragged. 
-	 * @param x The x-coordinate of the mouse
-	 * @param y The y-coordinate of the mouse
-	 * @param drawingWidth The width of the drawing in which the rectangle is contained 
-	 * @param drawingHeight The height of the drawing in which the rectangle is contained
-	 * @param rectWidth The width of the rectangle
-	 * @param rectHeight The width of the rectangle
-	 * @return An array of doubles containing the top left x-coordinate and top left y-coordinate
+	 * Calculates the coordinates of a rectangle or label as it is being dragged.
+	 * 
+	 * @param x             The x-coordinate of the mouse
+	 * @param y             The y-coordinate of the mouse
+	 * @param drawingWidth  The width of the drawing in which the rectangle is
+	 *                      contained
+	 * @param drawingHeight The height of the drawing in which the rectangle is
+	 *                      contained
+	 * @param rectWidth     The width of the rectangle
+	 * @param rectHeight    The width of the rectangle
+	 * @return An array of doubles containing the top left x-coordinate and top left
+	 *         y-coordinate
 	 */
-	public double[] moveRectCoordinates(double x, double y, double rectWidth, double rectHeight, double drawingWidth, double drawingHeight) {
+	public double[] moveRectCoordinates(double x, double y, double rectWidth, double rectHeight, double drawingWidth,
+			double drawingHeight) {
 		double newX = Math.max(rectMinX, Math.min(drawingWidth - rectWidth, x));
 		double newY = Math.max(rectMinY, Math.min(drawingHeight - rectHeight, y));
-		double[] coords = {newX, newY};
+		double[] coords = { newX, newY };
 		return coords;
 	}
-	
+
 	/**
 	 * Calculates the radii of an ellipse as it is being created.
-	 * @param x The x-coordinate of the mouse
-	 * @param y The y-coordinate of the mouse
-	 * @param centerX The x-coordinate of the center of the circle
-	 * @param centerY The y-coordinate of the center of the circle
-	 * @param drawingWidth The width of the drawing in which the circle is contained 
-	 * @param drawingHeight The height of the drawing in which the circle is contained
+	 * 
+	 * @param x             The x-coordinate of the mouse
+	 * @param y             The y-coordinate of the mouse
+	 * @param centerX       The x-coordinate of the center of the circle
+	 * @param centerY       The y-coordinate of the center of the circle
+	 * @param drawingWidth  The width of the drawing in which the circle is
+	 *                      contained
+	 * @param drawingHeight The height of the drawing in which the circle is
+	 *                      contained
 	 * @return An array of doubles containing the radiusX and radiusY
 	 */
-	public double[] updateCircleCoordinates(double x, double y, double centerX, double centerY, double drawingWidth, double drawingHeight) {
+	public double[] updateCircleCoordinates(double x, double y, double centerX, double centerY, double drawingWidth,
+			double drawingHeight) {
 		double maxRadiusX = Math.min(centerX, drawingWidth - centerX);
 		double maxRadiusY = Math.min(centerY, drawingHeight - centerY);
 		double radiusX = Math.min(maxRadiusX, Math.abs(centerX - x));
 		double radiusY = Math.min(maxRadiusY, Math.abs(centerY - y));
-		double[] radii = {radiusX, radiusY};
+		double[] radii = { radiusX, radiusY };
 		return radii;
 	}
-	
+
 	/**
 	 * 
-	 * @param x The x-coordinate of the mouse
-	 * @param y The y-coordinate of the mouse
-	 * @param radiusX The radiusX of the ellipse
-	 * @param radiusY The radiusY of the ellipse
-	 * @param drawingWidth The width of the drawing in which the circle is contained 
-	 * @param drawingHeight The height of the drawing in which the circle is contained
-	 * @return An array of doubles containing the center x-coordinate and center y-coordinate
+	 * @param x             The x-coordinate of the mouse
+	 * @param y             The y-coordinate of the mouse
+	 * @param radiusX       The radiusX of the ellipse
+	 * @param radiusY       The radiusY of the ellipse
+	 * @param drawingWidth  The width of the drawing in which the circle is
+	 *                      contained
+	 * @param drawingHeight The height of the drawing in which the circle is
+	 *                      contained
+	 * @return An array of doubles containing the center x-coordinate and center
+	 *         y-coordinate
 	 */
-	public double[] moveCircleCoordinates(double x, double y, double radiusX, double radiusY, double drawingWidth, double drawingHeight) {
+	public double[] moveCircleCoordinates(double x, double y, double radiusX, double radiusY, double drawingWidth,
+			double drawingHeight) {
 		double centerX = Math.max(radiusX, Math.min(drawingWidth - radiusX, x));
 		double centerY = Math.max(radiusY, Math.min(drawingHeight - radiusY, y));
-		double[] centers = {centerX, centerY};
+		double[] centers = { centerX, centerY };
 		return centers;
+	}
+
+	public String isPlantMatch(String plantName, double x, double y) {
+		System.out.println("Here");
+		System.out.println("Here2");
+		for (GardenPref gp : gardenPreferences) {
+			System.out.println("Here3");
+			if (isInArea(x, y, gp.getArea())) {
+				String match = "";
+				System.out.println("Here4");
+				Plant p = plants.get(plantName);
+				if (userCheck(p.getLight(), gp.getUserLight())) {
+					match = "Plant matches light requirement.";
+				} else {
+					match = "Plant does not match light requirement.";
+				}
+				
+				if (userCheck(p.getWaterLevel(), gp.getUserWater())) {
+					match += "\nPlant matches soil moisture.";
+				} else {
+					match += "\nPlant does not match soil moisture.";
+				}
+				
+				if (userCheck(p.getBloomtime(), gp.getUserBloom())) {
+					match += "\nPlant blooms in desired season.";
+				} else {
+					match += "\nPlant does not bloom in desired season.";
+				}
+				
+				HashSet<String> copy = new HashSet<String>(p.getColor());
+				Iterator<String> it = copy.iterator();
+				
+				while (it.hasNext()) {
+					if (gp.getUserColor().contains(it.next())) {
+						match += "\nPlant matches desired color.";
+						break;
+					}
+				}
+				return match;
+			}
+		}
+		return "No preferences in this area.";
+	}
+
+	public boolean isInArea(double x, double y, Rectangle area) {
+		boolean inX = x < area.getBoundsInParent().getMaxX() && x > area.getBoundsInParent().getMinX();
+		boolean inY = y < area.getBoundsInParent().getMaxY() && y > area.getBoundsInParent().getMinY();
+		return inX && inY;
 	}
 
 }

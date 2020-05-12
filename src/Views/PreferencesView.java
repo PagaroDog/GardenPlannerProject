@@ -179,7 +179,7 @@ public class PreferencesView extends View<PreferencesController> {
 		this.drawing = drawing;
 	}
 
-	public Shape getCurrArea() {
+	public Rectangle getCurrArea() {
 		return currArea;
 	}
 
