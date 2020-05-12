@@ -104,7 +104,7 @@ public class Model {
 	private int uniqueTrees =0;
 	private int uniqueShrubs =0;
 	private int uniqueHerbs =0;
-	private int uniqueVine =0;
+	private int uniqueVines =0;
 	
 	
 	private HashSet<String> allColors = new HashSet<String>();
@@ -774,7 +774,7 @@ public class Model {
 		uniqueTrees = 0;
 		uniqueShrubs = 0;
 		uniqueHerbs = 0;
-		uniqueVine = 0;
+		uniqueVines = 0;
 		double plantSurfaceArea =0;
 		allColors.clear();
 		allSeasons.clear();
@@ -815,7 +815,7 @@ public class Model {
 						uniqueTrees++;
 						break;
 					case VINE:
-						uniqueVine++;
+						uniqueVines++;
 						break;
 					}
 				}
@@ -852,8 +852,8 @@ public class Model {
 		return uniqueHerbs;
 	}
 
-	public int getUniqueVine() {
-		return uniqueVine;
+	public int getUniqueVines() {
+		return uniqueVines;
 	}
 
 

@@ -36,7 +36,7 @@ public class StatisticsController extends Controller<StatisticsView> {
 	public void updateStats() {
 		view.updateStats(model.getNumTrees(), model.getNumShrubs(), model.getNumHerbs(), model.getNumVines(), model.getAllColors(),
 				model.getAllSeasons(), model.getAllNames(), model.getGardenCoveredPercent(),model.getUniqueTrees(),model.getUniqueShrubs(),
-				model.getUniqueHerbs(),model.getUniqueVine());
+				model.getUniqueHerbs(),model.getUniqueVines());
 	}
 
 }
