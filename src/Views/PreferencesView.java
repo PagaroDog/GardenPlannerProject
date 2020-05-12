@@ -109,7 +109,7 @@ public class PreferencesView extends View<PreferencesController> {
 		sun = new ComboBox<String>();
 		sun.getItems().addAll(sunlevels);
 
-		String[] colors = { "Red", "Blue", "Violet", "Pink", "White", "Yellow", "Black","Brown","Green","Orange" };
+		String[] colors = { "Red", "Blue", "Purple", "Pink", "White", "Yellow", "Black","Brown","Green","Orange" };
 		color = new TilePane();
 		color.setPadding(new Insets(10, 10, 10, 10));
 		Label labcolor = new Label("What color of the bloom?");
