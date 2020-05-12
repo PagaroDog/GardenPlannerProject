@@ -138,9 +138,6 @@ public class GardenView extends View<GardenController> {
 			VBox tile = new VBox(10);
 			tile.setAlignment(Pos.CENTER);
 			tile.setPadding(new Insets(5, 0, 5, 0));
-//			tile.setVgap(4);
-//			tile.setHgap(4);
-//			tile.setPrefColumns(1);
 			tile.setStyle("-fx-background-color: DAE6F3;");
 			tile.setPrefWidth(SIZE);
 			for (int i = 0; i < numberPlants; i++) {
@@ -152,6 +149,8 @@ public class GardenView extends View<GardenController> {
 					imageview.setFitHeight(SIZE);
 					imageview.setFitWidth(SIZE);
 					imageview.setOnDragDetected(control.getHandlerForDragDetected());
+					imageview.setOnMouseEntered(control.handleOnMouseEnteredImage());
+					imageview.setOnMouseExited(control.handleOnMouseExitedImage());
 					imageview.setUserData(control.getPlantNameAt(i));
 					tile.getChildren().add(imageview);
 				}
@@ -508,6 +507,21 @@ public class GardenView extends View<GardenController> {
 		newButton.setFont(new Font(buttonFontSize));
 		return newButton;
 	}
+	
+	public void displayInfoForScrollPane(String plantString) {
+		VBox vb = new VBox();
+
+		vb.setStyle("-fx-background-color: DAE6F3;");
+
+		Label plantLabel = new Label(plantString);
+		plantLabel.setFont(new Font(20));
+
+		vb.getChildren().addAll(plantLabel);
+
+		info = vb;
+
+		this.garden.getChildren().add(vb);
+	}
 
 	public void displayInfo(Ellipse e, double mouseX, double mouseY, String plantMatch) {
 		ImageWithSourceInfo[] img = imgs.getPlantImages().get(e.getUserData());
@@ -522,10 +536,10 @@ public class GardenView extends View<GardenController> {
 		vb.setStyle("-fx-background-color: DAE6F3;");
 
 		Label topLabel = new Label(e.getUserData().toString());
-		topLabel.setStyle("-fx-font-size:20px;");
+		topLabel.setFont(new Font(20));
 
 		Label match = new Label(plantMatch);
-		match.setStyle("-fx-font-size:20px;");
+		match.setFont(new Font(20));
 
 		vb.getChildren().addAll(topLabel, plantImage, match);
 

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
-
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1005,6 +1005,30 @@ public class Model {
 		boolean inX = x <= area.getBoundsInParent().getMaxX() && x >= area.getBoundsInParent().getMinX();
 		boolean inY = y <= area.getBoundsInParent().getMaxY() && y >= area.getBoundsInParent().getMinY();
 		return inX && inY;
+	}
+	
+	public static <T>String toCommaString(Collection<T> arr) {
+		String str = "";
+		String separator = ", ";
+		for (T curr : arr) {
+			str += curr + separator;
+		}
+		if (str.length() > separator.length()) {
+			str.substring(0, str.length() - separator.length());
+		}
+		return str;
+	}
+	
+	public static <T>String toCommaString(T[] arr) {
+		String str = "";
+		String separator = ", ";
+		for (T curr : arr) {
+			str += curr + separator;
+		}
+		if (str.length() > separator.length()) {
+			str = str.substring(0, str.length() - separator.length());
+		}
+		return str;
 	}
 
 	public int getUniqueShrubs() {

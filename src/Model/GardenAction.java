@@ -118,7 +118,7 @@ public class GardenAction {
 		for(GardenAction ga : actionList) {
 			switch(ga.getAction()) {
 				case ADDPLANT:
-					gv.addCirlceToFlow(ga.getPlant(), ga.getX(), ga.getY(), ga.getName());
+					gv.addCircleToFlow(ga.getPlant(), ga.getX(), ga.getY(), ga.getName());
 					break; 
 					
 				case MOVEPLANT:

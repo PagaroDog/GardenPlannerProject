@@ -119,4 +119,19 @@ public class Plant {
 		this.spread = spread;
 	}
 	
+	@Override
+	public String toString() {
+		String commonString = Model.toCommaString(commonNames);
+		String colorString = Model.toCommaString(color);
+		String seasonString = Model.toCommaString(bloomtime);
+		String waterString = Model.toCommaString(waterLevel);
+		String lightString = Model.toCommaString(light);
+		return name +
+				"\nCommon names: " + commonString +
+				"\nDuration: " + duration +
+				"\nBloom colors: " + colorString +
+				"\nBloom seasons: " + seasonString +
+				"\nWater levels: " + waterString +
+				"\nLight levels: " + lightString;
+	}
 }
