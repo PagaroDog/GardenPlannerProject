@@ -14,7 +14,7 @@ def downloadImagesFromName(name):
         if not os.path.exists(folder):
             # query the website and return the html to the variable ‘page’
 
-            req = Request('https://commons.wikimedia.org/wiki/' + name, headers = {'User-Agent': 'Mozilla/5.0'})
+            req = Request('https://commons.wikimedia.org/wiki/Category:' + name, headers = {'User-Agent': 'Mozilla/5.0'})
 
             page = urlopen(req)
         

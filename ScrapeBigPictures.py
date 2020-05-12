@@ -45,8 +45,10 @@ def downloadImagesFromName(name):
 
 
 csvfile = open('plantInfo.csv', 'r', newline = '')
-reader = csv.reader(csvfile)
-for row in reader:
-    name = row[0]
-    name = name.replace(' ', '_')
-    downloadImagesFromName(name)
+# reader = csv.reader(csvfile)
+# for row in reader:
+#     name = row[0]
+#     name = name.replace(' ', '_')
+#     downloadImagesFromName(name)
+
+downloadImagesFromName("Quercus_imbricaria")
