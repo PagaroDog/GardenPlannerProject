@@ -27,6 +27,8 @@ public class StatisticsView extends View<StatisticsController> {
 	private double hboxSpacing = 70;
 	private double vboxSpacing = 50;
 	private double fontSize = 25;
+	private double smallFontSize=18;
+	private double evenSmallerFontSize=12;
 	private Label totPlants = new Label();
 	private Label trees = new Label();
 	private Label flowers = new Label();
@@ -43,6 +45,7 @@ public class StatisticsView extends View<StatisticsController> {
 	private Label numAnimal = new Label();
 	private Label animalTypes = new Label();
 	private Label plantList = new Label();
+	private Label tips = new Label();
 
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
@@ -77,7 +80,7 @@ public class StatisticsView extends View<StatisticsController> {
 			((Label) uPlants.getChildren().get(i)).setWrapText(true);
 		}
 
-		vBox.getChildren().addAll(plants,uPlants, gardenCover, colors, bloomingSeasons, plantList);
+		vBox.getChildren().addAll(plants,uPlants, gardenCover, colors, bloomingSeasons, plantList,tips);
 
 		for (int i = 2; i < vBox.getChildren().size(); i++) {
 			((Label) vBox.getChildren().get(i)).setFont(new Font(fontSize));
@@ -109,10 +112,10 @@ public class StatisticsView extends View<StatisticsController> {
 		HashSet<Season> seasons, HashSet<String> allNames, double gardenCoveredPercent,int uTrees, int uShrubs, int uHerbs, int uVines) {
 		int total = numTrees + numShrubs + numHerbs + numVines;
 		totPlants.setText("Total Plants: " + total);
-		trees.setText("Trees: " + numTrees);
-		shrubs.setText("Shrubs: " + numShrubs);
-		flowers.setText("Herbs: " + numHerbs);
-		vines.setText("Vines: " + numVines);
+		trees.setText("Tree Count: " + numTrees);
+		shrubs.setText("Shrub Count: " + numShrubs);
+		flowers.setText("Herb Count: " + numHerbs);
+		vines.setText("Vine Count: " + numVines);
 		int uTotal = uTrees + uShrubs + uHerbs + uVines;
 		this.uTotPlants.setText("Unique Plants: " + uTotal);
 		this.uTrees.setText("Unique Trees: " + uTrees);
@@ -141,6 +144,27 @@ public class StatisticsView extends View<StatisticsController> {
 			plantList.setText(plantList.getText() + name + ", ");
 		}
 		plantList.setText(plantList.getText().substring(0, plantList.getText().length() - 2));
+		
+		if(uTotal == 0) {
+			tips.setText("Add some plants! Bring your yard to life!");
+		}
+		else if(uTotal < 3) {
+			tips.setText("We all have our favorite plants, but a greater variety brings more life!");
+		}
+		else {
+			tips.setText("Nice work! You and nature will be pleased!");
+		}
+		
+
+		if(uTotal > 10) {
+			plantList.setFont(new Font(smallFontSize));
+		}
+		else if(uTotal>15) {
+			plantList.setFont(new Font(evenSmallerFontSize));
+		}
+		else {
+			plantList.setFont(new Font(fontSize));
+		}
 	}
 
 }
