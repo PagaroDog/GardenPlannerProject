@@ -1,6 +1,8 @@
 package Views;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -275,10 +277,12 @@ public class GardenView extends View<GardenController> {
 	 * @param y     y coordinates of mouse
 	 */
 	public void addCirlceToFlow(Ellipse plant, double x, double y, String name) {
+		Image img = imgs.getPlantImages().get(name)[0].getImg();
 		System.out.println("Dropping image " + name);
 		this.garden.getChildren().add(plant);
 		List<Node> imageArr = garden.getChildren();
 		int i = imageArr.size() - 1;
+		((Shape) imageArr.get(i)).setFill(new ImagePattern(img));
 		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
 		imageArr.get(i).setOnMouseReleased(control.handleOnMouseReleased());
 		imageArr.get(i).setOnMouseEntered(control.handleOnMouseEntered());
