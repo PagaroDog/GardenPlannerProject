@@ -840,10 +840,13 @@ public class Model {
 				plantSurfaceArea += Math.PI * ((Ellipse)node).getRadiusX() * ((Ellipse)node).getRadiusY();
 			}
 		}
-		System.out.println(propertyHeightInches);
+		
 		gardenCovered = plantSurfaceArea / (propertyHeightInches * propertyWidthInches);
+		makePercent();
 	}
-
+	public void makePercent() {
+		gardenCovered *=100;
+	}
 	public double getGardenCoveredPercent() {
 		
 		return gardenCovered;
