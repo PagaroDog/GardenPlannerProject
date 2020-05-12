@@ -5,6 +5,7 @@ import java.util.HashSet;
 import Controllers.StatisticsController;
 import Model.Season;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -31,6 +32,11 @@ public class StatisticsView extends View<StatisticsController> {
 	private Label flowers = new Label();
 	private Label shrubs = new Label();
 	private Label vines = new Label();
+	private Label uTotPlants = new Label();
+	private Label uTrees = new Label();
+	private Label uFlowers = new Label();
+	private Label uShrubs = new Label();
+	private Label uVines = new Label();
 	private Label colors = new Label();
 	private Label bloomingSeasons = new Label();
 	private Label gardenCover = new Label();
@@ -59,16 +65,21 @@ public class StatisticsView extends View<StatisticsController> {
 		scroll.setFitToHeight(true);
 
 		HBox plants = new HBox(totPlants, trees, flowers, shrubs,vines);
+		
+		HBox uPlants = new HBox(uTotPlants,uTrees,uFlowers,uShrubs,uVines);
 		plants.setSpacing(hboxSpacing);
+		uPlants.setSpacing(hboxSpacing);
 
 		for (int i = 0; i < plants.getChildren().size(); i++) {
 			((Label) plants.getChildren().get(i)).setFont(new Font(fontSize));
 			((Label) plants.getChildren().get(i)).setWrapText(true);
+			((Label) uPlants.getChildren().get(i)).setFont(new Font(fontSize));
+			((Label) uPlants.getChildren().get(i)).setWrapText(true);
 		}
 
-		vBox.getChildren().addAll(plants, gardenCover, colors, bloomingSeasons, plantList);
+		vBox.getChildren().addAll(plants,uPlants, gardenCover, colors, bloomingSeasons, plantList);
 
-		for (int i = 1; i < vBox.getChildren().size(); i++) {
+		for (int i = 2; i < vBox.getChildren().size(); i++) {
 			((Label) vBox.getChildren().get(i)).setFont(new Font(fontSize));
 			((Label) vBox.getChildren().get(i)).setWrapText(true);
 		}
@@ -95,15 +106,22 @@ public class StatisticsView extends View<StatisticsController> {
  * @param gardenCoveredPercent percent of garden covered by plants in percent form (EX. 1.23 = 1.23%)
  */
 	public void updateStats(int numTrees, int numShrubs, int numHerbs, int numVines, HashSet<String> colorSet,
-		HashSet<Season> seasons, HashSet<String> allNames, double gardenCoveredPercent) {
+		HashSet<Season> seasons, HashSet<String> allNames, double gardenCoveredPercent,int uTrees, int uShrubs, int uHerbs, int uVines) {
 		int total = numTrees + numShrubs + numHerbs + numVines;
 		totPlants.setText("Total Plants: " + total);
 		trees.setText("Trees: " + numTrees);
 		shrubs.setText("Shrubs: " + numShrubs);
 		flowers.setText("Herbs: " + numHerbs);
 		vines.setText("Vines: " + numVines);
-
-		colors.setText("Colors: ");
+		int uTotal = uTrees + uShrubs + uHerbs + uVines;
+		this.uTotPlants.setText("Unique Plants: " + uTotal);
+		this.uTrees.setText("Unique Trees: " + uTrees);
+		this.uShrubs.setText("Unique Shrubs: " + uShrubs);
+		this.uFlowers.setText("Unique Herbs: " + uHerbs);
+		this.uVines.setText("Unique Vines: " + uVines);
+		
+		
+		colors.setText("Potential Bloom Colors: ");
 		for (String color : colorSet) {
 			colors.setText(colors.getText() + color + ", ");
 		}

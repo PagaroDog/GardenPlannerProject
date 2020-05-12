@@ -101,6 +101,11 @@ public class Model {
 	private int numVine = 0;
 	private double gardenCovered = 0;
 	
+	private int uniqueTrees =0;
+	private int uniqueShrubs =0;
+	private int uniqueHerbs =0;
+	private int uniqueVine =0;
+	
 	private final int pollinatorsPerTree = 72;
 	private final int pollinatorsPerShrub = 17;
 	private final int pollinatorsPerHerb = 4;
@@ -115,7 +120,7 @@ public class Model {
 	private HashSet<String> allColors = new HashSet<String>();
 	private HashSet<Season> allSeasons = new HashSet<Season>();
 	private HashSet<String> allNames = new HashSet<String>();
-	private HashMap<String, Integer> commonPlant = new HashMap<String, Integer>();
+	private HashSet<String> uniquePlant = new HashSet<String>();
 
 	public Season getSeason() {
 		return season;
@@ -809,10 +814,14 @@ public class Model {
 		numShrubs = 0;
 		numHerbs = 0;
 		numVine = 0;
+		uniqueTrees = 0;
+		uniqueShrubs = 0;
+		uniqueHerbs = 0;
+		uniqueVine = 0;
 		double plantSurfaceArea =0;
 		allColors.clear();
 		allSeasons.clear();
-		commonPlant.clear();
+		uniquePlant.clear();
 		for (Node node : garden) {
 			String plantName = (String) node.getUserData();
 			if (plantName != null) {
@@ -837,6 +846,22 @@ public class Model {
 				for (Season season : plant.getBloomtime()) {
 					allSeasons.add(season);
 				}
+				if(uniquePlant.add(plantName)) {
+					switch (plant.getType()) {
+					case HERB:
+						uniqueHerbs++;
+						break;
+					case SHRUB:
+						uniqueShrubs++;
+						break;
+					case TREE:
+						uniqueTrees++;
+						break;
+					case VINE:
+						uniqueVine++;
+						break;
+					}
+				}
 				
 				allNames.add(plantName);
 				System.out.println("Area of " + plantName+ " " +Math.PI * ((Ellipse)node).getRadiusX() * ((Ellipse)node).getRadiusY() );
@@ -857,5 +882,23 @@ public class Model {
 		
 		return numVine;
 	}
+
+	public int getUniqueTrees() {
+		return uniqueTrees;
+	}
+
+	public int getUniqueShrubs() {
+		return uniqueShrubs;
+	}
+
+	public int getUniqueHerbs() {
+		return uniqueHerbs;
+	}
+
+	public int getUniqueVine() {
+		return uniqueVine;
+	}
+
+
 
 }
