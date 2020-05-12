@@ -36,8 +36,9 @@ public class SuggestionsView extends View<SuggestionsController> {
 	private int thumbnailWidth = 100;
 	private int thumbnailHeight = 100;
 	private final int spaceBetweenLabelsPerRow = 17;
-	int rows = canvasHeight / (thumbnailHeight * 2);
-	int cols = (int) (canvasWidth / (thumbnailWidth * 1.75));
+	private int stackPanePadding = 10;
+	private int rows = canvasHeight / (thumbnailHeight * 2);
+	private int cols = (int) (canvasWidth / (thumbnailWidth * 1.75));
 	private ImageView plantCopy;
 	BorderPane border;
 	ArrayList<Pane> imgs;
@@ -87,13 +88,15 @@ public class SuggestionsView extends View<SuggestionsController> {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				StackPane p = new StackPane();
-				p.setPadding(new Insets(10,10,10,10));
 				plantName = control.getPlantNameAt(count);
 				ImageView plant = new ImageView(images.getPlantImages().get(plantName)[0].getImg());
 				plant.setPreserveRatio(true);
-				plant.setFitWidth(thumbnailWidth);
-				plant.setFitHeight(thumbnailHeight);
+				if (plant.getImage().getWidth() > plant.getImage().getHeight())
+					plant.setFitWidth(thumbnailWidth);
+				else
+					plant.setFitHeight(thumbnailHeight);
 				p.setUserData(plantName);
+				p.setPadding(new Insets(stackPanePadding, stackPanePadding, stackPanePadding, stackPanePadding));
 			
 				p.getChildren().add(plant);
 				p.setAlignment(Pos.CENTER);
@@ -108,7 +111,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 				p.setOnMouseClicked(control.gethandleOnMouseClick());
 				count++;
 			}
-			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
+			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight + (stackPanePadding *2)));
 		}
 
 	/*	Pane test = new Pane();
@@ -123,7 +126,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 		this.stats = stats(rows);
 		GridPane.setConstraints(stats, 0, rows, cols, rows);
 		// Creates three rows of height 100 for the stats gridpane
-		for (int i = 0; i < rows; i++) {
+		for (int i = 0; i < rows-1; i++) {
 			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
 		}
 
@@ -157,7 +160,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 
 		String[] labels = { "Common Name", "Scientific Name", "Plant type", "Moisture", "Sun" };
 
-		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailHeight * imageCols));
+		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailWidth * imageCols));
 		for (int i = 0; i < 5; i++) {
 			stats.getRowConstraints().add(new RowConstraints(rows * spaceBetweenLabelsPerRow));
 			Label dud = new Label(labels[i] + ": ");
