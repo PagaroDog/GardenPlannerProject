@@ -395,21 +395,21 @@ public class GardenController extends Controller<GardenView> {
 		if(model.getYear() == 3) {
 			circle.setRadiusX(maxSize);
 			circle.setRadiusY(maxSize);
-			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+			circle.setFill(Color.BLUE);
 			plantWidthX=maxSize;
 			plantWidthY=maxSize;
 		}
 		else if(model.getYear() == 2) {
 			circle.setRadiusX((maxSize+minSize)/2);
 			circle.setRadiusY((maxSize+minSize)/2);
-			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+			circle.setFill(Color.BLUE);
 			plantWidthX=(maxSize-minSize)/2;
 			plantWidthY=(maxSize-minSize)/2;
 		}
 		else if(model.getYear() == 1) {
 			circle.setRadiusX(minSize);
 			circle.setRadiusY(minSize);
-			circle.setFill(Color.BLUE);		//TODO: figure out where we should get the color. 
+			circle.setFill(Color.BLUE);
 			plantWidthX=minSize;
 			plantWidthY=minSize;
 		}
@@ -684,8 +684,6 @@ public class GardenController extends Controller<GardenView> {
 		model.setCurrDrawObj(dragPlant);
 		
 		double calcX = model.calcX(event.getX(), dragPlant.getRadiusX(), view.getSize());
-		// System.out.println(view.getGarden().getLayoutX());
-		// System.out.println(dragPlant.getTranslateX());
 
 		double calcY = model.calcY(event.getY(), dragPlant.getRadiusY(), view.getBottomHeight());
 		System.out.println("Drag released at x:" + calcX + ", y:" + calcY); 
@@ -710,8 +708,6 @@ public class GardenController extends Controller<GardenView> {
 		GA.redo(view); 
 	}
 	
-	
-	
 	public EventHandler handleOnMouseEntered() {
 		return event -> displayInfo((MouseEvent) event); 
 	}
@@ -729,4 +725,18 @@ public class GardenController extends Controller<GardenView> {
 		view.removeInfo();
 	}
 
+	public EventHandler handleOnMouseEnteredImage() {
+		return event -> displayInfoForScrollPane((MouseEvent) event); 
+	}
+	
+	public void displayInfoForScrollPane(MouseEvent event) {
+		ImageView plantImage = (ImageView) event.getSource();
+		String plantName = (String) plantImage.getUserData();
+		Plant plant = model.getPlants().get(plantName);
+		view.displayInfoForScrollPane(plant.toString()); 
+	}
+	
+	public EventHandler handleOnMouseExitedImage() {
+		return event -> removeInfo((MouseEvent) event); 
+	}
 }
