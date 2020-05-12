@@ -5,6 +5,7 @@ import java.util.HashSet;
 import Controllers.StatisticsController;
 import Model.Season;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -26,16 +27,24 @@ public class StatisticsView extends View<StatisticsController> {
 	private double hboxSpacing = 70;
 	private double vboxSpacing = 50;
 	private double fontSize = 25;
+	private double smallFontSize=18;
+	private double evenSmallerFontSize=12;
 	private Label totPlants = new Label();
 	private Label trees = new Label();
 	private Label flowers = new Label();
 	private Label shrubs = new Label();
+	private Label vines = new Label();
+	private Label uTotPlants = new Label();
+	private Label uTrees = new Label();
+	private Label uFlowers = new Label();
+	private Label uShrubs = new Label();
+	private Label uVines = new Label();
 	private Label colors = new Label();
 	private Label bloomingSeasons = new Label();
-	private Label pollinators = new Label();
-	private Label numAnimal = new Label();
-	private Label animalTypes = new Label();
+	private Label gardenCover = new Label();
+	
 	private Label plantList = new Label();
+	private Label tips = new Label();
 
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
@@ -57,17 +66,22 @@ public class StatisticsView extends View<StatisticsController> {
 		scroll.setFitToWidth(true);
 		scroll.setFitToHeight(true);
 
-		HBox plants = new HBox(totPlants, trees, flowers, shrubs);
+		HBox plants = new HBox(totPlants, trees, flowers, shrubs,vines);
+		
+		HBox uPlants = new HBox(uTotPlants,uTrees,uFlowers,uShrubs,uVines);
 		plants.setSpacing(hboxSpacing);
+		uPlants.setSpacing(hboxSpacing);
 
 		for (int i = 0; i < plants.getChildren().size(); i++) {
 			((Label) plants.getChildren().get(i)).setFont(new Font(fontSize));
 			((Label) plants.getChildren().get(i)).setWrapText(true);
+			((Label) uPlants.getChildren().get(i)).setFont(new Font(fontSize));
+			((Label) uPlants.getChildren().get(i)).setWrapText(true);
 		}
 
-		vBox.getChildren().addAll(plants, pollinators, colors, bloomingSeasons, numAnimal, animalTypes, plantList);
+		vBox.getChildren().addAll(plants,uPlants, gardenCover, colors, bloomingSeasons, plantList,tips);
 
-		for (int i = 1; i < vBox.getChildren().size(); i++) {
+		for (int i = 2; i < vBox.getChildren().size(); i++) {
 			((Label) vBox.getChildren().get(i)).setFont(new Font(fontSize));
 			((Label) vBox.getChildren().get(i)).setWrapText(true);
 		}
@@ -82,38 +96,38 @@ public class StatisticsView extends View<StatisticsController> {
 		styleScene();
 	}
 
-	/**
-	 * Modifies the labels to show statistics. Does some calculations.
-	 * 
-	 * @param numTrees            The number of trees in the garden
-	 * @param numShrubs           The number of shrubs in the garden
-	 * @param numHerbs            The number of herbs in the garden
-	 * @param pollinatorsPerTree  The number of pollinators attracted by a tree
-	 * @param pollinatorsPerShrub The number of pollinators attracted by a shrub
-	 * @param pollinatorsPerHerb  The number of pollinators attracted by a herb
-	 * @param animalsPerTree      The number of animals attracted by a tree
-	 * @param animalsPerShrub     The number of animals attracted by a shrub
-	 * @param animalsPerHerb      The number of animals attracted by a herb
-	 * @param beeMin              The minimum number of plants needed to attract
-	 *                            bees
-	 * @param butterflyMin        The minimum number of plants needed to attract
-	 *                            butterflies
-	 * @param birdMin             The minimum number of plants needed to attract
-	 *                            birds
-	 * @param mammalMin           The minimum number of plants needed to attract
-	 *                            small mammals
-	 */
-	public void updateStats(int numTrees, int numShrubs, int numHerbs, HashSet<String> colorSet,
-			HashSet<Season> seasons, HashSet<String> allNames, int pollinatorsPerTree, int pollinatorsPerShrub,
-			int pollinatorsPerHerb, int animalsPerTree, int animalsPerShrub, int animalsPerHerb, int beeMin,
-			int butterflyMin, int birdMin, int mammalMin) {
-		int total = numTrees + numShrubs + numHerbs;
+/**
+ * Modifies the labels to show statistics. 
+ * @param numTrees number of trees in garden
+ * @param numShrubs number of shrubs in garden
+ * @param numHerbs number of herbs in garden
+ * @param numVines number of vine plants in garden
+ * @param colorSet set of colors of plant blooms from the plants in the garden
+ * @param seasons set of the seasons the plants bloom in the garden
+ * @param allNames set of all scientific names of the plants in the garden
+ * @param gardenCoveredPercent percent of garden covered by plants in percent form (EX. 1.23 = 1.23%)
+ * @param uTrees number of unique trees in garden
+ * @param uShrubs number of unique shrubs in garden
+ * @param uHerbs number of unique herbs in garden
+ * @param uVines number of unique vine plants in garden
+ */
+	public void updateStats(int numTrees, int numShrubs, int numHerbs, int numVines, HashSet<String> colorSet,
+		HashSet<Season> seasons, HashSet<String> allNames, double gardenCoveredPercent,int uTrees, int uShrubs, int uHerbs, int uVines) {
+		int total = numTrees + numShrubs + numHerbs + numVines;
 		totPlants.setText("Total Plants: " + total);
-		trees.setText("Trees: " + numTrees);
-		shrubs.setText("Shrubs: " + numShrubs);
-		flowers.setText("Herbs: " + numHerbs);
-
-		colors.setText("Colors: ");
+		trees.setText("Tree Count: " + numTrees);
+		shrubs.setText("Shrub Count: " + numShrubs);
+		flowers.setText("Herb Count: " + numHerbs);
+		vines.setText("Vine Count: " + numVines);
+		int uTotal = uTrees + uShrubs + uHerbs + uVines;
+		this.uTotPlants.setText("Unique Plants: " + uTotal);
+		this.uTrees.setText("Unique Trees: " + uTrees);
+		this.uShrubs.setText("Unique Shrubs: " + uShrubs);
+		this.uFlowers.setText("Unique Herbs: " + uHerbs);
+		this.uVines.setText("Unique Vines: " + uVines);
+		
+		
+		colors.setText("Potential Bloom Colors: ");
 		for (String color : colorSet) {
 			colors.setText(colors.getText() + color + ", ");
 		}
@@ -124,29 +138,36 @@ public class StatisticsView extends View<StatisticsController> {
 			bloomingSeasons.setText(bloomingSeasons.getText() + season + ", ");
 		}
 		bloomingSeasons.setText(bloomingSeasons.getText().substring(0, bloomingSeasons.getText().length() - 2));
-
-		pollinators.setText("Estimated Pollinators Supported: "
-				+ (numTrees * pollinatorsPerTree + numShrubs * pollinatorsPerShrub + numHerbs * pollinatorsPerHerb));
-		numAnimal.setText("Estimated Animals Attracted: "
-				+ (numTrees * animalsPerTree + numShrubs * animalsPerShrub + numHerbs * animalsPerHerb));
-
-		if (total > mammalMin) {
-			animalTypes.setText("Possible Animal Types: Bees, Butterflies, Birds, Small mammals");
-		} else if (total > birdMin) {
-			animalTypes.setText("Possible Animal Types: Bees, Butterflies, Birds");
-		} else if (total > butterflyMin) {
-			animalTypes.setText("Possible Animal Types: Bees, Butterflies");
-		} else if (total > beeMin) {
-			animalTypes.setText("Possible Animal Types: Bees");
-		} else {
-			animalTypes.setText("Possible Animal Types: None (Add more plants to you garden!)");
-		}
+	
+		String percent = String.format("%2.2f", gardenCoveredPercent)+ "%";
+		gardenCover.setText("Garden Covered: " + percent);
 
 		plantList.setText("List of Plants in your Garden: ");
 		for (String name : allNames) {
 			plantList.setText(plantList.getText() + name + ", ");
 		}
 		plantList.setText(plantList.getText().substring(0, plantList.getText().length() - 2));
+		
+		if(uTotal == 0) {
+			tips.setText("Add some plants! Bring your yard to life!");
+		}
+		else if(uTotal < 3) {
+			tips.setText("We all have our favorite plants, but a greater variety brings more life!");
+		}
+		else {
+			tips.setText("Nice work! You and nature will be pleased!");
+		}
+		
+
+		if(uTotal > 10) {
+			plantList.setFont(new Font(smallFontSize));
+		}
+		else if(uTotal>15) {
+			plantList.setFont(new Font(evenSmallerFontSize));
+		}
+		else {
+			plantList.setFont(new Font(fontSize));
+		}
 	}
 
 }

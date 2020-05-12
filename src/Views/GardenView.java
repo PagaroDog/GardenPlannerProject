@@ -121,6 +121,8 @@ public class GardenView extends View<GardenController> {
 	 * Creates a ScrollPane of suggested plants for the left part of the BorderPane
 	 */
 	public void left() {
+		System.out.println("Number of plants: " + control.getNumPlants());
+		
 		tabPane = new TabPane();
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		plants.clear();
@@ -138,6 +140,7 @@ public class GardenView extends View<GardenController> {
 			tile.setStyle("-fx-background-color: DAE6F3;");
 			tile.setPrefWidth(SIZE);
 			for (int i = 0; i < numberPlants; i++) {
+				
 				if (control.getPlantType(control.getPlantNameAt(i)) == type) {
 					Image img = imgs.getPlantImages().get(control.getPlantNameAt(i))[0].getImg();
 					ImageView imageview = new ImageView(img);

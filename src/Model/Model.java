@@ -22,9 +22,14 @@ import Controllers.SaveController;
 import Controllers.StartupController;
 import Controllers.StatisticsController;
 import Controllers.TutorialController;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+
 import javafx.scene.shape.Rectangle;
+
+import javafx.scene.shape.Ellipse;
+
 
 /**
  * This class stores the data for this software, as well as some methods that
@@ -47,7 +52,7 @@ public class Model {
 	private int propertyHeightInches = 1200;
 	private int propertyWidthInches = 2400;
 
-	// make a constructor to do this
+	
 	private HashMap<String, Plant> plants = new HashMap<String, Plant>();
 	private ArrayList<GardenPref> gardenPreferences = new ArrayList<GardenPref>();
 	private ArrayList<Plant> suggestedPlants = new ArrayList<Plant>();
@@ -98,20 +103,21 @@ public class Model {
 	private int numShrubs = 0;
 	private int numHerbs = 0;
 
-	private final int pollinatorsPerTree = 72;
-	private final int pollinatorsPerShrub = 17;
-	private final int pollinatorsPerHerb = 4;
-	private final int animalsPerTree = 19;
-	private final int animalsPerShrub = 4;
-	private final int animalsPerHerb = 1;
-	private final int beeMin = 2;
-	private final int butterflyMin = 8;
-	private final int birdMin = 15;
-	private final int mammalMin = 40;
+
+	private int numVine = 0;
+	private double gardenCovered = 0;
+	
+	private int uniqueTrees =0;
+	private int uniqueShrubs =0;
+	private int uniqueHerbs =0;
+	private int uniqueVines =0;
+	
+	
 
 	private HashSet<String> allColors = new HashSet<String>();
 	private HashSet<Season> allSeasons = new HashSet<Season>();
 	private HashSet<String> allNames = new HashSet<String>();
+	private HashSet<String> uniquePlant = new HashSet<String>();
 
 	private final double rectMinX = 0;
 	private final double rectMinY = 0;
@@ -308,45 +314,7 @@ public class Model {
 		this.numHerbs = numHerbs;
 	}
 
-	public int getPollinatorsPerTree() {
-		return pollinatorsPerTree;
-	}
 
-	public int getPollinatorsPerShrub() {
-		return pollinatorsPerShrub;
-	}
-
-	public int getPollinatorsPerHerb() {
-		return pollinatorsPerHerb;
-	}
-
-	public int getAnimalsPerTree() {
-		return animalsPerTree;
-	}
-
-	public int getAnimalsPerShrub() {
-		return animalsPerShrub;
-	}
-
-	public int getAnimalsPerHerb() {
-		return animalsPerHerb;
-	}
-
-	public int getBeeMin() {
-		return beeMin;
-	}
-
-	public int getButterflyMin() {
-		return butterflyMin;
-	}
-
-	public int getBirdMin() {
-		return birdMin;
-	}
-
-	public int getMammalMin() {
-		return mammalMin;
-	}
 
 	public HashSet<String> getAllColors() {
 		return allColors;
@@ -694,7 +662,7 @@ public class Model {
 		int score = prefCategoriesCnt;
 		int minGardenPrefScore = score;
 		int cnt = 1;
-		int plantNum = 1;
+		
 		for (int i = 0; i <= score; i++) {
 			plantsFromPref.put(i, new ArrayList<Plant>());
 		}
@@ -732,14 +700,18 @@ public class Model {
 			plantsFromPref.get(minGardenPrefScore).add(p);
 			cnt = 1;
 			minGardenPrefScore = prefCategoriesCnt;
-			plantNum++;
+			
 		}
 
 		suggestedPlants.clear();
-		for (int i = 0; i <= score; i++) {
+
+		
+		for (int i = 0; i <=score; i++) {
+			
 
 			suggestedPlants.addAll(plantsFromPref.get(i));
 		}
+		
 
 	}
 
@@ -794,10 +766,95 @@ public class Model {
 				index++;
 			}
 		}
+		
 		suggestedPlants.removeAll(selected);
 		suggestedPlants.addAll(0, selected);
-
+		
 	}
+	/**
+	 * Takes in an observable list of nodes from the GardenController. Iterates through the nodes counting the total number of trees, herbs, vines, and shrubs and counting
+	 * the number of unique plants of each plant type. Also uses the property height and width to calculate the coverage of the garden by the plants. Sets all attributes
+	 * to their appropriate values.  
+	 * @param garden
+	 */
+	public void generateStats(ObservableList<Node> garden) {
+		numTrees = 0;
+		numShrubs = 0;
+		numHerbs = 0;
+		numVine = 0;
+		uniqueTrees = 0;
+		uniqueShrubs = 0;
+		uniqueHerbs = 0;
+		uniqueVines = 0;
+		double plantSurfaceArea =0;
+		allColors.clear();
+		allSeasons.clear();
+		uniquePlant.clear();
+		for (Node node : garden) {
+			String plantName = (String) node.getUserData();
+			if (plantName != null) {
+				Plant plant = plants.get(plantName);
+				switch (plant.getType()) {
+				case HERB:
+					numHerbs++;
+					break;
+				case SHRUB:
+					numShrubs++;
+					break;
+				case TREE:
+					numTrees++;
+					break;
+				case VINE:
+					numVine++;
+					break;
+				}
+				for (String color : plant.getColor()) {
+					allColors.add(color);
+				}
+				for (Season season : plant.getBloomtime()) {
+					allSeasons.add(season);
+				}
+				if(uniquePlant.add(plantName)) {
+					switch (plant.getType()) {
+					case HERB:
+						uniqueHerbs++;
+						break;
+					case SHRUB:
+						uniqueShrubs++;
+						break;
+					case TREE:
+						uniqueTrees++;
+						break;
+					case VINE:
+						uniqueVines++;
+						break;
+					}
+				}
+				
+				allNames.add(plantName);
+				
+				plantSurfaceArea += Math.PI * ((Ellipse)node).getRadiusX() * ((Ellipse)node).getRadiusY();
+			}
+		}
+		
+		gardenCovered = plantSurfaceArea / (propertyHeightInches * propertyWidthInches)*100;
+		
+	}
+	
+	public double getGardenCoveredPercent() {
+		
+		return gardenCovered;
+	}
+
+	public int getNumVines() {
+		
+		return numVine;
+	}
+
+	public int getUniqueTrees() {
+		return uniqueTrees;
+	}
+
 
 	/**
 	 * Calculates the coordinates of a rectangle as it is being created.
@@ -937,5 +994,20 @@ public class Model {
 		boolean inY = y < area.getBoundsInParent().getMaxY() && y > area.getBoundsInParent().getMinY();
 		return inX && inY;
 	}
+
+	public int getUniqueShrubs() {
+		return uniqueShrubs;
+	}
+
+	public int getUniqueHerbs() {
+		return uniqueHerbs;
+	}
+
+	public int getUniqueVines() {
+		return uniqueVines;
+	}
+
+
+
 
 }
