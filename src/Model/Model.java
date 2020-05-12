@@ -115,6 +115,7 @@ public class Model {
 	private HashSet<String> allColors = new HashSet<String>();
 	private HashSet<Season> allSeasons = new HashSet<Season>();
 	private HashSet<String> allNames = new HashSet<String>();
+	private HashMap<String, Integer> commonPlant = new HashMap<String, Integer>();
 
 	public Season getSeason() {
 		return season;
@@ -811,6 +812,7 @@ public class Model {
 		double plantSurfaceArea =0;
 		allColors.clear();
 		allSeasons.clear();
+		commonPlant.clear();
 		for (Node node : garden) {
 			String plantName = (String) node.getUserData();
 			if (plantName != null) {
@@ -835,18 +837,17 @@ public class Model {
 				for (Season season : plant.getBloomtime()) {
 					allSeasons.add(season);
 				}
+				
 				allNames.add(plantName);
 				System.out.println("Area of " + plantName+ " " +Math.PI * ((Ellipse)node).getRadiusX() * ((Ellipse)node).getRadiusY() );
 				plantSurfaceArea += Math.PI * ((Ellipse)node).getRadiusX() * ((Ellipse)node).getRadiusY();
 			}
 		}
 		
-		gardenCovered = plantSurfaceArea / (propertyHeightInches * propertyWidthInches);
-		makePercent();
+		gardenCovered = plantSurfaceArea / (propertyHeightInches * propertyWidthInches)*100;
+		
 	}
-	public void makePercent() {
-		gardenCovered *=100;
-	}
+	
 	public double getGardenCoveredPercent() {
 		
 		return gardenCovered;
