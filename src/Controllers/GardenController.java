@@ -546,7 +546,7 @@ public class GardenController extends Controller<GardenView> {
 			
 			GA.addAction(new GardenAction(circle, calcX, calcY, plantName, ActionEnum.ADDPLANT ));
 	
-			view.addCirlceToFlow(circle, calcX, calcY, plantName);
+			view.addCircleToFlow(circle, calcX, calcY, plantName);
 			success = true;
 			model.setCurrDrawObj(circle);
 		}

@@ -42,6 +42,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -81,14 +82,15 @@ public class GardenView extends View<GardenController> {
 	private BorderPane navigation;
 	private TabPane tabPane;
 	private int SIZE = 200;
-	Images imgs;
-	double minxRad;
-	double minyRad;
-	double maxxRad;
-	double maxyRad;
+	private Images imgs;
+	private double minxRad;
+	private double minyRad;
+	private double maxxRad;
+	private double maxyRad;
 
 	private double buttonFontSize = Math.min(12, 18 * canvasWidth / expectedWidth);
 	private final double labelFontSize = Math.min(16, 21 * canvasWidth / expectedWidth);
+	private final double plantStrokeWidth = 5;
 
 	public GardenView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -276,9 +278,11 @@ public class GardenView extends View<GardenController> {
 	 * @param x     x coordinates of mouse
 	 * @param y     y coordinates of mouse
 	 */
-	public void addCirlceToFlow(Ellipse plant, double x, double y, String name) {
+	public void addCircleToFlow(Ellipse plant, double x, double y, String name) {
 		Image img = imgs.getPlantImages().get(name)[0].getImg();
 		System.out.println("Dropping image " + name);
+		plant.setStrokeType(StrokeType.INSIDE);
+		plant.setStrokeWidth(plantStrokeWidth);
 		this.garden.getChildren().add(plant);
 		List<Node> imageArr = garden.getChildren();
 		int i = imageArr.size() - 1;
