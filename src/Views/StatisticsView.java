@@ -42,8 +42,7 @@ public class StatisticsView extends View<StatisticsController> {
 	private Label colors = new Label();
 	private Label bloomingSeasons = new Label();
 	private Label gardenCover = new Label();
-	private Label numAnimal = new Label();
-	private Label animalTypes = new Label();
+	
 	private Label plantList = new Label();
 	private Label tips = new Label();
 
