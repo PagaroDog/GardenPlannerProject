@@ -948,42 +948,40 @@ public class Model {
 	}
 
 	public String isPlantMatch(String plantName, double x, double y) {
-		System.out.println("Here");
-		System.out.println("Here2");
 		for (GardenPref gp : gardenPreferences) {
-			System.out.println("Here3");
-			if (isInArea(x, y, gp.getArea())) {
-				String match = "";
-				System.out.println("Here4");
-				Plant p = plants.get(plantName);
-				if (userCheck(p.getLight(), gp.getUserLight())) {
-					match = "Plant matches light requirement.";
-				} else {
-					match = "Plant does not match light requirement.";
-				}
-				
-				if (userCheck(p.getWaterLevel(), gp.getUserWater())) {
-					match += "\nPlant matches soil moisture.";
-				} else {
-					match += "\nPlant does not match soil moisture.";
-				}
-				
-				if (userCheck(p.getBloomtime(), gp.getUserBloom())) {
-					match += "\nPlant blooms in desired season.";
-				} else {
-					match += "\nPlant does not bloom in desired season.";
-				}
-				
-				HashSet<String> copy = new HashSet<String>(p.getColor());
-				Iterator<String> it = copy.iterator();
-				
-				while (it.hasNext()) {
-					if (gp.getUserColor().contains(it.next())) {
-						match += "\nPlant matches desired color.";
-						break;
+			if (gp.getArea() != null) {
+				if (isInArea(x, y, gp.getArea())) {
+					String match = "";
+					Plant p = plants.get(plantName);
+					if (userCheck(p.getLight(), gp.getUserLight())) {
+						match = "Plant matches light requirement.";
+					} else {
+						match = "Plant does not match light requirement.";
 					}
+					
+					if (userCheck(p.getWaterLevel(), gp.getUserWater())) {
+						match += "\nPlant matches soil moisture.";
+					} else {
+						match += "\nPlant does not match soil moisture.";
+					}
+					
+					if (userCheck(p.getBloomtime(), gp.getUserBloom())) {
+						match += "\nPlant blooms in desired season.";
+					} else {
+						match += "\nPlant does not bloom in desired season.";
+					}
+					
+					HashSet<String> copy = new HashSet<String>(p.getColor());
+					Iterator<String> it = copy.iterator();
+					
+					while (it.hasNext()) {
+						if (gp.getUserColor().contains(it.next())) {
+							match += "\nPlant matches desired color.";
+							break;
+						}
+					}
+					return match;
 				}
-				return match;
 			}
 		}
 		return "No preferences in this area.";
