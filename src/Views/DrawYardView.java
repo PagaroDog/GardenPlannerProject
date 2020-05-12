@@ -49,8 +49,6 @@ public class DrawYardView extends View<DrawYardController> {
 	private Label heightTxt;
 	private Label heightUnit;
 
-	private Font font;
-
 	private Button selectButton;
 	private Button deleteButton;
 	private Button rectButton;
@@ -103,6 +101,7 @@ public class DrawYardView extends View<DrawYardController> {
 		circleButton = createButton("Circle", control.getHandleOnCircleButton());
 		labelButton = createButton("Label", control.getHandleOnLabelButton());
 		labeltxt = createField();
+		labeltxt.setPromptText("ex. House, Shed");
 		minusButton = createButton("-", control.getHandleOnMinusButton());
 		plusButton = createButton("+", control.getHandleOnPlusButton());
 		labelSizetxt = new Label("Label Size: " + (int) labelSize);
@@ -114,9 +113,11 @@ public class DrawYardView extends View<DrawYardController> {
 		widthTxt = new Label("Width: ");
 		widthTxt.setFont(new Font(labelFontSize));
 		widthField = createField();
+		widthField.setPromptText("v Left to Right v");
 		heightTxt = new Label("ft.   Height: ");
 		heightTxt.setFont(new Font(labelFontSize));
 		heightField = createField();
+		heightField.setPromptText("v Top to Bottom v");
 		heightUnit = new Label("ft.");
 		heightUnit.setFont(new Font(labelFontSize));
 
@@ -144,6 +145,7 @@ public class DrawYardView extends View<DrawYardController> {
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
 		scene.setOnKeyPressed(control.getHandleOnKeyPressed());
+//		scene.setOnMousePressed(control.getHandleOnScenePressed());
 		styleScene();
 	}
 

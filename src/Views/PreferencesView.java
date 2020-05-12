@@ -42,9 +42,8 @@ public class PreferencesView extends View<PreferencesController> {
 	private HBox zoneButtons;
 	private Rectangle currArea;
 	private Label zoneButtonsLabel;
-	
-	private double zoneButtonsFontSize = 16;
 
+	private double zoneButtonsFontSize = 16;
 
 	public PreferencesView(Stage stage) {
 		this.stage = stage;
@@ -64,12 +63,12 @@ public class PreferencesView extends View<PreferencesController> {
 		drawing = new Pane();
 		border.setLeft(drawing);
 		TilePane tp = new TilePane();
-		
+
 		zoneButtons = createToolbar();
 		zoneButtonsLabel = new Label("Garden Area: ");
 		zoneButtonsLabel.setFont(new Font(zoneButtonsFontSize));
 		zoneButtons.getChildren().add(zoneButtonsLabel);
-		
+
 		border.setTop(zoneButtons);
 
 		scene = new Scene(border, canvasWidth, canvasHeight);
@@ -83,33 +82,30 @@ public class PreferencesView extends View<PreferencesController> {
 		vbox.setStyle("-fx-background-color: rgba(158,255,174,1);");
 
 		name = new TextField();
+		name.setPromptText("Name this Area");
 
 		String[] seasons = { "Any", "Winter", "Spring", "Summer", "Fall" };
 		Label labbloom = new Label("When do you want the plant to bloom?");
 		bloom = new ComboBox<String>();
 		bloom.getItems().addAll(seasons);
-/*
-		String[] soils = { "Any", "Clay", "Sand", "Loam" };
-		Label labsoil = new Label("What type of soil?");
-		soil = new ComboBox<String>();
-		soil.getItems().addAll(soils);
-*/
-		String[] moistures = { "Any", "Wet", "Wet Mesic", "Dry Mesic","Dry" };
+		/*
+		 * String[] soils = { "Any", "Clay", "Sand", "Loam" }; Label labsoil = new
+		 * Label("What type of soil?"); soil = new ComboBox<String>();
+		 * soil.getItems().addAll(soils);
+		 */
+		String[] moistures = { "Any", "Wet", "Wet Mesic", "Mesic", "Dry Mesic", "Dry" };
 		Label labwater = new Label("What is your soil's moisture?");
 		water = new ComboBox<String>();
-		
-		water.getItems().addAll(moistures);
-		
-		
 
-		
-		
-		String[] sunlevels = { "Any", "Full Sun", "Full Sun to Partial Shade", "Partial Shade", "Partial Shade to Full Shade",  "Full Shade" };
+		water.getItems().addAll(moistures);
+
+		String[] sunlevels = { "Any", "Full Sun", "Full Sun to Partial Shade", "Partial Shade",
+				"Partial Shade to Full Shade", "Full Shade" };
 		Label labsun = new Label("What degree of sunlight?");
 		sun = new ComboBox<String>();
 		sun.getItems().addAll(sunlevels);
 
-		String[] colors = { "Red", "Blue", "Violet", "Pink", "White", "Yellow", "Black","Brown","Green","Orange" };
+		String[] colors = { "Red", "Blue", "Violet", "Pink", "White", "Yellow", "Black", "Brown", "Green", "Orange" };
 		color = new TilePane();
 		color.setPadding(new Insets(10, 10, 10, 10));
 		Label labcolor = new Label("What color of the bloom?");
@@ -117,26 +113,21 @@ public class PreferencesView extends View<PreferencesController> {
 			color.getChildren().add(new RadioButton(c));
 		}
 
-//		bloom.setPrefWidth(250);
-		//soil.setPrefWidth(250);
-//		water.setPrefWidth(250);
-//		sun.setPrefWidth(250);
-//		color.setPrefWidth(500);
-		vbox.getChildren().addAll(name, labwater, water,  labsun, sun, labcolor, color,
-				labbloom, bloom);
-//		vbox.setPrefWidth(500);
+		vbox.getChildren().addAll(name, labwater, water, labsun, sun, labcolor, color, labbloom, bloom);
 		return vbox;
 	}
 
 	public BorderPane addBottom() {
-		BorderPane bottom = createNavigationBar("Edit Areas", "See Suggestions", "Choose Your Preferences", control.gethandleOnBackButton(), control.gethandleOnNextButton());
+		BorderPane bottom = createNavigationBar("Edit Areas", "See Suggestions", "Choose Your Preferences",
+				control.gethandleOnBackButton(), control.gethandleOnNextButton());
 
 		return bottom;
 	}
 
 	/**
-	 * Creates the buttons that allow the user to switch between garden areas
-	 * and associates each garden area with a GardenPref.
+	 * Creates the buttons that allow the user to switch between garden areas and
+	 * associates each garden area with a GardenPref.
+	 * 
 	 * @param gardenPrefs The ArrayList of GardenPrefs
 	 */
 	public void setupZoneFlips(ArrayList<GardenPref> gardenPrefs) {

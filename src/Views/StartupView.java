@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * The View class for the Startup screen. Holds graphical data and defines
@@ -48,6 +49,9 @@ public class StartupView extends View<StartupController> {
 	 */
 	@Override
 	public void setup() {
+		stage.setResizable(false);
+		stage.sizeToScene();
+		
 		title = new Label("MyNativeGarden");
 		title.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Dandelion.ttf"), titleFontSize));
 		iv = new ImageView(new Image(getClass().getResourceAsStream("/imgs/StartupBackground.jpg"), canvasWidth,
@@ -72,6 +76,7 @@ public class StartupView extends View<StartupController> {
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
 		styleScene();
+
 	}
 
 	/**
