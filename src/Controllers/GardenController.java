@@ -512,34 +512,34 @@ public class GardenController extends Controller<GardenView> {
 			if (plantName != null) {
 				if(season == Season.FALL) {
 					if(seasonList.contains(season)) {
-						circle.setFill(this.getBloomColor(plantName));
+						circle.setStroke(this.getBloomColor(plantName));
 					}
 					else {
-						circle.setFill(Color.GREEN);
+						circle.setStroke(Color.GREEN);
 					}
 				}
 				if(season == Season.WINTER) {
 					if(seasonList.contains(season)) {
-						circle.setFill(this.getBloomColor(plantName));
+						circle.setStroke(this.getBloomColor(plantName));
 					}
 					else {
-						circle.setFill(Color.GRAY);
+						circle.setStroke(Color.GRAY);
 					}
 				}
 				if(season == Season.SPRING) {
 					if(seasonList.contains(season)) {
-						circle.setFill(this.getBloomColor(plantName));
+						circle.setStroke(this.getBloomColor(plantName));
 					}
 					else {
-						circle.setFill(Color.GREEN);
+						circle.setStroke(Color.GREEN);
 					}
 				}
 				if(season == Season.SUMMER) {
 					if(seasonList.contains(season)) {
-						circle.setFill(this.getBloomColor(plantName));
+						circle.setStroke(this.getBloomColor(plantName));
 					}
 					else {
-						circle.setFill(Color.GREEN);
+						circle.setStroke(Color.GREEN);
 					}
 				}
 			}

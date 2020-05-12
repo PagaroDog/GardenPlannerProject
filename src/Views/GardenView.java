@@ -447,30 +447,30 @@ public class GardenView extends View<GardenController> {
 				ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(control.getBloomTime(plantName)));
 				if (season == Season.FALL) {
 					if (seasonList.contains(season)) {
-						((Ellipse) plant).setFill(control.getBloomColor(plantName));
+						((Ellipse) plant).setStroke(control.getBloomColor(plantName));
 					} else {
-						((Ellipse) plant).setFill(Color.GREEN);
+						((Ellipse) plant).setStroke(Color.GREEN);
 					}
 				}
 				if (season == Season.WINTER) {
 					if (seasonList.contains(season)) {
-						((Shape) plant).setFill(control.getBloomColor(plantName));
+						((Shape) plant).setStroke(control.getBloomColor(plantName));
 					} else {
-						((Ellipse) plant).setFill(Color.GRAY);
+						((Ellipse) plant).setStroke(Color.GRAY);
 					}
 				}
 				if (season == Season.SPRING) {
 					if (seasonList.contains(season)) {
-						((Shape) plant).setFill(control.getBloomColor(plantName));
+						((Shape) plant).setStroke(control.getBloomColor(plantName));
 					} else {
-						((Ellipse) plant).setFill(Color.GREEN);
+						((Ellipse) plant).setStroke(Color.GREEN);
 					}
 				}
 				if (season == Season.SUMMER) {
 					if (seasonList.contains(season)) {
-						((Shape) plant).setFill(control.getBloomColor(plantName));
+						((Shape) plant).setStroke(control.getBloomColor(plantName));
 					} else {
-						((Ellipse) plant).setFill(Color.GREEN);
+						((Ellipse) plant).setStroke(Color.GREEN);
 					}
 				}
 			}
