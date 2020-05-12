@@ -104,6 +104,8 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 * @param drawing The drawing Pane from DrawYard
 	 */
 	public void setDrawing(Pane drawing) {
+		boolean firstCond = true;
+		Rectangle firstCondRect=new Rectangle();
 		if (drawing != null) {
 			view.getBorder().setLeft(drawing);
 			for (Node child : drawing.getChildren()) {
@@ -116,8 +118,13 @@ public class PreferencesController extends Controller<PreferencesView> {
 			double ratio = newWidth / oldWidth;
 			model.getGardenPreferences().clear();
 			for (Node child : drawing.getChildren()) {
+				
 				if (child.getUserData() == StageName.CONDITIONS) {
 					model.getGardenPreferences().add(new GardenPref());
+					if(firstCond) {
+						firstCondRect = (Rectangle)child;
+						firstCond = false;
+					}
 				}
 				double oldX = child.getBoundsInParent().getMinX();
 				child.setScaleX(ratio);
@@ -128,6 +135,10 @@ public class PreferencesController extends Controller<PreferencesView> {
 			view.setupZoneFlips(model.getGardenPreferences());
 			if (model.getGardenPreferences().size() > 0) {
 				model.setCurrPref(model.getGardenPreferences().get(0));
+				
+				model.getCurrPref().setArea(firstCondRect);
+				firstCondRect.setStroke(Color.RED);
+				view.setCurrArea(firstCondRect);
 			}
 		}
 	}
@@ -186,6 +197,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 */
 	public void saveUserPref(boolean stay) {
 		ObservableList<Node> colorButtons = view.getColor().getChildren();
+		
 		ArrayList<String> colors = new ArrayList<String>();
 		if (model.getCurrPref() != null) {
 			System.out.println("Saving Prefs");
@@ -195,6 +207,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 			//model.getCurrPref().setUserSoil(view.getSoil().getValue());
 			model.getCurrPref().setUserWater(view.getWater().getValue());
 			model.getCurrPref().setArea(view.getCurrArea());
+			
 
 			for (int i = 0; i < colorButtons.size(); i++) {
 				RadioButton button = (RadioButton) (colorButtons.get(i));
