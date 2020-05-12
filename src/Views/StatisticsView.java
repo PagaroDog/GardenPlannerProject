@@ -66,7 +66,7 @@ public class StatisticsView extends View<StatisticsController> {
 			((Label) plants.getChildren().get(i)).setWrapText(true);
 		}
 
-		vBox.getChildren().addAll(plants, gardenCover, colors, bloomingSeasons, numAnimal, animalTypes, plantList);
+		vBox.getChildren().addAll(plants, gardenCover, colors, bloomingSeasons, plantList);
 
 		for (int i = 1; i < vBox.getChildren().size(); i++) {
 			((Label) vBox.getChildren().get(i)).setFont(new Font(fontSize));
@@ -83,27 +83,17 @@ public class StatisticsView extends View<StatisticsController> {
 		styleScene();
 	}
 
-	/**
-	 * Modifies the labels to show statistics. Does some calculations.
-	 * 
-	 * @param numTrees            The number of trees in the garden
-	 * @param numShrubs           The number of shrubs in the garden
-	 * @param numHerbs            The number of herbs in the garden
-	 * @param pollinatorsPerTree  The number of pollinators attracted by a tree
-	 * @param pollinatorsPerShrub The number of pollinators attracted by a shrub
-	 * @param pollinatorsPerHerb  The number of pollinators attracted by a herb
-	 * @param animalsPerTree      The number of animals attracted by a tree
-	 * @param animalsPerShrub     The number of animals attracted by a shrub
-	 * @param animalsPerHerb      The number of animals attracted by a herb
-	 * @param beeMin              The minimum number of plants needed to attract
-	 *                            bees
-	 * @param butterflyMin        The minimum number of plants needed to attract
-	 *                            butterflies
-	 * @param birdMin             The minimum number of plants needed to attract
-	 *                            birds
-	 * @param mammalMin           The minimum number of plants needed to attract
-	 *                            small mammals
-	 */
+/**
+ * Modifies the labels to show statistics. 
+ * @param numTrees number of trees in garden
+ * @param numShrubs number of shrubs in garden
+ * @param numHerbs number of herbs in garden
+ * @param numVines number of vine plants in garden
+ * @param colorSet set of colors of plant blooms from the plants in the garden
+ * @param seasons set of the seasons the plants bloom in the garden
+ * @param allNames set of all scientific names of the plants in the garden
+ * @param gardenCoveredPercent percent of garden covered by plants in percent form (EX. 1.23 = 1.23%)
+ */
 	public void updateStats(int numTrees, int numShrubs, int numHerbs, int numVines, HashSet<String> colorSet,
 		HashSet<Season> seasons, HashSet<String> allNames, double gardenCoveredPercent) {
 		int total = numTrees + numShrubs + numHerbs + numVines;
@@ -124,25 +114,9 @@ public class StatisticsView extends View<StatisticsController> {
 			bloomingSeasons.setText(bloomingSeasons.getText() + season + ", ");
 		}
 		bloomingSeasons.setText(bloomingSeasons.getText().substring(0, bloomingSeasons.getText().length() - 2));
-		gardenCover.setText("Garden Covered: " + gardenCoveredPercent);
-		/*
-		 * pollinators.setText("Estimated Pollinators Supported: " + (numTrees *
-		 * pollinatorsPerTree + numShrubs * pollinatorsPerShrub + numHerbs *
-		 * pollinatorsPerHerb)); numAnimal.setText("Estimated Animals Attracted: " +
-		 * (numTrees * animalsPerTree + numShrubs * animalsPerShrub + numHerbs *
-		 * animalsPerHerb));
-		 */
-		/*
-		 * if (total > mammalMin) { animalTypes.
-		 * setText("Possible Animal Types: Bees, Butterflies, Birds, Small mammals"); }
-		 * else if (total > birdMin) {
-		 * animalTypes.setText("Possible Animal Types: Bees, Butterflies, Birds"); }
-		 * else if (total > butterflyMin) {
-		 * animalTypes.setText("Possible Animal Types: Bees, Butterflies"); } else if
-		 * (total > beeMin) { animalTypes.setText("Possible Animal Types: Bees"); } else
-		 * { animalTypes.
-		 * setText("Possible Animal Types: None (Add more plants to you garden!)"); }
-		 */
+	
+		String percent = String.format("%2.2f", gardenCoveredPercent)+ "%";
+		gardenCover.setText("Garden Covered: " + percent);
 
 		plantList.setText("List of Plants in your Garden: ");
 		for (String name : allNames) {
