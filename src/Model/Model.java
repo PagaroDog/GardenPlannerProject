@@ -48,7 +48,7 @@ public class Model {
 	private int propertyHeightInches = 1200;
 	private int propertyWidthInches = 2400;
 
-	// make a constructor to do this
+	
 	private HashMap<String, Plant> plants = new HashMap<String, Plant>();
 	private ArrayList<GardenPref> gardenPreferences = new ArrayList<GardenPref>();
 	private ArrayList<Plant> suggestedPlants = new ArrayList<Plant>();
@@ -106,16 +106,6 @@ public class Model {
 	private int uniqueHerbs =0;
 	private int uniqueVine =0;
 	
-	private final int pollinatorsPerTree = 72;
-	private final int pollinatorsPerShrub = 17;
-	private final int pollinatorsPerHerb = 4;
-	private final int animalsPerTree = 19;
-	private final int animalsPerShrub = 4;
-	private final int animalsPerHerb = 1;
-	private final int beeMin = 2;
-	private final int butterflyMin = 8;
-	private final int birdMin = 15;
-	private final int mammalMin = 40;
 	
 	private HashSet<String> allColors = new HashSet<String>();
 	private HashSet<Season> allSeasons = new HashSet<Season>();
@@ -315,45 +305,7 @@ public class Model {
 		this.numHerbs = numHerbs;
 	}
 
-	public int getPollinatorsPerTree() {
-		return pollinatorsPerTree;
-	}
 
-	public int getPollinatorsPerShrub() {
-		return pollinatorsPerShrub;
-	}
-
-	public int getPollinatorsPerHerb() {
-		return pollinatorsPerHerb;
-	}
-
-	public int getAnimalsPerTree() {
-		return animalsPerTree;
-	}
-
-	public int getAnimalsPerShrub() {
-		return animalsPerShrub;
-	}
-
-	public int getAnimalsPerHerb() {
-		return animalsPerHerb;
-	}
-
-	public int getBeeMin() {
-		return beeMin;
-	}
-
-	public int getButterflyMin() {
-		return butterflyMin;
-	}
-
-	public int getBirdMin() {
-		return birdMin;
-	}
-
-	public int getMammalMin() {
-		return mammalMin;
-	}
 
 	public HashSet<String> getAllColors() {
 		return allColors;
@@ -701,7 +653,7 @@ public class Model {
 		int score = prefCategoriesCnt;
 		int minGardenPrefScore = score;
 		int cnt = 1;
-		int plantNum = 1;
+		
 		for (int i = 0; i <= score; i++) {
 			plantsFromPref.put(i, new ArrayList<Plant>());
 		}
@@ -739,7 +691,7 @@ public class Model {
 			plantsFromPref.get(minGardenPrefScore).add(p);
 			cnt = 1;
 			minGardenPrefScore = prefCategoriesCnt;
-			plantNum++;
+			
 		}
 
 		suggestedPlants.clear();
@@ -864,7 +816,7 @@ public class Model {
 				}
 				
 				allNames.add(plantName);
-				System.out.println("Area of " + plantName+ " " +Math.PI * ((Ellipse)node).getRadiusX() * ((Ellipse)node).getRadiusY() );
+				
 				plantSurfaceArea += Math.PI * ((Ellipse)node).getRadiusX() * ((Ellipse)node).getRadiusY();
 			}
 		}
