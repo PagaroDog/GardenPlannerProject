@@ -21,10 +21,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
 
 /**
  * 
  * @author IanMcCabe
+ * @author Brandon Wu
+ * @author Tommy White
  *
  */
 public class ModelTests {
@@ -467,5 +470,114 @@ public class ModelTests {
 		assertEquals(expectedCoverage,test.getGardenCoveredPercent(),0.01);
 		
 		
+	}
+	
+	@Test
+	public void isPlantMatchTest() {
+		Model test = new Model();
+		test.importPlantsFromCSV("plantInfo.csv");
+		
+		Rectangle area0 = new Rectangle();
+		Rectangle area1 = new Rectangle();
+		Rectangle area2 = new Rectangle();
+		Rectangle area3 = new Rectangle();
+		
+		area0.setX(0);
+		area0.setY(0);
+		area1.setX(500);
+		area1.setY(0);
+		area2.setX(0);
+		area2.setY(500);
+		area3.setX(500);
+		area3.setY(500);
+		
+		area0.setWidth(499);
+		area1.setWidth(499);
+		area2.setWidth(499);
+		area3.setWidth(499);
+		area0.setHeight(499);
+		area1.setHeight(499);
+		area2.setHeight(499);
+		area3.setHeight(499);
+		
+		GardenPref pref0 = new GardenPref();
+		GardenPref pref1 = new GardenPref();
+		GardenPref pref2 = new GardenPref();
+		GardenPref pref3 = new GardenPref();
+		
+		pref0.setArea(area0);
+		pref1.setArea(area1);
+		pref2.setArea(area2);
+		pref3.setArea(area3);
+		
+		HashSet<String> colors0 = new HashSet<String>();
+		HashSet<String> colors1 = new HashSet<String>();
+		HashSet<String> colors2 = new HashSet<String>();
+		HashSet<String> colors3 = new HashSet<String>();
+		
+		pref0.setUserLight("Full Sun");
+		pref0.setUserWater("Wet Mesic");
+		pref0.setUserBloom("Spring");
+		colors0.add("Yellow");
+		pref0.setUserColor(colors0);
+		
+		pref1.setUserLight("Full Shade");
+		pref1.setUserWater("Dry");
+		pref1.setUserBloom("Winter");
+		colors1.add("Pink");
+		pref1.setUserColor(colors1);
+		
+		pref2.setUserLight("Full Sun to Partial Shade");
+		pref2.setUserWater("Dry");
+		pref2.setUserBloom("Summer");
+		colors2.add("White");
+		pref2.setUserColor(colors2);
+		
+		pref3.setUserLight("Partial Shade");
+		pref3.setUserWater("Mesic");
+		pref3.setUserBloom("Fall");
+		colors3.add("Orange");
+		pref3.setUserColor(colors3);
+		
+		ArrayList<GardenPref> prefs = new ArrayList<GardenPref>();
+		prefs.add(pref0);
+		prefs.add(pref1);
+		prefs.add(pref2);
+		prefs.add(pref3);
+		
+		test.setGardenPreferences(prefs);
+		
+		String result = test.isPlantMatch("Acer negundo", 50, 50);
+		assertEquals("Plant matches light requirement.\nPlant matches soil moisture.\nPlant blooms in desired season.\nPlant matches desired color.", result);
+		
+		result = test.isPlantMatch("Acer negundo", 550, 50);
+		assertEquals("Plant does not match light requirement.\nPlant matches soil moisture.\nPlant does not bloom in desired season.", result);
+		
+		result = test.isPlantMatch("Amelanchier arborea", 50, 550);
+		assertEquals("Plant matches light requirement.\nPlant does not match soil moisture.\nPlant does not bloom in desired season.\nPlant matches desired color.", result);
+		
+		result = test.isPlantMatch("Helianthus angustifolius", 550, 550);
+		assertEquals("Plant does not match light requirement.\nPlant matches soil moisture.\nPlant blooms in desired season.", result);		
+	}
+	
+	@Test
+	public void isInAreaTest() {
+		Model test = new Model();
+		
+		Rectangle area = new Rectangle();
+		
+		area.setX(0);
+		area.setY(0);
+		
+		area.setWidth(499);
+		area.setHeight(499);
+		
+		assertEquals(false, test.isInArea(-1, -1, area));
+		assertEquals(false, test.isInArea(500, 500, area));
+		assertEquals(false, test.isInArea(500, 250, area));
+		assertEquals(false, test.isInArea(250, 500, area));
+		assertEquals(true, test.isInArea(250, 250, area));
+		assertEquals(true, test.isInArea(0, 0, area));
+		assertEquals(true, test.isInArea(499, 499, area));
 	}
 }
