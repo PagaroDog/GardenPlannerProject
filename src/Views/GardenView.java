@@ -90,10 +90,10 @@ public class GardenView extends View<GardenController> {
 
 	private double buttonFontSize = Math.min(12, 18 * canvasWidth / expectedWidth);
 	private final double labelFontSize = Math.min(16, 21 * canvasWidth / expectedWidth);
-	private final double treeStrokeWidth = 7;
-	private final double shrubStrokeWidth = 7;
-	private final double herbStrokeWidth = 1;
-	private final double vineStrokeWidth = 1;
+	private final double treeStrokeWidth = 10;
+	private final double shrubStrokeWidth = 10;
+	private final double herbStrokeWidth = 5;
+	private final double vineStrokeWidth = 5;
 
 	public GardenView(Stage stage, Images imgs) {
 		this.stage = stage;
