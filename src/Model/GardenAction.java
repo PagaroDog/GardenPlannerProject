@@ -95,7 +95,8 @@ public class GardenAction {
 		redoList.push(actionList.removeLast());
 		
 		if(actionList.size()== 0) {
-			gv.getGarden().getChildren().clear(); 
+			gv.getGarden().getChildren().clear();
+			gv.getGarden().getChildren().add(gv.getDrawing()) ;
 		}
 		else {
 			actionIterate(gv);
