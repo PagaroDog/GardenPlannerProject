@@ -1,7 +1,9 @@
 package Controllers;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import javax.imageio.ImageIO;
 
@@ -13,6 +15,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Ellipse;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -84,16 +88,17 @@ public class SaveController extends Controller<SaveView> {
 	}
 
 	private void saveGarden(Scene scene) {// needs to work for load
-		WritableImage writableImage = new WritableImage((int) scene.getWidth(), (int) scene.getHeight());
-		scene.snapshot(writableImage);
 
-		File file = new File("Garden.garden");
 		try {
-			ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "garden", file);
-			System.out.println("snapshot saved: " + file.getAbsolutePath());
-		} catch (IOException ex) {
-			Logger.getLogger(SaveController.class.getName()).log(Level.SEVERE, null, ex);
+			FileOutputStream file = new FileOutputStream("Garden.garden");
+			ObjectOutputStream out = new ObjectOutputStream(file);
+			main.getGardenControl().savePlants();
+			out.close();
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		
 	}
 
 	/**

@@ -4,6 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -53,7 +54,7 @@ import javafx.stage.Stage;
  * @author Matt Cohen
  *
  */
-public class GardenView extends View<GardenController> {
+public class GardenView extends View<GardenController> implements Serializable {
 	private HashMap<String, Image> plantImages = new HashMap<String, Image>();
 	private ArrayList<Image> plants = new ArrayList<Image>();
 
@@ -82,7 +83,7 @@ public class GardenView extends View<GardenController> {
 	private BorderPane navigation;
 	private TabPane tabPane;
 	private int SIZE = 200;
-	private Images imgs;
+	private transient Images imgs;
 	private double minxRad;
 	private double minyRad;
 	private double maxxRad;

@@ -78,7 +78,8 @@ public class DrawYardView extends View<DrawYardController> {
 	private final double labelFontSize = Math.min(16, 18 * canvasWidth / expectedWidth);
 	private final double initShapeSize = 10;
 	private final int minRGB = 30;
-	private final double randRGB = 255 - minRGB;
+	private final int maxRGB = 190;
+	private final double randRGB = maxRGB - minRGB;
 	private final double opacity = 0.3;
 	private final double minLabelLength = 0;
 
@@ -101,7 +102,7 @@ public class DrawYardView extends View<DrawYardController> {
 		deleteButton = createButton("Delete", control.getHandleOnDeleteButton());
 		rectButton = createButton("Rectangle", control.getHandleOnRectButton());
 		circleButton = createButton("Circle", control.getHandleOnCircleButton());
-		labelButton = createButton("Label", control.getHandleOnLabelButton());
+		labelButton = createButton("Add Label", control.getHandleOnLabelButton());
 		labeltxt = createField();
 		labeltxt.setPromptText("ex. House, Shed");
 		minusButton = createButton("-", control.getHandleOnMinusButton());
@@ -139,6 +140,7 @@ public class DrawYardView extends View<DrawYardController> {
 		drawing = new Pane();
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
 		drawing.setOnMouseDragged(control.getHandleOnDragPane());
+		drawing.setOnMouseReleased(control.getHandleOnSelectButton());
 
 		root = new BorderPane();
 		root.setTop(toolbar);
@@ -284,15 +286,15 @@ public class DrawYardView extends View<DrawYardController> {
 		circle.setCenterY(y);
 	}
 
-	public Node addLabel(double x, double y) {
+	public Node addLabel() {
 		if (labeltxt.getText().length() > minLabelLength) {
 			Label txt = new Label(labeltxt.getText());
 			drawing.getChildren().add(txt);
 			txt.setFont(new Font(labelSize));
 			txt.setOnMousePressed(control.getHandleOnPressShape());
 			txt.setOnMouseDragged(control.getHandleOnDragLabel());
-			txt.setLayoutX(x);
-			txt.setLayoutY(y);
+			txt.setLayoutX(drawing.getWidth()/2);
+			txt.setLayoutY(drawing.getHeight()/2);
 			labeltxt.setText("");
 			return txt;
 		} else {
@@ -418,15 +420,11 @@ public class DrawYardView extends View<DrawYardController> {
 		selectButton.setId("");
 		rectButton.setId("");
 		circleButton.setId("");
-		labelButton.setId("");
 		newAreaButton.setId("");
 		if (newMode != null) {
 			switch (newMode) {
 			case CIRCLE:
 				circleButton.setId("selected-button");
-				break;
-			case LABEL:
-				labelButton.setId("selected-button");
 				break;
 			case RECTANGLE:
 				rectButton.setId("selected-button");

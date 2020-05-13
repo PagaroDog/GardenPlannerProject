@@ -1,6 +1,7 @@
 package Controllers;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -9,13 +10,14 @@ import java.util.Random;
 
 import Model.ActionEnum;
 import Model.GardenAction;
-
+import Model.GardenObj;
 import Model.Model;
 import Model.Plant;
 import Model.PlantType;
 import Model.StageName;
 import Model.Season;
 import Views.GardenView;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -35,23 +37,23 @@ import javafx.scene.shape.Ellipse;
  * @author Matt Cohen
  * 
  */
-public class GardenController extends Controller<GardenView> {
-	boolean copied = false;
+public class GardenController extends Controller<GardenView> implements Serializable {
+	private boolean copied = false;
 	private final int year1int = 1;
 	private final int year2int = 2;
 	private final int year3int = 3;
 	private final double originalTranslate = 0;
 	private final double originalScale = 1;
 	private final double newLayoutY = 0;
-	double plantWidthX=0;
-	double plantWidthY=0;
-	String plantName = "";
-	double minxRad;
-	double minyRad;
-	double maxxRad;
-	double maxyRad;
+	private double plantWidthX=0;
+	private double plantWidthY=0;
+	private String plantName = "";
+	private double minxRad;
+	private double minyRad;
+	private double maxxRad;
+	private double maxyRad;
 	
-	GardenAction GA = new GardenAction(); 
+	private transient GardenAction GA = new GardenAction(); 
 
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
@@ -738,5 +740,23 @@ public class GardenController extends Controller<GardenView> {
 	
 	public EventHandler handleOnMouseExitedImage() {
 		return event -> removeInfo((MouseEvent) event); 
+	}
+
+	public void setView(GardenView view) {
+		this.view = view;
+	}
+	
+	public void savePlants() {
+		ObservableList<Node> children = view.getBorder().getChildren();
+//		ObservableList<Node> drawingChildren = ((Pane) children.get(0)).getChildren();
+//		for (Node node : drawingChildren) {
+//			if (node instanceof Ellipse) {
+//				model.getDrawingChildren();
+//			}
+//		}
+		model.getGardenObjs.clear();
+		for (int i = 1; i < children.size(); i++) {
+			model.getGardenObjs().add(new GardenObj((Ellipse) children.get(i)));
+		}
 	}
 }

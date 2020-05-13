@@ -274,8 +274,13 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * Sets drawing mode to label
 	 */
 	public void labelButton() {
-		view.updateMode(DrawMode.LABEL);
-		model.setDrawMode(DrawMode.LABEL);
+		Node newLabel = view.addLabel();
+		if (newLabel != null) {
+			view.deselect(model.getCurrDrawObj());
+			model.setCurrDrawObj(newLabel);
+			view.select(model.getCurrDrawObj());
+			selectButton();
+		}
 	}
 
 	/**
@@ -326,7 +331,6 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the Pane was dragged
 	 */
 	public void dragPane(MouseEvent event) {
-//		System.out.println(model.getDrawMode());
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case RECTANGLE:
@@ -363,9 +367,6 @@ public class DrawYardController extends Controller<DrawYardView> {
 				break;
 			case CIRCLE:
 				model.setCurrDrawObj(view.addCircle(event.getX(), event.getY()));
-				break;
-			case LABEL:
-				model.setCurrDrawObj(view.addLabel(event.getX(), event.getY()));
 				break;
 			}
 		}
@@ -509,10 +510,11 @@ public class DrawYardController extends Controller<DrawYardView> {
 			case SELECT:
 				Label label = (Label) event.getSource();
 				double[] newCoords = model.moveRectCoordinates(event.getSceneX(),
-						event.getSceneY() - view.getToolbarHeight(), view.getDrawing().getWidth(),
-						view.getDrawing().getHeight(), label.getWidth(), label.getHeight());
-				if (model.getStageName() == StageName.DRAW)
+						event.getSceneY() - view.getToolbarHeight(), label.getWidth(), label.getHeight(),
+						view.getDrawing().getWidth(), view.getDrawing().getHeight());
+				if (model.getStageName() == StageName.DRAW) {
 					view.moveLabel(label, newCoords[xInd], newCoords[yInd]);
+				}
 			}
 		}
 	}

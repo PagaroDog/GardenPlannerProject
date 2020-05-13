@@ -104,6 +104,11 @@ public class Main extends Application {
 	public GardenController getGardenControl() {
 		return gardenControl;
 	}
+	
+	public void setGardenControl(GardenController gardenControl) {
+		this.gardenControl = gardenControl;
+	}
+	
 	public SuggestionsController getSuggestionsControl() {
 		return suggControl;
 	}

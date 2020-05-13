@@ -12,9 +12,9 @@ import Views.View;
  * @param <T> The specific type of View class associated the controller
  */
 public class Controller<T extends View> {
-	Model model;
-	T view;
-	Main main;
+	protected transient Model model;
+	protected transient T view;
+	protected transient Main main;
 
 	public Controller(Model model, T view, Main main) {
 		this.model = model;
