@@ -355,6 +355,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the Pane was pressed
 	 */
 	public void pressPane(MouseEvent event) {
+		System.out.println("Press pane");
 		model.setDrawPressX(event.getX());
 		model.setDrawPressY(event.getY());
 		if (model.getCurrDrawObj() != null) {
@@ -431,6 +432,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the shape was pressed
 	 */
 	public void pressShape(MouseEvent event) {
+		System.out.println("Press shape");
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case SELECT:
@@ -555,5 +557,44 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 */
 	public double getViewWidth() {
 		return view.getRoot().getWidth();
+	}
+	
+	/**
+	 * Handles event when user drags on a circle, invoking dragCircle()
+	 * 
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandleOnCirclesPane() {
+		return event -> circ((MouseEvent) event);
+	}
+	
+	private void circ(MouseEvent event) {
+		System.out.println("circle pane");
+	}
+
+	/**
+	 * Handles event when user drags on a circle, invoking dragCircle()
+	 * 
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandleOnLabelPane() {
+		return event -> lab((MouseEvent) event);
+	}
+	
+	private void lab(MouseEvent event) {
+		System.out.println("label pane");
+	}
+
+	/**
+	 * Handles event when user drags on a circle, invoking dragCircle()
+	 * 
+	 * @return EventHandler object for this action
+	 */
+	public EventHandler getHandleOnRectPane() {
+		return event -> rec((MouseEvent) event);
+	}
+
+	private void rec(MouseEvent event) {
+		System.out.println("circle pane");
 	}
 }

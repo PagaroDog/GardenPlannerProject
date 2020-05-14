@@ -1,25 +1,27 @@
 package Controllers;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
-
 import Model.ActionEnum;
+import Model.CircleDrawingObj;
 import Model.GardenAction;
 import Model.GardenObj;
+import Model.LabelDrawingObj;
 import Model.Model;
 import Model.Plant;
 import Model.PlantType;
+import Model.RectDrawingObj;
 import Model.StageName;
 import Model.Season;
 import Views.GardenView;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
@@ -29,6 +31,8 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
 
 /**
  * This class is the controller for the Garden Design screen. It mostly handles
@@ -38,24 +42,15 @@ import javafx.scene.shape.Circle;
  * 
  */
 public class GardenController extends Controller<GardenView> implements Serializable {
-	private boolean copied = false;
 	private final int year1int = 1;
 	private final int year2int = 2;
 	private final int year3int = 3;
 	private final double originalTranslate = 0;
 	private final double originalScale = 1;
 	private final double newLayoutY = 0;
-	private double plantWidthX=0;
-	private double plantWidthY=0;
 	private String plantName = "";
-	private double minXRad;
-	private double minYRad;
-	private double maxXRad;
-	private double maxYRad;
-	private double minRad;
-	private double maxRad;
-	
-	private transient GardenAction GA = new GardenAction(); 
+
+	private transient GardenAction GA = new GardenAction();
 
 	public GardenController(Model model, GardenView view, Main main) {
 		super(model, view, main);
@@ -155,7 +150,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		view.getStage().setScene(Main.getScenes().get(StageName.STATS));
 		model.setStageName(StageName.STATS);
 		model.generateStats(view.getGarden().getChildren());
-		
+
 		main.getStatControl().updateStats();
 	}
 
@@ -315,16 +310,18 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 		Circle dragPlant = (Circle) event.getSource();
 		model.setCurrDrawObj(dragPlant);
-		
+
 		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize(), view.getCanvasWidth());
 
 		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight(), view.getCanvasHeight());
 		view.movePlant(dragPlant, calcX, calcY);
 
 	}
+
 	public EventHandler getHandlerForCirclePressed() {
 		return event -> circlePressed((MouseEvent) event);
 	}
+
 	public void circlePressed(MouseEvent event) {
 		model.setCurrDrawObj((Node) event.getSource());
 	}
@@ -386,60 +383,24 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		return event -> imageDrag((MouseEvent) event);
 	}
 
-
 	public void imageDrag(MouseEvent event) {
 		System.out.println("Started To Drag");
 		Node n = (Node) event.getSource();
 		Circle circle = new Circle();
 		Pane p = new Pane();
 		plantName = (String) ((Node) event.getSource()).getUserData();
-		
-//		double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
-//		double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;
-//		if(model.getYear() == 3) {
-//			circle.setRadiusX(maxSize);
-//			circle.setRadiusY(maxSize);
-//			circle.setFill(Color.BLUE);
-//			plantWidthX=maxSize;
-//			plantWidthY=maxSize;
-//		}
-//		else if(model.getYear() == 2) {
-//			circle.setRadiusX((maxSize+minSize)/2);
-//			circle.setRadiusY((maxSize+minSize)/2);
-//			circle.setFill(Color.BLUE);
-//			plantWidthX=(maxSize-minSize)/2;
-//			plantWidthY=(maxSize-minSize)/2;
-//		}
-//		else if(model.getYear() == 1) {
-//			circle.setRadiusX(minSize);
-//			circle.setRadiusY(minSize);
-//			circle.setFill(Color.BLUE);
-//			plantWidthX=minSize;
-//			plantWidthY=minSize;
-//		}
-//		else {
-//			circle.setRadiusX(minSize);
-//			circle.setRadiusY(minSize);
-//			plantWidthX=10;
-//			plantWidthY=10;
-//		}
 
 		Dragboard db = n.startDragAndDrop(TransferMode.ANY);
 		p.getChildren().add(circle);
-		//Image i = new Image(circle);
-		
-		plantWidthX=100;
-		plantWidthY=100;
-		
-		
+		// Image i = new Image(circle);
+
 		ClipboardContent content = new ClipboardContent();
-		
+
 		content.putImage(((ImageView) event.getSource()).getImage());
-		//content.putImage(p);
+		// content.putImage(p);
 		db.setContent(content);
 		event.consume();
 	}
-
 
 	public EventHandler getHandlerForDragOver() {
 		return event -> gardenDragOver((DragEvent) event);
@@ -455,104 +416,90 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 
 	public void gardenDragDropped(DragEvent event) {
-		
+
 		Dragboard db = event.getDragboard();
 		boolean success = false;
-		double calcX =0;
-		double calcY =0;
-		//System.out.println("in dragDropped");
+		double calcX = 0;
+		double calcY = 0;
+		// System.out.println("in dragDropped");
 
 		if (db.hasImage()) {
-			
-			Circle circle = new Circle();
-			double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
-			double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;		//divide by two bc radius and not diameter
-			double propertyWidth = model.getPropertyWidthInches();
-			double propertyHeight = model.getPropertyHeightInches();
-			minXRad = minSize/propertyWidth * (view.getGarden().getWidth());
-			minYRad = minSize/propertyHeight * (view.getGarden().getHeight());
-			maxXRad = maxSize/propertyWidth * (view.getGarden().getWidth());
-			maxYRad = maxSize/propertyHeight * (view.getGarden().getHeight());
-			if(maxSize == 0) {
-				minSize = (model.getPlants().get(plantName).getHeight()[0])/4;
-				maxSize = (model.getPlants().get(plantName).getHeight()[1])/4;
-				propertyWidth = model.getPropertyWidthInches();
-				propertyHeight = model.getPropertyHeightInches();
-				minXRad = minSize/propertyWidth * (view.getGarden().getWidth());
-				minYRad = minSize/propertyHeight * (view.getGarden().getHeight());
-				maxXRad = maxSize/propertyWidth * (view.getGarden().getWidth());
-				maxYRad = maxSize/propertyHeight * (view.getGarden().getHeight());
+			double minSize = getMinSize(plantName);
+			double maxSize = getMaxSize(plantName);
+			double minRad = getRad(minSize, model.getPropertyWidthInches(), model.getPropertyHeightInches());
+			double maxRad = getRad(maxSize, model.getPropertyWidthInches(), model.getPropertyHeightInches());
+			double rad;
+			// System.out.println("Dragging " + plantName);
+			// System.out.print("maxSize: " + maxSize);
+			if (model.getYear() == 3) {
+				rad = maxRad;
+			} else if (model.getYear() == 2) {
+				rad = (maxRad + minRad) / 2;
+			} else {
+				rad = minRad;
 			}
-			minRad = (minXRad + minYRad) / 2;
-			maxRad = (maxXRad + maxYRad) / 2;
-			//System.out.println("Dragging " + plantName);
-			//System.out.print("maxSize: " + maxSize);
-			if(model.getYear() == 3) {
-				circle.setRadius(maxRad);
-				calcX = model.calcX(event.getX(), maxRad, view.getSize(), view.getCanvasWidth());
-				calcY = model.calcY(event.getY(), maxRad, view.getBottomHeight(), view.getCanvasHeight());
-			}
-			else if(model.getYear() == 2) {
-				circle.setRadius((maxRad+minRad)/2);
-				calcX = model.calcX(event.getX(), (maxRad+minRad)/2, view.getSize(), view.getCanvasWidth());
-				calcY = model.calcY(event.getY(), (maxRad+minRad)/2, view.getBottomHeight(), view.getCanvasHeight());
-			}
-			else if(model.getYear() == 1) {
-				circle.setRadius(minRad);
-				calcX = model.calcX(event.getX(), minRad, view.getSize(), view.getCanvasWidth());
-				calcY = model.calcY(event.getY(), minRad, view.getBottomHeight(), view.getCanvasHeight());
-			}
-			else {
-				circle.setRadius(minRad);
-				calcX = model.calcX(event.getX(), minSize, view.getSize(), view.getCanvasWidth());
-				calcY = model.calcY(event.getY(), minSize, view.getBottomHeight(), view.getCanvasHeight());
-			}
-			circle.setUserData(plantName);
-			
-			setCircleColor(circle);
-			
-			GA.addAction(new GardenAction(circle, calcX, calcY, plantName, ActionEnum.ADDPLANT ));
-	
-			view.addCircleToFlow(circle, calcX, calcY, plantName);
+
+			calcX = model.calcX(event.getX(), rad, view.getSize(), view.getCanvasWidth());
+			calcY = model.calcY(event.getY(), rad, view.getBottomHeight(), view.getCanvasHeight());
+
+			Color color = findCircleColor(plantName);
+
+			model.setCurrDrawObj(view.addCircleToFlow(calcX, calcY, rad, plantName, color));
+			GA.addAction(new GardenAction((Circle) model.getCurrDrawObj(), calcX, calcY, rad, plantName, color,
+					ActionEnum.ADDPLANT));
 			success = true;
-			model.setCurrDrawObj(circle);
 		}
 		event.setDropCompleted(success);
 		event.consume();
 	}
+
 	/**
-	 * Gets the scientific name of the plant at position x of the suggestedPlants ArrayList in the Model
+	 * Gets the scientific name of the plant at position x of the suggestedPlants
+	 * ArrayList in the Model
+	 * 
 	 * @param x index
 	 * @return String Scientific Name of Plant
 	 */
 	public String getPlantNameAt(int x) {
 		return model.getSuggestedPlants().get(x).getName();
 	}
-	
+
 	public int getNumPlants() {
 		return model.getPlants().size();
 	}
+
 	/**
-	 * Called by SuggestionsController when the next button is hit. Calls the view to update Plants in the event the 
-	 * suggestedPlants in the Model changed.
+	 * Called by SuggestionsController when the next button is hit. Calls the view
+	 * to update Plants in the event the suggestedPlants in the Model changed.
 	 */
 	public void update() {
 		view.updatePlants();
-		//System.out.println("Updating");
+		// System.out.println("Updating");
 	}
-	/*
-	 * @param String plantName
-	 * returns list of spread vals from model, if spread is zero returns height list.
-	 */
-	public int[] getSpread(String plantName) {
-		if(model.getPlants().get(plantName).getSpread()[1] == 0) {
-			return model.getPlants().get(plantName).getHeight();
+
+	public double getMinSize(String plantName) {
+		double minSize = model.getPlants().get(plantName).getSpread()[0] / 2;
+		if (minSize == 0) {
+			minSize = (model.getPlants().get(plantName).getHeight()[0]) / 6;
 		}
-		else {
-			return model.getPlants().get(plantName).getSpread();
-		}
+		return minSize;
 	}
-	
+
+	public double getMaxSize(String plantName) {
+		double maxSize = model.getPlants().get(plantName).getSpread()[1] / 2;
+		if (maxSize == 0) {
+			maxSize = (model.getPlants().get(plantName).getHeight()[1]) / 6;
+		}
+		return maxSize;
+	}
+
+	public double getRad(double size, double propertyWidth, double propertyHeight) {
+		double xRad = size / propertyWidth * (view.getGarden().getWidth());
+		double yRad = size / propertyHeight * (view.getGarden().getHeight());
+		double rad = (xRad + yRad) / 2;
+		return rad;
+	}
+
 	/**
 	 * Handles event when user presses delete button, invoking deleteButton()
 	 * 
@@ -561,19 +508,18 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public EventHandler handleOnDeleteButton() {
 		return event -> deleteButton((MouseEvent) event);
 	}
-	
+
 	/*
-	 * @param MouseEvent event
-	 * called by eventHandler
+	 * @param MouseEvent event called by eventHandler
 	 */
 	public void deleteButton(MouseEvent event) {
-		Circle e = (Circle)model.getCurrDrawObj();
-		
-		GA.addAction(new GardenAction(e, 0, 0, e.getUserData().toString(), ActionEnum.DELETE));
-		
+		Circle e = (Circle) model.getCurrDrawObj();
+
+		GA.addAction(new GardenAction(e, 0, 0, 0, e.getUserData().toString(), null, ActionEnum.DELETE));
+
 		view.deleteShape(model.getCurrDrawObj());
 	}
-	
+
 	/**
 	 * Handles event when user presses delete button, invoking deleteButton()
 	 * 
@@ -582,10 +528,9 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public EventHandler handleOnCopyButton() {
 		return event -> copyButton((MouseEvent) event);
 	}
-	
+
 	/*
-	 * @param MouseEvent event
-	 * called by eventHandler
+	 * @param MouseEvent event called by eventHandler
 	 */
 	public void copyButton(MouseEvent event) {
 		Circle oldCircle = new Circle();
@@ -594,12 +539,12 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		copy.setUserData(oldCircle.getUserData());
 		copy.setOnMouseClicked(this.getHandlerForCirclePressed());
 		copy.setOnMouseDragged(this.getHandlerForDrag());
-		copy.setOnMouseReleased(this.handleOnMouseReleased()); 
+		copy.setOnMouseReleased(this.handleOnMouseReleased());
 		((Circle) copy).setFill(oldCircle.getFill());
-		
-		System.out.println("In copyButton"); 
-		GA.addAction(new GardenAction(copy, 0, 0, copy.getUserData().toString(), ActionEnum.COPY));
-		
+
+		System.out.println("In copyButton");
+		GA.addAction(new GardenAction(copy, 0, 0, 0, copy.getUserData().toString(), null, ActionEnum.COPY));
+
 		view.addShape(copy);
 	}
 
@@ -609,175 +554,176 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public int getPropertyWidthInches() {
 		return model.getPropertyWidthInches();
 	}
+
 	/*
 	 * returns the width of the property
 	 */
 	public int getPropertyHeightInches() {
 		return model.getPropertyHeightInches();
 	}
-	
 
 	public Season[] getBloomTime(String plantName) {
 		return model.getPlants().get(plantName).getBloomtime();
 	}
-	
+
 	public Color getBloomColor(String plantName) {
 		HashSet<String> hashset = model.getPlants().get(plantName).getColor();
 		int size = hashset.size();
 		int item = new Random().nextInt(size); // In real life, the Random object should be rather more shared than this
 		int i = 0;
-		for(String colorName : hashset)
-		{
-		    if (i == item)
-		        return Color.web(colorName);
-		    i++;
+		for (String colorName : hashset) {
+			if (i == item)
+				return Color.web(colorName);
+			i++;
 		}
 		System.out.println("setting as BLACK");
 		return Color.BLACK;
-		
+
 	}
-	
+
 	public PlantType getPlantType(String name) {
 		return model.getPlants().get(name).getType();
 	}
-	
 
 	public EventHandler handleOnMouseReleased() {
-		return event -> mouseReleased((MouseEvent) event); 
+		return event -> mouseReleased((MouseEvent) event);
 	}
-	
+
 	public void mouseReleased(MouseEvent event) {
 		Circle dragPlant = (Circle) event.getSource();
 		model.setCurrDrawObj(dragPlant);
-		
+
 		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize(), view.getCanvasWidth());
 
 		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight(), view.getCanvasHeight());
-		System.out.println("Drag released at x:" + calcX + ", y:" + calcY); 
-		
-		GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getUserData().toString(), ActionEnum.MOVEPLANT));
-		
+		System.out.println("Drag released at x:" + calcX + ", y:" + calcY);
+
+		GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getRadius(),
+				dragPlant.getUserData().toString(), (Color) dragPlant.getStroke(), ActionEnum.MOVEPLANT));
+
 	}
-	
+
 	public EventHandler handleOnUndoButton() {
 		return event -> undo((MouseEvent) event);
 	}
-	
+
 	public void undo(MouseEvent event) {
 		GA.undo(view);
 	}
-	
+
 	public EventHandler handleOnRedoButton() {
 		return event -> redo((MouseEvent) event);
 	}
-	
+
 	public void redo(MouseEvent event) {
-		GA.redo(view); 
+		GA.redo(view);
 	}
-	
+
 	public EventHandler handleOnMouseEntered() {
-		return event -> displayInfo((MouseEvent) event); 
+		return event -> displayInfo((MouseEvent) event);
 	}
-	
+
 	public void displayInfo(MouseEvent event) {
 		Circle plant = (Circle) event.getSource();
-		view.displayInfo(plant, event.getX(), event.getY(), model.isPlantMatch(plant.getUserData().toString(), event.getX(), event.getY())); 
+		view.displayInfo(plant, event.getX(), event.getY(),
+				model.isPlantMatch(plant.getUserData().toString(), event.getX(), event.getY()));
 	}
-	
+
 	public EventHandler handleOnMouseExited() {
-		return event -> removeInfo((MouseEvent) event); 
+		return event -> removeInfo((MouseEvent) event);
 	}
-	
+
 	public void removeInfo(MouseEvent event) {
 		view.removeInfo();
 	}
 
 	public EventHandler handleOnMouseEnteredImage() {
-		return event -> displayInfoForScrollPane((MouseEvent) event); 
+		return event -> displayInfoForScrollPane((MouseEvent) event);
 	}
-	
+
 	public void displayInfoForScrollPane(MouseEvent event) {
 		ImageView plantImage = (ImageView) event.getSource();
 		String plantName = (String) plantImage.getUserData();
 		Plant plant = model.getPlants().get(plantName);
-		view.displayInfoForScrollPane(plant.toString()); 
+		view.displayInfoForScrollPane(plant.toString());
 	}
-	
+
 	public EventHandler handleOnMouseExitedImage() {
-		return event -> removeInfo((MouseEvent) event); 
+		return event -> removeInfo((MouseEvent) event);
 	}
 
 	public void setView(GardenView view) {
 		this.view = view;
 	}
-	
+
 	public void savePlants() {
 		ObservableList<Node> children = view.getGarden().getChildren();
-//		ObservableList<Node> drawingChildren = ((Pane) children.get(0)).getChildren();
-//		for (Node node : drawingChildren) {
-//			if (node instanceof Circle) {
-//				model.getDrawingChildren();
-//			}
-//		}
+		model.getRectangles().clear();
+		model.getLabels().clear();
+		model.getCircles().clear();
 		model.getGardenObjs().clear();
+		ObservableList<Node> rectangles = ((Pane) view.getDrawing().getChildren().get(0)).getChildren();
+		for (int i = 1; i < rectangles.size(); i++) {
+			model.getRectangles().add(new RectDrawingObj((Rectangle) rectangles.get(i)));
+		}
+		ObservableList<Node> circles = ((Pane) rectangles.get(0)).getChildren();
+		for (int i = 1; i < circles.size(); i++) {
+			model.getCircles().add(new CircleDrawingObj((Ellipse) circles.get(i)));
+		}
+		ObservableList<Node> labels = ((Pane) circles.get(0)).getChildren();
+		for (int i = 1; i < labels.size(); i++) {
+			model.getLabels().add(new LabelDrawingObj((Label) labels.get(i)));
+		}
+		// TODO save background image
 		for (int i = 1; i < children.size(); i++) {
 			model.getGardenObjs().add(new GardenObj((Circle) children.get(i)));
 		}
 	}
-	
+
 	public void loadPlants() {
-//		ObservableList<Node> drawingChildren = ((Pane) children.get(0)).getChildren();
-//		for (Node node : drawingChildren) {
-//			if (node instanceof Circle) {
-//				model.getDrawingChildren();
-//			}
-//		}
 		for (GardenObj plant : model.getGardenObjs()) {
-			Circle plantCircle = new Circle();
-			plantCircle.setRadius(plant.getRadius());
-			plantCircle.setUserData(plant.getPlantName());
-			setCircleColor(plantCircle);
-			view.addCircleToFlow(plantCircle, plant.getX(), plant.getY(), plant.getPlantName());
+			view.addCircleToFlow(plant.getX(), plant.getY(), plant.getRadius(), plant.getPlantName(),
+					findCircleColor(plant.getPlantName()));
+		}
+		view.setDrawing(main.getDyControl().getDrawing());
+		for (RectDrawingObj rectObj : model.getRectangles()) {
+			Rectangle rect = new Rectangle();
+			rect.setFill(Color.TRANSPARENT);
+			rect.setStroke(Color.BLACK);
+			rect.setScaleX(rectObj.getScale());
+			rect.setTranslateX(rectObj.getTrans());
+			rect.setX(rectObj.getX());
+			rect.setY(rectObj.getY());
+			rect.setWidth(rectObj.getWidth());
+			rect.setHeight(rectObj.getHeight());
+			System.out.println(rectObj.getWidth());
+			System.out.println(rectObj.getX());
+			((Pane) view.getDrawing().getChildren().get(0)).getChildren().add(rect);
 		}
 	}
 
-	public void setCircleColor(Circle circle) {
-		String name = (String) circle.getUserData();
+	public Color findCircleColor(String name) {
 		ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(getBloomTime(name)));
 		Season season = model.getSeason();
-		if (plantName != null) {
-			if(season == Season.FALL) {
-				if(seasonList.contains(season)) {
-					circle.setStroke(this.getBloomColor(name));
-				}
-				else {
-					circle.setStroke(Color.GREEN);
-				}
+		if (season == Season.FALL) {
+			if (seasonList.contains(season)) {
+				return getBloomColor(name);
 			}
-			if(season == Season.WINTER) {
-				if(seasonList.contains(season)) {
-					circle.setStroke(this.getBloomColor(name));
-				}
-				else {
-					circle.setStroke(Color.GRAY);
-				}
+		} else if (season == Season.WINTER) {
+			if (seasonList.contains(season)) {
+				return getBloomColor(name);
+			} else {
+				return Color.GRAY;
 			}
-			if(season == Season.SPRING) {
-				if(seasonList.contains(season)) {
-					circle.setStroke(this.getBloomColor(name));
-				}
-				else {
-					circle.setStroke(Color.GREEN);
-				}
+		} else if (season == Season.SPRING) {
+			if (seasonList.contains(season)) {
+				return getBloomColor(name);
 			}
-			if(season == Season.SUMMER) {
-				if(seasonList.contains(season)) {
-					circle.setStroke(this.getBloomColor(name));
-				}
-				else {
-					circle.setStroke(Color.GREEN);
-				}
+		} else if (season == Season.SUMMER) {
+			if (seasonList.contains(season)) {
+				return getBloomColor(name);
 			}
 		}
+		return Color.GREEN;
 	}
 }

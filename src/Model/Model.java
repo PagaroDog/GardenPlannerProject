@@ -1,11 +1,10 @@
 package Model;
 
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -115,6 +114,10 @@ public class Model implements Serializable{
 	private final double rectMinY = 0;
 
 	private ArrayList<GardenObj> gardenObjs = new ArrayList<GardenObj>();
+	private ArrayList<RectDrawingObj> rectangles = new ArrayList<RectDrawingObj>();
+	private ArrayList<LabelDrawingObj> labels = new ArrayList<LabelDrawingObj>();
+	private ArrayList<CircleDrawingObj> circles = new ArrayList<CircleDrawingObj>();
+	private String backgroundPath;
 
 	public Season getSeason() {
 		return season;
@@ -1025,8 +1028,24 @@ public class Model implements Serializable{
 		return gardenObjs;
 	}
 
-	public void setGardenObjs(ArrayList<GardenObj> gardenObjs) {
-		this.gardenObjs = gardenObjs;
+	public ArrayList<RectDrawingObj> getRectangles() {
+		return rectangles;
+	}
+
+	public ArrayList<LabelDrawingObj> getLabels() {
+		return labels;
+	}
+
+	public ArrayList<CircleDrawingObj> getCircles() {
+		return circles;
+	}
+
+	public String getBackgroundPath() {
+		return backgroundPath;
+	}
+
+	public void setBackgroundPath(String backgroundPath) {
+		this.backgroundPath = backgroundPath;
 	}
 
 }

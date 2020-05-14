@@ -6,22 +6,16 @@ import javafx.scene.paint.ImagePattern;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import Controllers.GardenController;
-import Model.GardenPref;
 import Model.PlantType;
 import Model.Season;
-import Model.StageName;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,20 +23,15 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
-import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -58,8 +47,6 @@ public class GardenView extends View<GardenController> implements Serializable {
 	private HashMap<String, Image> plantImages = new HashMap<String, Image>();
 	private ArrayList<Image> plants = new ArrayList<Image>();
 
-	private FlowPane suggestedFlowPane;
-	private double bottomHeight;
 	private HBox toolbar;
 	private Pane garden;
 	private Button save;
@@ -84,12 +71,6 @@ public class GardenView extends View<GardenController> implements Serializable {
 	private TabPane tabPane;
 	private int SIZE = 200;
 	private transient Images imgs;
-	private double minXRad;
-	private double minYRad;
-	private double maxXRad;
-	private double maxYRad;
-	private double minRad;
-	private double maxRad;
 
 	private double buttonFontSize = Math.min(12, 18 * canvasWidth / expectedWidth);
 	private final double labelFontSize = Math.min(16, 21 * canvasWidth / expectedWidth);
@@ -256,37 +237,28 @@ public class GardenView extends View<GardenController> implements Serializable {
 	}
 
 	/**
-	 * Adds an ImageView to the garden Pane when the user releases a drag over the
+	 * Adds a Circle to the garden Pane when the user releases a drag over the
 	 * pane. Uses the SIZE to center images around mouse.
 	 * 
 	 * @param plant ImageView of plant from ScrollPane that was dragged by user
 	 * @param x     x coordinates of mouse
 	 * @param y     y coordinates of mouse
 	 */
-	public void addIVToFlow(ImageView plant, double x, double y) {
-		System.out.println("Dropping image");
-		this.garden.getChildren().add(plant);
-		List<Node> imageArr = garden.getChildren();
-		int i = imageArr.size() - 1;
-		((ImageView) imageArr.get(i)).setPreserveRatio(true);
-		((ImageView) imageArr.get(i)).setFitHeight(SIZE);
-		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
-		garden.getChildren().get(i).setLayoutX(x);
-		garden.getChildren().get(i).setLayoutY(y);
-	}
-
-	/**
-	 * Adds an ImageView to the garden Pane when the user releases a drag over the
-	 * pane. Uses the SIZE to center images around mouse.
-	 * 
-	 * @param plant ImageView of plant from ScrollPane that was dragged by user
-	 * @param x     x coordinates of mouse
-	 * @param y     y coordinates of mouse
-	 */
-	public void addCircleToFlow(Circle plant, double x, double y, String name) {
-		Image img = imgs.getPlantImages().get(name)[0].getImg();
+	public Circle addCircleToFlow(double x, double y, double radius, String name, Color color) {
+		Circle plant = new Circle();
 		System.out.println("Dropping image " + name);
+		plant.setUserData(name);
+		plant.setRadius(radius);
+		plant.setCenterX(x);
+		plant.setCenterY(y);
+		plant.setOnMouseDragged(control.getHandlerForDrag());
+		plant.setOnMouseReleased(control.handleOnMouseReleased());
+		plant.setOnMouseEntered(control.handleOnMouseEntered());
+		plant.setOnMouseExited(control.handleOnMouseExited());
+		Image img = imgs.getPlantImages().get(name)[0].getImg();
+		plant.setFill(new ImagePattern(img));
 		plant.setStrokeType(StrokeType.INSIDE);
+		plant.setStroke(color);
 		PlantType pT = control.getPlantType(name);
 		switch(pT) {
 			case HERB:
@@ -300,21 +272,10 @@ public class GardenView extends View<GardenController> implements Serializable {
 				break;
 			case SHRUB:
 				plant.setStrokeWidth(shrubStrokeWidth);
-				break;
-			
+				break;	
 		}
-		plant.setStrokeWidth(1);
-		this.garden.getChildren().add(plant);
-		List<Node> imageArr = garden.getChildren();
-		int i = imageArr.size() - 1;
-		((Shape) imageArr.get(i)).setFill(new ImagePattern(img));
-		imageArr.get(i).setOnMouseDragged(control.getHandlerForDrag());
-		imageArr.get(i).setOnMouseReleased(control.handleOnMouseReleased());
-		imageArr.get(i).setOnMouseEntered(control.handleOnMouseEntered());
-		imageArr.get(i).setOnMouseExited(control.handleOnMouseExited());
-		((Circle) garden.getChildren().get(i)).setCenterX(x);
-		((Circle) garden.getChildren().get(i)).setCenterY(y);
-		((Circle) garden.getChildren().get(i)).setUserData(name);
+		garden.getChildren().add(plant);
+		return plant;
 	}
 
 	/**
@@ -417,34 +378,29 @@ public class GardenView extends View<GardenController> implements Serializable {
 		List<Node> gardenList = garden.getChildren();
 		for (Node plant : gardenList) {
 			String plantName = (String) plant.getUserData();
-			
-			double minSize = control.getSpread(plantName)[0] / 2;
-			double maxSize = control.getSpread(plantName)[1] / 2;
-			double propertyWidth = control.getPropertyWidthInches();
-			double propertyHeight = control.getPropertyHeightInches();
-
-			minXRad = minSize / propertyWidth * (this.getGarden().getWidth());
-			minYRad = minSize / propertyHeight * (this.getGarden().getHeight());
-			maxXRad = maxSize / propertyWidth * (this.getGarden().getWidth());
-			maxYRad = maxSize / propertyHeight * (this.getGarden().getHeight());
-			
-			minRad = (minXRad + minYRad) / 2;
-			maxRad = (maxXRad + maxYRad) / 2;
-
 			if (plantName != null) {
-				if (year == 1) {
-					((Circle) plant).setRadius(minRad);
-				}
-
-				else if (year == 2) {
-					((Circle) plant).setRadius((maxRad + minRad) / 2);
-				}
-
-				else if (year == 3) {
-					((Circle) plant).setRadius(maxRad);
+				double minSize = control.getMinSize(plantName);
+				double maxSize = control.getMaxSize(plantName);
+				
+				double minRad = control.getRad(minSize, control.getPropertyWidthInches(), control.getPropertyHeightInches());
+				double maxRad = control.getRad(maxSize, control.getPropertyWidthInches(), control.getPropertyHeightInches());
+	
+				if (plantName != null) {
+					if (year == 1) {
+						((Circle) plant).setRadius(minRad);
+					}
+	
+					else if (year == 2) {
+						((Circle) plant).setRadius((maxRad + minRad) / 2);
+					}
+	
+					else if (year == 3) {
+						((Circle) plant).setRadius(maxRad);
+					}
 				}
 			}
 		}
+			
 	}
 
 	public void changeSeason(Season season) {
@@ -454,7 +410,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 			String plantName = (String) plant.getUserData();
 
 			if (plantName != null) {
-				control.setCircleColor((Circle) plant);
+				((Circle) plant).setStroke(control.findCircleColor(plantName));
 			}
 		}
 	}
@@ -493,7 +449,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 		vb.setStyle("-fx-background-color: DAE6F3;");
 
 		Label plantLabel = new Label(plantString);
-		plantLabel.setFont(new Font(20));
+		plantLabel.setFont(new Font(14));
 
 		vb.getChildren().addAll(plantLabel);
 
@@ -534,6 +490,11 @@ public class GardenView extends View<GardenController> implements Serializable {
 
 	public void removeInfo() {
 		this.garden.getChildren().remove(info);
+	}
+
+	public void refresh() {
+		stage.hide();
+		stage.show();
 	}
 
 }
