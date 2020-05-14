@@ -542,10 +542,11 @@ public class GardenController extends Controller<GardenView> implements Serializ
 //		copy.setOnMouseReleased(this.handleOnMouseReleased());
 //		((Circle) copy).setFill(oldCircle.getFill());
 //		System.out.println("In copyButton");
-//		GA.addAction(new GardenAction(copy, 0, 0, 0, copy.getUserData().toString(), null, ActionEnum.COPY));
+		
 
 		//view.addShape(copy);
-		view.addCircleToFlow(oldCircle.getCenterX(), oldCircle.getCenterY(), oldCircle.getRadius(),	(String) oldCircle.getUserData(), oldCircle.getFill());
+		Circle copy = view.addCircleToFlow(oldCircle.getCenterX(), oldCircle.getCenterY(), oldCircle.getRadius(),	(String) oldCircle.getUserData(), oldCircle.getFill());
+		GA.addAction(new GardenAction(copy, 0, 0, 0, copy.getUserData().toString(), null, ActionEnum.COPY));
 	}
 
 	/*
