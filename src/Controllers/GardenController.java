@@ -535,17 +535,17 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public void copyButton(MouseEvent event) {
 		Circle oldCircle = new Circle();
 		oldCircle = (Circle) model.getCurrDrawObj();
-		Circle copy = new Circle(oldCircle.getRadius());
-		copy.setUserData(oldCircle.getUserData());
-		copy.setOnMouseClicked(this.getHandlerForCirclePressed());
-		copy.setOnMouseDragged(this.getHandlerForDrag());
-		copy.setOnMouseReleased(this.handleOnMouseReleased());
-		((Circle) copy).setFill(oldCircle.getFill());
+//		Circle copy = new Circle(oldCircle.getRadius());
+//		copy.setUserData(oldCircle.getUserData());
+//		copy.setOnMouseClicked(this.getHandlerForCirclePressed());
+//		copy.setOnMouseDragged(this.getHandlerForDrag());
+//		copy.setOnMouseReleased(this.handleOnMouseReleased());
+//		((Circle) copy).setFill(oldCircle.getFill());
+//		System.out.println("In copyButton");
+//		GA.addAction(new GardenAction(copy, 0, 0, 0, copy.getUserData().toString(), null, ActionEnum.COPY));
 
-		System.out.println("In copyButton");
-		GA.addAction(new GardenAction(copy, 0, 0, 0, copy.getUserData().toString(), null, ActionEnum.COPY));
-
-		view.addShape(copy);
+		//view.addShape(copy);
+		view.addCircleToFlow(oldCircle.getCenterX(), oldCircle.getCenterY(), oldCircle.getRadius(),	(String) oldCircle.getUserData(), oldCircle.getFill());
 	}
 
 	/*

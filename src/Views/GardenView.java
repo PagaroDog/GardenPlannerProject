@@ -2,6 +2,7 @@ package Views;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 
 import java.io.File;
 import java.io.Serializable;
@@ -244,7 +245,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 	 * @param x     x coordinates of mouse
 	 * @param y     y coordinates of mouse
 	 */
-	public Circle addCircleToFlow(double x, double y, double radius, String name, Color color) {
+	public Circle addCircleToFlow(double x, double y, double radius, String name, Paint paint) {
 		Circle plant = new Circle();
 		System.out.println("Dropping image " + name);
 		plant.setUserData(name);
@@ -258,13 +259,14 @@ public class GardenView extends View<GardenController> implements Serializable {
 		Image img = imgs.getPlantImages().get(name)[0].getImg();
 		plant.setFill(new ImagePattern(img));
 		plant.setStrokeType(StrokeType.INSIDE);
-		plant.setStroke(color);
+		plant.setStroke(paint);
+		((Circle) plant).setStroke(control.findCircleColor(name));
 		PlantType pT = control.getPlantType(name);
 		switch(pT) {
 			case HERB:
 				plant.setStrokeWidth(herbStrokeWidth);
 				break;
-			case VINE:
+			case VINE: 
 				plant.setStrokeWidth(vineStrokeWidth);
 				break;
 			case TREE:
