@@ -50,6 +50,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	private final double originalScale = 1;
 	private final double newLayoutY = 0;
 	private String plantName = "";
+	private int copyOffset = 10;
 
 	private transient GardenAction GA = new GardenAction();
 
@@ -537,36 +538,12 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param MouseEvent event called by eventHandler
 	 */
 	public void copyButton(MouseEvent event) {
-		Circle oldCircle = new Circle();
-		oldCircle = (Circle) model.getCurrDrawObj();
-		Circle copy = new Circle(oldCircle.getRadius());
-		copy.setUserData(oldCircle.getUserData());
-		copy.setOnMouseClicked(this.getHandlerForCirclePressed());
-		copy.setOnMouseDragged(this.getHandlerForDrag());
-		copy.setOnMouseReleased(this.handleOnMouseReleased());
-		
-		((Circle) copy).setFill(oldCircle.getFill());
-		copy.setStrokeType(StrokeType.INSIDE);
-		copy.setStroke(oldCircle.getStroke());
-		PlantType pT = getPlantType(oldCircle.getUserData().toString());
-		switch(pT) {
-			case HERB:
-				copy.setStrokeWidth(5);
-				break;
-			case VINE:
-				copy.setStrokeWidth(5);
-				break;
-			case TREE:
-				copy.setStrokeWidth(10);
-				break;
-			case SHRUB:
-				copy.setStrokeWidth(10);
-				break;	
-		}
-		System.out.println("In copyButton");
-		GA.addAction(new GardenAction(copy, 0, 0, 0, copy.getUserData().toString(), null, ActionEnum.COPY));
-
-		view.addShape(copy);
+		System.out.println("creating copy");
+		Circle oldCircle = (Circle) model.getCurrDrawObj();
+		Circle newCircle = new Circle();
+		view.addCircleToFlow(newCircle, oldCircle.getCenterX() + copyOffset, oldCircle.getCenterY() + copyOffset, oldCircle.getRadius(), (String) oldCircle.getUserData(), (Color) oldCircle.getStroke());
+		System.out.println(newCircle.getCenterX());
+		GA.addAction(new GardenAction(newCircle, 0, 0, 0, newCircle.getUserData().toString(), null, ActionEnum.COPY));
 	}
 
 	/*

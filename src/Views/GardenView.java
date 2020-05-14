@@ -2,6 +2,7 @@ package Views;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 
 import java.io.File;
 import java.io.Serializable;
@@ -257,12 +258,13 @@ public class GardenView extends View<GardenController> implements Serializable {
 		plant.setFill(new ImagePattern(img));
 		plant.setStrokeType(StrokeType.INSIDE);
 		plant.setStroke(color);
+		((Circle) plant).setStroke(control.findCircleColor(name));
 		PlantType pT = control.getPlantType(name);
 		switch(pT) {
 			case HERB:
 				plant.setStrokeWidth(herbStrokeWidth);
 				break;
-			case VINE:
+			case VINE: 
 				plant.setStrokeWidth(vineStrokeWidth);
 				break;
 			case TREE:
