@@ -29,5 +29,9 @@ public class Controller<T extends View> {
 	public T getView() {
 		return view;
 	}
+	
+	public void setModel(Model model) {
+		this.model = model;
+	}
 
 }

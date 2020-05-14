@@ -93,6 +93,7 @@ public class SaveController extends Controller<SaveView> {
 			FileOutputStream file = new FileOutputStream("Garden.garden");
 			ObjectOutputStream out = new ObjectOutputStream(file);
 			main.getGardenControl().savePlants();
+			out.writeObject(model);
 			out.close();
 			file.close();
 		} catch (IOException e) {

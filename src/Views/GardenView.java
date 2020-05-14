@@ -454,35 +454,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 			String plantName = (String) plant.getUserData();
 
 			if (plantName != null) {
-				ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(control.getBloomTime(plantName)));
-				if (season == Season.FALL) {
-					if (seasonList.contains(season)) {
-						((Circle) plant).setStroke(control.getBloomColor(plantName));
-					} else {
-						((Circle) plant).setStroke(Color.GREEN);
-					}
-				}
-				if (season == Season.WINTER) {
-					if (seasonList.contains(season)) {
-						((Shape) plant).setStroke(control.getBloomColor(plantName));
-					} else {
-						((Circle) plant).setStroke(Color.GRAY);
-					}
-				}
-				if (season == Season.SPRING) {
-					if (seasonList.contains(season)) {
-						((Shape) plant).setStroke(control.getBloomColor(plantName));
-					} else {
-						((Circle) plant).setStroke(Color.GREEN);
-					}
-				}
-				if (season == Season.SUMMER) {
-					if (seasonList.contains(season)) {
-						((Shape) plant).setStroke(control.getBloomColor(plantName));
-					} else {
-						((Circle) plant).setStroke(Color.GREEN);
-					}
-				}
+				control.setCircleColor((Circle) plant);
 			}
 		}
 	}

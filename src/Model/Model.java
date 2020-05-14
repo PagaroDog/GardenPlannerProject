@@ -3,6 +3,7 @@ package Model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
@@ -39,14 +40,14 @@ import javafx.scene.shape.Ellipse;
  *
  */
 
-public class Model {
+public class Model implements Serializable{
 	private Season season = Season.SUMMER;
-	private StageName stageName = StageName.WELCOME;
+	private transient StageName stageName = StageName.WELCOME;
 
-	private DrawMode drawMode;
-	private double drawPressX;
-	private double drawPressY;
-	private Node currDrawObj;
+	private transient DrawMode drawMode;
+	private transient double drawPressX;
+	private transient double drawPressY;
+	private transient Node currDrawObj;
 
 	private int propertyHeightInches = 1200;
 	private int propertyWidthInches = 2400;
@@ -62,10 +63,6 @@ public class Model {
 	private ArrayList<Actions> redoActions;
 	private int year;
 	private int prefCategoriesCnt = 4;
-
-	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-	int canvasWidth = gd.getDisplayMode().getWidth() - 150;
-	int canvasHeight = gd.getDisplayMode().getHeight() - 150;
 
 	private StartupController startControl;
 	private TutorialController tutControl;
@@ -165,22 +162,6 @@ public class Model {
 
 	public void setYear(int year) {
 		this.year = year;
-	}
-
-	public int getCanvasWidth() {
-		return canvasWidth;
-	}
-
-	public void setCanvasWidth(int canvasWidth) {
-		this.canvasWidth = canvasWidth;
-	}
-
-	public int getCanvasHeight() {
-		return canvasHeight;
-	}
-
-	public void setCanvasHeight(int canvasHeight) {
-		this.canvasHeight = canvasHeight;
 	}
 
 	public DrawMode getDrawMode() {
@@ -384,7 +365,7 @@ public class Model {
 	 * @param left the size of the ScrollPane of images
 	 * @return ret
 	 */
-	public double calcX(double x, double size, double left) {
+	public double calcX(double x, double size, double left, double canvasWidth) {
 		double rightBorder = canvasWidth - size - left;
 		double leftBorder = size;
 		double ret = x;
@@ -410,7 +391,7 @@ public class Model {
 	 * @param bottom the size of the bottom border of the BorderPane
 	 * @return ret
 	 */
-	public double calcY(double y, double size, double bottom) {
+	public double calcY(double y, double size, double bottom, double canvasHeight) {
 
 		double bottomBorder = canvasHeight - size - bottom * 2;
 		System.out.println(size);

@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.Serializable;
+
 /**
  * An Enum for the 4 seasons
  * 
@@ -7,7 +9,7 @@ package Model;
  * @author Brandon Wu
  *
  */
-public enum Season {
+public enum Season implements Serializable {
 	WINTER("Winter"), SPRING("Spring"), SUMMER("Summer"), FALL("Fall");
 
 	private String season = null;

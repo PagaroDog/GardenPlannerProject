@@ -117,4 +117,28 @@ public class Main extends Application {
 		return statControl;
 	}
 
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public void updateModel() {
+		model.setDyControl(dyControl);
+		model.setGardenControl(gardenControl);
+		model.setPrefControl(prefControl);
+		model.setSaveControl(saveControl);
+		model.setStartControl(startControl);
+		model.setStatControl(statControl);
+		model.setTutControl(tutControl);
+		
+		dyControl.setModel(model);
+		gardenControl.setModel(model);
+		prefControl.setModel(model);
+		saveControl.setModel(model);
+		startControl.setModel(model);
+		statControl.setModel(model);
+		tutControl.setModel(model);
+		
+		gardenControl.loadPlants();
+	}
+
 }

@@ -316,9 +316,9 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		Circle dragPlant = (Circle) event.getSource();
 		model.setCurrDrawObj(dragPlant);
 		
-		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize());
+		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize(), view.getCanvasWidth());
 
-		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight());
+		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight(), view.getCanvasHeight());
 		view.movePlant(dragPlant, calcX, calcY);
 
 	}
@@ -489,62 +489,27 @@ public class GardenController extends Controller<GardenView> implements Serializ
 			//System.out.print("maxSize: " + maxSize);
 			if(model.getYear() == 3) {
 				circle.setRadius(maxRad);
-				calcX = model.calcX(event.getX(), maxRad, view.getSize());
-				calcY = model.calcY(event.getY(), maxRad, view.getBottomHeight());
+				calcX = model.calcX(event.getX(), maxRad, view.getSize(), view.getCanvasWidth());
+				calcY = model.calcY(event.getY(), maxRad, view.getBottomHeight(), view.getCanvasHeight());
 			}
 			else if(model.getYear() == 2) {
 				circle.setRadius((maxRad+minRad)/2);
-				calcX = model.calcX(event.getX(), (maxRad+minRad)/2, view.getSize());
-				calcY = model.calcY(event.getY(), (maxRad+minRad)/2, view.getBottomHeight());
+				calcX = model.calcX(event.getX(), (maxRad+minRad)/2, view.getSize(), view.getCanvasWidth());
+				calcY = model.calcY(event.getY(), (maxRad+minRad)/2, view.getBottomHeight(), view.getCanvasHeight());
 			}
 			else if(model.getYear() == 1) {
 				circle.setRadius(minRad);
-				calcX = model.calcX(event.getX(), minRad, view.getSize());
-				calcY = model.calcY(event.getY(), minRad, view.getBottomHeight());
+				calcX = model.calcX(event.getX(), minRad, view.getSize(), view.getCanvasWidth());
+				calcY = model.calcY(event.getY(), minRad, view.getBottomHeight(), view.getCanvasHeight());
 			}
 			else {
 				circle.setRadius(minRad);
-				calcX = model.calcX(event.getX(), minSize, view.getSize());
-				calcY = model.calcY(event.getY(), minSize, view.getBottomHeight());
+				calcX = model.calcX(event.getX(), minSize, view.getSize(), view.getCanvasWidth());
+				calcY = model.calcY(event.getY(), minSize, view.getBottomHeight(), view.getCanvasHeight());
 			}
 			circle.setUserData(plantName);
 			
-			ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(this.getBloomTime(plantName)));
-			Season season = model.getSeason();
-			if (plantName != null) {
-				if(season == Season.FALL) {
-					if(seasonList.contains(season)) {
-						circle.setStroke(this.getBloomColor(plantName));
-					}
-					else {
-						circle.setStroke(Color.GREEN);
-					}
-				}
-				if(season == Season.WINTER) {
-					if(seasonList.contains(season)) {
-						circle.setStroke(this.getBloomColor(plantName));
-					}
-					else {
-						circle.setStroke(Color.GRAY);
-					}
-				}
-				if(season == Season.SPRING) {
-					if(seasonList.contains(season)) {
-						circle.setStroke(this.getBloomColor(plantName));
-					}
-					else {
-						circle.setStroke(Color.GREEN);
-					}
-				}
-				if(season == Season.SUMMER) {
-					if(seasonList.contains(season)) {
-						circle.setStroke(this.getBloomColor(plantName));
-					}
-					else {
-						circle.setStroke(Color.GREEN);
-					}
-				}
-			}
+			setCircleColor(circle);
 			
 			GA.addAction(new GardenAction(circle, calcX, calcY, plantName, ActionEnum.ADDPLANT ));
 	
@@ -685,9 +650,9 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		Circle dragPlant = (Circle) event.getSource();
 		model.setCurrDrawObj(dragPlant);
 		
-		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize());
+		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize(), view.getCanvasWidth());
 
-		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight());
+		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight(), view.getCanvasHeight());
 		System.out.println("Drag released at x:" + calcX + ", y:" + calcY); 
 		
 		GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getUserData().toString(), ActionEnum.MOVEPLANT));
@@ -747,7 +712,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 	
 	public void savePlants() {
-		ObservableList<Node> children = view.getBorder().getChildren();
+		ObservableList<Node> children = view.getGarden().getChildren();
 //		ObservableList<Node> drawingChildren = ((Pane) children.get(0)).getChildren();
 //		for (Node node : drawingChildren) {
 //			if (node instanceof Circle) {
@@ -757,6 +722,62 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		model.getGardenObjs().clear();
 		for (int i = 1; i < children.size(); i++) {
 			model.getGardenObjs().add(new GardenObj((Circle) children.get(i)));
+		}
+	}
+	
+	public void loadPlants() {
+//		ObservableList<Node> drawingChildren = ((Pane) children.get(0)).getChildren();
+//		for (Node node : drawingChildren) {
+//			if (node instanceof Circle) {
+//				model.getDrawingChildren();
+//			}
+//		}
+		for (GardenObj plant : model.getGardenObjs()) {
+			Circle plantCircle = new Circle();
+			plantCircle.setRadius(plant.getRadius());
+			plantCircle.setUserData(plant.getPlantName());
+			setCircleColor(plantCircle);
+			view.addCircleToFlow(plantCircle, plant.getX(), plant.getY(), plant.getPlantName());
+		}
+	}
+
+	public void setCircleColor(Circle circle) {
+		String name = (String) circle.getUserData();
+		ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(getBloomTime(name)));
+		Season season = model.getSeason();
+		if (plantName != null) {
+			if(season == Season.FALL) {
+				if(seasonList.contains(season)) {
+					circle.setStroke(this.getBloomColor(name));
+				}
+				else {
+					circle.setStroke(Color.GREEN);
+				}
+			}
+			if(season == Season.WINTER) {
+				if(seasonList.contains(season)) {
+					circle.setStroke(this.getBloomColor(name));
+				}
+				else {
+					circle.setStroke(Color.GRAY);
+				}
+			}
+			if(season == Season.SPRING) {
+				if(seasonList.contains(season)) {
+					circle.setStroke(this.getBloomColor(name));
+				}
+				else {
+					circle.setStroke(Color.GREEN);
+				}
+			}
+			if(season == Season.SUMMER) {
+				if(seasonList.contains(season)) {
+					circle.setStroke(this.getBloomColor(name));
+				}
+				else {
+					circle.setStroke(Color.GREEN);
+				}
+			}
 		}
 	}
 }

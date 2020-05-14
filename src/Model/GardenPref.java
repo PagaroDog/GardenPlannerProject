@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 import javafx.scene.Node;
@@ -12,14 +13,14 @@ import javafx.scene.shape.Rectangle;
  * @author Brandon Wu
  *
  */
-public class GardenPref {
+public class GardenPref implements Serializable{
 	private String name;
 	private String userLight;
 	private String userBloom;
 	private String userSoil;
 	private HashSet<String> userColor = new HashSet<String>();
 	private String userWater;
-	private Rectangle area;
+	private transient Rectangle area;
 
 	public GardenPref() {
 	}

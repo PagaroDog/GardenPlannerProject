@@ -50,8 +50,7 @@ public class StartupController extends Controller<StartupView> {
 		try {
 			FileInputStream fileIn = new FileInputStream(file.getPath());
 			ObjectInputStream input = new ObjectInputStream(fileIn);
-			main.setGardenControl((GardenController) input.readObject());
-			main.getGardenControl().setView((GardenView) input.readObject());
+			main.setModel((Model) input.readObject());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -59,6 +58,7 @@ public class StartupController extends Controller<StartupView> {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		main.updateModel();
 		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 		model.setStageName(StageName.DESIGN);
 	}
