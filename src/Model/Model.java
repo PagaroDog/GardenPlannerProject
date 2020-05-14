@@ -1,6 +1,5 @@
 package Model;
 
-import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -58,8 +57,6 @@ public class Model implements Serializable{
 	private HashMap<Integer, ArrayList<Plant>> plantsFromPref = new HashMap<Integer, ArrayList<Plant>>();
 
 	private GardenPref currPref;
-	private ArrayList<Actions> undoActions;
-	private ArrayList<Actions> redoActions;
 	private int year;
 	private int prefCategoriesCnt = 4;
 
@@ -141,22 +138,6 @@ public class Model implements Serializable{
 
 	public void setGardenPreferences(ArrayList<GardenPref> gardenPreferences) {
 		this.gardenPreferences = gardenPreferences;
-	}
-
-	public ArrayList<Actions> getUndoActions() {
-		return undoActions;
-	}
-
-	public void setUndoActions(ArrayList<Actions> undoActions) {
-		this.undoActions = undoActions;
-	}
-
-	public ArrayList<Actions> getRedoActions() {
-		return redoActions;
-	}
-
-	public void setRedoActions(ArrayList<Actions> redoActions) {
-		this.redoActions = redoActions;
 	}
 
 	public int getYear() {
@@ -314,20 +295,6 @@ public class Model implements Serializable{
 	 * @param i the integer key value of the garden object
 	 */
 	public void copy(int i) {
-
-	}
-
-	/**
-	 * Undoes an action, such as removing an object after it's been created
-	 */
-	public void undo() {
-
-	}
-
-	/**
-	 * Redoes an undone action
-	 */
-	public void redo() {
 
 	}
 

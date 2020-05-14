@@ -153,9 +153,6 @@ public class DrawYardView extends View<DrawYardController> {
 		circles.getChildren().add(labels);
 		labels.getChildren().add(back);
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
-		rectangles.setOnMousePressed(control.getHandleOnRectPane());
-		labels.setOnMousePressed(control.getHandleOnLabelPane());
-		circles.setOnMousePressed(control.getHandleOnCirclesPane());
 		drawing.setOnMouseDragged(control.getHandleOnDragPane());
 		drawing.setOnMouseReleased(control.getHandleOnSelectButton());
 

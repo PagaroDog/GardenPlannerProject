@@ -559,42 +559,4 @@ public class DrawYardController extends Controller<DrawYardView> {
 		return view.getRoot().getWidth();
 	}
 	
-	/**
-	 * Handles event when user drags on a circle, invoking dragCircle()
-	 * 
-	 * @return EventHandler object for this action
-	 */
-	public EventHandler getHandleOnCirclesPane() {
-		return event -> circ((MouseEvent) event);
-	}
-	
-	private void circ(MouseEvent event) {
-		System.out.println("circle pane");
-	}
-
-	/**
-	 * Handles event when user drags on a circle, invoking dragCircle()
-	 * 
-	 * @return EventHandler object for this action
-	 */
-	public EventHandler getHandleOnLabelPane() {
-		return event -> lab((MouseEvent) event);
-	}
-	
-	private void lab(MouseEvent event) {
-		System.out.println("label pane");
-	}
-
-	/**
-	 * Handles event when user drags on a circle, invoking dragCircle()
-	 * 
-	 * @return EventHandler object for this action
-	 */
-	public EventHandler getHandleOnRectPane() {
-		return event -> rec((MouseEvent) event);
-	}
-
-	private void rec(MouseEvent event) {
-		System.out.println("circle pane");
-	}
 }
