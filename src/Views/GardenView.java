@@ -246,7 +246,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 	 */
 	public Circle addCircleToFlow(double x, double y, double radius, String name, Color color) {
 		Circle plant = new Circle();
-		System.out.println("Dropping image " + name);
+		//System.out.println("Dropping image " + name);
 		plant.setUserData(name);
 		plant.setRadius(radius);
 		plant.setCenterX(x);
@@ -277,7 +277,48 @@ public class GardenView extends View<GardenController> implements Serializable {
 		garden.getChildren().add(plant);
 		return plant;
 	}
-
+	
+	
+	
+	public Circle actionAddCircleToFlow(Circle plant, double x, double y, double radius, String name, Color color) {
+		//Circle plant = new Circle();
+		//System.out.println("Dropping image " + name);
+		plant.setUserData(name);
+		plant.setRadius(radius);
+		plant.setCenterX(x);
+		plant.setCenterY(y);
+		plant.setOnMouseDragged(control.getHandlerForDrag());
+		plant.setOnMouseReleased(control.handleOnMouseReleased());
+		plant.setOnMouseEntered(control.handleOnMouseEntered());
+		plant.setOnMouseExited(control.handleOnMouseExited());
+		Image img = imgs.getPlantImages().get(name)[0].getImg();
+		plant.setFill(new ImagePattern(img));
+		plant.setStrokeType(StrokeType.INSIDE);
+		plant.setStroke(color);
+		PlantType pT = control.getPlantType(name);
+		switch(pT) {
+			case HERB:
+				plant.setStrokeWidth(herbStrokeWidth);
+				break;
+			case VINE:
+				plant.setStrokeWidth(vineStrokeWidth);
+				break;
+			case TREE:
+				plant.setStrokeWidth(treeStrokeWidth);
+				break;
+			case SHRUB:
+				plant.setStrokeWidth(shrubStrokeWidth);
+				break;	
+		}
+		garden.getChildren().add(plant);
+		return plant;
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * Called to move an already placed plant. Places the plant at the given (x,y)
 	 * coordinates and changes the plants xLoc and yLoc values carried by the
@@ -290,7 +331,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 	public void movePlant(Circle dragPlant, double x, double y) {
 		dragPlant.setCenterX(x);
 		dragPlant.setCenterY(y);
-		System.out.println("Moving plant at x:" + x + ", y:" + y);
+		//System.out.println("Moving plant at x:" + x + ", y:" + y);
 	}
 
 	/**

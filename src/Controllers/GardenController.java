@@ -600,7 +600,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 		GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getRadius(),
 				dragPlant.getUserData().toString(), (Color) dragPlant.getStroke(), ActionEnum.MOVEPLANT));
-
+		
 	}
 
 	public EventHandler handleOnUndoButton() {

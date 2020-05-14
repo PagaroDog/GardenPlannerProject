@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import Views.GardenView;
@@ -116,6 +117,7 @@ public class GardenAction {
 
 	public void addAction(GardenAction ga) {
 		actionList.add(ga);
+		equalityChecker(); 
 		redoList.clear();
 		System.out.println(actionList);
 	}
@@ -146,24 +148,40 @@ public class GardenAction {
 	}
 
 	public void actionIterate(GardenView gv) {
+		System.out.println("ActionIterate"); 
 		gv.getGarden().getChildren().clear();
 		gv.getGarden().getChildren().add(gv.getDrawing());
 		for (GardenAction ga : actionList) {
 			switch (ga.getAction()) {
 			case ADDPLANT:
-				gv.addCircleToFlow(ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
+				gv.actionAddCircleToFlow(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
+				System.out.print("ADD");
 				break;
 
 			case MOVEPLANT:
 				gv.movePlant(ga.getPlant(), ga.getX(), ga.getY());
+				System.out.print("MOVE"); 
 				break;
 
 			case DELETE:
 				gv.deleteShape(ga.getPlant());
+				System.out.print("DELETE");
 				break;
 
 			case COPY:
 				gv.addShape(ga.getPlant());
+				System.out.print("COPY");
+			}
+			System.out.println(""); 
+		}
+	}
+	
+	public void equalityChecker() {
+		Iterator<GardenAction> i = actionList.iterator();  
+		while(i.hasNext()) {
+			GardenAction j = i.next(); 
+			if(i.hasNext()) {
+				System.out.println(j.getPlant().equals(i.next().getPlant()));
 			}
 		}
 	}
