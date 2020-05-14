@@ -444,7 +444,10 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 			Color color = findCircleColor(plantName);
 
-			model.setCurrDrawObj(view.addCircleToFlow(calcX, calcY, rad, plantName, color));
+			Circle circle = new Circle();
+			
+			view.addCircleToFlow(circle, calcX, calcY, rad, plantName, color);
+			model.setCurrDrawObj(circle);
 			GA.addAction(new GardenAction((Circle) model.getCurrDrawObj(), calcX, calcY, rad, plantName, color,
 					ActionEnum.ADDPLANT));
 			success = true;
@@ -682,7 +685,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 	public void loadPlants() {
 		for (GardenObj plant : model.getGardenObjs()) {
-			view.addCircleToFlow(plant.getX(), plant.getY(), plant.getRadius(), plant.getPlantName(),
+			Circle circle = new Circle();
+			view.addCircleToFlow(circle, plant.getX(), plant.getY(), plant.getRadius(), plant.getPlantName(),
 					findCircleColor(plant.getPlantName()));
 		}
 		view.setDrawing(main.getDyControl().getDrawing());
