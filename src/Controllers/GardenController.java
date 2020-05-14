@@ -28,7 +28,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Circle;
 
 /**
  * This class is the controller for the Garden Design screen. It mostly handles
@@ -48,10 +48,12 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	private double plantWidthX=0;
 	private double plantWidthY=0;
 	private String plantName = "";
-	private double minxRad;
-	private double minyRad;
-	private double maxxRad;
-	private double maxyRad;
+	private double minXRad;
+	private double minYRad;
+	private double maxXRad;
+	private double maxYRad;
+	private double minRad;
+	private double maxRad;
 	
 	private transient GardenAction GA = new GardenAction(); 
 
@@ -311,19 +313,19 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 */
 	public void drag(MouseEvent event) {
 
-		Ellipse dragPlant = (Ellipse) event.getSource();
+		Circle dragPlant = (Circle) event.getSource();
 		model.setCurrDrawObj(dragPlant);
 		
-		double calcX = model.calcX(event.getX(), dragPlant.getRadiusX(), view.getSize());
+		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize());
 
-		double calcY = model.calcY(event.getY(), dragPlant.getRadiusY(), view.getBottomHeight());
+		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight());
 		view.movePlant(dragPlant, calcX, calcY);
 
 	}
-	public EventHandler getHandlerForEllipsePressed() {
-		return event -> ellipsePressed((MouseEvent) event);
+	public EventHandler getHandlerForCirclePressed() {
+		return event -> circlePressed((MouseEvent) event);
 	}
-	public void ellipsePressed(MouseEvent event) {
+	public void circlePressed(MouseEvent event) {
 		model.setCurrDrawObj((Node) event.getSource());
 	}
 
@@ -388,39 +390,39 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public void imageDrag(MouseEvent event) {
 		System.out.println("Started To Drag");
 		Node n = (Node) event.getSource();
-		Ellipse circle = new Ellipse();
+		Circle circle = new Circle();
 		Pane p = new Pane();
 		plantName = (String) ((Node) event.getSource()).getUserData();
 		
-		double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
-		double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;
-		if(model.getYear() == 3) {
-			circle.setRadiusX(maxSize);
-			circle.setRadiusY(maxSize);
-			circle.setFill(Color.BLUE);
-			plantWidthX=maxSize;
-			plantWidthY=maxSize;
-		}
-		else if(model.getYear() == 2) {
-			circle.setRadiusX((maxSize+minSize)/2);
-			circle.setRadiusY((maxSize+minSize)/2);
-			circle.setFill(Color.BLUE);
-			plantWidthX=(maxSize-minSize)/2;
-			plantWidthY=(maxSize-minSize)/2;
-		}
-		else if(model.getYear() == 1) {
-			circle.setRadiusX(minSize);
-			circle.setRadiusY(minSize);
-			circle.setFill(Color.BLUE);
-			plantWidthX=minSize;
-			plantWidthY=minSize;
-		}
-		else {
-			circle.setRadiusX(minSize);
-			circle.setRadiusY(minSize);
-			plantWidthX=10;
-			plantWidthY=10;
-		}
+//		double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
+//		double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;
+//		if(model.getYear() == 3) {
+//			circle.setRadiusX(maxSize);
+//			circle.setRadiusY(maxSize);
+//			circle.setFill(Color.BLUE);
+//			plantWidthX=maxSize;
+//			plantWidthY=maxSize;
+//		}
+//		else if(model.getYear() == 2) {
+//			circle.setRadiusX((maxSize+minSize)/2);
+//			circle.setRadiusY((maxSize+minSize)/2);
+//			circle.setFill(Color.BLUE);
+//			plantWidthX=(maxSize-minSize)/2;
+//			plantWidthY=(maxSize-minSize)/2;
+//		}
+//		else if(model.getYear() == 1) {
+//			circle.setRadiusX(minSize);
+//			circle.setRadiusY(minSize);
+//			circle.setFill(Color.BLUE);
+//			plantWidthX=minSize;
+//			plantWidthY=minSize;
+//		}
+//		else {
+//			circle.setRadiusX(minSize);
+//			circle.setRadiusY(minSize);
+//			plantWidthX=10;
+//			plantWidthY=10;
+//		}
 
 		Dragboard db = n.startDragAndDrop(TransferMode.ANY);
 		p.getChildren().add(circle);
@@ -462,48 +464,46 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 		if (db.hasImage()) {
 			
-			Ellipse circle = new Ellipse();
+			Circle circle = new Circle();
 			double minSize = model.getPlants().get(plantName).getSpread()[0]/2;
 			double maxSize = model.getPlants().get(plantName).getSpread()[1]/2;		//divide by two bc radius and not diameter
 			double propertyWidth = model.getPropertyWidthInches();
 			double propertyHeight = model.getPropertyHeightInches();
-			minxRad = minSize/propertyWidth * (view.getGarden().getWidth());
-			minyRad = minSize/propertyHeight * (view.getGarden().getHeight());
-			maxxRad = maxSize/propertyWidth * (view.getGarden().getWidth());
-			maxyRad = maxSize/propertyHeight * (view.getGarden().getHeight());
+			minXRad = minSize/propertyWidth * (view.getGarden().getWidth());
+			minYRad = minSize/propertyHeight * (view.getGarden().getHeight());
+			maxXRad = maxSize/propertyWidth * (view.getGarden().getWidth());
+			maxYRad = maxSize/propertyHeight * (view.getGarden().getHeight());
 			if(maxSize == 0) {
 				minSize = (model.getPlants().get(plantName).getHeight()[0])/4;
 				maxSize = (model.getPlants().get(plantName).getHeight()[1])/4;
 				propertyWidth = model.getPropertyWidthInches();
 				propertyHeight = model.getPropertyHeightInches();
-				minxRad = minSize/propertyWidth * (view.getGarden().getWidth());
-				minyRad = minSize/propertyHeight * (view.getGarden().getHeight());
-				maxxRad = maxSize/propertyWidth * (view.getGarden().getWidth());
-				maxyRad = maxSize/propertyHeight * (view.getGarden().getHeight());
+				minXRad = minSize/propertyWidth * (view.getGarden().getWidth());
+				minYRad = minSize/propertyHeight * (view.getGarden().getHeight());
+				maxXRad = maxSize/propertyWidth * (view.getGarden().getWidth());
+				maxYRad = maxSize/propertyHeight * (view.getGarden().getHeight());
 			}
+			minRad = (minXRad + minYRad) / 2;
+			maxRad = (maxXRad + maxYRad) / 2;
 			//System.out.println("Dragging " + plantName);
 			//System.out.print("maxSize: " + maxSize);
 			if(model.getYear() == 3) {
-				circle.setRadiusX(maxxRad);
-				circle.setRadiusY(maxyRad);
-				calcX = model.calcX(event.getX(), maxxRad, view.getSize());
-				calcY = model.calcY(event.getY(), maxyRad, view.getBottomHeight());
+				circle.setRadius(maxRad);
+				calcX = model.calcX(event.getX(), maxRad, view.getSize());
+				calcY = model.calcY(event.getY(), maxRad, view.getBottomHeight());
 			}
 			else if(model.getYear() == 2) {
-				circle.setRadiusX((maxxRad+minxRad)/2);
-				circle.setRadiusY((maxyRad+minyRad)/2);
-				calcX = model.calcX(event.getX(), (maxxRad+minxRad)/2, view.getSize());
-				calcY = model.calcY(event.getY(), (maxyRad+minyRad)/2, view.getBottomHeight());
+				circle.setRadius((maxRad+minRad)/2);
+				calcX = model.calcX(event.getX(), (maxRad+minRad)/2, view.getSize());
+				calcY = model.calcY(event.getY(), (maxRad+minRad)/2, view.getBottomHeight());
 			}
 			else if(model.getYear() == 1) {
-				circle.setRadiusX(minxRad);
-				circle.setRadiusY(minyRad);
-				calcX = model.calcX(event.getX(), minxRad, view.getSize());
-				calcY = model.calcY(event.getY(), minyRad, view.getBottomHeight());
+				circle.setRadius(minRad);
+				calcX = model.calcX(event.getX(), minRad, view.getSize());
+				calcY = model.calcY(event.getY(), minRad, view.getBottomHeight());
 			}
 			else {
-				circle.setRadiusX(minxRad);
-				circle.setRadiusY(minyRad);
+				circle.setRadius(minRad);
 				calcX = model.calcX(event.getX(), minSize, view.getSize());
 				calcY = model.calcY(event.getY(), minSize, view.getBottomHeight());
 			}
@@ -602,7 +602,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * called by eventHandler
 	 */
 	public void deleteButton(MouseEvent event) {
-		Ellipse e = (Ellipse)model.getCurrDrawObj();
+		Circle e = (Circle)model.getCurrDrawObj();
 		
 		GA.addAction(new GardenAction(e, 0, 0, e.getUserData().toString(), ActionEnum.DELETE));
 		
@@ -623,14 +623,14 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * called by eventHandler
 	 */
 	public void copyButton(MouseEvent event) {
-		Ellipse oldEllipse = new Ellipse();
-		oldEllipse = (Ellipse) model.getCurrDrawObj();
-		Ellipse copy = new Ellipse(oldEllipse.getRadiusX(), oldEllipse.getRadiusY());
-		copy.setUserData(oldEllipse.getUserData());
-		copy.setOnMouseClicked(this.getHandlerForEllipsePressed());
+		Circle oldCircle = new Circle();
+		oldCircle = (Circle) model.getCurrDrawObj();
+		Circle copy = new Circle(oldCircle.getRadius());
+		copy.setUserData(oldCircle.getUserData());
+		copy.setOnMouseClicked(this.getHandlerForCirclePressed());
 		copy.setOnMouseDragged(this.getHandlerForDrag());
 		copy.setOnMouseReleased(this.handleOnMouseReleased()); 
-		((Ellipse) copy).setFill(oldEllipse.getFill());
+		((Circle) copy).setFill(oldCircle.getFill());
 		
 		System.out.println("In copyButton"); 
 		GA.addAction(new GardenAction(copy, 0, 0, copy.getUserData().toString(), ActionEnum.COPY));
@@ -682,12 +682,12 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 	
 	public void mouseReleased(MouseEvent event) {
-		Ellipse dragPlant = (Ellipse) event.getSource();
+		Circle dragPlant = (Circle) event.getSource();
 		model.setCurrDrawObj(dragPlant);
 		
-		double calcX = model.calcX(event.getX(), dragPlant.getRadiusX(), view.getSize());
+		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize());
 
-		double calcY = model.calcY(event.getY(), dragPlant.getRadiusY(), view.getBottomHeight());
+		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight());
 		System.out.println("Drag released at x:" + calcX + ", y:" + calcY); 
 		
 		GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getUserData().toString(), ActionEnum.MOVEPLANT));
@@ -715,7 +715,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 	
 	public void displayInfo(MouseEvent event) {
-		Ellipse plant = (Ellipse) event.getSource();
+		Circle plant = (Circle) event.getSource();
 		view.displayInfo(plant, event.getX(), event.getY(), model.isPlantMatch(plant.getUserData().toString(), event.getX(), event.getY())); 
 	}
 	
@@ -750,13 +750,13 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		ObservableList<Node> children = view.getBorder().getChildren();
 //		ObservableList<Node> drawingChildren = ((Pane) children.get(0)).getChildren();
 //		for (Node node : drawingChildren) {
-//			if (node instanceof Ellipse) {
+//			if (node instanceof Circle) {
 //				model.getDrawingChildren();
 //			}
 //		}
-		model.getGardenObjs.clear();
+		model.getGardenObjs().clear();
 		for (int i = 1; i < children.size(); i++) {
-			model.getGardenObjs().add(new GardenObj((Ellipse) children.get(i)));
+			model.getGardenObjs().add(new GardenObj((Circle) children.get(i)));
 		}
 	}
 }

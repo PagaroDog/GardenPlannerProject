@@ -3,7 +3,7 @@ package Model;
 import java.util.LinkedList;
 
 import Views.GardenView;
-import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Circle;
 
 /**
  * 
@@ -12,18 +12,18 @@ import javafx.scene.shape.Ellipse;
  */
 public class GardenAction {
 	
-	private Ellipse plant; 
+	private Circle plant; 
 	private double x; 
 	private double y; 
 	private String name; 
 	private ActionEnum action; 
 	private LinkedList<GardenAction> actionList; 
 	private LinkedList<GardenAction> redoList;
-	public Ellipse getPlant() {
+	public Circle getPlant() {
 		return plant;
 	}
 	
-	public void setPlant(Ellipse plant) {
+	public void setPlant(Circle plant) {
 		this.plant = plant;
 	}
 	public double getX() {
@@ -73,7 +73,7 @@ public class GardenAction {
 		redoList = new LinkedList<GardenAction>(); 
 	}
 	
-	public GardenAction(Ellipse plant, double x, double y, String name, ActionEnum action){
+	public GardenAction(Circle plant, double x, double y, String name, ActionEnum action){
 		this.plant = plant; 
 		this.x = x; 
 		this.y = y; 

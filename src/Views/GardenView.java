@@ -40,7 +40,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
@@ -84,10 +84,12 @@ public class GardenView extends View<GardenController> implements Serializable {
 	private TabPane tabPane;
 	private int SIZE = 200;
 	private transient Images imgs;
-	private double minxRad;
-	private double minyRad;
-	private double maxxRad;
-	private double maxyRad;
+	private double minXRad;
+	private double minYRad;
+	private double maxXRad;
+	private double maxYRad;
+	private double minRad;
+	private double maxRad;
 
 	private double buttonFontSize = Math.min(12, 18 * canvasWidth / expectedWidth);
 	private final double labelFontSize = Math.min(16, 21 * canvasWidth / expectedWidth);
@@ -281,7 +283,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 	 * @param x     x coordinates of mouse
 	 * @param y     y coordinates of mouse
 	 */
-	public void addCircleToFlow(Ellipse plant, double x, double y, String name) {
+	public void addCircleToFlow(Circle plant, double x, double y, String name) {
 		Image img = imgs.getPlantImages().get(name)[0].getImg();
 		System.out.println("Dropping image " + name);
 		plant.setStrokeType(StrokeType.INSIDE);
@@ -310,9 +312,9 @@ public class GardenView extends View<GardenController> implements Serializable {
 		imageArr.get(i).setOnMouseReleased(control.handleOnMouseReleased());
 		imageArr.get(i).setOnMouseEntered(control.handleOnMouseEntered());
 		imageArr.get(i).setOnMouseExited(control.handleOnMouseExited());
-		((Ellipse) garden.getChildren().get(i)).setCenterX(x);
-		((Ellipse) garden.getChildren().get(i)).setCenterY(y);
-		((Ellipse) garden.getChildren().get(i)).setUserData(name);
+		((Circle) garden.getChildren().get(i)).setCenterX(x);
+		((Circle) garden.getChildren().get(i)).setCenterY(y);
+		((Circle) garden.getChildren().get(i)).setUserData(name);
 	}
 
 	/**
@@ -324,7 +326,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 	 * @param x
 	 * @param y
 	 */
-	public void movePlant(Ellipse dragPlant, double x, double y) {
+	public void movePlant(Circle dragPlant, double x, double y) {
 		dragPlant.setCenterX(x);
 		dragPlant.setCenterY(y);
 		System.out.println("Moving plant at x:" + x + ", y:" + y);
@@ -346,7 +348,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 	 * @param x     the new x value of the specified imagView in garden
 	 */
 	public void setXs(int index, double x) {
-		garden.getChildren().get(index).setTranslateX(((Ellipse) garden.getChildren().get(index)).getCenterX() + x);
+		garden.getChildren().get(index).setTranslateX(((Circle) garden.getChildren().get(index)).getCenterX() + x);
 	}
 
 	/**
@@ -356,7 +358,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 	 * @param y     the new y value of the specified ImageView in garden
 	 */
 	public void setYs(int index, double y) {
-		garden.getChildren().get(index).setTranslateY(((Ellipse) garden.getChildren().get(index)).getCenterY() + y);
+		garden.getChildren().get(index).setTranslateY(((Circle) garden.getChildren().get(index)).getCenterY() + y);
 	}
 
 	/**
@@ -415,46 +417,31 @@ public class GardenView extends View<GardenController> implements Serializable {
 		List<Node> gardenList = garden.getChildren();
 		for (Node plant : gardenList) {
 			String plantName = (String) plant.getUserData();
+			
+			double minSize = control.getSpread(plantName)[0] / 2;
+			double maxSize = control.getSpread(plantName)[1] / 2;
+			double propertyWidth = control.getPropertyWidthInches();
+			double propertyHeight = control.getPropertyHeightInches();
+
+			minXRad = minSize / propertyWidth * (this.getGarden().getWidth());
+			minYRad = minSize / propertyHeight * (this.getGarden().getHeight());
+			maxXRad = maxSize / propertyWidth * (this.getGarden().getWidth());
+			maxYRad = maxSize / propertyHeight * (this.getGarden().getHeight());
+			
+			minRad = (minXRad + minYRad) / 2;
+			maxRad = (maxXRad + maxYRad) / 2;
 
 			if (plantName != null) {
 				if (year == 1) {
-					double minSize = control.getSpread(plantName)[0] / 2;
-					double maxSize = control.getSpread(plantName)[1] / 2;
-					double propertyWidth = control.getPropertyWidthInches();
-					double propertyHeight = control.getPropertyHeightInches();
-					minxRad = minSize / propertyWidth * (this.getGarden().getWidth());
-					minyRad = minSize / propertyHeight * (this.getGarden().getHeight());
-					maxxRad = maxSize / propertyWidth * (this.getGarden().getWidth());
-					maxyRad = maxSize / propertyHeight * (this.getGarden().getHeight());
-					((Ellipse) plant).setRadiusX(minxRad);
-					((Ellipse) plant).setRadiusY(minyRad);
+					((Circle) plant).setRadius(minRad);
 				}
 
 				else if (year == 2) {
-					double minSize = control.getSpread(plantName)[0] / 2;
-					double maxSize = control.getSpread(plantName)[1] / 2;
-					double propertyWidth = control.getPropertyWidthInches();
-					double propertyHeight = control.getPropertyHeightInches();
-					minxRad = minSize / propertyWidth * (this.getGarden().getWidth());
-					minyRad = minSize / propertyHeight * (this.getGarden().getHeight());
-					maxxRad = maxSize / propertyWidth * (this.getGarden().getWidth());
-					maxyRad = maxSize / propertyHeight * (this.getGarden().getHeight());
-					((Ellipse) plant).setRadiusX((maxxRad + minxRad) / 2);
-					((Ellipse) plant).setRadiusY((maxyRad + minyRad) / 2);
+					((Circle) plant).setRadius((maxRad + minRad) / 2);
 				}
 
 				else if (year == 3) {
-
-					double minSize = control.getSpread(plantName)[0] / 2;
-					double maxSize = control.getSpread(plantName)[1] / 2;
-					double propertyWidth = control.getPropertyWidthInches();
-					double propertyHeight = control.getPropertyHeightInches();
-					minxRad = minSize / propertyWidth * (this.getGarden().getWidth());
-					minyRad = minSize / propertyHeight * (this.getGarden().getHeight());
-					maxxRad = maxSize / propertyWidth * (this.getGarden().getWidth());
-					maxyRad = maxSize / propertyHeight * (this.getGarden().getHeight());
-					((Ellipse) plant).setRadiusX(maxxRad);
-					((Ellipse) plant).setRadiusY(maxyRad);
+					((Circle) plant).setRadius(maxRad);
 				}
 			}
 		}
@@ -470,30 +457,30 @@ public class GardenView extends View<GardenController> implements Serializable {
 				ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(control.getBloomTime(plantName)));
 				if (season == Season.FALL) {
 					if (seasonList.contains(season)) {
-						((Ellipse) plant).setStroke(control.getBloomColor(plantName));
+						((Circle) plant).setStroke(control.getBloomColor(plantName));
 					} else {
-						((Ellipse) plant).setStroke(Color.GREEN);
+						((Circle) plant).setStroke(Color.GREEN);
 					}
 				}
 				if (season == Season.WINTER) {
 					if (seasonList.contains(season)) {
 						((Shape) plant).setStroke(control.getBloomColor(plantName));
 					} else {
-						((Ellipse) plant).setStroke(Color.GRAY);
+						((Circle) plant).setStroke(Color.GRAY);
 					}
 				}
 				if (season == Season.SPRING) {
 					if (seasonList.contains(season)) {
 						((Shape) plant).setStroke(control.getBloomColor(plantName));
 					} else {
-						((Ellipse) plant).setStroke(Color.GREEN);
+						((Circle) plant).setStroke(Color.GREEN);
 					}
 				}
 				if (season == Season.SUMMER) {
 					if (seasonList.contains(season)) {
 						((Shape) plant).setStroke(control.getBloomColor(plantName));
 					} else {
-						((Ellipse) plant).setStroke(Color.GREEN);
+						((Circle) plant).setStroke(Color.GREEN);
 					}
 				}
 			}
@@ -510,8 +497,8 @@ public class GardenView extends View<GardenController> implements Serializable {
 		garden.getChildren().remove(node);
 	}
 
-	public void addShape(Ellipse ellipse) {
-		garden.getChildren().add(ellipse);
+	public void addShape(Circle circle) {
+		garden.getChildren().add(circle);
 	}
 
 	/**
@@ -543,7 +530,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 		this.garden.getChildren().add(vb);
 	}
 
-	public void displayInfo(Ellipse e, double mouseX, double mouseY, String plantMatch) {
+	public void displayInfo(Circle e, double mouseX, double mouseY, String plantMatch) {
 		ImageWithSourceInfo[] img = imgs.getPlantImages().get(e.getUserData());
 		Image i = img[0].getImg();
 
