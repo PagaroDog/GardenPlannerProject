@@ -33,6 +33,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 
 /**
  * This class is the controller for the Garden Design screen. It mostly handles
@@ -543,8 +544,25 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		copy.setOnMouseClicked(this.getHandlerForCirclePressed());
 		copy.setOnMouseDragged(this.getHandlerForDrag());
 		copy.setOnMouseReleased(this.handleOnMouseReleased());
+		
 		((Circle) copy).setFill(oldCircle.getFill());
-
+		copy.setStrokeType(StrokeType.INSIDE);
+		copy.setStroke(oldCircle.getStroke());
+		PlantType pT = getPlantType(oldCircle.getUserData().toString());
+		switch(pT) {
+			case HERB:
+				copy.setStrokeWidth(5);
+				break;
+			case VINE:
+				copy.setStrokeWidth(5);
+				break;
+			case TREE:
+				copy.setStrokeWidth(10);
+				break;
+			case SHRUB:
+				copy.setStrokeWidth(10);
+				break;	
+		}
 		System.out.println("In copyButton");
 		GA.addAction(new GardenAction(copy, 0, 0, 0, copy.getUserData().toString(), null, ActionEnum.COPY));
 
