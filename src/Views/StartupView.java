@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -30,6 +31,7 @@ public class StartupView extends View<StartupController> {
 	private ImageView iv;
 	private Pane root;
 	private TilePane buttons;
+	private FileChooser fileChooser;
 	private int numButtons = 3;
 	private double titleFontSize = 125;
 	private double buttonFont = 35;
@@ -41,6 +43,7 @@ public class StartupView extends View<StartupController> {
 
 	public StartupView(Stage stage) {
 		this.stage = stage;
+		fileChooser = new FileChooser();
 	}
 
 	/**
@@ -94,5 +97,9 @@ public class StartupView extends View<StartupController> {
 
 		title.setLayoutX(titleXPos - title.getWidth() / 2);
 		title.setLayoutY(titleYPos);
+	}
+
+	public FileChooser getFileChooser() {
+		return fileChooser;
 	}
 }

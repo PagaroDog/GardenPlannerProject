@@ -25,7 +25,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -40,6 +39,10 @@ import javafx.stage.Stage;
 public class DrawYardView extends View<DrawYardController> {
 	private BorderPane root;
 	private Pane drawing;
+	private Pane rectangles;
+	private Pane circles;
+	private Pane labels;
+	private Pane back;
 	private HBox toolbar;
 	private BorderPane navigationDraw;
 	private BorderPane navigationCond;
@@ -78,9 +81,13 @@ public class DrawYardView extends View<DrawYardController> {
 	private final double labelFontSize = Math.min(16, 18 * canvasWidth / expectedWidth);
 	private final double initShapeSize = 10;
 	private final int minRGB = 30;
-	private final double randRGB = 255 - minRGB;
+	private final int maxRGB = 190;
+	private final double randRGB = maxRGB - minRGB;
 	private final double opacity = 0.3;
 	private final double minLabelLength = 0;
+
+	private final String selectedRGB = "rgba(255, 0, 0, 1)";
+	private final String deselectedRGB = "rgba(0, 0, 0, 1)";
 
 	private ArrayList<Node> areas = new ArrayList<Node>();
 
@@ -101,7 +108,7 @@ public class DrawYardView extends View<DrawYardController> {
 		deleteButton = createButton("Delete", control.getHandleOnDeleteButton());
 		rectButton = createButton("Rectangle", control.getHandleOnRectButton());
 		circleButton = createButton("Circle", control.getHandleOnCircleButton());
-		labelButton = createButton("Label", control.getHandleOnLabelButton());
+		labelButton = createButton("Add Label", control.getHandleOnLabelButton());
 		labeltxt = createField();
 		labeltxt.setPromptText("ex. House, Shed");
 		minusButton = createButton("-", control.getHandleOnMinusButton());
@@ -137,8 +144,20 @@ public class DrawYardView extends View<DrawYardController> {
 				control.getHandleNextButton());
 
 		drawing = new Pane();
+		rectangles = new Pane();
+		circles = new Pane();
+		labels = new Pane();
+		back = new Pane();
+		drawing.getChildren().add(rectangles);
+		rectangles.getChildren().add(circles);
+		circles.getChildren().add(labels);
+		labels.getChildren().add(back);
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
+		rectangles.setOnMousePressed(control.getHandleOnRectPane());
+		labels.setOnMousePressed(control.getHandleOnLabelPane());
+		circles.setOnMousePressed(control.getHandleOnCirclesPane());
 		drawing.setOnMouseDragged(control.getHandleOnDragPane());
+		drawing.setOnMouseReleased(control.getHandleOnSelectButton());
 
 		root = new BorderPane();
 		root.setTop(toolbar);
@@ -147,7 +166,6 @@ public class DrawYardView extends View<DrawYardController> {
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
 		scene.setOnKeyPressed(control.getHandleOnKeyPressed());
-//		scene.setOnMousePressed(control.getHandleOnScenePressed());
 		styleScene();
 	}
 
@@ -197,16 +215,16 @@ public class DrawYardView extends View<DrawYardController> {
 		if (mode == StageName.DRAW) {
 			rect.setFill(Color.TRANSPARENT);
 			rect.setStroke(Color.BLACK);
-			rect.setOnMouseClicked(control.getHandleOnPressShape());
+			rect.setOnMousePressed(control.getHandleOnPressShape());
 		} else {
 			rect.setFill(Color.rgb((int) (Math.random() * randRGB) + minRGB, (int) (Math.random() * randRGB) + minRGB,
 					(int) (Math.random() * randRGB) + minRGB, opacity));
 			rect.setStroke(Color.TRANSPARENT);
-			rect.setOnMouseClicked(control.getHandleOnPressArea());
+			rect.setOnMousePressed(control.getHandleOnPressArea());
 		}
 		rect.setUserData(mode);
 		rect.setOnMouseDragged(control.getHandleOnDragRectangle());
-		drawing.getChildren().add(rect);
+		rectangles.getChildren().add(rect);
 		return rect;
 	}
 
@@ -252,9 +270,9 @@ public class DrawYardView extends View<DrawYardController> {
 		Ellipse circle = new Ellipse(x, y, initShapeSize, initShapeSize);
 		circle.setFill(Color.TRANSPARENT);
 		circle.setStroke(Color.BLACK);
-		circle.setOnMouseClicked(control.getHandleOnPressShape());
+		circle.setOnMousePressed(control.getHandleOnPressShape());
 		circle.setOnMouseDragged(control.getHandleOnDragCircle());
-		drawing.getChildren().add(circle);
+		circles.getChildren().add(circle);
 		return circle;
 	}
 
@@ -284,15 +302,15 @@ public class DrawYardView extends View<DrawYardController> {
 		circle.setCenterY(y);
 	}
 
-	public Node addLabel(double x, double y) {
+	public Node addLabel() {
 		if (labeltxt.getText().length() > minLabelLength) {
 			Label txt = new Label(labeltxt.getText());
-			drawing.getChildren().add(txt);
+			labels.getChildren().add(txt);
 			txt.setFont(new Font(labelSize));
 			txt.setOnMousePressed(control.getHandleOnPressShape());
 			txt.setOnMouseDragged(control.getHandleOnDragLabel());
-			txt.setLayoutX(x);
-			txt.setLayoutY(y);
+			txt.setLayoutX(drawing.getWidth()/2);
+			txt.setLayoutY(drawing.getHeight()/2);
 			labeltxt.setText("");
 			return txt;
 		} else {
@@ -320,7 +338,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param node The shape to be deleted.
 	 */
 	public void deleteShape(Node node) {
-		drawing.getChildren().remove(node);
+		((Pane) node.getParent()).getChildren().remove(node);
 	}
 
 	/**
@@ -329,11 +347,10 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param node The selected node
 	 */
 	public void select(Node node) {
-		if (node instanceof Shape)
-			((Shape) node).setStroke(Color.RED);
-		else if (node instanceof Label)
-			((Label) node).setTextFill(Color.RED);
-		// nothing if null
+		if (node != null) {
+			node.setStyle("-fx-stroke: " + selectedRGB + ";"
+					+ "-fx-text-fill: " + selectedRGB + ";");
+		}
 	}
 
 	/**
@@ -342,15 +359,10 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param node The deselected node
 	 */
 	public void deselect(Node node) {
-		if (node instanceof Shape) {
-			Shape shape = (Shape) node;
-			if (shape.getUserData() == StageName.CONDITIONS)
-				shape.setStroke(Color.TRANSPARENT);
-			else
-				shape.setStroke(Color.BLACK);
-		} else if (node instanceof Label)
-			((Label) node).setTextFill(Color.BLACK);
-		// nothing if null
+		if (node != null) {
+			node.setStyle("-fx-stroke: " + deselectedRGB + ";"
+					+ "-fx-text-fill: " + deselectedRGB + ";");
+		}
 	}
 
 	/**
@@ -361,10 +373,10 @@ public class DrawYardView extends View<DrawYardController> {
 		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
 				minusButton, plusButton, labelSizetxt, importButton, removeImportButton, emptyCenter, widthTxt,
 				widthField, heightTxt, heightField, heightUnit);
-		ObservableList<Node> drawObjs = drawing.getChildren();
-		for (int i = drawObjs.size() - 1; i >= 0 && drawObjs.get(i).getUserData() == StageName.CONDITIONS; i--) {
-			areas.add(drawObjs.get(i));
-			drawObjs.remove(i);
+		ObservableList<Node> rects = rectangles.getChildren();
+		for (int i = rects.size() - 1; i >= 0 && rects.get(i).getUserData() == StageName.CONDITIONS; i--) {
+			areas.add(rects.get(i));
+			rects.remove(i);
 		}
 		root.setBottom(navigationDraw);
 	}
@@ -375,7 +387,7 @@ public class DrawYardView extends View<DrawYardController> {
 	public void condMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
 		toolbar.getChildren().addAll(selectButton, deleteButton, newAreaButton);
-		drawing.getChildren().addAll(areas);
+		rectangles.getChildren().addAll(areas);
 		areas.clear();
 		root.setBottom(navigationCond);
 	}
@@ -396,16 +408,16 @@ public class DrawYardView extends View<DrawYardController> {
 		try {
 			background = new ImageView(
 					new Image(new FileInputStream(path), drawing.getWidth(), drawing.getHeight(), false, false));
-			if (!drawing.getChildren().contains(background)) {
-				drawing.getChildren().add(background);
-				background.toBack();
+			if (!back.getChildren().contains(background)) {
+				back.getChildren().add(background);
+				back.toBack();
 			}
 		} catch (FileNotFoundException e) {
 		}
 	}
 
 	public void removeBackground() {
-		drawing.getChildren().remove(background);
+		back.getChildren().remove(background);
 	}
 
 	/**
@@ -418,15 +430,11 @@ public class DrawYardView extends View<DrawYardController> {
 		selectButton.setId("");
 		rectButton.setId("");
 		circleButton.setId("");
-		labelButton.setId("");
 		newAreaButton.setId("");
 		if (newMode != null) {
 			switch (newMode) {
 			case CIRCLE:
 				circleButton.setId("selected-button");
-				break;
-			case LABEL:
-				labelButton.setId("selected-button");
 				break;
 			case RECTANGLE:
 				rectButton.setId("selected-button");

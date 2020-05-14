@@ -1,10 +1,10 @@
 package Model;
 
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,7 +30,6 @@ import javafx.scene.shape.Rectangle;
 
 import javafx.scene.shape.Ellipse;
 
-
 /**
  * This class stores the data for this software, as well as some methods that
  * define logic.
@@ -40,19 +39,18 @@ import javafx.scene.shape.Ellipse;
  *
  */
 
-public class Model {
+public class Model implements Serializable{
 	private Season season = Season.SUMMER;
-	private StageName stageName = StageName.WELCOME;
+	private transient StageName stageName = StageName.WELCOME;
 
-	private DrawMode drawMode;
-	private double drawPressX;
-	private double drawPressY;
-	private Node currDrawObj;
+	private transient DrawMode drawMode;
+	private transient double drawPressX;
+	private transient double drawPressY;
+	private transient Node currDrawObj;
 
 	private int propertyHeightInches = 1200;
 	private int propertyWidthInches = 2400;
 
-	
 	private HashMap<String, Plant> plants = new HashMap<String, Plant>();
 	private ArrayList<GardenPref> gardenPreferences = new ArrayList<GardenPref>();
 	private ArrayList<Plant> suggestedPlants = new ArrayList<Plant>();
@@ -64,10 +62,6 @@ public class Model {
 	private ArrayList<Actions> redoActions;
 	private int year;
 	private int prefCategoriesCnt = 4;
-
-	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-	int canvasWidth = gd.getDisplayMode().getWidth() - 150;
-	int canvasHeight = gd.getDisplayMode().getHeight() - 150;
 
 	private StartupController startControl;
 	private TutorialController tutControl;
@@ -103,16 +97,13 @@ public class Model {
 	private int numShrubs = 0;
 	private int numHerbs = 0;
 
-
 	private int numVine = 0;
 	private double gardenCovered = 0;
-	
-	private int uniqueTrees =0;
-	private int uniqueShrubs =0;
-	private int uniqueHerbs =0;
-	private int uniqueVines =0;
-	
-	
+
+	private int uniqueTrees = 0;
+	private int uniqueShrubs = 0;
+	private int uniqueHerbs = 0;
+	private int uniqueVines = 0;
 
 	private HashSet<String> allColors = new HashSet<String>();
 	private HashSet<Season> allSeasons = new HashSet<Season>();
@@ -121,6 +112,12 @@ public class Model {
 
 	private final double rectMinX = 0;
 	private final double rectMinY = 0;
+
+	private ArrayList<GardenObj> gardenObjs = new ArrayList<GardenObj>();
+	private ArrayList<RectDrawingObj> rectangles = new ArrayList<RectDrawingObj>();
+	private ArrayList<LabelDrawingObj> labels = new ArrayList<LabelDrawingObj>();
+	private ArrayList<CircleDrawingObj> circles = new ArrayList<CircleDrawingObj>();
+	private String backgroundPath;
 
 	public Season getSeason() {
 		return season;
@@ -168,22 +165,6 @@ public class Model {
 
 	public void setYear(int year) {
 		this.year = year;
-	}
-
-	public int getCanvasWidth() {
-		return canvasWidth;
-	}
-
-	public void setCanvasWidth(int canvasWidth) {
-		this.canvasWidth = canvasWidth;
-	}
-
-	public int getCanvasHeight() {
-		return canvasHeight;
-	}
-
-	public void setCanvasHeight(int canvasHeight) {
-		this.canvasHeight = canvasHeight;
 	}
 
 	public DrawMode getDrawMode() {
@@ -314,8 +295,6 @@ public class Model {
 		this.numHerbs = numHerbs;
 	}
 
-
-
 	public HashSet<String> getAllColors() {
 		return allColors;
 	}
@@ -389,7 +368,7 @@ public class Model {
 	 * @param left the size of the ScrollPane of images
 	 * @return ret
 	 */
-	public double calcX(double x, double size, double left) {
+	public double calcX(double x, double size, double left, double canvasWidth) {
 		double rightBorder = canvasWidth - size - left;
 		double leftBorder = size;
 		double ret = x;
@@ -415,7 +394,7 @@ public class Model {
 	 * @param bottom the size of the bottom border of the BorderPane
 	 * @return ret
 	 */
-	public double calcY(double y, double size, double bottom) {
+	public double calcY(double y, double size, double bottom, double canvasHeight) {
 
 		double bottomBorder = canvasHeight - size - bottom * 2;
 		System.out.println(size);
@@ -662,7 +641,7 @@ public class Model {
 		int score = prefCategoriesCnt;
 		int minGardenPrefScore = score;
 		int cnt = 1;
-		
+
 		for (int i = 0; i <= score; i++) {
 			plantsFromPref.put(i, new ArrayList<Plant>());
 		}
@@ -700,18 +679,15 @@ public class Model {
 			plantsFromPref.get(minGardenPrefScore).add(p);
 			cnt = 1;
 			minGardenPrefScore = prefCategoriesCnt;
-			
+
 		}
 
 		suggestedPlants.clear();
 
-		
-		for (int i = 0; i <=score; i++) {
-			
+		for (int i = 0; i <= score; i++) {
 
 			suggestedPlants.addAll(plantsFromPref.get(i));
 		}
-		
 
 	}
 
@@ -766,15 +742,19 @@ public class Model {
 				index++;
 			}
 		}
-		
+
 		suggestedPlants.removeAll(selected);
 		suggestedPlants.addAll(0, selected);
-		
+
 	}
+
 	/**
-	 * Takes in an observable list of nodes from the GardenController. Iterates through the nodes counting the total number of trees, herbs, vines, and shrubs and counting
-	 * the number of unique plants of each plant type. Also uses the property height and width to calculate the coverage of the garden by the plants. Sets all attributes
-	 * to their appropriate values.  
+	 * Takes in an observable list of nodes from the GardenController. Iterates
+	 * through the nodes counting the total number of trees, herbs, vines, and
+	 * shrubs and counting the number of unique plants of each plant type. Also uses
+	 * the property height and width to calculate the coverage of the garden by the
+	 * plants. Sets all attributes to their appropriate values.
+	 * 
 	 * @param garden
 	 */
 	public void generateStats(ObservableList<Node> garden) {
@@ -786,7 +766,7 @@ public class Model {
 		uniqueShrubs = 0;
 		uniqueHerbs = 0;
 		uniqueVines = 0;
-		double plantSurfaceArea =0;
+		double plantSurfaceArea = 0;
 		allColors.clear();
 		allSeasons.clear();
 		uniquePlant.clear();
@@ -814,7 +794,7 @@ public class Model {
 				for (Season season : plant.getBloomtime()) {
 					allSeasons.add(season);
 				}
-				if(uniquePlant.add(plantName)) {
+				if (uniquePlant.add(plantName)) {
 					switch (plant.getType()) {
 					case HERB:
 						uniqueHerbs++;
@@ -830,31 +810,30 @@ public class Model {
 						break;
 					}
 				}
-				
+
 				allNames.add(plantName);
-				
-				plantSurfaceArea += Math.PI * ((Ellipse)node).getRadiusX() * ((Ellipse)node).getRadiusY();
+
+				plantSurfaceArea += Math.PI * ((Ellipse) node).getRadiusX() * ((Ellipse) node).getRadiusY();
 			}
 		}
-		
-		gardenCovered = plantSurfaceArea / (propertyHeightInches * propertyWidthInches)*100;
-		
+
+		gardenCovered = plantSurfaceArea / (propertyHeightInches * propertyWidthInches) * 100;
+
 	}
-	
+
 	public double getGardenCoveredPercent() {
-		
+
 		return gardenCovered;
 	}
 
 	public int getNumVines() {
-		
+
 		return numVine;
 	}
 
 	public int getUniqueTrees() {
 		return uniqueTrees;
 	}
-
 
 	/**
 	 * Calculates the coordinates of a rectangle as it is being created.
@@ -949,9 +928,10 @@ public class Model {
 
 	/**
 	 * Checks if a plant matches the preferences of the area it has been placed in
+	 * 
 	 * @param plantName The name of the plant
-	 * @param x The x-coordinate of the mouse
-	 * @param y The y-coordinate of the mouse
+	 * @param x         The x-coordinate of the mouse
+	 * @param y         The y-coordinate of the mouse
 	 * @return A string that describes how well the plant matches
 	 */
 	public String isPlantMatch(String plantName, double x, double y) {
@@ -965,22 +945,22 @@ public class Model {
 					} else {
 						match = "Plant does not match light requirement.";
 					}
-					
+
 					if (userCheck(p.getWaterLevel(), gp.getUserWater())) {
 						match += "\nPlant matches soil moisture.";
 					} else {
 						match += "\nPlant does not match soil moisture.";
 					}
-					
+
 					if (userCheck(p.getBloomtime(), gp.getUserBloom())) {
 						match += "\nPlant blooms in desired season.";
 					} else {
 						match += "\nPlant does not bloom in desired season.";
 					}
-					
+
 					HashSet<String> copy = new HashSet<String>(p.getColor());
 					Iterator<String> it = copy.iterator();
-					
+
 					while (it.hasNext()) {
 						if (gp.getUserColor().contains(it.next())) {
 							match += "\nPlant matches desired color.";
@@ -996,8 +976,9 @@ public class Model {
 
 	/**
 	 * Determines if the given x and y coordinates are inside the given rectangle
-	 * @param x The x-coordinate of the mouse
-	 * @param y The y-coordinate of the mouse
+	 * 
+	 * @param x    The x-coordinate of the mouse
+	 * @param y    The y-coordinate of the mouse
 	 * @param area The rectangle to check if the mouse is inside
 	 * @return true if the mouse is in the rectangle, false otherwise
 	 */
@@ -1006,8 +987,8 @@ public class Model {
 		boolean inY = y <= area.getBoundsInParent().getMaxY() && y >= area.getBoundsInParent().getMinY();
 		return inX && inY;
 	}
-	
-	public static <T>String toCommaString(Collection<T> arr) {
+
+	public static <T> String toCommaString(Collection<T> arr) {
 		String str = "";
 		String separator = ", ";
 		for (T curr : arr) {
@@ -1018,8 +999,8 @@ public class Model {
 		}
 		return str;
 	}
-	
-	public static <T>String toCommaString(T[] arr) {
+
+	public static <T> String toCommaString(T[] arr) {
 		String str = "";
 		String separator = ", ";
 		for (T curr : arr) {
@@ -1043,7 +1024,28 @@ public class Model {
 		return uniqueVines;
 	}
 
+	public ArrayList<GardenObj> getGardenObjs() {
+		return gardenObjs;
+	}
 
+	public ArrayList<RectDrawingObj> getRectangles() {
+		return rectangles;
+	}
 
+	public ArrayList<LabelDrawingObj> getLabels() {
+		return labels;
+	}
+
+	public ArrayList<CircleDrawingObj> getCircles() {
+		return circles;
+	}
+
+	public String getBackgroundPath() {
+		return backgroundPath;
+	}
+
+	public void setBackgroundPath(String backgroundPath) {
+		this.backgroundPath = backgroundPath;
+	}
 
 }

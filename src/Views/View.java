@@ -101,6 +101,14 @@ public class View<T extends Controller> {
 		return navigation;
 	}
 
+	public int getCanvasWidth() {
+		return canvasWidth;
+	}
+
+	public int getCanvasHeight() {
+		return canvasHeight;
+	}
+
 	public Scene getScene() {return scene;}
 
 	public void setController(T controller) {control = controller;}

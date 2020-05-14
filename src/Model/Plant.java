@@ -1,6 +1,7 @@
 
 package Model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 /**
@@ -9,7 +10,7 @@ import java.util.HashSet;
  * @author Tommy White
  *
  */
-public class Plant {
+public class Plant implements Serializable {
 	private String name;
 	private String[] commonNames;
 	private String duration;

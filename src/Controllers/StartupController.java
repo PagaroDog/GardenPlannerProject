@@ -1,7 +1,14 @@
 package Controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 import Model.Model;
 import Model.StageName;
+import Views.GardenView;
 import Views.StartupView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -39,6 +46,19 @@ public class StartupController extends Controller<StartupView> {
 	}
 
 	public void loadButton(MouseEvent event) {
+		File file = view.getFileChooser().showOpenDialog(view.getStage());
+		try {
+			FileInputStream fileIn = new FileInputStream(file.getPath());
+			ObjectInputStream input = new ObjectInputStream(fileIn);
+			main.setModel((Model) input.readObject());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		main.updateModel();
 		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
 		model.setStageName(StageName.DESIGN);
 	}
