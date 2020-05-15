@@ -3,6 +3,7 @@ package Model;
 import javafx.scene.shape.Rectangle;
 
 public class RectDrawingObj extends DrawingObj {
+	private StageName userData;
 	
 	public RectDrawingObj(Rectangle rect) {
 		x = rect.getX();
@@ -11,6 +12,15 @@ public class RectDrawingObj extends DrawingObj {
 		height = rect.getHeight();
 		trans = rect.getTranslateX();
 		scale = rect.getScaleX();
+		userData = (StageName) rect.getUserData();
+	}
+
+	public StageName getUserData() {
+		return userData;
+	}
+
+	public void setUserData(StageName userData) {
+		this.userData = userData;
 	}
 
 }

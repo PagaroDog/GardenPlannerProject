@@ -137,8 +137,6 @@ public class Main extends Application {
 		startControl.setModel(model);
 		statControl.setModel(model);
 		tutControl.setModel(model);
-		
-		gardenControl.loadPlants();
 	}
 
 }

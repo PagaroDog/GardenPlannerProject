@@ -66,7 +66,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 * @return EventHandler
 	 */
 	public EventHandler gethandleOnNextButton() {
-		return event -> NextButton((MouseEvent) event);
+		return event -> nextButton();
 	}
 
 	public EventHandler getHandleOnZoneButton(Rectangle rect, GardenPref gardenPref) {
@@ -81,7 +81,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 * 
 	 * @param event
 	 */
-	public void NextButton(MouseEvent event) {
+	public void nextButton() {
 		saveUserPref(false);
 		view.getStage().setScene(Main.getScenes().get(StageName.SUGGESTIONS));
 		
