@@ -1,7 +1,7 @@
 package Controllers;
 
 import Model.Model;
-import Model.StageName;
+import Model.StageNameEnum;
 import Views.StatisticsView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -26,8 +26,8 @@ public class StatisticsController extends Controller<StatisticsView> {
 	}
 
 	public void backButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
-		model.setStageName(StageName.DESIGN);
+		view.getStage().setScene(Main.getScenes().get(StageNameEnum.DESIGN));
+		model.setStageName(StageNameEnum.DESIGN);
 	}
 
 	/**

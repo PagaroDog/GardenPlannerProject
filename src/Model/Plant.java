@@ -14,17 +14,17 @@ public class Plant implements Serializable {
 	private String name;
 	private String[] commonNames;
 	private String duration;
-	private PlantType type;
+	private PlantTypeEnum type;
 	private int[] height;
 	private HashSet<String> color = new HashSet<String>();
-	private Season[] bloomtime;
-	private Water[] waterLevel;
-	private Sun[] light;
+	private SeasonEnum[] bloomtime;
+	private WaterEnum[] waterLevel;
+	private SunEnum[] light;
 	private int[] spread;
 	
 
-	public Plant(String name, String[] commonNames, String duration, PlantType type, int[] height, String[] color,
-			Season[] bloomtime, Water[] waterLevel, Sun[] light, int[] spread) {
+	public Plant(String name, String[] commonNames, String duration, PlantTypeEnum type, int[] height, String[] color,
+			SeasonEnum[] bloomtime, WaterEnum[] waterLevel, SunEnum[] light, int[] spread) {
 		this.name = name;
 		this.commonNames = commonNames;
 		this.duration = duration;
@@ -48,27 +48,27 @@ public class Plant implements Serializable {
 		this.name = name;
 	}
 
-	public Sun[] getLight() {
+	public SunEnum[] getLight() {
 		return light;
 	}
 
-	public void setLight(Sun[] light) {
+	public void setLight(SunEnum[] light) {
 		this.light = light;
 	}
 
-	public Season[] getBloomtime() {
+	public SeasonEnum[] getBloomtime() {
 		return bloomtime;
 	}
 
-	public void setBloomtime(Season[] bloomtime) {
+	public void setBloomtime(SeasonEnum[] bloomtime) {
 		this.bloomtime = bloomtime;
 	}
 
-	public Water[] getWaterLevel() {
+	public WaterEnum[] getWaterLevel() {
 		return waterLevel;
 	}
 
-	public void setWaterLevel(Water[] waterLevel) {
+	public void setWaterLevel(WaterEnum[] waterLevel) {
 		this.waterLevel = waterLevel;
 	}
 
@@ -96,11 +96,11 @@ public class Plant implements Serializable {
 		this.duration = duration;
 	}
 
-	public PlantType getType() {
+	public PlantTypeEnum getType() {
 		return type;
 	}
 
-	public void setType(PlantType type) {
+	public void setType(PlantTypeEnum type) {
 		this.type = type;
 	}
 

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import Controllers.SuggestionsController;
-import Model.PlantType;
-import Model.Sun;
-import Model.Water;
+import Model.PlantTypeEnum;
+import Model.SunEnum;
+import Model.WaterEnum;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -180,7 +180,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 * 
 	 * @param event
 	 */
-	public void inputStats(Object event,  String[] cNames, String name,PlantType type, Water[] moisture, Sun[] sun) {
+	public void inputStats(Object event,  String[] cNames, String name,PlantTypeEnum type, WaterEnum[] moisture, SunEnum[] sun) {
 		Object[] info = { cNames, name,  moisture, type, sun };
 		int cnt = 0;
 		/*for (Object s : info) {

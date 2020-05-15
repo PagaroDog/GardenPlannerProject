@@ -13,9 +13,9 @@ import java.util.List;
 import Controllers.GardenController;
 import Model.EllipseDrawingObj;
 import Model.LabelDrawingObj;
-import Model.PlantType;
+import Model.PlantTypeEnum;
 import Model.RectDrawingObj;
-import Model.Season;
+import Model.SeasonEnum;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -130,7 +130,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		plants.clear();
 		int numberPlants = control.getNumPlants();
-		for (PlantType type : PlantType.values()) {
+		for (PlantTypeEnum type : PlantTypeEnum.values()) {
 			Tab tab = new Tab(type.toString());
 			// tab.setText(type.toString());
 			// Label label = new Label(type.toString());
@@ -270,7 +270,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 		plant.setStrokeType(StrokeType.INSIDE);
 		plant.setStroke(color);
 		((Circle) plant).setStroke(control.findCircleColor(name));
-		PlantType pT = control.getPlantType(name);
+		PlantTypeEnum pT = control.getPlantType(name);
 		switch(pT) {
 			case HERB:
 				plant.setStrokeWidth(herbStrokeWidth);
@@ -419,7 +419,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 			
 	}
 
-	public void changeSeason(Season season) {
+	public void changeSeason(SeasonEnum season) {
 		List<Node> gardenList = garden.getChildren();
 		for (Node plant : gardenList) {
 

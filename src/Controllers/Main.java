@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Model.Model;
-import Model.StageName;
+import Model.StageNameEnum;
 import Views.DrawYardView;
 import Views.GardenView;
 import Views.Images;
@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  * @author Brandon Wu
  */
 public class Main extends Application {
-	private static Map<StageName, Scene> scenes = new HashMap<>();
+	private static Map<StageNameEnum, Scene> scenes = new HashMap<>();
 	private Model model;
 	private StartupView startView;
 	private TutorialView tutView;
@@ -60,22 +60,22 @@ public class Main extends Application {
 		prefControl = new PreferencesController(model, prefView, this);
 		suggControl = new SuggestionsController(model, suggView, this);
 
-		scenes.put(StageName.WELCOME, startView.getScene());
-		scenes.put(StageName.TUTORIAL, tutView.getScene());
-		scenes.put(StageName.DRAW, dyView.getScene());
-		scenes.put(StageName.STATS, statView.getScene());
-		scenes.put(StageName.DESIGN, gardenView.getScene());
-		scenes.put(StageName.PREFERENCES, prefView.getScene());
-		scenes.put(StageName.SUGGESTIONS, suggView.getScene());
+		scenes.put(StageNameEnum.WELCOME, startView.getScene());
+		scenes.put(StageNameEnum.TUTORIAL, tutView.getScene());
+		scenes.put(StageNameEnum.DRAW, dyView.getScene());
+		scenes.put(StageNameEnum.STATS, statView.getScene());
+		scenes.put(StageNameEnum.DESIGN, gardenView.getScene());
+		scenes.put(StageNameEnum.PREFERENCES, prefView.getScene());
+		scenes.put(StageNameEnum.SUGGESTIONS, suggView.getScene());
 
 		// Start with the main scene
-		stage.setScene(scenes.get(StageName.WELCOME));
+		stage.setScene(scenes.get(StageNameEnum.WELCOME));
 		stage.setTitle("My Native Garden");
 		stage.show();
 		startView.start();
 	}
 
-	public static Map<StageName, Scene> getScenes() {
+	public static Map<StageNameEnum, Scene> getScenes() {
 		return scenes;
 	}
 

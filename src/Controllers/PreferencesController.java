@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 import Model.GardenPref;
 import Model.Model;
-import Model.StageName;
+import Model.StageNameEnum;
 import Views.PreferencesView;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -50,8 +50,8 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 * @param event
 	 */
 	public void BackButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.DRAW));
-		model.setStageName(StageName.CONDITIONS);
+		view.getStage().setScene(Main.getScenes().get(StageNameEnum.DRAW));
+		model.setStageName(StageNameEnum.CONDITIONS);
 //		if (view.getDrawing() != null) {
 			main.getDyControl().setDrawing(view.getDrawing());
 //		}
@@ -83,7 +83,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 */
 	public void nextButton() {
 		saveUserPref(false);
-		view.getStage().setScene(Main.getScenes().get(StageName.SUGGESTIONS));
+		view.getStage().setScene(Main.getScenes().get(StageNameEnum.SUGGESTIONS));
 		
 		model.createSuggestions(model.getGardenPreferences().size() == 0);
 		main.getSuggestionsControl().update();
@@ -92,7 +92,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 		}
 		view.setCurrArea(null);
 		model.setCurrPref(null);
-		model.setStageName(StageName.SUGGESTIONS);
+		model.setStageName(StageNameEnum.SUGGESTIONS);
 		
 	}
 
@@ -119,7 +119,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 			model.getGardenPreferences().clear();
 			for (Node child : drawing.getChildren()) {
 				
-				if (child.getUserData() == StageName.CONDITIONS) {
+				if (child.getUserData() == StageNameEnum.CONDITIONS) {
 					model.getGardenPreferences().add(new GardenPref());
 					if(firstCond) {
 						firstCondRect = (Rectangle)child;

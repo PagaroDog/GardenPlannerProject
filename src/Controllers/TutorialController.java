@@ -1,7 +1,7 @@
 package Controllers;
 
 import Model.Model;
-import Model.StageName;
+import Model.StageNameEnum;
 import Views.TutorialView;
 import Views.View;
 import javafx.event.EventHandler;
@@ -48,16 +48,16 @@ public class TutorialController extends Controller<TutorialView> {
 	 * Goes to the next Stage
 	 */
 	public void nextButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.DRAW));
-		model.setStageName(StageName.DRAW);
+		view.getStage().setScene(Main.getScenes().get(StageNameEnum.DRAW));
+		model.setStageName(StageNameEnum.DRAW);
 	}
 
 	/**
 	 * Goes to the previous stage
 	 */
 	public void prevButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.WELCOME));
-		model.setStageName(StageName.WELCOME);
+		view.getStage().setScene(Main.getScenes().get(StageNameEnum.WELCOME));
+		model.setStageName(StageNameEnum.WELCOME);
 	}
 
 	/**

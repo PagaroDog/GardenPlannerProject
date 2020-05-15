@@ -8,12 +8,12 @@ import java.io.Serializable;
  * @author Tommy White
  *
  */
-public enum Water implements Serializable {
+public enum WaterEnum implements Serializable {
 	WET("Wet"), WETMES("Wet Mesic"), MESIC("Mesic"), DRYMES("Dry Mesic"), DRY("Dry");
 
 	private String water = null;
 
-	private Water(String s) {
+	private WaterEnum(String s) {
 		water = s;
 	}
 

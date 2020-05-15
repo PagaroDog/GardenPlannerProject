@@ -2,10 +2,10 @@ package Controllers;
 
 import java.io.File;
 
-import Model.DrawMode;
+import Model.DrawModeEnum;
 
 import Model.Model;
-import Model.StageName;
+import Model.StageNameEnum;
 import Views.DrawYardView;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -250,24 +250,24 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * Sets drawing mode to select
 	 */
 	public void selectButton() {
-		view.updateMode(DrawMode.SELECT);
-		model.setDrawMode(DrawMode.SELECT);
+		view.updateMode(DrawModeEnum.SELECT);
+		model.setDrawMode(DrawModeEnum.SELECT);
 	}
 
 	/**
 	 * Sets drawing mode to rectangle
 	 */
 	public void rectButton() {
-		view.updateMode(DrawMode.RECTANGLE);
-		model.setDrawMode(DrawMode.RECTANGLE);
+		view.updateMode(DrawModeEnum.RECTANGLE);
+		model.setDrawMode(DrawModeEnum.RECTANGLE);
 	}
 
 	/**
 	 * Sets drawing mode to ellipse
 	 */
 	public void ellipseButton() {
-		view.updateMode(DrawMode.ELLIPSE);
-		model.setDrawMode(DrawMode.ELLIPSE);
+		view.updateMode(DrawModeEnum.ELLIPSE);
+		model.setDrawMode(DrawModeEnum.ELLIPSE);
 	}
 
 	/**
@@ -386,8 +386,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 		model.setCurrDrawObj(null);
 		model.setDrawMode(null);
 		view.updateMode(null);
-		if (model.getStageName() == StageName.DRAW) {
-			model.setStageName(StageName.CONDITIONS);
+		if (model.getStageName() == StageNameEnum.DRAW) {
+			model.setStageName(StageNameEnum.CONDITIONS);
 			view.condMode();
 			String widthStr = view.getWidthField().getText();
 			if (widthStr.matches("[0-9]+")) {
@@ -398,8 +398,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 				model.setPropertyHeightInches(Integer.valueOf(heightStr) * model.getInchesPerFoot());
 			}
 		} else {
-			view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
-			model.setStageName(StageName.PREFERENCES);
+			view.getStage().setScene(Main.getScenes().get(StageNameEnum.PREFERENCES));
+			model.setStageName(StageNameEnum.PREFERENCES);
 			model.setDrawMode(null);
 			main.getPrefControl().setDrawing(view.getDrawing());
 		}
@@ -417,11 +417,11 @@ public class DrawYardController extends Controller<DrawYardView> {
 		view.updateMode(null);
 		view.deselect(model.getCurrDrawObj());
 		model.setCurrDrawObj(null);
-		if (model.getStageName() == StageName.DRAW) {
-			view.getStage().setScene(Main.getScenes().get(StageName.WELCOME));
-			model.setStageName(StageName.WELCOME);
+		if (model.getStageName() == StageNameEnum.DRAW) {
+			view.getStage().setScene(Main.getScenes().get(StageNameEnum.WELCOME));
+			model.setStageName(StageNameEnum.WELCOME);
 		} else {
-			model.setStageName(StageName.DRAW);
+			model.setStageName(StageNameEnum.DRAW);
 			view.drawMode();
 		}
 	}
@@ -436,7 +436,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case SELECT:
-				if (model.getStageName() == StageName.DRAW) {
+				if (model.getStageName() == StageNameEnum.DRAW) {
 					view.deselect(model.getCurrDrawObj());
 					model.setCurrDrawObj((Node) event.getSource());
 					view.select(model.getCurrDrawObj());
@@ -455,7 +455,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case SELECT:
-				if (model.getStageName() == StageName.CONDITIONS) {
+				if (model.getStageName() == StageNameEnum.CONDITIONS) {
 					view.deselect(model.getCurrDrawObj());
 					model.setCurrDrawObj((Node) event.getSource());
 					view.select(model.getCurrDrawObj());
@@ -491,7 +491,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case SELECT:
-				if (model.getStageName() == StageName.DRAW) {
+				if (model.getStageName() == StageNameEnum.DRAW) {
 					Ellipse ellipse = (Ellipse) event.getSource();
 					double[] newCenters = model.moveEllipseCoordinates(event.getX(), event.getY(), ellipse.getRadiusX(),
 							ellipse.getRadiusY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
@@ -514,7 +514,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 				double[] newCoords = model.moveRectCoordinates(event.getSceneX(),
 						event.getSceneY() - view.getToolbarHeight(), label.getWidth(), label.getHeight(),
 						view.getDrawing().getWidth(), view.getDrawing().getHeight());
-				if (model.getStageName() == StageName.DRAW) {
+				if (model.getStageName() == StageNameEnum.DRAW) {
 					view.moveLabel(label, newCoords[xInd], newCoords[yInd]);
 				}
 			}

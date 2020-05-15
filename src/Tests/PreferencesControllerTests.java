@@ -11,7 +11,7 @@ import Controllers.Main;
 import Controllers.PreferencesController;
 import Model.GardenPref;
 import Model.Model;
-import Model.StageName;
+import Model.StageNameEnum;
 import Views.PreferencesView;
 import javafx.stage.Stage;
 

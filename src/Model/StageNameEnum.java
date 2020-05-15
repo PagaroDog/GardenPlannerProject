@@ -6,6 +6,6 @@ package Model;
  * @author Brandon Wu
  *
  */
-public enum StageName {
+public enum StageNameEnum {
 	WELCOME, TUTORIAL, PREFERENCES, DRAW, CONDITIONS, SUGGESTIONS, DESIGN, SAVE, STATS;
 }

@@ -38,10 +38,10 @@ import javafx.scene.shape.Ellipse;
  */
 
 public class Model implements Serializable{
-	private Season season = Season.SUMMER;
-	private transient StageName stageName = StageName.WELCOME;
+	private SeasonEnum season = SeasonEnum.SUMMER;
+	private transient StageNameEnum stageName = StageNameEnum.WELCOME;
 
-	private transient DrawMode drawMode;
+	private transient DrawModeEnum drawMode;
 	private transient double drawPressX;
 	private transient double drawPressY;
 	private transient Node currDrawObj;
@@ -101,7 +101,7 @@ public class Model implements Serializable{
 	private int uniqueVines = 0;
 
 	private HashSet<String> allColors = new HashSet<String>();
-	private HashSet<Season> allSeasons = new HashSet<Season>();
+	private HashSet<SeasonEnum> allSeasons = new HashSet<SeasonEnum>();
 	private HashSet<String> allNames = new HashSet<String>();
 	private HashSet<String> uniquePlant = new HashSet<String>();
 
@@ -114,19 +114,19 @@ public class Model implements Serializable{
 	private ArrayList<EllipseDrawingObj> ellipses = new ArrayList<EllipseDrawingObj>();
 	private String backgroundPath;
 
-	public Season getSeason() {
+	public SeasonEnum getSeason() {
 		return season;
 	}
 
-	public void setSeason(Season season) {
+	public void setSeason(SeasonEnum season) {
 		this.season = season;
 	}
 
-	public StageName getStageName() {
+	public StageNameEnum getStageName() {
 		return stageName;
 	}
 
-	public void setStageName(StageName stageName) {
+	public void setStageName(StageNameEnum stageName) {
 		this.stageName = stageName;
 	}
 
@@ -146,11 +146,11 @@ public class Model implements Serializable{
 		this.year = year;
 	}
 
-	public DrawMode getDrawMode() {
+	public DrawModeEnum getDrawMode() {
 		return drawMode;
 	}
 
-	public void setDrawMode(DrawMode drawMode) {
+	public void setDrawMode(DrawModeEnum drawMode) {
 		this.drawMode = drawMode;
 	}
 
@@ -270,7 +270,7 @@ public class Model implements Serializable{
 		return allColors;
 	}
 
-	public HashSet<Season> getAllSeasons() {
+	public HashSet<SeasonEnum> getAllSeasons() {
 		return allSeasons;
 	}
 
@@ -377,19 +377,19 @@ public class Model implements Serializable{
 		String[] commonNames;
 		String duration;
 		String typeStr;
-		PlantType type;
+		PlantTypeEnum type;
 		String[] heightStr = new String[heightArrLen];
 		int[] height = new int[heightArrLen];
 		String[] color;
 		String[] bloomtimeStr;
-		LinkedHashSet<Season> bloomSet = new LinkedHashSet<Season>();
-		Season[] bloomtime;
+		LinkedHashSet<SeasonEnum> bloomSet = new LinkedHashSet<SeasonEnum>();
+		SeasonEnum[] bloomtime;
 		String[] waterStr;
-		LinkedHashSet<Water> waterSet = new LinkedHashSet<Water>();
-		Water[] waterLevel;
+		LinkedHashSet<WaterEnum> waterSet = new LinkedHashSet<WaterEnum>();
+		WaterEnum[] waterLevel;
 		String[] lightStr;
-		LinkedHashSet<Sun> lightSet = new LinkedHashSet<Sun>();
-		Sun[] light;
+		LinkedHashSet<SunEnum> lightSet = new LinkedHashSet<SunEnum>();
+		SunEnum[] light;
 		String[] spreadStr = new String[spreadArrLen];
 		int[] spread = new int[spreadArrLen];
 
@@ -413,13 +413,13 @@ public class Model implements Serializable{
 				duration = parsedLine.get(durationInd);
 				typeStr = parsedLine.get(typeInd).trim();
 				if (typeStr.equals("Herb")) {
-					type = PlantType.HERB;
+					type = PlantTypeEnum.HERB;
 				} else if (typeStr.equals("Shrub")) {
-					type = PlantType.SHRUB;
+					type = PlantTypeEnum.SHRUB;
 				} else if (typeStr.equals("Tree")) {
-					type = PlantType.TREE;
+					type = PlantTypeEnum.TREE;
 				} else {
-					type = PlantType.VINE;
+					type = PlantTypeEnum.VINE;
 				}
 				heightStr = parsedLine.get(heightInd).replaceAll(" ", "").split("-");
 				if (heightStr.length == 1) {
@@ -436,38 +436,38 @@ public class Model implements Serializable{
 				color = parsedLine.get(colorInd).replaceAll(" ", "").split(",");
 
 				bloomtimeStr = parsedLine.get(bloomtimeInd).replaceAll(" ", "")
-						.replaceAll("Dec|Jan|Feb", String.format("%d", Season.WINTER.ordinal()))
-						.replaceAll("Mar|Apr|May", String.format("%d", Season.SPRING.ordinal()))
-						.replaceAll("Jun|Jul|Aug|Sep", String.format("%d", Season.SUMMER.ordinal()))
-						.replaceAll("Oct|Nov", String.format("%d", Season.FALL.ordinal())).split(",");
+						.replaceAll("Dec|Jan|Feb", String.format("%d", SeasonEnum.WINTER.ordinal()))
+						.replaceAll("Mar|Apr|May", String.format("%d", SeasonEnum.SPRING.ordinal()))
+						.replaceAll("Jun|Jul|Aug|Sep", String.format("%d", SeasonEnum.SUMMER.ordinal()))
+						.replaceAll("Oct|Nov", String.format("%d", SeasonEnum.FALL.ordinal())).split(",");
 
 				for (String num : bloomtimeStr) {
 
-					bloomSet.add(Season.values()[Integer.valueOf(num)]);
+					bloomSet.add(SeasonEnum.values()[Integer.valueOf(num)]);
 				}
 
-				bloomtime = bloomSet.toArray(new Season[0]);
+				bloomtime = bloomSet.toArray(new SeasonEnum[0]);
 
 				waterStr = parsedLine.get(waterInd).replaceAll(" ", "")
-						.replace("WetMesic", String.format("%d", Water.WETMES.ordinal()))
-						.replace("DryMesic", String.format("%d", Water.DRYMES.ordinal()))
-						.replace("Wet", String.format("%d", Water.WET.ordinal()))
-						.replace("Mesic", String.format("%d", Water.MESIC.ordinal()))
-						.replace("Dry", String.format("%d", Water.DRY.ordinal())).split(",");
+						.replace("WetMesic", String.format("%d", WaterEnum.WETMES.ordinal()))
+						.replace("DryMesic", String.format("%d", WaterEnum.DRYMES.ordinal()))
+						.replace("Wet", String.format("%d", WaterEnum.WET.ordinal()))
+						.replace("Mesic", String.format("%d", WaterEnum.MESIC.ordinal()))
+						.replace("Dry", String.format("%d", WaterEnum.DRY.ordinal())).split(",");
 				for (String num : waterStr) {
-					waterSet.add(Water.values()[Integer.valueOf(num)]);
+					waterSet.add(WaterEnum.values()[Integer.valueOf(num)]);
 				}
-				waterLevel = waterSet.toArray(new Water[0]);
+				waterLevel = waterSet.toArray(new WaterEnum[0]);
 				lightStr = parsedLine.get(lightInd).replaceAll(" ", "")
-						.replace("FullSuntoPartialShade", String.format("%d", Sun.FULL_PARTIAL.ordinal()))
-						.replace("PartialShadetoFullShade", String.format("%d", Sun.PARTIAL_NONE.ordinal()))
-						.replace("FullSun", String.format("%d", Sun.FULL.ordinal()))
-						.replace("PartialorDappledShade", String.format("%d", Sun.PARTIAL.ordinal()))
-						.replace("FullShade", String.format("%d", Sun.NONE.ordinal())).split(",");
+						.replace("FullSuntoPartialShade", String.format("%d", SunEnum.FULL_PARTIAL.ordinal()))
+						.replace("PartialShadetoFullShade", String.format("%d", SunEnum.PARTIAL_NONE.ordinal()))
+						.replace("FullSun", String.format("%d", SunEnum.FULL.ordinal()))
+						.replace("PartialorDappledShade", String.format("%d", SunEnum.PARTIAL.ordinal()))
+						.replace("FullShade", String.format("%d", SunEnum.NONE.ordinal())).split(",");
 				for (String num : lightStr) {
-					lightSet.add(Sun.values()[Integer.valueOf(num)]);
+					lightSet.add(SunEnum.values()[Integer.valueOf(num)]);
 				}
-				light = lightSet.toArray(new Sun[0]);
+				light = lightSet.toArray(new SunEnum[0]);
 				if (parsedLine.get(spreadInd).equals("fail")) {
 					spread[minSpreadInd] = failedSpreadNum;
 					spread[maxSpreadInd] = failedSpreadNum;
@@ -748,7 +748,7 @@ public class Model implements Serializable{
 				for (String color : plant.getColor()) {
 					allColors.add(color);
 				}
-				for (Season season : plant.getBloomtime()) {
+				for (SeasonEnum season : plant.getBloomtime()) {
 					allSeasons.add(season);
 				}
 				if (uniquePlant.add(plantName)) {

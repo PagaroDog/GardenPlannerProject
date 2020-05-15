@@ -5,6 +5,6 @@ package Model;
  * @author Tommy White
  *
  */
-public enum DrawMode {
+public enum DrawModeEnum {
 	SELECT, RECTANGLE, ELLIPSE
 }

@@ -2,7 +2,7 @@ package Controllers;
 
 import Model.Model;
 import Model.Plant;
-import Model.StageName;
+import Model.StageNameEnum;
 import Views.SuggestionsView;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -27,8 +27,8 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 	}
 
 	public void backButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
-		model.setStageName(StageName.PREFERENCES);
+		view.getStage().setScene(Main.getScenes().get(StageNameEnum.PREFERENCES));
+		model.setStageName(StageNameEnum.PREFERENCES);
 	}
 
 	/**
@@ -51,11 +51,11 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 	public void nextButton() {
 		
 		
-		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
+		view.getStage().setScene(Main.getScenes().get(StageNameEnum.DESIGN));
 		model.getUserPicks(view.getGrid(),view.getRows(),view.getCols(),view.getSelectedBG());
 		
 		main.getGardenControl().update();
-		model.setStageName(StageName.DESIGN);
+		model.setStageName(StageNameEnum.DESIGN);
 
 		main.getGardenControl().setDrawing(main.getPrefControl().getDrawing());
 	}

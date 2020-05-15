@@ -8,12 +8,12 @@ import java.io.Serializable;
  * @author Tommy White
  *
  */
-public enum PlantType implements Serializable {
+public enum PlantTypeEnum implements Serializable {
 	HERB("Herb"), SHRUB("Shrub"), TREE("Tree"), VINE("Vine");
 
 	private String plantType = null;
 
-	private PlantType(String s) {
+	private PlantTypeEnum(String s) {
 		plantType = s;
 	}
 

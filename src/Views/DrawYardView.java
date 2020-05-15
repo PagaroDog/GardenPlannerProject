@@ -7,8 +7,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import Controllers.DrawYardController;
-import Model.DrawMode;
-import Model.StageName;
+import Model.DrawModeEnum;
+import Model.StageNameEnum;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -208,9 +208,9 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param y The y coordinate of the initial mouse press
 	 * @return The newly created rectangle
 	 */
-	public Node addRectangle(StageName mode, double x, double y) {
+	public Node addRectangle(StageNameEnum mode, double x, double y) {
 		Rectangle rect = new Rectangle(x, y, initShapeSize, initShapeSize);
-		if (mode == StageName.DRAW) {
+		if (mode == StageNameEnum.DRAW) {
 			rect.setFill(Color.TRANSPARENT);
 			rect.setStroke(Color.BLACK);
 			rect.setOnMousePressed(control.getHandleOnPressShape());
@@ -357,7 +357,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 */
 	public void deselect(Node node) {
 		if (node != null) {
-			if (node.getUserData() != StageName.CONDITIONS) {
+			if (node.getUserData() != StageNameEnum.CONDITIONS) {
 			node.setStyle("-fx-stroke: " + deselectedRGB + ";"
 					+ "-fx-text-fill: " + deselectedRGB + ";");
 			} else {
@@ -376,7 +376,7 @@ public class DrawYardView extends View<DrawYardController> {
 				minusButton, plusButton, labelSizetxt, importButton, removeImportButton, emptyCenter, widthTxt,
 				widthField, heightTxt, heightField, heightUnit);
 		ObservableList<Node> rects = rectangles.getChildren();
-		for (int i = rects.size() - 1; i >= 0 && rects.get(i).getUserData() == StageName.CONDITIONS; i--) {
+		for (int i = rects.size() - 1; i >= 0 && rects.get(i).getUserData() == StageNameEnum.CONDITIONS; i--) {
 			areas.add(rects.get(i));
 			rects.remove(i);
 		}
@@ -428,7 +428,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 * 
 	 * @param newMode The newly update drawing mode
 	 */
-	public void updateMode(DrawMode newMode) {
+	public void updateMode(DrawModeEnum newMode) {
 		selectButton.setId("");
 		rectButton.setId("");
 		ellipseButton.setId("");

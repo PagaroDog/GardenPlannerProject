@@ -13,10 +13,10 @@ import org.junit.Test;
 import Model.GardenPref;
 import Model.Model;
 import Model.Plant;
-import Model.PlantType;
-import Model.Season;
-import Model.Sun;
-import Model.Water;
+import Model.PlantTypeEnum;
+import Model.SeasonEnum;
+import Model.SunEnum;
+import Model.WaterEnum;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -32,47 +32,32 @@ import javafx.scene.shape.Rectangle;
  */
 public class ModelTests {
 
-
-
-	@Test
-	public void copyTest() {
-		fail("method not made");
-	}
-
-	@Test
-	public void undoTest() {
-		fail("method not made");
-	}
-	@Test
-	public void redoTest() {
-		fail("method not made");
-	}
 	@Test 
 	public void calcXTest() {
 		Model test = new Model();
 		
-		double center = test.calcX(250, 100, 100);
+		double center = test.calcX(250, 100, 100, 1130);
 		assertEquals(250,center,0.01);
 		
-		double left = test.calcX(30, 50, 100);
+		double left = test.calcX(30, 50, 100, 1130);
 		assertEquals(50,left,0.01);
 		
-		double right = test.calcX(test.getCanvasWidth(), 50, 100);
-		assertEquals(test.getCanvasWidth()-50-100,right,0.01);
+		double right = test.calcX(1130, 50, 100, 1130);
+		assertEquals(980,right,0.01);
 		
 	}
 	@Test
 	public void calcYTest() {
 		Model test = new Model();
 		
-		double center = test.calcY(250, 40, 100);
+		double center = test.calcY(250, 40, 100, 570);
 		assertEquals(250,center,0.01);
 		
-		double top = test.calcY(0, 50, 100);
+		double top = test.calcY(0, 50, 100, 570);
 		assertEquals(50,top,0.01);
 		
-		double bottom = test.calcY(100000, 100, 100);
-		assertEquals(test.getCanvasHeight()-100-200,bottom,0.01);
+		double bottom = test.calcY(100000, 100, 100, 570);
+		assertEquals(270,bottom,0.01);
 	}
 	
 	@Test
@@ -105,11 +90,11 @@ public class ModelTests {
 		assertEquals("Perennial", plant3.getDuration());
 		assertEquals("Perennial", plant4.getDuration());
 		
-		assertEquals(PlantType.HERB, plant0.getType());
-		assertEquals(PlantType.VINE, plant1.getType());
-		assertEquals(PlantType.TREE, plant2.getType());
-		assertEquals(PlantType.SHRUB, plant3.getType());
-		assertEquals(PlantType.HERB, plant4.getType());
+		assertEquals(PlantTypeEnum.HERB, plant0.getType());
+		assertEquals(PlantTypeEnum.VINE, plant1.getType());
+		assertEquals(PlantTypeEnum.TREE, plant2.getType());
+		assertEquals(PlantTypeEnum.SHRUB, plant3.getType());
+		assertEquals(PlantTypeEnum.HERB, plant4.getType());
 		
 		assertEquals(12, plant0.getHeight()[0]);
 		assertEquals(36, plant0.getHeight()[1]);
@@ -135,44 +120,44 @@ public class ModelTests {
 		System.out.println(plant0.getBloomtime()[0]);
 		System.out.println(plant0.getBloomtime()[1]);
 
-		assertEquals(Season.SPRING, plant0.getBloomtime()[0]);
-		assertEquals(Season.SUMMER, plant0.getBloomtime()[1]);
-		assertEquals(Season.SUMMER, plant1.getBloomtime()[0]);		
-		assertEquals(Season.SPRING, plant2.getBloomtime()[0]);
-		assertEquals(Season.SPRING, plant3.getBloomtime()[0]);
-		assertEquals(Season.SUMMER, plant3.getBloomtime()[1]);	
-		assertEquals(Season.WINTER, plant4.getBloomtime()[0]);		
-		assertEquals(Season.SPRING, plant4.getBloomtime()[1]);
-		assertEquals(Season.SUMMER, plant4.getBloomtime()[2]);	
-		assertEquals(Season.FALL, plant4.getBloomtime()[3]);
+		assertEquals(SeasonEnum.SPRING, plant0.getBloomtime()[0]);
+		assertEquals(SeasonEnum.SUMMER, plant0.getBloomtime()[1]);
+		assertEquals(SeasonEnum.SUMMER, plant1.getBloomtime()[0]);		
+		assertEquals(SeasonEnum.SPRING, plant2.getBloomtime()[0]);
+		assertEquals(SeasonEnum.SPRING, plant3.getBloomtime()[0]);
+		assertEquals(SeasonEnum.SUMMER, plant3.getBloomtime()[1]);	
+		assertEquals(SeasonEnum.WINTER, plant4.getBloomtime()[0]);		
+		assertEquals(SeasonEnum.SPRING, plant4.getBloomtime()[1]);
+		assertEquals(SeasonEnum.SUMMER, plant4.getBloomtime()[2]);	
+		assertEquals(SeasonEnum.FALL, plant4.getBloomtime()[3]);
 
-		assertEquals(Water.MESIC, plant0.getWaterLevel()[0]);
-		assertEquals(Water.DRYMES, plant0.getWaterLevel()[1]);
-		assertEquals(Water.DRY, plant0.getWaterLevel()[2]);
-		assertEquals(Water.MESIC, plant1.getWaterLevel()[0]);
-		assertEquals(Water.DRYMES, plant1.getWaterLevel()[1]);
-		assertEquals(Water.DRY, plant1.getWaterLevel()[2]);
-		assertEquals(Water.WET, plant2.getWaterLevel()[0]);
-		assertEquals(Water.WETMES, plant2.getWaterLevel()[1]);
-		assertEquals(Water.MESIC, plant2.getWaterLevel()[2]);
-		assertEquals(Water.MESIC, plant3.getWaterLevel()[0]);
-		assertEquals(Water.DRYMES, plant3.getWaterLevel()[1]);
-		assertEquals(Water.DRY, plant3.getWaterLevel()[2]);
-		assertEquals(Water.MESIC, plant4.getWaterLevel()[0]);
-		assertEquals(Water.DRYMES, plant4.getWaterLevel()[1]);
-		assertEquals(Water.DRY, plant4.getWaterLevel()[2]);
+		assertEquals(WaterEnum.MESIC, plant0.getWaterLevel()[0]);
+		assertEquals(WaterEnum.DRYMES, plant0.getWaterLevel()[1]);
+		assertEquals(WaterEnum.DRY, plant0.getWaterLevel()[2]);
+		assertEquals(WaterEnum.MESIC, plant1.getWaterLevel()[0]);
+		assertEquals(WaterEnum.DRYMES, plant1.getWaterLevel()[1]);
+		assertEquals(WaterEnum.DRY, plant1.getWaterLevel()[2]);
+		assertEquals(WaterEnum.WET, plant2.getWaterLevel()[0]);
+		assertEquals(WaterEnum.WETMES, plant2.getWaterLevel()[1]);
+		assertEquals(WaterEnum.MESIC, plant2.getWaterLevel()[2]);
+		assertEquals(WaterEnum.MESIC, plant3.getWaterLevel()[0]);
+		assertEquals(WaterEnum.DRYMES, plant3.getWaterLevel()[1]);
+		assertEquals(WaterEnum.DRY, plant3.getWaterLevel()[2]);
+		assertEquals(WaterEnum.MESIC, plant4.getWaterLevel()[0]);
+		assertEquals(WaterEnum.DRYMES, plant4.getWaterLevel()[1]);
+		assertEquals(WaterEnum.DRY, plant4.getWaterLevel()[2]);
 
-		assertEquals(Sun.FULL, plant0.getLight()[0]);
-		assertEquals(Sun.FULL, plant1.getLight()[0]);
-		assertEquals(Sun.FULL_PARTIAL, plant1.getLight()[1]);
-		assertEquals(Sun.FULL, plant2.getLight()[0]);
-		assertEquals(Sun.FULL_PARTIAL, plant2.getLight()[1]);
-		assertEquals(Sun.PARTIAL, plant2.getLight()[2]);
-		assertEquals(Sun.PARTIAL_NONE, plant2.getLight()[3]);
-		assertEquals(Sun.NONE, plant2.getLight()[4]);
-		assertEquals(Sun.PARTIAL, plant3.getLight()[0]);
-		assertEquals(Sun.FULL, plant4.getLight()[0]);
-		assertEquals(Sun.FULL_PARTIAL, plant4.getLight()[1]);
+		assertEquals(SunEnum.FULL, plant0.getLight()[0]);
+		assertEquals(SunEnum.FULL, plant1.getLight()[0]);
+		assertEquals(SunEnum.FULL_PARTIAL, plant1.getLight()[1]);
+		assertEquals(SunEnum.FULL, plant2.getLight()[0]);
+		assertEquals(SunEnum.FULL_PARTIAL, plant2.getLight()[1]);
+		assertEquals(SunEnum.PARTIAL, plant2.getLight()[2]);
+		assertEquals(SunEnum.PARTIAL_NONE, plant2.getLight()[3]);
+		assertEquals(SunEnum.NONE, plant2.getLight()[4]);
+		assertEquals(SunEnum.PARTIAL, plant3.getLight()[0]);
+		assertEquals(SunEnum.FULL, plant4.getLight()[0]);
+		assertEquals(SunEnum.FULL_PARTIAL, plant4.getLight()[1]);
 		
 		assertEquals(24, plant0.getSpread()[0]);
 		assertEquals(36, plant0.getSpread()[1]);
@@ -277,7 +262,7 @@ public class ModelTests {
 	@Test
 	public void userCheckTest() {
 		Model test = new Model();
-		Season[] seasons = {Season.WINTER,Season.FALL};
+		SeasonEnum[] seasons = {SeasonEnum.WINTER,SeasonEnum.FALL};
 		String pass = "Winter";
 		String fail = "Summer";
 		String any = "Any";
@@ -362,20 +347,20 @@ public class ModelTests {
 	public void updateCircleCoordinatesTest() {
 		Model test = new Model();
 		
-		double[] radii = test.updateCircleCoordinates(10, 20, 110, 220, 1000, 1000);
+		double[] radii = test.updateEllipseCoordinates(10, 20, 110, 220, 1000, 1000);
 		assertEquals(100, radii[0], 0.01);
 		assertEquals(200, radii[1], 0.01);
 
 
-		radii = test.updateCircleCoordinates(110, 220, 10, 20, 1000, 1000);
+		radii = test.updateEllipseCoordinates(110, 220, 10, 20, 1000, 1000);
 		assertEquals(10, radii[0], 0.01);
 		assertEquals(20, radii[1], 0.01);
 		
-		radii = test.updateCircleCoordinates(-1, -1, 100, 200, 1000, 1000);
+		radii = test.updateEllipseCoordinates(-1, -1, 100, 200, 1000, 1000);
 		assertEquals(100, radii[0], 0.01);
 		assertEquals(200, radii[1], 0.01);
 		
-		radii = test.updateCircleCoordinates(1001, 1001, 400, 550, 1000, 1000);
+		radii = test.updateEllipseCoordinates(1001, 1001, 400, 550, 1000, 1000);
 		assertEquals(400, radii[0], 0.01);
 		assertEquals(450, radii[1], 0.01);
 	}
@@ -384,19 +369,19 @@ public class ModelTests {
 	public void moveCircleCoordinatesTest() {
 		Model test = new Model();
 		
-		double[] coords = test.moveCircleCoordinates(10, 20, 110, 220, 1000, 1000);
+		double[] coords = test.moveEllipseCoordinates(10, 20, 110, 220, 1000, 1000);
 		assertEquals(110, coords[0], 0.01);
 		assertEquals(220, coords[1], 0.01);
 
-		coords = test.moveCircleCoordinates(110, 220, 10, 20, 1000, 1000);
+		coords = test.moveEllipseCoordinates(110, 220, 10, 20, 1000, 1000);
 		assertEquals(110, coords[0], 0.01);
 		assertEquals(220, coords[1], 0.01);
 		
-		coords = test.moveCircleCoordinates(-1, -1, 100, 200, 1000, 1000);
+		coords = test.moveEllipseCoordinates(-1, -1, 100, 200, 1000, 1000);
 		assertEquals(100, coords[0], 0.01);
 		assertEquals(200, coords[1], 0.01);
 		
-		coords = test.moveCircleCoordinates(1001, 1001, 400, 450, 1000, 1000);
+		coords = test.moveEllipseCoordinates(1001, 1001, 400, 450, 1000, 1000);
 		assertEquals(600, coords[0], 0.01);
 		assertEquals(550, coords[1], 0.01);
 	}
@@ -427,9 +412,9 @@ public class ModelTests {
 		expectedColors.add("Red");expectedColors.add("Yellow");
 		expectedColors.add("White");
 		
-		HashSet<Season> expectedSeasons = new HashSet<Season>();
-		expectedSeasons.add(Season.SUMMER);
-		expectedSeasons.add(Season.SPRING);
+		HashSet<SeasonEnum> expectedSeasons = new HashSet<SeasonEnum>();
+		expectedSeasons.add(SeasonEnum.SUMMER);
+		expectedSeasons.add(SeasonEnum.SPRING);
 		
 		HashSet<String> expectedPlantsRemoved = new HashSet<String>();
 		expectedPlantsRemoved.addAll(test.getPlants().keySet());
@@ -458,8 +443,8 @@ public class ModelTests {
 		assertEquals(false,test.getAllColors().contains("Black"));
 		
 		assertEquals(true,expectedSeasons.containsAll(test.getAllSeasons()));
-		assertEquals(false,test.getAllSeasons().contains(Season.FALL));
-		assertEquals(false,test.getAllSeasons().contains(Season.WINTER));
+		assertEquals(false,test.getAllSeasons().contains(SeasonEnum.FALL));
+		assertEquals(false,test.getAllSeasons().contains(SeasonEnum.WINTER));
 		
 		assertEquals(true,expectedNames.containsAll(test.getAllNames()));
 		for(String p: expectedPlantsRemoved) {

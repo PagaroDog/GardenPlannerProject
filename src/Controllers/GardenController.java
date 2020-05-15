@@ -22,10 +22,10 @@ import Model.GardenObj;
 import Model.LabelDrawingObj;
 import Model.Model;
 import Model.Plant;
-import Model.PlantType;
+import Model.PlantTypeEnum;
 import Model.RectDrawingObj;
-import Model.StageName;
-import Model.Season;
+import Model.StageNameEnum;
+import Model.SeasonEnum;
 import Views.GardenView;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -85,8 +85,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param event
 	 */
 	public void springButton(MouseEvent event) {
-		model.setSeason(Season.SPRING);
-		view.changeSeason(Season.SPRING);
+		model.setSeason(SeasonEnum.SPRING);
+		view.changeSeason(SeasonEnum.SPRING);
 	}
 
 	/**
@@ -104,8 +104,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param event
 	 */
 	public void summerButton(MouseEvent event) {
-		model.setSeason(Season.SUMMER);
-		view.changeSeason(Season.SUMMER);
+		model.setSeason(SeasonEnum.SUMMER);
+		view.changeSeason(SeasonEnum.SUMMER);
 	}
 
 	/**
@@ -123,8 +123,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param event
 	 */
 	public void fallButton(MouseEvent event) {
-		model.setSeason(Season.FALL);
-		view.changeSeason(Season.FALL);
+		model.setSeason(SeasonEnum.FALL);
+		view.changeSeason(SeasonEnum.FALL);
 	}
 
 	/**
@@ -142,8 +142,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param event
 	 */
 	public void winterButton(MouseEvent event) {
-		model.setSeason(Season.WINTER);
-		view.changeSeason(Season.WINTER);
+		model.setSeason(SeasonEnum.WINTER);
+		view.changeSeason(SeasonEnum.WINTER);
 	}
 
 	/**
@@ -161,8 +161,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param event
 	 */
 	public void statsButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.STATS));
-		model.setStageName(StageName.STATS);
+		view.getStage().setScene(Main.getScenes().get(StageNameEnum.STATS));
+		model.setStageName(StageNameEnum.STATS);
 		model.generateStats(view.getGarden().getChildren());
 
 		main.getStatControl().updateStats();
@@ -260,8 +260,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 */
 	public void prefButton() {
 		model.setCurrDrawObj(null);
-		view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
-		model.setStageName(StageName.PREFERENCES);
+		view.getStage().setScene(Main.getScenes().get(StageNameEnum.PREFERENCES));
+		model.setStageName(StageNameEnum.PREFERENCES);
 		main.getPrefControl().setDrawing(view.getDrawing());
 	}
 
@@ -592,7 +592,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		return model.getPropertyHeightInches();
 	}
 
-	public Season[] getBloomTime(String plantName) {
+	public SeasonEnum[] getBloomTime(String plantName) {
 		return model.getPlants().get(plantName).getBloomtime();
 	}
 
@@ -611,7 +611,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 	}
 
-	public PlantType getPlantType(String name) {
+	public PlantTypeEnum getPlantType(String name) {
 		return model.getPlants().get(name).getType();
 	}
 
@@ -717,7 +717,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 					findCircleColor(plant.getPlantName()));
 		}
 		for (RectDrawingObj rectObj : model.getRectangles()) {
-			if (rectObj.getUserData() == StageName.DRAW) {
+			if (rectObj.getUserData() == StageNameEnum.DRAW) {
 				view.addRectangle(rectObj, Color.TRANSPARENT, Color.BLACK, main.getDyControl().getHandleOnPressShape(), main.getDyControl().getHandleOnDragRectangle());
 			} else {
 				view.addRectangle(rectObj, main.getDyControl().getView().getRandomColor(), Color.TRANSPARENT, main.getDyControl().getHandleOnPressArea(), main.getDyControl().getHandleOnDragRectangle());
@@ -737,23 +737,23 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 
 	public Color findCircleColor(String name) {
-		ArrayList<Season> seasonList = new ArrayList<Season>(Arrays.asList(getBloomTime(name)));
-		Season season = model.getSeason();
-		if (season == Season.FALL) {
+		ArrayList<SeasonEnum> seasonList = new ArrayList<SeasonEnum>(Arrays.asList(getBloomTime(name)));
+		SeasonEnum season = model.getSeason();
+		if (season == SeasonEnum.FALL) {
 			if (seasonList.contains(season)) {
 				return getBloomColor(name);
 			}
-		} else if (season == Season.WINTER) {
+		} else if (season == SeasonEnum.WINTER) {
 			if (seasonList.contains(season)) {
 				return getBloomColor(name);
 			} else {
 				return Color.GRAY;
 			}
-		} else if (season == Season.SPRING) {
+		} else if (season == SeasonEnum.SPRING) {
 			if (seasonList.contains(season)) {
 				return getBloomColor(name);
 			}
-		} else if (season == Season.SUMMER) {
+		} else if (season == SeasonEnum.SUMMER) {
 			if (seasonList.contains(season)) {
 				return getBloomColor(name);
 			}

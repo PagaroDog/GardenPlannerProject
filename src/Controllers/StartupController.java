@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import Model.Model;
-import Model.StageName;
+import Model.StageNameEnum;
 import Views.GardenView;
 import Views.StartupView;
 import javafx.event.EventHandler;
@@ -34,8 +34,8 @@ public class StartupController extends Controller<StartupView> {
 	}
 
 	public void newButton() {
-		view.getStage().setScene(Main.getScenes().get(StageName.DRAW));
-		model.setStageName(StageName.DRAW);
+		view.getStage().setScene(Main.getScenes().get(StageNameEnum.DRAW));
+		model.setStageName(StageNameEnum.DRAW);
 	}
 
 	/**
@@ -81,8 +81,8 @@ public class StartupController extends Controller<StartupView> {
 	}
 
 	public void tutorialButton(MouseEvent event) {
-		view.getStage().setScene(Main.getScenes().get(StageName.TUTORIAL));
-		model.setStageName(StageName.TUTORIAL);
+		view.getStage().setScene(Main.getScenes().get(StageNameEnum.TUTORIAL));
+		model.setStageName(StageNameEnum.TUTORIAL);
 		main.getTutControl().getView().initSlide();
 	}
 

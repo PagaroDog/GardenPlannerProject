@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import Controllers.DrawYardController;
 import Controllers.Main;
-import Model.DrawMode;
+import Model.DrawModeEnum;
 import Model.Model;
 import Views.DrawYardView;
 import javafx.scene.input.MouseEvent;

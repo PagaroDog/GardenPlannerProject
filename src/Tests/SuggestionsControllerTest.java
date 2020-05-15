@@ -8,7 +8,7 @@ import Controllers.Main;
 import Controllers.StartupController;
 import Controllers.SuggestionsController;
 import Model.Model;
-import Model.StageName;
+import Model.StageNameEnum;
 import Views.StartupView;
 import Views.SuggestionsView;
 import javafx.stage.Stage;

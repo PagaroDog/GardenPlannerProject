@@ -9,7 +9,7 @@ import org.junit.Test;
 import Controllers.Main;
 import Controllers.StartupController;
 import Model.Model;
-import Model.StageName;
+import Model.StageNameEnum;
 import Views.StartupView;
 import javafx.stage.Stage;
 
@@ -23,13 +23,13 @@ public class StartupControllerTests {
 		StartupController suc = new StartupController(model, suv, main);
 
 		suc.handleOnNewButton();
-		assertEquals(model.getStageName(), StageName.PREFERENCES);
+		assertEquals(model.getStageName(), StageNameEnum.PREFERENCES);
 
 		suc.handleOnLoadButton();
-		assertEquals(model.getStageName(), StageName.DESIGN);
+		assertEquals(model.getStageName(), StageNameEnum.DESIGN);
 
 		suc.handleOnTutorialButton();
-		assertEquals(model.getStageName(), StageName.TUTORIAL);
+		assertEquals(model.getStageName(), StageNameEnum.TUTORIAL);
 
 	}
 

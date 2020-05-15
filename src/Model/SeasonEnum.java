@@ -9,12 +9,12 @@ import java.io.Serializable;
  * @author Brandon Wu
  *
  */
-public enum Season implements Serializable {
+public enum SeasonEnum implements Serializable {
 	WINTER("Winter"), SPRING("Spring"), SUMMER("Summer"), FALL("Fall");
 
 	private String season = null;
 
-	private Season(String s) {
+	private SeasonEnum(String s) {
 		season = s;
 	}
 

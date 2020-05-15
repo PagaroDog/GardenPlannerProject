@@ -3,7 +3,7 @@ package Views;
 import java.util.HashSet;
 
 import Controllers.StatisticsController;
-import Model.Season;
+import Model.SeasonEnum;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -112,7 +112,7 @@ public class StatisticsView extends View<StatisticsController> {
  * @param uVines number of unique vine plants in garden
  */
 	public void updateStats(int numTrees, int numShrubs, int numHerbs, int numVines, HashSet<String> colorSet,
-		HashSet<Season> seasons, HashSet<String> allNames, double gardenCoveredPercent,int uTrees, int uShrubs, int uHerbs, int uVines) {
+		HashSet<SeasonEnum> seasons, HashSet<String> allNames, double gardenCoveredPercent,int uTrees, int uShrubs, int uHerbs, int uVines) {
 		int total = numTrees + numShrubs + numHerbs + numVines;
 		totPlants.setText("Total Plants: " + total);
 		trees.setText("Tree Count: " + numTrees);
@@ -134,7 +134,7 @@ public class StatisticsView extends View<StatisticsController> {
 		colors.setText(colors.getText().substring(0, colors.getText().length() - 2));
 
 		bloomingSeasons.setText("Blooming seasons: ");
-		for (Season season : seasons) {
+		for (SeasonEnum season : seasons) {
 			bloomingSeasons.setText(bloomingSeasons.getText() + season + ", ");
 		}
 		bloomingSeasons.setText(bloomingSeasons.getText().substring(0, bloomingSeasons.getText().length() - 2));
