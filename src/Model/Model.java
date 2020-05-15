@@ -44,6 +44,8 @@ public class Model implements Serializable{
 	private transient DrawModeEnum drawMode;
 	private transient double drawPressX;
 	private transient double drawPressY;
+	private transient double shapeX;
+	private transient double shapeY;
 	private transient Node currDrawObj;
 
 	private int propertyHeightInches = 1200;
@@ -277,15 +279,57 @@ public class Model implements Serializable{
 	public HashSet<String> getAllNames() {
 		return allNames;
 	}
+	
+	public int getUniqueShrubs() {
+		return uniqueShrubs;
+	}
 
-	/**
-	 * Copies a garden object
-	 * 
-	 * @param j the garden object being copied
-	 * @param i the integer key value of the garden object
-	 */
-	public void copy(int i) {
+	public int getUniqueHerbs() {
+		return uniqueHerbs;
+	}
 
+	public int getUniqueVines() {
+		return uniqueVines;
+	}
+
+	public ArrayList<GardenObj> getGardenObjs() {
+		return gardenObjs;
+	}
+
+	public ArrayList<RectDrawingObj> getRectangles() {
+		return rectangles;
+	}
+
+	public ArrayList<LabelDrawingObj> getLabels() {
+		return labels;
+	}
+
+	public ArrayList<EllipseDrawingObj> getEllipses() {
+		return ellipses;
+	}
+
+	public String getBackgroundPath() {
+		return backgroundPath;
+	}
+
+	public void setBackgroundPath(String backgroundPath) {
+		this.backgroundPath = backgroundPath;
+	}
+
+	public double getShapeX() {
+		return shapeX;
+	}
+
+	public void setShapeX(double shapeX) {
+		this.shapeX = shapeX;
+	}
+
+	public double getShapeY() {
+		return shapeY;
+	}
+
+	public void setShapeY(double shapeY) {
+		this.shapeY = shapeY;
 	}
 
 	public void setCurrDrawObj(Node node) {
@@ -314,6 +358,20 @@ public class Model implements Serializable{
 
 	public GardenPref getCurrPref() {
 		return currPref;
+	}
+	
+	public double getGardenCoveredPercent() {
+
+		return gardenCovered;
+	}
+
+	public int getNumVines() {
+
+		return numVine;
+	}
+
+	public int getUniqueTrees() {
+		return uniqueTrees;
 	}
 
 	/**
@@ -778,20 +836,6 @@ public class Model implements Serializable{
 
 	}
 
-	public double getGardenCoveredPercent() {
-
-		return gardenCovered;
-	}
-
-	public int getNumVines() {
-
-		return numVine;
-	}
-
-	public int getUniqueTrees() {
-		return uniqueTrees;
-	}
-
 	/**
 	 * Calculates the coordinates of a rectangle as it is being created.
 	 * 
@@ -833,8 +877,10 @@ public class Model implements Serializable{
 	 */
 	public double[] moveRectCoordinates(double x, double y, double rectWidth, double rectHeight, double drawingWidth,
 			double drawingHeight) {
-		double newX = Math.max(rectMinX, Math.min(drawingWidth - rectWidth, x));
-		double newY = Math.max(rectMinY, Math.min(drawingHeight - rectHeight, y));
+		double newX = shapeX + (x - drawPressX);
+		double newY = shapeY + (y - drawPressY);
+		newX = Math.max(rectMinX, Math.min(drawingWidth - rectWidth, newX));
+		newY = Math.max(rectMinY, Math.min(drawingHeight - rectHeight, newY));
 		double[] coords = { newX, newY };
 		return coords;
 	}
@@ -877,9 +923,11 @@ public class Model implements Serializable{
 	 */
 	public double[] moveEllipseCoordinates(double x, double y, double radiusX, double radiusY, double drawingWidth,
 			double drawingHeight) {
-		double centerX = Math.max(radiusX, Math.min(drawingWidth - radiusX, x));
-		double centerY = Math.max(radiusY, Math.min(drawingHeight - radiusY, y));
-		double[] centers = { centerX, centerY };
+		double newCenterX = shapeX + radiusX + (x - drawPressX);
+		double newCenterY = shapeY + radiusY + (y - drawPressY);
+		newCenterX = Math.max(radiusX, Math.min(drawingWidth - radiusX, newCenterX));
+		newCenterY = Math.max(radiusY, Math.min(drawingHeight - radiusY, newCenterY));
+		double[] centers = { newCenterX, newCenterY };
 		return centers;
 	}
 
@@ -967,42 +1015,6 @@ public class Model implements Serializable{
 			str = str.substring(0, str.length() - separator.length());
 		}
 		return str;
-	}
-
-	public int getUniqueShrubs() {
-		return uniqueShrubs;
-	}
-
-	public int getUniqueHerbs() {
-		return uniqueHerbs;
-	}
-
-	public int getUniqueVines() {
-		return uniqueVines;
-	}
-
-	public ArrayList<GardenObj> getGardenObjs() {
-		return gardenObjs;
-	}
-
-	public ArrayList<RectDrawingObj> getRectangles() {
-		return rectangles;
-	}
-
-	public ArrayList<LabelDrawingObj> getLabels() {
-		return labels;
-	}
-
-	public ArrayList<EllipseDrawingObj> getEllipses() {
-		return ellipses;
-	}
-
-	public String getBackgroundPath() {
-		return backgroundPath;
-	}
-
-	public void setBackgroundPath(String backgroundPath) {
-		this.backgroundPath = backgroundPath;
 	}
 
 }

@@ -111,6 +111,7 @@ public class DrawYardView extends View<DrawYardController> {
 		ellipseButton = createButton("Ellipse", control.getHandleOnEllipseButton());
 		labelButton = createButton("Add Label", control.getHandleOnLabelButton());
 		labeltxt = createField();
+		labeltxt.setOnKeyPressed(control.getHandleOnEnterPressed());
 		labeltxt.setPromptText("ex. House, Shed");
 		minusButton = createButton("-", control.getHandleOnMinusButton());
 		plusButton = createButton("+", control.getHandleOnPlusButton());
@@ -163,7 +164,7 @@ public class DrawYardView extends View<DrawYardController> {
 		root.setBottom(navigationDraw);
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
-		scene.setOnKeyPressed(control.getHandleOnKeyPressed());
+		scene.setOnKeyPressed(control.getHandleOnKeyPressed(labeltxt, widthField, heightField));
 		styleScene();
 	}
 
@@ -308,6 +309,7 @@ public class DrawYardView extends View<DrawYardController> {
 			txt.setOnMouseDragged(control.getHandleOnDragLabel());
 			txt.setLayoutX(drawing.getWidth()/2);
 			txt.setLayoutY(drawing.getHeight()/2);
+			drawing.requestFocus();
 			labeltxt.setText("");
 			return txt;
 		} else {

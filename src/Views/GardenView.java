@@ -149,7 +149,8 @@ public class GardenView extends View<GardenController> implements Serializable {
 					imageview.setFitWidth(SIZE);
 					imageview.setOnDragDetected(control.getHandlerForDragDetected());
 					imageview.setOnMouseEntered(control.handleOnMouseEnteredImage());
-					imageview.setOnMouseExited(control.handleOnMouseExitedImage());
+					imageview.setOnMouseExited(control.handleOnMouseExited());
+					imageview.setOnMouseDragged(control.handleOnMouseExited());
 					imageview.setUserData(control.getPlantNameAt(i));
 					tile.getChildren().add(imageview);
 				}

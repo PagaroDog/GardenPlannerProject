@@ -10,6 +10,7 @@ import Views.DrawYardView;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -216,30 +217,41 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * 
 	 * @return EventHandler object for this action
 	 */
-	public EventHandler getHandleOnKeyPressed() {
+	public EventHandler getHandleOnKeyPressed(TextField label, TextField width, TextField height) {
+		return new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent e) {
+				if (!(label.isFocused() || width.isFocused() || height.isFocused())) {
+					switch (e.getCode()) {
+					case S:
+						selectButton();
+						break;
+					case DELETE:
+						deleteButton();
+						break;
+					case R:
+						rectButton();
+						break;
+					case E:
+						ellipseButton();
+						break;
+					case EQUALS:
+						plusButton();
+						break;
+					case MINUS:
+						minusButton();
+						break;
+					}
+				}
+			}
+		};
+	}
+	
+	public EventHandler getHandleOnEnterPressed() {
 		return new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
-				case S:
-					selectButton();
-					break;
-				case DELETE:
-					deleteButton();
-					break;
-				case R:
-					rectButton();
-					break;
-				case C:
-					ellipseButton();
-					break;
-				case L:
+				case ENTER:
 					labelButton();
-					break;
-				case EQUALS:
-					plusButton();
-					break;
-				case MINUS:
-					minusButton();
 					break;
 				}
 			}
@@ -356,6 +368,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 */
 	public void pressPane(MouseEvent event) {
 		System.out.println("Press pane");
+		view.getDrawing().requestFocus();
 		model.setDrawPressX(event.getX());
 		model.setDrawPressY(event.getY());
 		if (model.getCurrDrawObj() != null) {
@@ -432,7 +445,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the shape was pressed
 	 */
 	public void pressShape(MouseEvent event) {
-		System.out.println("Press shape");
+		model.setShapeX(((Node) event.getSource()).getBoundsInParent().getMinX());
+		model.setShapeY(((Node) event.getSource()).getBoundsInParent().getMinY());
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case SELECT:
@@ -474,8 +488,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 			switch (model.getDrawMode()) {
 			case SELECT:
 				Rectangle rect = (Rectangle) event.getSource();
-				double[] newCoords = model.moveRectCoordinates(event.getX(), event.getY(), rect.getWidth(),
-						rect.getHeight(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
+				double[] newCoords = model.moveRectCoordinates(event.getX(), event.getY(), rect.getWidth(), rect.getHeight(),
+						view.getDrawing().getWidth(), view.getDrawing().getHeight());
 				if (rect.getUserData() == model.getStageName())
 					view.moveRectangle(rect, newCoords[xInd], newCoords[yInd]);
 			}
@@ -511,9 +525,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 			switch (model.getDrawMode()) {
 			case SELECT:
 				Label label = (Label) event.getSource();
-				double[] newCoords = model.moveRectCoordinates(event.getSceneX(),
-						event.getSceneY() - view.getToolbarHeight(), label.getWidth(), label.getHeight(),
-						view.getDrawing().getWidth(), view.getDrawing().getHeight());
+				double[] newCoords = model.moveRectCoordinates(event.getSceneX(), event.getSceneY() - view.getToolbarHeight(), label.getWidth(),
+						label.getHeight(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
 				if (model.getStageName() == StageNameEnum.DRAW) {
 					view.moveLabel(label, newCoords[xInd], newCoords[yInd]);
 				}
@@ -558,5 +571,5 @@ public class DrawYardController extends Controller<DrawYardView> {
 	public double getViewWidth() {
 		return view.getRoot().getWidth();
 	}
-	
+
 }

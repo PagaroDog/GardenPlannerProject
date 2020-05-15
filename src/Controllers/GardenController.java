@@ -282,7 +282,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public void saveButton() {
 		File file = view.getFileChooser().showOpenDialog(view.getStage());
 		try {
-			if (file.getName().endsWith(".garden")) { 
+			if (file.getName().endsWith(".garden")) {
 				FileOutputStream fileOut = new FileOutputStream(file.getPath());
 				ObjectOutputStream out = new ObjectOutputStream(fileOut);
 				main.getGardenControl().savePlants();
@@ -290,7 +290,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 				out.close();
 				fileOut.close();
 			} else if (file.getName().endsWith(".png")) {
-				WritableImage writableImage = new WritableImage((int) view.getGarden().getWidth(), (int) view.getGarden().getHeight());
+				WritableImage writableImage = new WritableImage((int) view.getGarden().getWidth(),
+						(int) view.getGarden().getHeight());
 				view.getGarden().snapshot(null, writableImage);
 				ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
 				System.out.println("snapshot saved: " + file.getAbsolutePath());
@@ -573,7 +574,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		System.out.println("creating copy");
 		Circle oldCircle = (Circle) model.getCurrDrawObj();
 		Circle newCircle = new Circle();
-		view.addCircleToFlow(newCircle, oldCircle.getCenterX() + copyOffset, oldCircle.getCenterY() + copyOffset, oldCircle.getRadius(), (String) oldCircle.getUserData(), (Color) oldCircle.getStroke());
+		view.addCircleToFlow(newCircle, oldCircle.getCenterX() + copyOffset, oldCircle.getCenterY() + copyOffset,
+				oldCircle.getRadius(), (String) oldCircle.getUserData(), (Color) oldCircle.getStroke());
 		System.out.println(newCircle.getCenterX());
 		GA.addAction(new GardenAction(newCircle, 0, 0, 0, newCircle.getUserData().toString(), null, ActionEnum.COPY));
 	}
@@ -678,10 +680,6 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		view.displayInfoForScrollPane(plant.toString());
 	}
 
-	public EventHandler handleOnMouseExitedImage() {
-		return event -> removeInfo((MouseEvent) event);
-	}
-
 	public void setView(GardenView view) {
 		this.view = view;
 	}
@@ -718,22 +716,26 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		}
 		for (RectDrawingObj rectObj : model.getRectangles()) {
 			if (rectObj.getUserData() == StageNameEnum.DRAW) {
-				view.addRectangle(rectObj, Color.TRANSPARENT, Color.BLACK, main.getDyControl().getHandleOnPressShape(), main.getDyControl().getHandleOnDragRectangle());
+				view.addRectangle(rectObj, Color.TRANSPARENT, Color.BLACK, main.getDyControl().getHandleOnPressShape(),
+						main.getDyControl().getHandleOnDragRectangle());
 			} else {
-				view.addRectangle(rectObj, main.getDyControl().getView().getRandomColor(), Color.TRANSPARENT, main.getDyControl().getHandleOnPressArea(), main.getDyControl().getHandleOnDragRectangle());
+				view.addRectangle(rectObj, main.getDyControl().getView().getRandomColor(), Color.TRANSPARENT,
+						main.getDyControl().getHandleOnPressArea(), main.getDyControl().getHandleOnDragRectangle());
 			}
 		}
 		for (EllipseDrawingObj ellipseObj : model.getEllipses()) {
-			view.addEllipse(ellipseObj, main.getDyControl().getHandleOnPressShape(), main.getDyControl().getHandleOnDragEllipse());
+			view.addEllipse(ellipseObj, main.getDyControl().getHandleOnPressShape(),
+					main.getDyControl().getHandleOnDragEllipse());
 		}
 		for (LabelDrawingObj labelObj : model.getLabels()) {
-			view.addLabel(labelObj, main.getDyControl().getHandleOnPressShape(), main.getDyControl().getHandleOnDragLabel());
+			view.addLabel(labelObj, main.getDyControl().getHandleOnPressShape(),
+					main.getDyControl().getHandleOnDragLabel());
 		}
 		Platform.runLater(() -> {
 			prefButton();
 			main.getPrefControl().nextButton();
 			main.getSuggestionsControl().nextButton();
-	    });
+		});
 	}
 
 	public Color findCircleColor(String name) {

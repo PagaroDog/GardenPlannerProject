@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 
 import Model.Model;
@@ -53,8 +54,17 @@ public class StartupController extends Controller<StartupView> {
 			FileInputStream fileIn = new FileInputStream(file.getPath());
 			ObjectInputStream input = new ObjectInputStream(fileIn);
 			main.setModel((Model) input.readObject());
+			main.updateModel();
+			newButton();
+			main.getDyControl().nextButton();
+			main.getDyControl().nextButton();
+			main.getPrefControl().nextButton();
+			main.getSuggestionsControl().nextButton();
+			main.getGardenControl().loadPlants();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (InvalidClassException e) {
+			System.out.println("Software has been updated. This garden file is no longer compatible.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -62,13 +72,6 @@ public class StartupController extends Controller<StartupView> {
 		} catch (NullPointerException e) {
 			System.out.println("No file chosen.");
 		}
-		main.updateModel();
-		newButton();
-		main.getDyControl().nextButton();
-		main.getDyControl().nextButton();
-		main.getPrefControl().nextButton();
-		main.getSuggestionsControl().nextButton();
-		main.getGardenControl().loadPlants();
 	}
 
 	/**
