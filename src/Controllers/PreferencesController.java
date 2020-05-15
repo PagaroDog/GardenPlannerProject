@@ -119,9 +119,9 @@ public class PreferencesController extends Controller<PreferencesView> {
 			model.getGardenPreferences().clear();
 			Pane draw = (Pane) drawing.getChildren().get(0);
 			for (Node child : draw.getChildren()) {
-				System.out.println(child);
+				
 				if (child.getUserData() == StageNameEnum.CONDITIONS) {
-					System.out.println("HERE");
+					
 					model.getGardenPreferences().add(new GardenPref());
 					if(firstCond) {
 						firstCondRect = (Rectangle)child;
