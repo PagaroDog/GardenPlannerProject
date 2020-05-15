@@ -17,7 +17,6 @@ import Controllers.Controller;
 import Controllers.DrawYardController;
 import Controllers.GardenController;
 import Controllers.PreferencesController;
-import Controllers.SaveController;
 import Controllers.StartupController;
 import Controllers.StatisticsController;
 import Controllers.TutorialController;
@@ -65,7 +64,6 @@ public class Model implements Serializable{
 	private DrawYardController dyControl;
 	private StatisticsController statControl;
 	private GardenController gardenControl;
-	private SaveController saveControl;
 	private PreferencesController prefControl;
 
 	private char nameInd = 0;
@@ -214,14 +212,6 @@ public class Model implements Serializable{
 
 	public void setGardenControl(GardenController gardenControl) {
 		this.gardenControl = gardenControl;
-	}
-
-	public SaveController getSaveControl() {
-		return saveControl;
-	}
-
-	public void setSaveControl(SaveController saveControl) {
-		this.saveControl = saveControl;
 	}
 
 	public PreferencesController getPrefControl() {

@@ -44,6 +44,8 @@ public class StartupView extends View<StartupController> {
 	public StartupView(Stage stage) {
 		this.stage = stage;
 		fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Garden Files (*.garden)", "*.garden");
+		fileChooser.getExtensionFilters().add(filter);
 	}
 
 	/**

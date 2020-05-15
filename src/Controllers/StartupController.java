@@ -14,7 +14,9 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 /**
- * @author matt cohen this class is the controller for the startup screen.
+ * This class is the controller for the startup screen.
+ * @author matt cohen
+ * @author Tommy White
  */
 public class StartupController extends Controller<StartupView> {
 
@@ -57,6 +59,8 @@ public class StartupController extends Controller<StartupView> {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e) {
+			System.out.println("No file chosen.");
 		}
 		main.updateModel();
 		newButton();

@@ -40,6 +40,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -84,10 +85,15 @@ public class GardenView extends View<GardenController> implements Serializable {
 	private final double shrubStrokeWidth = 10;
 	private final double herbStrokeWidth = 5;
 	private final double vineStrokeWidth = 5;
+	private FileChooser fileChooser;
 
 	public GardenView(Stage stage, Images imgs) {
 		this.stage = stage;
 		this.imgs = imgs;
+		fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter gardenFilter = new FileChooser.ExtensionFilter("Garden Files (*.garden)", "*.garden");
+		FileChooser.ExtensionFilter pngFilter = new FileChooser.ExtensionFilter("PNG Files (*.png)", "*.png");
+		fileChooser.getExtensionFilters().addAll(gardenFilter, pngFilter);
 	}
 
 	/**
@@ -180,7 +186,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 	 * preferences.
 	 */
 	public void top() {
-		save = createButton("Save", control.handleOnSaveButton());
+		save = createButton("Save/Export as Image", control.handleOnSaveButton());
 
 		Region empty1 = new Region();
 		HBox.setHgrow(empty1, Priority.ALWAYS);
@@ -363,6 +369,10 @@ public class GardenView extends View<GardenController> implements Serializable {
 
 	public double getBottomHeight() {
 		return border.getBottom().getLayoutBounds().getHeight();
+	}
+
+	public FileChooser getFileChooser() {
+		return fileChooser;
 	}
 
 	/**

@@ -1,10 +1,19 @@
 package Controllers;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 
 import Model.ActionEnum;
 import Model.EllipseDrawingObj;
@@ -20,10 +29,12 @@ import Model.Season;
 import Views.GardenView;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -269,8 +280,28 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param event
 	 */
 	public void saveButton() {
-		view.getStage().setScene(Main.getScenes().get(StageName.SAVE));
-		model.setStageName(StageName.SAVE);
+		File file = view.getFileChooser().showOpenDialog(view.getStage());
+		try {
+			if (file.getName().endsWith(".garden")) { 
+				FileOutputStream fileOut = new FileOutputStream(file.getPath());
+				ObjectOutputStream out = new ObjectOutputStream(fileOut);
+				main.getGardenControl().savePlants();
+				out.writeObject(model);
+				out.close();
+				fileOut.close();
+			} else if (file.getName().endsWith(".png")) {
+				WritableImage writableImage = new WritableImage((int) view.getGarden().getWidth(), (int) view.getGarden().getHeight());
+				view.getGarden().snapshot(null, writableImage);
+				ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
+				System.out.println("snapshot saved: " + file.getAbsolutePath());
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			System.out.println("No file chosen.");
+		}
 	}
 
 	/**

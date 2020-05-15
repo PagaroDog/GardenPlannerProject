@@ -9,7 +9,6 @@ import Views.DrawYardView;
 import Views.GardenView;
 import Views.Images;
 import Views.PreferencesView;
-import Views.SaveView;
 import Views.StartupView;
 import Views.StatisticsView;
 import Views.SuggestionsView;
@@ -29,7 +28,6 @@ public class Main extends Application {
 	private DrawYardView dyView;
 	private StatisticsView statView;
 	private GardenView gardenView;
-	private SaveView saveView;
 	private SuggestionsView suggView;
 	private PreferencesView prefView;
 	private StartupController startControl;
@@ -37,7 +35,6 @@ public class Main extends Application {
 	private DrawYardController dyControl;
 	private StatisticsController statControl;
 	private GardenController gardenControl;
-	private SaveController saveControl;
 	private PreferencesController prefControl;
 	private SuggestionsController suggControl;
 	private Images imgs;
@@ -53,7 +50,6 @@ public class Main extends Application {
 		dyView = new DrawYardView(stage);
 		statView = new StatisticsView(stage);
 		gardenView = new GardenView(stage, imgs);
-		saveView = new SaveView(stage);
 		prefView = new PreferencesView(stage);
 		suggView = new SuggestionsView(stage, imgs);
 		startControl = new StartupController(model, startView, this);
@@ -61,7 +57,6 @@ public class Main extends Application {
 		dyControl = new DrawYardController(model, dyView, this);
 		statControl = new StatisticsController(model, statView, this);
 		gardenControl = new GardenController(model, gardenView, this);
-		saveControl = new SaveController(model, saveView, this);
 		prefControl = new PreferencesController(model, prefView, this);
 		suggControl = new SuggestionsController(model, suggView, this);
 
@@ -70,7 +65,6 @@ public class Main extends Application {
 		scenes.put(StageName.DRAW, dyView.getScene());
 		scenes.put(StageName.STATS, statView.getScene());
 		scenes.put(StageName.DESIGN, gardenView.getScene());
-		scenes.put(StageName.SAVE, saveView.getScene());
 		scenes.put(StageName.PREFERENCES, prefView.getScene());
 		scenes.put(StageName.SUGGESTIONS, suggView.getScene());
 
@@ -125,7 +119,6 @@ public class Main extends Application {
 		model.setDyControl(dyControl);
 		model.setGardenControl(gardenControl);
 		model.setPrefControl(prefControl);
-		model.setSaveControl(saveControl);
 		model.setStartControl(startControl);
 		model.setStatControl(statControl);
 		model.setTutControl(tutControl);
@@ -133,7 +126,6 @@ public class Main extends Application {
 		dyControl.setModel(model);
 		gardenControl.setModel(model);
 		prefControl.setModel(model);
-		saveControl.setModel(model);
 		startControl.setModel(model);
 		statControl.setModel(model);
 		tutControl.setModel(model);
