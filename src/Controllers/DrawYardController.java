@@ -58,16 +58,16 @@ public class DrawYardController extends Controller<DrawYardView> {
 	}
 
 	/**
-	 * Handles event when user presses circle button, invoking circleButton()
+	 * Handles event when user presses ellipse button, invoking ellipseButton()
 	 * 
 	 * @return EventHandler object for this action
 	 */
-	public EventHandler getHandleOnCircleButton() {
-		return event -> circleButton();
+	public EventHandler getHandleOnEllipseButton() {
+		return event -> ellipseButton();
 	}
 
 	/**
-	 * Handles event when user presses label button, invoking circleButton()
+	 * Handles event when user presses label button, invoking ellipseButton()
 	 * 
 	 * @return EventHandler object for this action
 	 */
@@ -154,7 +154,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler getHandleNextButton() {
-		return event -> nextButton((MouseEvent) event);
+		return event -> nextButton();
 	}
 
 	/**
@@ -194,12 +194,12 @@ public class DrawYardController extends Controller<DrawYardView> {
 	}
 
 	/**
-	 * Handles event when user drags on a circle, invoking dragCircle()
+	 * Handles event when user drags on a ellipse, invoking dragEllipse()
 	 * 
 	 * @return EventHandler object for this action
 	 */
-	public EventHandler getHandleOnDragCircle() {
-		return event -> dragCircle((MouseEvent) event);
+	public EventHandler getHandleOnDragEllipse() {
+		return event -> dragEllipse((MouseEvent) event);
 	}
 
 	/**
@@ -230,7 +230,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 					rectButton();
 					break;
 				case C:
-					circleButton();
+					ellipseButton();
 					break;
 				case L:
 					labelButton();
@@ -263,11 +263,11 @@ public class DrawYardController extends Controller<DrawYardView> {
 	}
 
 	/**
-	 * Sets drawing mode to circle
+	 * Sets drawing mode to ellipse
 	 */
-	public void circleButton() {
-		view.updateMode(DrawMode.CIRCLE);
-		model.setDrawMode(DrawMode.CIRCLE);
+	public void ellipseButton() {
+		view.updateMode(DrawMode.ELLIPSE);
+		model.setDrawMode(DrawMode.ELLIPSE);
 	}
 
 	/**
@@ -339,17 +339,17 @@ public class DrawYardController extends Controller<DrawYardView> {
 				view.updateRect((Rectangle) model.getCurrDrawObj(), newCoords[xInd], newCoords[yInd],
 						newCoords[widthInd], newCoords[heightInd]);
 				break;
-			case CIRCLE:
-				Ellipse circle = (Ellipse) model.getCurrDrawObj();
-				double[] newRadii = model.updateCircleCoordinates(event.getX(), event.getY(), circle.getCenterX(),
-						circle.getCenterY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
-				view.updateCircle(circle, newRadii[xInd], newRadii[yInd]);
+			case ELLIPSE:
+				Ellipse ellipse = (Ellipse) model.getCurrDrawObj();
+				double[] newRadii = model.updateEllipseCoordinates(event.getX(), event.getY(), ellipse.getCenterX(),
+						ellipse.getCenterY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
+				view.updateEllipse(ellipse, newRadii[xInd], newRadii[yInd]);
 			}
 		}
 	}
 
 	/**
-	 * Adds a rectangle, circle or label to drawing or does nothing based on the
+	 * Adds a rectangle, ellipse or label to drawing or does nothing based on the
 	 * DrawMode. Also stores initial coordinates.
 	 * 
 	 * @param event The MouseEvent generated when the Pane was pressed
@@ -366,8 +366,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 			case RECTANGLE:
 				model.setCurrDrawObj(view.addRectangle(model.getStageName(), event.getX(), event.getY()));
 				break;
-			case CIRCLE:
-				model.setCurrDrawObj(view.addCircle(event.getX(), event.getY()));
+			case ELLIPSE:
+				model.setCurrDrawObj(view.addEllipse(event.getX(), event.getY()));
 				break;
 			}
 		}
@@ -381,7 +381,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * 
 	 * @param event The MouseEvent generated when the button was pressed
 	 */
-	public void nextButton(MouseEvent event) {
+	public void nextButton() {
 		view.deselect(model.getCurrDrawObj());
 		model.setCurrDrawObj(null);
 		model.setDrawMode(null);
@@ -483,19 +483,19 @@ public class DrawYardController extends Controller<DrawYardView> {
 	}
 
 	/**
-	 * In select mode, moves a dragged circle
+	 * In select mode, moves a dragged ellipse
 	 * 
-	 * @param event The MouseEvent generated when the circle was dragged
+	 * @param event The MouseEvent generated when the ellipse was dragged
 	 */
-	public void dragCircle(MouseEvent event) {
+	public void dragEllipse(MouseEvent event) {
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case SELECT:
 				if (model.getStageName() == StageName.DRAW) {
-					Ellipse circle = (Ellipse) event.getSource();
-					double[] newCenters = model.moveCircleCoordinates(event.getX(), event.getY(), circle.getRadiusX(),
-							circle.getRadiusY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
-					view.moveCircle(circle, newCenters[xInd], newCenters[yInd]);
+					Ellipse ellipse = (Ellipse) event.getSource();
+					double[] newCenters = model.moveEllipseCoordinates(event.getX(), event.getY(), ellipse.getRadiusX(),
+							ellipse.getRadiusY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
+					view.moveEllipse(ellipse, newCenters[xInd], newCenters[yInd]);
 				}
 			}
 		}

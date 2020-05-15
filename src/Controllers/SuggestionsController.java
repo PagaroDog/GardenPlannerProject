@@ -39,7 +39,7 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 	 * @return EventHandler
 	 */
 	public EventHandler gethandleOnNextButton() {
-		return event -> nextButton((MouseEvent) event);
+		return event -> nextButton();
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 	 * 
 	 * @param event
 	 */
-	public void nextButton(MouseEvent event) {
+	public void nextButton() {
 		
 		
 		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));

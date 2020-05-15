@@ -40,7 +40,7 @@ public class DrawYardView extends View<DrawYardController> {
 	private BorderPane root;
 	private Pane drawing;
 	private Pane rectangles;
-	private Pane circles;
+	private Pane ellipses;
 	private Pane labels;
 	private Pane back;
 	private HBox toolbar;
@@ -55,7 +55,7 @@ public class DrawYardView extends View<DrawYardController> {
 	private Button selectButton;
 	private Button deleteButton;
 	private Button rectButton;
-	private Button circleButton;
+	private Button ellipseButton;
 	private Button labelButton;
 	private Button minusButton;
 	private Button plusButton;
@@ -88,6 +88,7 @@ public class DrawYardView extends View<DrawYardController> {
 
 	private final String selectedRGB = "rgba(255, 0, 0, 1)";
 	private final String deselectedRGB = "rgba(0, 0, 0, 1)";
+	private final String deselectedAreaRGB = "rgba(0, 0, 0, 0)";
 
 	private ArrayList<Node> areas = new ArrayList<Node>();
 
@@ -107,7 +108,7 @@ public class DrawYardView extends View<DrawYardController> {
 		selectButton = createButton("Select", control.getHandleOnSelectButton());
 		deleteButton = createButton("Delete", control.getHandleOnDeleteButton());
 		rectButton = createButton("Rectangle", control.getHandleOnRectButton());
-		circleButton = createButton("Circle", control.getHandleOnCircleButton());
+		ellipseButton = createButton("Ellipse", control.getHandleOnEllipseButton());
 		labelButton = createButton("Add Label", control.getHandleOnLabelButton());
 		labeltxt = createField();
 		labeltxt.setPromptText("ex. House, Shed");
@@ -133,7 +134,7 @@ public class DrawYardView extends View<DrawYardController> {
 		newAreaButton = createButton("New Conditions Area", control.getHandleOnNewAreaButton());
 
 		toolbar = createToolbar();
-		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
+		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, ellipseButton, labelButton, labeltxt,
 				minusButton, plusButton, labelSizetxt, importButton, removeImportButton, emptyCenter, widthTxt,
 				widthField, heightTxt, heightField, heightUnit);
 
@@ -145,12 +146,12 @@ public class DrawYardView extends View<DrawYardController> {
 
 		drawing = new Pane();
 		rectangles = new Pane();
-		circles = new Pane();
+		ellipses = new Pane();
 		labels = new Pane();
 		back = new Pane();
 		drawing.getChildren().add(rectangles);
-		rectangles.getChildren().add(circles);
-		circles.getChildren().add(labels);
+		rectangles.getChildren().add(ellipses);
+		ellipses.getChildren().add(labels);
 		labels.getChildren().add(back);
 		drawing.setOnMousePressed(control.getHandleOnPressPane());
 		drawing.setOnMouseDragged(control.getHandleOnDragPane());
@@ -214,8 +215,7 @@ public class DrawYardView extends View<DrawYardController> {
 			rect.setStroke(Color.BLACK);
 			rect.setOnMousePressed(control.getHandleOnPressShape());
 		} else {
-			rect.setFill(Color.rgb((int) (Math.random() * randRGB) + minRGB, (int) (Math.random() * randRGB) + minRGB,
-					(int) (Math.random() * randRGB) + minRGB, opacity));
+			rect.setFill(getRandomColor());
 			rect.setStroke(Color.TRANSPARENT);
 			rect.setOnMousePressed(control.getHandleOnPressArea());
 		}
@@ -257,46 +257,46 @@ public class DrawYardView extends View<DrawYardController> {
 
 	/**
 	 * Called when user clicks on the drawing Pane in CIRLCE mode. Creates a new
-	 * Circle object and adds it to the drawing Pane
+	 * Ellipse object and adds it to the drawing Pane
 	 * 
 	 * @param x The x coordinate of the initial mouse press
 	 * @param y The y coordinate of the initial mouse press
-	 * @return The newly created circle
+	 * @return The newly created ellipse
 	 */
-	public Node addCircle(double x, double y) {
-		Ellipse circle = new Ellipse(x, y, initShapeSize, initShapeSize);
-		circle.setFill(Color.TRANSPARENT);
-		circle.setStroke(Color.BLACK);
-		circle.setOnMousePressed(control.getHandleOnPressShape());
-		circle.setOnMouseDragged(control.getHandleOnDragCircle());
-		circles.getChildren().add(circle);
-		return circle;
+	public Node addEllipse(double x, double y) {
+		Ellipse ellipse = new Ellipse(x, y, initShapeSize, initShapeSize);
+		ellipse.setFill(Color.TRANSPARENT);
+		ellipse.setStroke(Color.BLACK);
+		ellipse.setOnMousePressed(control.getHandleOnPressShape());
+		ellipse.setOnMouseDragged(control.getHandleOnDragEllipse());
+		ellipses.getChildren().add(ellipse);
+		return ellipse;
 	}
 
 	/**
-	 * Called when user drags on the drawing Pane while creating a new circle,
-	 * showing the current state of the circle.
+	 * Called when user drags on the drawing Pane while creating a new ellipse,
+	 * showing the current state of the ellipse.
 	 * 
-	 * @param circle The circle to be updated
+	 * @param ellipse The ellipse to be updated
 	 * @param x      The x coordinate of the current mouse position
 	 * @param y      The y coordinate of the current mouse position
 	 */
-	public void updateCircle(Ellipse circle, double radiusX, double radiusY) {
-		circle.setRadiusX(radiusX);
-		circle.setRadiusY(radiusY);
+	public void updateEllipse(Ellipse ellipse, double radiusX, double radiusY) {
+		ellipse.setRadiusX(radiusX);
+		ellipse.setRadiusY(radiusY);
 	}
 
 	/**
-	 * Called when user drags on an already created circle, moving the position of
-	 * the circle.
+	 * Called when user drags on an already created ellipse, moving the position of
+	 * the ellipse.
 	 * 
-	 * @param rect The Circle to be moved.
-	 * @param x    The new x coordinate of the center of the circle
-	 * @param y    The new y coordinate of the center of the circle
+	 * @param rect The Ellipse to be moved.
+	 * @param x    The new x coordinate of the center of the ellipse
+	 * @param y    The new y coordinate of the center of the ellipse
 	 */
-	public void moveCircle(Ellipse circle, double x, double y) {
-		circle.setCenterX(x);
-		circle.setCenterY(y);
+	public void moveEllipse(Ellipse ellipse, double x, double y) {
+		ellipse.setCenterX(x);
+		ellipse.setCenterY(y);
 	}
 
 	public Node addLabel() {
@@ -357,8 +357,13 @@ public class DrawYardView extends View<DrawYardController> {
 	 */
 	public void deselect(Node node) {
 		if (node != null) {
+			if (node.getUserData() != StageName.CONDITIONS) {
 			node.setStyle("-fx-stroke: " + deselectedRGB + ";"
 					+ "-fx-text-fill: " + deselectedRGB + ";");
+			} else {
+
+				node.setStyle("-fx-stroke: " + deselectedAreaRGB + ";");
+			}
 		}
 	}
 
@@ -367,7 +372,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 */
 	public void drawMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
-		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, circleButton, labelButton, labeltxt,
+		toolbar.getChildren().addAll(selectButton, deleteButton, rectButton, ellipseButton, labelButton, labeltxt,
 				minusButton, plusButton, labelSizetxt, importButton, removeImportButton, emptyCenter, widthTxt,
 				widthField, heightTxt, heightField, heightUnit);
 		ObservableList<Node> rects = rectangles.getChildren();
@@ -426,12 +431,12 @@ public class DrawYardView extends View<DrawYardController> {
 	public void updateMode(DrawMode newMode) {
 		selectButton.setId("");
 		rectButton.setId("");
-		circleButton.setId("");
+		ellipseButton.setId("");
 		newAreaButton.setId("");
 		if (newMode != null) {
 			switch (newMode) {
-			case CIRCLE:
-				circleButton.setId("selected-button");
+			case ELLIPSE:
+				ellipseButton.setId("selected-button");
 				break;
 			case RECTANGLE:
 				rectButton.setId("selected-button");
@@ -472,5 +477,9 @@ public class DrawYardView extends View<DrawYardController> {
 		return field;
 	}
 
+	public Color getRandomColor() {
+		return Color.rgb((int) (Math.random() * randRGB) + minRGB, (int) (Math.random() * randRGB) + minRGB,
+				(int) (Math.random() * randRGB) + minRGB, opacity);
+	}
 
 }

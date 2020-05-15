@@ -11,7 +11,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import Controllers.GardenController;
+import Model.EllipseDrawingObj;
+import Model.LabelDrawingObj;
 import Model.PlantType;
+import Model.RectDrawingObj;
 import Model.Season;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -33,6 +36,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -493,9 +498,43 @@ public class GardenView extends View<GardenController> implements Serializable {
 		this.garden.getChildren().remove(info);
 	}
 
-	public void refresh() {
-		stage.hide();
-		stage.show();
+	public void addRectangle(RectDrawingObj rectObj, Color fill, Color stroke, EventHandler onPress, EventHandler onDrag) {
+		Rectangle rect = new Rectangle();
+		rect.setFill(fill);
+		rect.setStroke(stroke);
+		rect.setX(rectObj.getX());
+		rect.setY(rectObj.getY());
+		rect.setWidth(rectObj.getWidth());
+		rect.setHeight(rectObj.getHeight());
+		rect.setOnMousePressed(onPress);
+		rect.setOnMouseDragged(onDrag);
+		rect.setUserData(rectObj.getUserData());
+		((Pane) drawing.getChildren().get(0)).getChildren().add(rect);
+	}
+
+	public void addEllipse(EllipseDrawingObj ellipseObj, EventHandler onPress,
+			EventHandler onDrag) {
+		Ellipse e = new Ellipse();
+		e.setFill(Color.TRANSPARENT);
+		e.setStroke(Color.BLACK);
+		e.setCenterX(ellipseObj.getX());
+		e.setCenterY(ellipseObj.getY());
+		e.setRadiusX(ellipseObj.getWidth());
+		e.setRadiusY(ellipseObj.getHeight());
+		e.setOnMousePressed(onPress);
+		e.setOnMouseDragged(onDrag);
+		((Pane) ((Pane) drawing.getChildren().get(0)).getChildren().get(0)).getChildren().add(e);
+	}
+
+	public void addLabel(LabelDrawingObj labelObj, EventHandler onPress, EventHandler onDrag) {
+		Label lab = new Label();
+		lab.setText(labelObj.getText());
+		lab.setLayoutX(labelObj.getX());
+		lab.setLayoutY(labelObj.getY());
+		lab.setFont(new Font(labelObj.getWidth()));
+		lab.setOnMousePressed(onPress);
+		lab.setOnMouseDragged(onDrag);
+		((Pane) ((Pane) ((Pane) drawing.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren().add(lab);
 	}
 
 }

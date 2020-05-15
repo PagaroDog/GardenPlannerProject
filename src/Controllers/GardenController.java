@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 import Model.ActionEnum;
-import Model.CircleDrawingObj;
+import Model.EllipseDrawingObj;
 import Model.GardenAction;
 import Model.GardenObj;
 import Model.LabelDrawingObj;
@@ -18,6 +18,7 @@ import Model.RectDrawingObj;
 import Model.StageName;
 import Model.Season;
 import Views.GardenView;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -237,7 +238,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler handleOnPrefButton() {
-		return event -> prefButton((MouseEvent) event);
+		return event -> prefButton();
 	}
 
 	/**
@@ -246,7 +247,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * 
 	 * @param event
 	 */
-	public void prefButton(MouseEvent event) {
+	public void prefButton() {
 		model.setCurrDrawObj(null);
 		view.getStage().setScene(Main.getScenes().get(StageName.PREFERENCES));
 		model.setStageName(StageName.PREFERENCES);
@@ -447,7 +448,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 			Color color = findCircleColor(plantName);
 
 			Circle circle = new Circle();
-			
+
 			view.addCircleToFlow(circle, calcX, calcY, rad, plantName, color);
 			model.setCurrDrawObj(circle);
 			GA.addAction(new GardenAction((Circle) model.getCurrDrawObj(), calcX, calcY, rad, plantName, color,
@@ -598,7 +599,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 		GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getRadius(),
 				dragPlant.getUserData().toString(), (Color) dragPlant.getStroke(), ActionEnum.MOVEPLANT));
-		
+
 	}
 
 	public EventHandler handleOnUndoButton() {
@@ -658,17 +659,17 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		ObservableList<Node> children = view.getGarden().getChildren();
 		model.getRectangles().clear();
 		model.getLabels().clear();
-		model.getCircles().clear();
+		model.getEllipses().clear();
 		model.getGardenObjs().clear();
 		ObservableList<Node> rectangles = ((Pane) view.getDrawing().getChildren().get(0)).getChildren();
 		for (int i = 1; i < rectangles.size(); i++) {
 			model.getRectangles().add(new RectDrawingObj((Rectangle) rectangles.get(i)));
 		}
-		ObservableList<Node> circles = ((Pane) rectangles.get(0)).getChildren();
-		for (int i = 1; i < circles.size(); i++) {
-			model.getCircles().add(new CircleDrawingObj((Ellipse) circles.get(i)));
+		ObservableList<Node> ellipses = ((Pane) rectangles.get(0)).getChildren();
+		for (int i = 1; i < ellipses.size(); i++) {
+			model.getEllipses().add(new EllipseDrawingObj((Ellipse) ellipses.get(i)));
 		}
-		ObservableList<Node> labels = ((Pane) circles.get(0)).getChildren();
+		ObservableList<Node> labels = ((Pane) ellipses.get(0)).getChildren();
 		for (int i = 1; i < labels.size(); i++) {
 			model.getLabels().add(new LabelDrawingObj((Label) labels.get(i)));
 		}
@@ -684,21 +685,24 @@ public class GardenController extends Controller<GardenView> implements Serializ
 			view.addCircleToFlow(circle, plant.getX(), plant.getY(), plant.getRadius(), plant.getPlantName(),
 					findCircleColor(plant.getPlantName()));
 		}
-		view.setDrawing(main.getDyControl().getDrawing());
 		for (RectDrawingObj rectObj : model.getRectangles()) {
-			Rectangle rect = new Rectangle();
-			rect.setFill(Color.TRANSPARENT);
-			rect.setStroke(Color.BLACK);
-			rect.setScaleX(rectObj.getScale());
-			rect.setTranslateX(rectObj.getTrans());
-			rect.setX(rectObj.getX());
-			rect.setY(rectObj.getY());
-			rect.setWidth(rectObj.getWidth());
-			rect.setHeight(rectObj.getHeight());
-			System.out.println(rectObj.getWidth());
-			System.out.println(rectObj.getX());
-			((Pane) view.getDrawing().getChildren().get(0)).getChildren().add(rect);
+			if (rectObj.getUserData() == StageName.DRAW) {
+				view.addRectangle(rectObj, Color.TRANSPARENT, Color.BLACK, main.getDyControl().getHandleOnPressShape(), main.getDyControl().getHandleOnDragRectangle());
+			} else {
+				view.addRectangle(rectObj, main.getDyControl().getView().getRandomColor(), Color.TRANSPARENT, main.getDyControl().getHandleOnPressArea(), main.getDyControl().getHandleOnDragRectangle());
+			}
 		}
+		for (EllipseDrawingObj ellipseObj : model.getEllipses()) {
+			view.addEllipse(ellipseObj, main.getDyControl().getHandleOnPressShape(), main.getDyControl().getHandleOnDragEllipse());
+		}
+		for (LabelDrawingObj labelObj : model.getLabels()) {
+			view.addLabel(labelObj, main.getDyControl().getHandleOnPressShape(), main.getDyControl().getHandleOnDragLabel());
+		}
+		Platform.runLater(() -> {
+			prefButton();
+			main.getPrefControl().nextButton();
+			main.getSuggestionsControl().nextButton();
+	    });
 	}
 
 	public Color findCircleColor(String name) {

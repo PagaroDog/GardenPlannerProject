@@ -28,10 +28,10 @@ public class StartupController extends Controller<StartupView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler handleOnNewButton() {
-		return event -> newButton((MouseEvent) event);
+		return event -> newButton();
 	}
 
-	public void newButton(MouseEvent event) {
+	public void newButton() {
 		view.getStage().setScene(Main.getScenes().get(StageName.DRAW));
 		model.setStageName(StageName.DRAW);
 	}
@@ -59,8 +59,12 @@ public class StartupController extends Controller<StartupView> {
 			e.printStackTrace();
 		}
 		main.updateModel();
-		view.getStage().setScene(Main.getScenes().get(StageName.DESIGN));
-		model.setStageName(StageName.DESIGN);
+		newButton();
+		main.getDyControl().nextButton();
+		main.getDyControl().nextButton();
+		main.getPrefControl().nextButton();
+		main.getSuggestionsControl().nextButton();
+		main.getGardenControl().loadPlants();
 	}
 
 	/**

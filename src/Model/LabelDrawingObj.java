@@ -9,10 +9,17 @@ public class LabelDrawingObj extends DrawingObj {
 	public LabelDrawingObj(Label label) {
 		x = label.getLayoutX();
 		y = label.getLayoutY();
-		width = label.getWidth();
-		height = label.getHeight();
+		width = label.getFont().getSize();
 		trans = label.getTranslateX();
 		scale = label.getScaleX();
 		text = label.getText();
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 }

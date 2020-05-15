@@ -113,7 +113,7 @@ public class Model implements Serializable{
 	private ArrayList<GardenObj> gardenObjs = new ArrayList<GardenObj>();
 	private ArrayList<RectDrawingObj> rectangles = new ArrayList<RectDrawingObj>();
 	private ArrayList<LabelDrawingObj> labels = new ArrayList<LabelDrawingObj>();
-	private ArrayList<CircleDrawingObj> circles = new ArrayList<CircleDrawingObj>();
+	private ArrayList<EllipseDrawingObj> ellipses = new ArrayList<EllipseDrawingObj>();
 	private String backgroundPath;
 
 	public Season getSeason() {
@@ -854,15 +854,15 @@ public class Model implements Serializable{
 	 * 
 	 * @param x             The x-coordinate of the mouse
 	 * @param y             The y-coordinate of the mouse
-	 * @param centerX       The x-coordinate of the center of the circle
-	 * @param centerY       The y-coordinate of the center of the circle
-	 * @param drawingWidth  The width of the drawing in which the circle is
+	 * @param centerX       The x-coordinate of the center of the ellipse
+	 * @param centerY       The y-coordinate of the center of the ellipse
+	 * @param drawingWidth  The width of the drawing in which the ellipse is
 	 *                      contained
-	 * @param drawingHeight The height of the drawing in which the circle is
+	 * @param drawingHeight The height of the drawing in which the ellipse is
 	 *                      contained
 	 * @return An array of doubles containing the radiusX and radiusY
 	 */
-	public double[] updateCircleCoordinates(double x, double y, double centerX, double centerY, double drawingWidth,
+	public double[] updateEllipseCoordinates(double x, double y, double centerX, double centerY, double drawingWidth,
 			double drawingHeight) {
 		double maxRadiusX = Math.min(centerX, drawingWidth - centerX);
 		double maxRadiusY = Math.min(centerY, drawingHeight - centerY);
@@ -878,14 +878,14 @@ public class Model implements Serializable{
 	 * @param y             The y-coordinate of the mouse
 	 * @param radiusX       The radiusX of the ellipse
 	 * @param radiusY       The radiusY of the ellipse
-	 * @param drawingWidth  The width of the drawing in which the circle is
+	 * @param drawingWidth  The width of the drawing in which the ellipse is
 	 *                      contained
-	 * @param drawingHeight The height of the drawing in which the circle is
+	 * @param drawingHeight The height of the drawing in which the ellipse is
 	 *                      contained
 	 * @return An array of doubles containing the center x-coordinate and center
 	 *         y-coordinate
 	 */
-	public double[] moveCircleCoordinates(double x, double y, double radiusX, double radiusY, double drawingWidth,
+	public double[] moveEllipseCoordinates(double x, double y, double radiusX, double radiusY, double drawingWidth,
 			double drawingHeight) {
 		double centerX = Math.max(radiusX, Math.min(drawingWidth - radiusX, x));
 		double centerY = Math.max(radiusY, Math.min(drawingHeight - radiusY, y));
@@ -1003,8 +1003,8 @@ public class Model implements Serializable{
 		return labels;
 	}
 
-	public ArrayList<CircleDrawingObj> getCircles() {
-		return circles;
+	public ArrayList<EllipseDrawingObj> getEllipses() {
+		return ellipses;
 	}
 
 	public String getBackgroundPath() {
