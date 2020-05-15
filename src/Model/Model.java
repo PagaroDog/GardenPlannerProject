@@ -785,6 +785,7 @@ public class Model implements Serializable{
 		allColors.clear();
 		allSeasons.clear();
 		uniquePlant.clear();
+		allNames.clear();
 		for (Node node : garden) {
 			String plantName = (String) node.getUserData();
 			if (plantName != null) {
