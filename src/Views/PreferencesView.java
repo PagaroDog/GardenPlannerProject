@@ -135,11 +135,12 @@ public class PreferencesView extends View<PreferencesController> {
 	public void setupZoneFlips(ArrayList<GardenPref> gardenPrefs) {
 		zoneButtons.getChildren().clear();
 		zoneButtons.getChildren().add(zoneButtonsLabel);
+		Pane rectangles = (Pane) drawing.getChildren().get(0);
 		for (int i = 0; i < gardenPrefs.size(); i++) {
 			Button button = new Button("" + (i + 1));
 			button.setUserData(i);
 			button.setOnMousePressed(control.getHandleOnZoneButton(
-					(Rectangle) drawing.getChildren().get(drawing.getChildren().size() - gardenPrefs.size() + i),
+					(Rectangle) rectangles.getChildren().get(rectangles.getChildren().size() - gardenPrefs.size() + i),
 					gardenPrefs.get(i)));
 			zoneButtons.getChildren().add(button);
 		}

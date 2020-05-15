@@ -117,9 +117,11 @@ public class PreferencesController extends Controller<PreferencesView> {
 			drawing.setPrefWidth(newWidth);
 			double ratio = newWidth / oldWidth;
 			model.getGardenPreferences().clear();
-			for (Node child : drawing.getChildren()) {
-				
+			Pane draw = (Pane) drawing.getChildren().get(0);
+			for (Node child : draw.getChildren()) {
+				System.out.println(child);
 				if (child.getUserData() == StageNameEnum.CONDITIONS) {
+					System.out.println("HERE");
 					model.getGardenPreferences().add(new GardenPref());
 					if(firstCond) {
 						firstCondRect = (Rectangle)child;
