@@ -114,9 +114,10 @@ public class PreferencesController extends Controller<PreferencesView> {
 			}
 			double oldWidth = main.getDyControl().getViewWidth();
 			double newWidth = view.getBorder().getWidth() - view.getVBox().getWidth();
-			drawing.setPrefWidth(newWidth);
+			((Pane)drawing.getChildren().get(0)).setPrefWidth(newWidth);
 			double ratio = newWidth / oldWidth;
 			model.getGardenPreferences().clear();
+			
 			Pane draw = (Pane) drawing.getChildren().get(0);
 			for (Node child : draw.getChildren()) {
 				
@@ -133,6 +134,8 @@ public class PreferencesController extends Controller<PreferencesView> {
 				double newX = child.getBoundsInParent().getMinX();
 				child.setTranslateX(oldX * ratio - newX);
 			}
+			
+			
 			view.setDrawing(drawing);
 			view.setupZoneFlips(model.getGardenPreferences());
 			if (model.getGardenPreferences().size() > 0) {
