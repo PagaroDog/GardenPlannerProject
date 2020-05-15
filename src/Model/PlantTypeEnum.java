@@ -9,12 +9,14 @@ import java.io.Serializable;
  *
  */
 public enum PlantTypeEnum implements Serializable {
-	HERB("Herb"), SHRUB("Shrub"), TREE("Tree"), VINE("Vine");
+	HERB("Herb",2), SHRUB("Shrub",5), TREE("Tree",10), VINE("Vine",2);
 
 	private String plantType = null;
+	private double strokeSize;
 
-	private PlantTypeEnum(String s) {
+	private PlantTypeEnum(String s,double stroke) {
 		plantType = s;
+		strokeSize =stroke;
 	}
 
 	@Override
@@ -25,5 +27,9 @@ public enum PlantTypeEnum implements Serializable {
 	public static String[] getVals() {
 		String[] arr =  {"Herb", "Shrub", "Tree", "Vine"};
 		return arr;
+	}
+	
+	public double getStrokeSize() {
+		return strokeSize;
 	}
 }
