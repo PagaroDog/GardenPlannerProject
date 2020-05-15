@@ -25,7 +25,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 
 import javafx.scene.shape.Rectangle;
-
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 
 /**
@@ -828,7 +828,7 @@ public class Model implements Serializable{
 
 				allNames.add(plantName);
 
-				plantSurfaceArea += Math.PI * ((Ellipse) node).getRadiusX() * ((Ellipse) node).getRadiusY();
+				plantSurfaceArea += Math.PI * Math.pow(((Circle) node).getRadius(),2);
 			}
 		}
 
