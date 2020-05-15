@@ -272,20 +272,8 @@ public class GardenView extends View<GardenController> implements Serializable {
 		plant.setStroke(color);
 		((Circle) plant).setStroke(control.findCircleColor(name));
 		PlantTypeEnum pT = control.getPlantType(name);
-		switch(pT) {
-			case HERB:
-				plant.setStrokeWidth(herbStrokeWidth);
-				break;
-			case VINE: 
-				plant.setStrokeWidth(vineStrokeWidth);
-				break;
-			case TREE:
-				plant.setStrokeWidth(treeStrokeWidth);
-				break;
-			case SHRUB:
-				plant.setStrokeWidth(shrubStrokeWidth);
-				break;	
-		}
+		plant.setStrokeWidth(pT.getStrokeSize());
+		
 		garden.getChildren().add(plant);
 		return plant;
 	}	
