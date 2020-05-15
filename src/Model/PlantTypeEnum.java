@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  */
 public enum PlantTypeEnum implements Serializable {
-	HERB("Herb",2), SHRUB("Shrub",5), TREE("Tree",10), VINE("Vine",2);
+	HERB("Herb",2), SHRUB("Shrub",4), TREE("Tree",8), VINE("Vine",2);
 
 	private String plantType = null;
 	private double strokeSize;
