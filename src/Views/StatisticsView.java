@@ -29,6 +29,7 @@ public class StatisticsView extends View<StatisticsController> {
 	private double fontSize;
 	private double smallFontSize;
 	private double evenSmallerFontSize;
+	private double smallestFontSize;
 	private Label totPlants = new Label();
 	private Label trees = new Label();
 	private Label flowers = new Label();
@@ -53,10 +54,11 @@ public class StatisticsView extends View<StatisticsController> {
 			fontSize = 15;
 			smallScreen = true;
 		}else {
-			fontSize = 25;
+			fontSize = 20;
 		}
 		smallFontSize = fontSize-5;	
 		evenSmallerFontSize = smallFontSize-3;
+		smallestFontSize =  evenSmallerFontSize - 3;
 	}
 
 	/**
@@ -180,14 +182,17 @@ public class StatisticsView extends View<StatisticsController> {
 			}
 		}
 		else {
-			if(uTotal < 10) {
+			if(uTotal < 30) {
 				plantList.setFont(new Font(fontSize));
 			}
-			else if(uTotal < 15) {
+			else if(uTotal < 60) {
 				plantList.setFont(new Font(smallFontSize));
 			}
-			else {
+			else if(uTotal < 100){
 				plantList.setFont(new Font(evenSmallerFontSize));
+			}
+			else {
+				plantList.setFont(new Font(smallestFontSize));
 			}
 		}
 	}
