@@ -26,9 +26,9 @@ import javafx.stage.Stage;
 public class StatisticsView extends View<StatisticsController> {
 	private double hboxSpacing = 70;
 	private double vboxSpacing = 50;
-	private double fontSize = 25;
-	private double smallFontSize=18;
-	private double evenSmallerFontSize=12;
+	private double fontSize;
+	private double smallFontSize;
+	private double evenSmallerFontSize;
 	private Label totPlants = new Label();
 	private Label trees = new Label();
 	private Label flowers = new Label();
@@ -46,8 +46,17 @@ public class StatisticsView extends View<StatisticsController> {
 	private Label plantList = new Label();
 	private Label tips = new Label();
 
+	private boolean smallScreen = false;
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
+		if(canvasHeight < 700 || canvasWidth < 1200) {
+			fontSize = 15;
+			smallScreen = true;
+		}else {
+			fontSize = 25;
+		}
+		smallFontSize = fontSize-5;	
+		evenSmallerFontSize = smallFontSize-3;
 	}
 
 	/**
@@ -159,14 +168,27 @@ public class StatisticsView extends View<StatisticsController> {
 		}
 		
 
-		if(uTotal > 10) {
-			plantList.setFont(new Font(smallFontSize));
-		}
-		else if(uTotal>15) {
-			plantList.setFont(new Font(evenSmallerFontSize));
+		if(smallScreen) {
+			if(uTotal < 20) {
+				plantList.setFont(new Font(fontSize));
+			}
+			else if(uTotal<50) {
+				plantList.setFont(new Font(smallFontSize));
+			}
+			else {
+				plantList.setFont(new Font(evenSmallerFontSize));
+			}
 		}
 		else {
-			plantList.setFont(new Font(fontSize));
+			if(uTotal < 10) {
+				plantList.setFont(new Font(fontSize));
+			}
+			else if(uTotal < 15) {
+				plantList.setFont(new Font(smallFontSize));
+			}
+			else {
+				plantList.setFont(new Font(evenSmallerFontSize));
+			}
 		}
 	}
 
