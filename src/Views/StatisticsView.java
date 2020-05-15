@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 public class StatisticsView extends View<StatisticsController> {
 	private double hboxSpacing = 70;
 	private double vboxSpacing = 50;
-	private double fontSize;
+	private double defaultFontSize;
 	private double smallFontSize;
 	private double evenSmallerFontSize;
 	private double smallestFontSize;
@@ -51,12 +51,12 @@ public class StatisticsView extends View<StatisticsController> {
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
 		if(canvasHeight < 700 || canvasWidth < 1200) {
-			fontSize = 15;
+			defaultFontSize = 15;
 			smallScreen = true;
 		}else {
-			fontSize = 20;
+			defaultFontSize = 20;
 		}
-		smallFontSize = fontSize-5;	
+		smallFontSize = defaultFontSize-5;	
 		evenSmallerFontSize = smallFontSize-3;
 		smallestFontSize =  evenSmallerFontSize - 3;
 	}
@@ -84,16 +84,16 @@ public class StatisticsView extends View<StatisticsController> {
 		uPlants.setSpacing(hboxSpacing);
 
 		for (int i = 0; i < plants.getChildren().size(); i++) {
-			((Label) plants.getChildren().get(i)).setFont(new Font(fontSize));
+			((Label) plants.getChildren().get(i)).setFont(new Font(defaultFontSize));
 			((Label) plants.getChildren().get(i)).setWrapText(true);
-			((Label) uPlants.getChildren().get(i)).setFont(new Font(fontSize));
+			((Label) uPlants.getChildren().get(i)).setFont(new Font(defaultFontSize));
 			((Label) uPlants.getChildren().get(i)).setWrapText(true);
 		}
 
 		vBox.getChildren().addAll(plants,uPlants, gardenCover, colors, bloomingSeasons, plantList,tips);
 
 		for (int i = 2; i < vBox.getChildren().size(); i++) {
-			((Label) vBox.getChildren().get(i)).setFont(new Font(fontSize));
+			((Label) vBox.getChildren().get(i)).setFont(new Font(defaultFontSize));
 			((Label) vBox.getChildren().get(i)).setWrapText(true);
 		}
 
@@ -172,7 +172,7 @@ public class StatisticsView extends View<StatisticsController> {
 
 		if(smallScreen) {
 			if(uTotal < 20) {
-				plantList.setFont(new Font(fontSize));
+				plantList.setFont(new Font(defaultFontSize));
 			}
 			else if(uTotal<50) {
 				plantList.setFont(new Font(smallFontSize));
@@ -183,7 +183,7 @@ public class StatisticsView extends View<StatisticsController> {
 		}
 		else {
 			if(uTotal < 30) {
-				plantList.setFont(new Font(fontSize));
+				plantList.setFont(new Font(defaultFontSize));
 			}
 			else if(uTotal < 60) {
 				plantList.setFont(new Font(smallFontSize));
