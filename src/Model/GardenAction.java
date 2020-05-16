@@ -117,7 +117,7 @@ public class GardenAction {
 
 	public void addAction(GardenAction ga) {
 		actionList.add(ga);
-		equalityChecker(); 
+		//equalityChecker(); 
 		redoList.clear();
 		System.out.println(actionList);
 	}
