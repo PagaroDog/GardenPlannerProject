@@ -946,27 +946,42 @@ public class Model implements Serializable{
 				if (isInArea(x, y, gp.getArea())) {
 					String match = "";
 					Plant p = plants.get(plantName);
-					if (userCheck(p.getLight(), gp.getUserLight())) {
-						match = "Plant matches light requirement.";
+					
+					if (gp.getUserLight() != null) {
+						if (userCheck(p.getLight(), gp.getUserLight())) {
+							match = "Plant matches light requirement.";
+						} else {
+							match = "Plant does not match light requirement.";
+						}
 					} else {
-						match = "Plant does not match light requirement.";
+						match += "No light level preference in this area.";
 					}
 
-					if (userCheck(p.getWaterLevel(), gp.getUserWater())) {
-						match += "\nPlant matches soil moisture.";
+					if (gp.getUserWater() != null) {
+						if (userCheck(p.getWaterLevel(), gp.getUserWater())) {
+							match += "\nPlant matches soil moisture.";
+						} else {
+							match += "\nPlant does not match soil moisture.";
+						}
 					} else {
-						match += "\nPlant does not match soil moisture.";
+						match += "\nNo soil moisture preference in this area.";
 					}
-
-					if (userCheck(p.getBloomtime(), gp.getUserBloom())) {
-						match += "\nPlant blooms in desired season.";
+					
+					
+					if (gp.getUserBloom() != null) {
+						if (userCheck(p.getBloomtime(), gp.getUserBloom())) {
+							match += "\nPlant blooms in desired season.";
+						} else {
+							match += "\nPlant does not bloom in desired season.";
+						}
 					} else {
-						match += "\nPlant does not bloom in desired season.";
+						match += "\nNo season preference in this area.";
 					}
 
 					HashSet<String> copy = new HashSet<String>(p.getColor());
 					Iterator<String> it = copy.iterator();
-
+					
+					if (gp.getUserColor() != null)
 					while (it.hasNext()) {
 						if (gp.getUserColor().contains(it.next())) {
 							match += "\nPlant matches desired color.";

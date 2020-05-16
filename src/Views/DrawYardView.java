@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -27,6 +28,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 /**
@@ -69,7 +71,6 @@ public class DrawYardView extends View<DrawYardController> {
 	private TextField widthField;
 	private TextField heightField;
 
-
 	private FileChooser fileChooser;
 
 	private ImageView background;
@@ -85,6 +86,10 @@ public class DrawYardView extends View<DrawYardController> {
 	private final double randRGB = maxRGB - minRGB;
 	private final double opacity = 0.3;
 	private final double minLabelLength = 0;
+	private final double minFont = 4;
+	private final double maxFont = 50;
+	private final double fontDecrement = 1;
+	private final double fontIncrement = 1;
 
 	private final String selectedRGB = "rgba(255, 0, 0, 1)";
 	private final String deselectedRGB = "rgba(0, 0, 0, 1)";
@@ -95,7 +100,7 @@ public class DrawYardView extends View<DrawYardController> {
 	public DrawYardView(Stage stage) {
 		this.stage = stage;
 		fileChooser = new FileChooser();
-		
+		fileChooser.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
 	}
 
 	/**
@@ -201,6 +206,22 @@ public class DrawYardView extends View<DrawYardController> {
 		return heightField;
 	}
 
+	public double getMinFont() {
+		return minFont;
+	}
+
+	public double getMaxFont() {
+		return maxFont;
+	}
+
+	public double getFontDecrement() {
+		return fontDecrement;
+	}
+
+	public double getFontIncrement() {
+		return fontIncrement;
+	}
+
 	/**
 	 * Called when user clicks on the drawing Pane in RECTANGLE mode. Creates a new
 	 * Rectangle object and adds it to the drawing Pane
@@ -214,11 +235,11 @@ public class DrawYardView extends View<DrawYardController> {
 		if (mode == StageNameEnum.DRAW) {
 			rect.setFill(Color.TRANSPARENT);
 			rect.setStroke(Color.BLACK);
-			rect.setOnMousePressed(control.getHandleOnPressShape());
+			rect.setOnMousePressed(control.getHandleOnPressShape(StageNameEnum.DRAW));
 		} else {
 			rect.setFill(getRandomColor());
 			rect.setStroke(Color.TRANSPARENT);
-			rect.setOnMousePressed(control.getHandleOnPressArea());
+			rect.setOnMousePressed(control.getHandleOnPressShape(StageNameEnum.CONDITIONS));
 		}
 		rect.setUserData(mode);
 		rect.setOnMouseDragged(control.getHandleOnDragRectangle());
@@ -268,7 +289,7 @@ public class DrawYardView extends View<DrawYardController> {
 		Ellipse ellipse = new Ellipse(x, y, initShapeSize, initShapeSize);
 		ellipse.setFill(Color.TRANSPARENT);
 		ellipse.setStroke(Color.BLACK);
-		ellipse.setOnMousePressed(control.getHandleOnPressShape());
+		ellipse.setOnMousePressed(control.getHandleOnPressShape(StageNameEnum.DRAW));
 		ellipse.setOnMouseDragged(control.getHandleOnDragEllipse());
 		ellipses.getChildren().add(ellipse);
 		return ellipse;
@@ -279,8 +300,8 @@ public class DrawYardView extends View<DrawYardController> {
 	 * showing the current state of the ellipse.
 	 * 
 	 * @param ellipse The ellipse to be updated
-	 * @param x      The x coordinate of the current mouse position
-	 * @param y      The y coordinate of the current mouse position
+	 * @param x       The x coordinate of the current mouse position
+	 * @param y       The y coordinate of the current mouse position
 	 */
 	public void updateEllipse(Ellipse ellipse, double radiusX, double radiusY) {
 		ellipse.setRadiusX(radiusX);
@@ -305,10 +326,10 @@ public class DrawYardView extends View<DrawYardController> {
 			Label txt = new Label(labeltxt.getText());
 			labels.getChildren().add(txt);
 			txt.setFont(new Font(labelSize));
-			txt.setOnMousePressed(control.getHandleOnPressShape());
+			txt.setOnMousePressed(control.getHandleOnPressShape(StageNameEnum.DRAW));
 			txt.setOnMouseDragged(control.getHandleOnDragLabel());
-			txt.setLayoutX(drawing.getWidth()/2);
-			txt.setLayoutY(drawing.getHeight()/2);
+			txt.setLayoutX(drawing.getWidth() / 2);
+			txt.setLayoutY(drawing.getHeight() / 2);
 			drawing.requestFocus();
 			labeltxt.setText("");
 			return txt;
@@ -347,8 +368,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 */
 	public void select(Node node) {
 		if (node != null) {
-			node.setStyle("-fx-stroke: " + selectedRGB + ";"
-					+ "-fx-text-fill: " + selectedRGB + ";");
+			node.setStyle("-fx-stroke: " + selectedRGB + ";" + "-fx-text-fill: " + selectedRGB + ";");
 		}
 	}
 
@@ -360,10 +380,8 @@ public class DrawYardView extends View<DrawYardController> {
 	public void deselect(Node node) {
 		if (node != null) {
 			if (node.getUserData() != StageNameEnum.CONDITIONS) {
-			node.setStyle("-fx-stroke: " + deselectedRGB + ";"
-					+ "-fx-text-fill: " + deselectedRGB + ";");
+				node.setStyle("-fx-stroke: " + deselectedRGB + ";" + "-fx-text-fill: " + deselectedRGB + ";");
 			} else {
-
 				node.setStyle("-fx-stroke: " + deselectedAreaRGB + ";");
 			}
 		}
@@ -417,6 +435,7 @@ public class DrawYardView extends View<DrawYardController> {
 				back.toBack();
 			}
 		} catch (FileNotFoundException e) {
+			System.out.println("Invalid file.");
 		}
 	}
 
@@ -479,6 +498,11 @@ public class DrawYardView extends View<DrawYardController> {
 		return field;
 	}
 
+	/**
+	 * Generates a random RGB Color based on the randomRGB and minRGB values.
+	 * 
+	 * @return A Color object
+	 */
 	public Color getRandomColor() {
 		return Color.rgb((int) (Math.random() * randRGB) + minRGB, (int) (Math.random() * randRGB) + minRGB,
 				(int) (Math.random() * randRGB) + minRGB, opacity);

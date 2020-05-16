@@ -25,10 +25,6 @@ import javafx.scene.shape.Rectangle;
  */
 public class DrawYardController extends Controller<DrawYardView> {
 
-	private final double minFont = 4;
-	private final double maxFont = 50;
-	private final double fontDecrement = 1;
-	private final double fontIncrement = 1;
 	private final double originalTranslate = 0;
 	private final double originalScale = 1;
 	private final int xInd = 0;
@@ -172,17 +168,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * 
 	 * @return EventHandler object for this action
 	 */
-	public EventHandler getHandleOnPressShape() {
-		return event -> pressShape((MouseEvent) event);
-	}
-
-	/**
-	 * Handles event when user presses on a conditions area, invoking pressArea()
-	 * 
-	 * @return EventHandler object for this action
-	 */
-	public EventHandler getHandleOnPressArea() {
-		return event -> pressArea((MouseEvent) event);
+	public EventHandler getHandleOnPressShape(StageNameEnum stageName) {
+		return event -> pressShape((MouseEvent) event, stageName);
 	}
 
 	/**
@@ -299,14 +286,14 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * Decreases the label font by 1, with a minimum of 4
 	 */
 	public void minusButton() {
-		view.setLabelSize(Math.max(minFont, view.getLabelSize() - fontDecrement));
+		view.setLabelSize(Math.max(view.getMinFont(), view.getLabelSize() - view.getFontDecrement()));
 	}
 
 	/**
 	 * Increased the label font by 1, with a maximum of 50
 	 */
 	public void plusButton() {
-		view.setLabelSize(Math.min(maxFont, view.getLabelSize() + fontIncrement));
+		view.setLabelSize(Math.min(view.getMaxFont(), view.getLabelSize() + view.getFontIncrement()));
 	}
 
 	/**
@@ -367,7 +354,6 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the Pane was pressed
 	 */
 	public void pressPane(MouseEvent event) {
-		System.out.println("Press pane");
 		view.getDrawing().requestFocus();
 		model.setDrawPressX(event.getX());
 		model.setDrawPressY(event.getY());
@@ -440,41 +426,17 @@ public class DrawYardController extends Controller<DrawYardView> {
 	}
 
 	/**
-	 * In select mode and draw mode, sets model's currDrawObj to the pressed shape
+	 * In select mode and the correct stage, sets model's currDrawObj to the pressed shape
 	 * 
 	 * @param event The MouseEvent generated when the shape was pressed
 	 */
-	public void pressShape(MouseEvent event) {
+	public void pressShape(MouseEvent event, StageNameEnum stageName) {
 		model.setShapeX(((Node) event.getSource()).getBoundsInParent().getMinX());
 		model.setShapeY(((Node) event.getSource()).getBoundsInParent().getMinY());
-		if (model.getDrawMode() != null) {
-			switch (model.getDrawMode()) {
-			case SELECT:
-				if (model.getStageName() == StageNameEnum.DRAW) {
-					view.deselect(model.getCurrDrawObj());
-					model.setCurrDrawObj((Node) event.getSource());
-					view.select(model.getCurrDrawObj());
-				}
-			}
-		}
-	}
-
-	/**
-	 * In select mode and conditions mode, sets model's currDrawObj to the pressed
-	 * conditions area
-	 * 
-	 * @param event The MouseEvent generated when the area was pressed
-	 */
-	public void pressArea(MouseEvent event) {
-		if (model.getDrawMode() != null) {
-			switch (model.getDrawMode()) {
-			case SELECT:
-				if (model.getStageName() == StageNameEnum.CONDITIONS) {
-					view.deselect(model.getCurrDrawObj());
-					model.setCurrDrawObj((Node) event.getSource());
-					view.select(model.getCurrDrawObj());
-				}
-			}
+		if (model.getDrawMode() == DrawModeEnum.SELECT && model.getStageName() == stageName) {
+			view.deselect(model.getCurrDrawObj());
+			model.setCurrDrawObj((Node) event.getSource());
+			view.select(model.getCurrDrawObj());
 		}
 	}
 
@@ -484,15 +446,12 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the rectangle was dragged
 	 */
 	public void dragRectangle(MouseEvent event) {
-		if (model.getDrawMode() != null) {
-			switch (model.getDrawMode()) {
-			case SELECT:
-				Rectangle rect = (Rectangle) event.getSource();
-				double[] newCoords = model.moveRectCoordinates(event.getX(), event.getY(), rect.getWidth(), rect.getHeight(),
-						view.getDrawing().getWidth(), view.getDrawing().getHeight());
-				if (rect.getUserData() == model.getStageName())
-					view.moveRectangle(rect, newCoords[xInd], newCoords[yInd]);
-			}
+		if (model.getDrawMode() == DrawModeEnum.SELECT) {
+			Rectangle rect = (Rectangle) event.getSource();
+			double[] newCoords = model.moveRectCoordinates(event.getX(), event.getY(), rect.getWidth(), rect.getHeight(),
+					view.getDrawing().getWidth(), view.getDrawing().getHeight());
+			if (rect.getUserData() == model.getStageName())
+				view.moveRectangle(rect, newCoords[xInd], newCoords[yInd]);
 		}
 	}
 
@@ -502,15 +461,12 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the ellipse was dragged
 	 */
 	public void dragEllipse(MouseEvent event) {
-		if (model.getDrawMode() != null) {
-			switch (model.getDrawMode()) {
-			case SELECT:
-				if (model.getStageName() == StageNameEnum.DRAW) {
-					Ellipse ellipse = (Ellipse) event.getSource();
-					double[] newCenters = model.moveEllipseCoordinates(event.getX(), event.getY(), ellipse.getRadiusX(),
-							ellipse.getRadiusY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
-					view.moveEllipse(ellipse, newCenters[xInd], newCenters[yInd]);
-				}
+		if (model.getDrawMode() == DrawModeEnum.SELECT) {
+			if (model.getStageName() == StageNameEnum.DRAW) {
+				Ellipse ellipse = (Ellipse) event.getSource();
+				double[] newCenters = model.moveEllipseCoordinates(event.getX(), event.getY(), ellipse.getRadiusX(),
+						ellipse.getRadiusY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
+				view.moveEllipse(ellipse, newCenters[xInd], newCenters[yInd]);
 			}
 		}
 	}
@@ -521,15 +477,12 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the button was pressed
 	 */
 	public void dragLabel(MouseEvent event) {
-		if (model.getDrawMode() != null) {
-			switch (model.getDrawMode()) {
-			case SELECT:
-				Label label = (Label) event.getSource();
-				double[] newCoords = model.moveRectCoordinates(event.getSceneX(), event.getSceneY() - view.getToolbarHeight(), label.getWidth(),
-						label.getHeight(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
-				if (model.getStageName() == StageNameEnum.DRAW) {
-					view.moveLabel(label, newCoords[xInd], newCoords[yInd]);
-				}
+		if (model.getDrawMode() == DrawModeEnum.SELECT) {
+			Label label = (Label) event.getSource();
+			double[] newCoords = model.moveRectCoordinates(event.getSceneX(), event.getSceneY() - view.getToolbarHeight(), label.getWidth(),
+					label.getHeight(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
+			if (model.getStageName() == StageNameEnum.DRAW) {
+				view.moveLabel(label, newCoords[xInd], newCoords[yInd]);
 			}
 		}
 	}
@@ -542,7 +495,6 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param drawing The drawing from the preferences screen
 	 */
 	public void setDrawing(Pane drawing) {
-		// Set children nodes back to original size and position
 		view.setDrawing(drawing);
 		view.getRoot().setCenter(drawing);
 		drawing.setPrefWidth(view.getRoot().getWidth());
