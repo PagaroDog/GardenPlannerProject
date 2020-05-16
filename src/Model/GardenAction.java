@@ -126,56 +126,15 @@ public class GardenAction {
 		if (actionList.size() == 0) {
 			return;
 		}
-
 		redoList.push(actionList.removeLast());
-		
-		/*
-		if(actionList.size()== 0) {
-			gv.getGarden().getChildren().clear();
-			gv.getGarden().getChildren().add(gv.getDrawing()) ;
-		}
-		
-		else {
-			actionIterate(gv);
-		}
-		*/
 	}
 
 	public void redo() {
 		if (redoList.size() == 0) {
 			return;
-		} else {
-			actionList.add(redoList.pop());
-			//actionIterate(gv);
 		}
-	}
-
-	public void actionIterate(GardenView gv) {
-		System.out.println("ActionIterate"); 
-		gv.getGarden().getChildren().clear();
-		gv.getGarden().getChildren().add(gv.getDrawing());
-		for (GardenAction ga : actionList) {
-			switch (ga.getAction()) {
-			case ADDPLANT:
-				gv.addCircleToFlow(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
-				System.out.print("ADD");
-				break;
-
-			case MOVEPLANT:
-				gv.movePlant(ga.getPlant(), ga.getX(), ga.getY());
-				System.out.print("MOVE"); 
-				break;
-
-			case DELETE:
-				gv.deleteShape(ga.getPlant());
-				System.out.print("DELETE");
-				break;
-
-			case COPY:
-				gv.addShape(ga.getPlant());
-				System.out.print("COPY");
-			}
-			System.out.println(""); 
+		else {
+			actionList.add(redoList.pop());
 		}
 	}
 	

@@ -51,8 +51,18 @@ public class GardenActionTests {
 		test.addAction(actionThree);
 		assertEquals(test.getActionList().size(), 3);
 		 
+		test.undo();
+		test.undo(); 
+		assertEquals(test.getRedoList().size(), 2); 
+		assertEquals(test.getActionList().size(), 1); 
 		
+		testX += testMoveX;
+		testY += testMoveY;
+		GardenAction actionFour = new GardenAction(testPlant, testX + testMoveX, testY , testRadius, testName, testColor, ActionEnum.MOVEPLANT);
+		test.addAction(actionFour);
 		
+		assertEquals(test.getRedoList().size(), 0); 
+		assertEquals(test.getActionList().size(), 2); 
 	}
 	
 	
