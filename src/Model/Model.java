@@ -924,8 +924,8 @@ public class Model implements Serializable{
 	 */
 	public double[] moveEllipseCoordinates(double x, double y, double radiusX, double radiusY, double drawingWidth,
 			double drawingHeight) {
-		double newCenterX = shapeX + radiusX + (x - drawPressX);
-		double newCenterY = shapeY + radiusY + (y - drawPressY);
+		double newCenterX = x;
+		double newCenterY = y;
 		newCenterX = Math.max(radiusX, Math.min(drawingWidth - radiusX, newCenterX));
 		newCenterY = Math.max(radiusY, Math.min(drawingHeight - radiusY, newCenterY));
 		double[] centers = { newCenterX, newCenterY };
