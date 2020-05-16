@@ -20,6 +20,7 @@ import Model.WaterEnum;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 
@@ -397,9 +398,8 @@ public class ModelTests {
 		String[] plants = {"Achillea millefolium","Achillea millefolium","Acer negundo","Acer spicatum","Ceanothus americanus","Lonicera sempervirens","Staphylea trifolia"};
 		
 		for(String s : plants) {
-			Ellipse p = new Ellipse();
-			p.setRadiusX(defaultRadius);
-			p.setRadiusY(defaultRadius);
+			Circle p = new Circle();
+			p.setRadius(defaultRadius);
 			garden.getChildren().add(p);
 			garden.getChildren().get(garden.getChildren().size()-1).setUserData(s);
 			expectedNames.add(s);
