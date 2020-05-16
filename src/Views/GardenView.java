@@ -536,4 +536,8 @@ public class GardenView extends View<GardenController> implements Serializable {
 		((Pane) ((Pane) ((Pane) drawing.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren().add(lab);
 	}
 
+	public TabPane getTabPane() {
+		return tabPane;
+	}
+
 }

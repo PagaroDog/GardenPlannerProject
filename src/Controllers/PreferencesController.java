@@ -120,7 +120,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 			
 			Pane draw = (Pane) drawing.getChildren().get(0);
 			for (Node child : draw.getChildren()) {
-				
+				System.out.println(child);
 				if (child.getUserData() == StageNameEnum.CONDITIONS) {
 					
 					model.getGardenPreferences().add(new GardenPref());
