@@ -19,6 +19,7 @@ import Model.ActionEnum;
 import Model.EllipseDrawingObj;
 import Model.GardenAction;
 import Model.GardenObj;
+import Model.GardenPref;
 import Model.LabelDrawingObj;
 import Model.Model;
 import Model.Plant;
@@ -41,6 +42,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
@@ -389,22 +391,44 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param drawing The drawing to be resized and set.
 	 */
 	public void setDrawing(Pane drawing) {
-		view.setDrawing(drawing);
-		view.getGarden().getChildren().add(drawing);
+		
+		
 		for (Node child : drawing.getChildren()) {
 			child.setTranslateX(originalTranslate);
 			child.setScaleX(originalScale);
 		}
 		double oldWidth = main.getDyControl().getViewWidth();
+		
+		double newWidth = view.getGarden().getWidth()-100;
 		drawing.setPrefWidth(view.getGarden().getWidth());
-		double newWidth = view.getGarden().getWidth();
+		System.out.println(oldWidth);
+		System.out.println(newWidth);
+		((Pane)drawing.getChildren().get(0)).setPrefWidth(newWidth);
 		double ratio = newWidth / oldWidth;
-		for (Node child : drawing.getChildren()) {
+		Pane draw = (Pane) drawing.getChildren().get(0);
+		for (Node child : draw.getChildren()) {
+			System.out.println(child);
 			double oldX = child.getBoundsInParent().getMinX();
 			child.setScaleX(ratio);
 			double newX = child.getBoundsInParent().getMinX();
 			child.setTranslateX(oldX * ratio - newX);
 		}
+		view.setDrawing(drawing);
+		view.getGarden().getChildren().add(drawing);
+//		for (Node child : drawing.getChildren()) {
+//			child.setTranslateX(originalTranslate);
+//			child.setScaleX(originalScale);
+//		}
+//		double oldWidth = main.getDyControl().getViewWidth();
+//		drawing.setPrefWidth(view.getGarden().getWidth());
+//		double newWidth = view.getGarden().getWidth();
+//		double ratio = newWidth / oldWidth;
+//		for (Node child : drawing.getChildren()) {
+//			double oldX = child.getBoundsInParent().getMinX();
+//			child.setScaleX(ratio);
+//			double newX = child.getBoundsInParent().getMinX();
+//			child.setTranslateX(oldX * ratio - newX);
+//		}
 		drawing.setLayoutY(newLayoutY);
 		drawing.toBack();
 	}
