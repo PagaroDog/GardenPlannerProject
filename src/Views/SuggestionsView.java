@@ -79,7 +79,6 @@ public class SuggestionsView extends View<SuggestionsController> {
 
 		pane.setPrefWidth(canvasWidth);
 		pane.setStyle("-fx-background-color: rgba(255, 130, 203,0.5);");
-				// This lines are here only for testing the GridPane Layout
 		
 		
 		imgs = new ArrayList<Pane>();
@@ -100,10 +99,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 			
 				p.getChildren().add(plant);
 				p.setAlignment(Pos.CENTER);
-				//p.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/commonMilkweed.png"),
-			//	thumbnailHeight, thumbnailWidth, true, false)));
-				//System.out.println(control.getPlantNameAt(count));
-				
+	
 				imgs.add(p);
 				GridPane.setConstraints(p, j, i);
 				p.setOnMouseEntered(control.gethandleOnMouseEnter());
@@ -114,15 +110,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight + (stackPanePadding *2)));
 		}
 
-	/*	Pane test = new Pane();
-		test.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("/imgs/whiteAsh.png"),
-				thumbnailHeight, thumbnailWidth, true, false)));
-		imgs.add(test);
-		GridPane.setConstraints(test, 1, 1);
-		imgs.get(imgs.size() - 1).setOnMouseEntered(control.gethandleOnMouseEnter());
-		imgs.get(imgs.size() - 1).setOnMouseExited(control.gethandleOnMouseExit());
-		imgs.get(imgs.size() - 1).setOnMouseClicked(control.gethandleOnMouseClick());
-*/
+
 		this.stats = stats(rows);
 		GridPane.setConstraints(stats, 0, rows, cols, rows);
 		// Creates three rows of height 100 for the stats gridpane
@@ -183,21 +171,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	public void inputStats(Object event,  String[] cNames, String name,PlantTypeEnum type, WaterEnum[] moisture, SunEnum[] sun) {
 		Object[] info = { cNames, name,  moisture, type, sun };
 		int cnt = 0;
-		/*for (Object s : info) {
-			Label val = new Label();
-			if(cnt % 2 == 0) {
-				val.setText(Arrays.deepToString((Object[]) s));
-			}
-			else {
-				val.setText(s.toString());
-			}
-			
-			
-			GridPane.setConstraints(val, 3, cnt);
-			cnt++;
-			stats.getChildren().add(val);
-			
-		}*/
+
 		
 		Label val = new Label(cNames[0]);
 		GridPane.setConstraints(val, 3, cnt);
