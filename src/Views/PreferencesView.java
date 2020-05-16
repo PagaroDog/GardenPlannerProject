@@ -19,7 +19,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -44,6 +43,16 @@ public class PreferencesView extends View<PreferencesController> {
 	private Label zoneButtonsLabel;
 
 	private double zoneButtonsFontSize = 16;
+	
+	private final double vBoxSpacing = 15;
+	private final double vBoxVPadding = 15;
+	private final double vBoxHPadding = 12;
+	private final double vBoxRed = 158;
+	private final double vBoxGreen = 255;
+	private final double vBoxBlue = 174;
+	private final double vBoxOpacity = 12;
+	
+	private final double colorInsets = 10;
 
 	public PreferencesView(Stage stage) {
 		this.stage = stage;
@@ -62,7 +71,6 @@ public class PreferencesView extends View<PreferencesController> {
 		border.setRight(vbox);
 		drawing = new Pane();
 		border.setLeft(drawing);
-		TilePane tp = new TilePane();
 
 		zoneButtons = createToolbar();
 		zoneButtonsLabel = new Label("Garden Area: ");
@@ -77,9 +85,9 @@ public class PreferencesView extends View<PreferencesController> {
 
 	public VBox addVBox() {
 		vbox = new VBox();
-		vbox.setPadding(new Insets(15, 12, 15, 12));
-		vbox.setSpacing(15);
-		vbox.setStyle("-fx-background-color: rgba(158,255,174,1);");
+		vbox.setPadding(new Insets(vBoxVPadding, vBoxHPadding, vBoxVPadding, vBoxHPadding));
+		vbox.setSpacing(vBoxSpacing);
+		vbox.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %d);", vBoxRed, vBoxGreen, vBoxBlue, vBoxOpacity));
 
 		name = new TextField();
 		name.setPromptText("Name this Area");
@@ -109,7 +117,7 @@ public class PreferencesView extends View<PreferencesController> {
 		String[] colors = { "Red", "Blue", "Purple", "Pink", "White", "Yellow", "Black","Brown","Green","Orange" };
 
 		color = new TilePane();
-		color.setPadding(new Insets(10, 10, 10, 10));
+		color.setPadding(new Insets(colorInsets, colorInsets, colorInsets, colorInsets));
 		Label labcolor = new Label("What color of the bloom?");
 		for (String c : colors) {
 			color.getChildren().add(new RadioButton(c));
@@ -146,6 +154,25 @@ public class PreferencesView extends View<PreferencesController> {
 		}
 	}
 
+	public String[] getUserColor() {
+		Object[] buttons = color.getChildren().filtered(new Predicate<Node>() {
+			@Override
+			public boolean test(Node node) {
+				if (node instanceof RadioButton) {
+					return ((RadioButton) node).isSelected();
+				}
+				return false;
+			}
+
+		}).toArray();
+		String[] strings = new String[buttons.length];
+		for (int i = 0; i < buttons.length; i++) {
+			strings[i] = buttons[i].toString();
+		}
+		System.out.println(strings);
+		return strings;
+	}
+	
 	public TextField getName() {
 		return name;
 	}
@@ -192,24 +219,5 @@ public class PreferencesView extends View<PreferencesController> {
 
 	public Pane getDrawing() {
 		return drawing;
-	}
-
-	public String[] getUserColor() {
-		Object[] buttons = color.getChildren().filtered(new Predicate<Node>() {
-			@Override
-			public boolean test(Node node) {
-				if (node instanceof RadioButton) {
-					return ((RadioButton) node).isSelected();
-				}
-				return false;
-			}
-
-		}).toArray();
-		String[] strings = new String[buttons.length];
-		for (int i = 0; i < buttons.length; i++) {
-			strings[i] = buttons[i].toString();
-		}
-		System.out.println(strings);
-		return strings;
 	}
 }

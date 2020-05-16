@@ -9,7 +9,6 @@ import java.io.ObjectInputStream;
 
 import Model.Model;
 import Model.StageNameEnum;
-import Views.GardenView;
 import Views.StartupView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -62,7 +61,7 @@ public class StartupController extends Controller<StartupView> {
 			main.getSuggestionsControl().nextButton();
 			main.getGardenControl().loadPlants();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("File not found.");
 		} catch (InvalidClassException e) {
 			System.out.println("Software has been updated. This garden file is no longer compatible.");
 		} catch (IOException e) {
