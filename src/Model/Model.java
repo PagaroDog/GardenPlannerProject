@@ -34,6 +34,8 @@ import javafx.scene.shape.Ellipse;
  * 
  * @author IanMcCabe
  * @author Tommy White
+ * @author Brandon Wu
+ * @author Matt Cohen
  *
  */
 
