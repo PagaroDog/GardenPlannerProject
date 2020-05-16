@@ -456,12 +456,6 @@ public class Model implements Serializable{
 			while ((line = br.readLine()) != null) {
 
 				parsedLine = parseLine(line);
-//
-//				System.out.println("Science Name: " + parsedLine.get(0) + ", common names: " + parsedLine.get(1)
-//						+ ", duration: " + parsedLine.get(2) + ", type: " + parsedLine.get(3) + ", fruit: "
-//						+ parsedLine.get(4) + ", size: " + parsedLine.get(5) + ", color: " + parsedLine.get(6)
-//						+ ", time: " + parsedLine.get(7) + ", water: " + parsedLine.get(8) + ", light: "
-//						+ parsedLine.get(9) + ", spread: " + parsedLine.get(10));
 
 				name = parsedLine.get(nameInd);
 				commonNames = parsedLine.get(commonNamesInd).split(",");
@@ -1008,7 +1002,12 @@ public class Model implements Serializable{
 		boolean inY = y <= area.getBoundsInParent().getMaxY() && y >= area.getBoundsInParent().getMinY();
 		return inX && inY;
 	}
-
+	/**
+	 * Takes a collection of Strings and returns a string of the elements separated by commas
+	 * @param <T> Collection 
+	 * @param arr Collection of Strings
+	 * @return string of elements from collection separated by commas
+	 */
 	public static <T> String toCommaString(Collection<T> arr) {
 		String str = "";
 		String separator = ", ";
@@ -1020,7 +1019,12 @@ public class Model implements Serializable{
 		}
 		return str;
 	}
-
+	/**
+	 * Takes an array of Strings and returns a string of the elements sperated by commas
+	 * @param <T> Array
+	 * @param arr Array of Strings
+	 * @return string of elements from array separated by commas
+	 */
 	public static <T> String toCommaString(T[] arr) {
 		String str = "";
 		String separator = ", ";
