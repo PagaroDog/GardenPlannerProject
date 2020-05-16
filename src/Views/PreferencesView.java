@@ -87,7 +87,7 @@ public class PreferencesView extends View<PreferencesController> {
 		vbox = new VBox();
 		vbox.setPadding(new Insets(vBoxVPadding, vBoxHPadding, vBoxVPadding, vBoxHPadding));
 		vbox.setSpacing(vBoxSpacing);
-		vbox.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %d);", vBoxRed, vBoxGreen, vBoxBlue, vBoxOpacity));
+		vbox.setStyle(String.format("-fx-background-color: rgba(%f, %f, %f, %f);", vBoxRed, vBoxGreen, vBoxBlue, vBoxOpacity));
 
 		name = new TextField();
 		name.setPromptText("Name this Area");
