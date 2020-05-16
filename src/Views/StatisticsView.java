@@ -21,7 +21,7 @@ import javafx.stage.Stage;
  * 
  * @author Ian McCabe
  * @author Tommy White
- *
+ * @author Brandon Wu
  */
 public class StatisticsView extends View<StatisticsController> {
 	private double hboxSpacing = 70;
