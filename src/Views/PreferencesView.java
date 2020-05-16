@@ -88,11 +88,7 @@ public class PreferencesView extends View<PreferencesController> {
 		Label labbloom = new Label("When do you want the plant to bloom?");
 		bloom = new ComboBox<String>();
 		bloom.getItems().addAll(seasons);
-		/*
-		 * String[] soils = { "Any", "Clay", "Sand", "Loam" }; Label labsoil = new
-		 * Label("What type of soil?"); soil = new ComboBox<String>();
-		 * soil.getItems().addAll(soils);
-		 */
+
 		String[] moistures = { "Any", "Wet", "Wet Mesic", "Mesic", "Dry Mesic", "Dry" };
 		Label labwater = new Label("What is your soil's moisture?");
 		water = new ComboBox<String>();
@@ -193,7 +189,10 @@ public class PreferencesView extends View<PreferencesController> {
 	public Pane getDrawing() {
 		return drawing;
 	}
-
+	/**
+	 * Searches the color radio buttons and puts the selected colors into an array and returns it
+	 * @return An array of strings of the selected colors
+	 */
 	public String[] getUserColor() {
 		Object[] buttons = color.getChildren().filtered(new Predicate<Node>() {
 			@Override
