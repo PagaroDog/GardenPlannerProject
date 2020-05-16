@@ -12,7 +12,6 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  * The View class for the Startup screen. Holds graphical data and defines

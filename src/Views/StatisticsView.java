@@ -48,17 +48,32 @@ public class StatisticsView extends View<StatisticsController> {
 	private Label tips = new Label();
 
 	private boolean smallScreen = false;
+	
+	private final double smallHeight = 700;
+	private final double smallWidth = 1200;
+	private final double smallDefualtFont = 15;
+	private final double standardDefaultFont = 20;
+
+	private final double smallFontDifference = 5;
+	private final double evenSmallerFontDifference = 3;
+	private final double smallestFontDifference = 3;
+	
+	private final double vBoxRed = 158;
+	private final double vBoxGreen = 255;
+	private final double vBoxBlue = 174;
+	private final double vBoxOpacity = 1;
+	
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
-		if(canvasHeight < 700 || canvasWidth < 1200) {
-			defaultFontSize = 15;
+		if(canvasHeight < smallHeight || canvasWidth < smallWidth) {
+			defaultFontSize = smallDefualtFont;
 			smallScreen = true;
 		}else {
-			defaultFontSize = 20;
+			defaultFontSize = standardDefaultFont;
 		}
-		smallFontSize = defaultFontSize-5;	
-		evenSmallerFontSize = smallFontSize-3;
-		smallestFontSize =  evenSmallerFontSize - 3;
+		smallFontSize = defaultFontSize - smallFontDifference;	
+		evenSmallerFontSize = smallFontSize - evenSmallerFontDifference;
+		smallestFontSize =  evenSmallerFontSize - smallestFontDifference;
 	}
 
 	/**
@@ -99,7 +114,7 @@ public class StatisticsView extends View<StatisticsController> {
 
 		vBox.setPadding(new Insets(vboxSpacing, vboxSpacing, vboxSpacing, vboxSpacing));
 		vBox.setSpacing(vboxSpacing);
-		vBox.setStyle("-fx-background-color: rgba(158,255,174,1);");
+		vBox.setStyle(String.format("-fx-background-color: rgba( %d, %d, %d, %d);", vBoxRed , vBoxGreen, vBoxBlue, vBoxOpacity));
 
 		border.setCenter(scroll);
 
