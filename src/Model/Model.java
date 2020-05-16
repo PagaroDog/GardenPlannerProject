@@ -651,8 +651,6 @@ public class Model implements Serializable{
 		plantsFromPref.clear();
 		int score = prefCategoriesCnt;
 		int minGardenPrefScore = score;
-		int cnt = 1;
-
 		for (int i = 0; i <= score; i++) {
 			plantsFromPref.put(i, new ArrayList<Plant>());
 		}
@@ -682,13 +680,9 @@ public class Model implements Serializable{
 				if (minGardenPrefScore > score) {
 					minGardenPrefScore = score;
 				}
-
-				cnt++;
 				score = prefCategoriesCnt;
 			}
-
 			plantsFromPref.get(minGardenPrefScore).add(p);
-			cnt = 1;
 			minGardenPrefScore = prefCategoriesCnt;
 
 		}
