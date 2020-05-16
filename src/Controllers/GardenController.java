@@ -282,7 +282,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param event
 	 */
 	public void saveButton() {
-		File file = view.getFileChooser().showOpenDialog(view.getStage());
+		File file = view.getFileChooser().showSaveDialog(view.getStage());
 		try {
 			if (file.getName().endsWith(".garden")) {
 				FileOutputStream fileOut = new FileOutputStream(file.getPath());
