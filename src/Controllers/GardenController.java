@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -19,7 +17,6 @@ import Model.ActionEnum;
 import Model.EllipseDrawingObj;
 import Model.GardenAction;
 import Model.GardenObj;
-import Model.GardenPref;
 import Model.LabelDrawingObj;
 import Model.Model;
 import Model.Plant;
@@ -42,12 +39,10 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 
 /**
  * This class is the controller for the Garden Design screen. It mostly handles
@@ -57,14 +52,13 @@ import javafx.scene.shape.StrokeType;
  * 
  */
 public class GardenController extends Controller<GardenView> implements Serializable {
-	private final int year1int = 1;
-	private final int year2int = 2;
-	private final int year3int = 3;
 	private final double originalTranslate = 0;
 	private final double originalScale = 1;
 	private final double newLayoutY = 0;
 	private String plantName = "";
 	private int copyOffset = 10;
+	private int minSpreadInd = 0;
+	private int maxSpreadInd = 1;
 
 	private transient GardenAction GA = new GardenAction();
 
@@ -73,79 +67,22 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 
 	/**
-	 * code is triggered by a press of SpringButton
+	 * code is triggered by a press of a SeasonButton
 	 * 
 	 * @return EventHandler object for this action
 	 */
-	public EventHandler handleOnSpringButton() {
-		return event -> springButton((MouseEvent) event);
+	public EventHandler handleOnSeasonButton(SeasonEnum season) {
+		return event -> seasonButton(season);
 	}
 
 	/**
-	 * sets model season to spring
+	 * sets model season to specified season
 	 * 
 	 * @param event
 	 */
-	public void springButton(MouseEvent event) {
-		model.setSeason(SeasonEnum.SPRING);
-		view.changeSeason(SeasonEnum.SPRING);
-	}
-
-	/**
-	 * code is triggered by a press of SummerButton
-	 * 
-	 * @return EventHandler object for this action
-	 */
-	public EventHandler handleOnSummerButton() {
-		return event -> summerButton((MouseEvent) event);
-	}
-
-	/**
-	 * sets model season to summer
-	 * 
-	 * @param event
-	 */
-	public void summerButton(MouseEvent event) {
-		model.setSeason(SeasonEnum.SUMMER);
-		view.changeSeason(SeasonEnum.SUMMER);
-	}
-
-	/**
-	 * code is triggered by a press of fallButton
-	 * 
-	 * @return EventHandler object for this action
-	 */
-	public EventHandler handleOnFallButton() {
-		return event -> fallButton((MouseEvent) event);
-	}
-
-	/**
-	 * sets model season to fall
-	 * 
-	 * @param event
-	 */
-	public void fallButton(MouseEvent event) {
-		model.setSeason(SeasonEnum.FALL);
-		view.changeSeason(SeasonEnum.FALL);
-	}
-
-	/**
-	 * code is triggered by a press of WinterButton
-	 * 
-	 * @return EventHandler object for this action
-	 */
-	public EventHandler handleOnWinterButton() {
-		return event -> winterButton((MouseEvent) event);
-	}
-
-	/**
-	 * sets model season to winter
-	 * 
-	 * @param event
-	 */
-	public void winterButton(MouseEvent event) {
-		model.setSeason(SeasonEnum.WINTER);
-		view.changeSeason(SeasonEnum.WINTER);
+	public void seasonButton(SeasonEnum season) {
+		model.setSeason(season);
+		view.changeSeason(season);
 	}
 
 	/**
@@ -166,65 +103,26 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		view.getStage().setScene(Main.getScenes().get(StageNameEnum.STATS));
 		model.setStageName(StageNameEnum.STATS);
 		model.generateStats(view.getGarden().getChildren());
-
 		main.getStatControl().updateStats();
 	}
 
 	/**
-	 * code is triggered by a press of Year1Button
+	 * code is triggered by a press of a YearButton
 	 * 
 	 * @return EventHandler object for this action
 	 */
-	public EventHandler handleOnYear1Button() {
-		return event -> year1Button((MouseEvent) event);
+	public EventHandler handleOnYearButton(int yearInt) {
+		return event -> yearButton(yearInt);
 	}
 
 	/**
-	 * sets model year to 1
+	 * sets model year to specified year
 	 * 
 	 * @param event
 	 */
-	public void year1Button(MouseEvent event) {
-		model.setYear(year1int);
-		view.setYear(year1int);
-	}
-
-	/**
-	 * code is triggered by a press of Year2Button
-	 * 
-	 * @return EventHandler object for this action
-	 */
-	public EventHandler handleOnYear2Button() {
-		return event -> year2Button((MouseEvent) event);
-	}
-
-	/**
-	 * sets model year to 2
-	 * 
-	 * @param event
-	 */
-	public void year2Button(MouseEvent event) {
-		model.setYear(year2int);
-		view.setYear(year2int);
-	}
-
-	/**
-	 * code is triggered by a press of Year3Button
-	 * 
-	 * @return EventHandler object for this action
-	 */
-	public EventHandler handleOnYear3Button() {
-		return event -> year3Button((MouseEvent) event);
-	}
-
-	/**
-	 * sets model year to 3
-	 * 
-	 * @param event
-	 */
-	public void year3Button(MouseEvent event) {
-		model.setYear(year3int);
-		view.setYear(year3int);
+	public void yearButton(int yearInt) {
+		model.setYear(yearInt);
+		view.setYear(yearInt);
 	}
 
 	/**
@@ -299,7 +197,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 				System.out.println("snapshot saved: " + file.getAbsolutePath());
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println("Invalid file.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
@@ -379,7 +277,6 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param event the mouse pressing event
 	 */
 	public void press(MouseEvent event) {
-		Object click = event.getSource();
 		model.setCurrDrawObj((Node) event.getSource());
 		// int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
 	}
@@ -391,8 +288,6 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param drawing The drawing to be resized and set.
 	 */
 	public void setDrawing(Pane drawing) {
-		
-		
 		for (Node child : drawing.getChildren()) {
 			child.setTranslateX(originalTranslate);
 			child.setScaleX(originalScale);
@@ -401,10 +296,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		
 		double newWidth = view.getGarden().getWidth();
 		drawing.setPrefWidth(view.getGarden().getWidth());
-		
-		//((Pane)drawing.getChildren().get(0)).setPrefWidth(newWidth);
 		double ratio = newWidth / oldWidth;
-		//Pane draw = (Pane) drawing.getChildren().get(0);
 		for (Node child : drawing.getChildren()) {
 			System.out.println(child);
 			double oldX = child.getBoundsInParent().getMinX();
@@ -414,20 +306,6 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		}
 		view.setDrawing(drawing);
 		view.getGarden().getChildren().add(drawing);
-//		for (Node child : drawing.getChildren()) {
-//			child.setTranslateX(originalTranslate);
-//			child.setScaleX(originalScale);
-//		}
-//		double oldWidth = main.getDyControl().getViewWidth();
-//		drawing.setPrefWidth(view.getGarden().getWidth());
-//		double newWidth = view.getGarden().getWidth();
-//		double ratio = newWidth / oldWidth;
-//		for (Node child : drawing.getChildren()) {
-//			double oldX = child.getBoundsInParent().getMinX();
-//			child.setScaleX(ratio);
-//			double newX = child.getBoundsInParent().getMinX();
-//			child.setTranslateX(oldX * ratio - newX);
-//		}
 		drawing.setLayoutY(newLayoutY);
 		drawing.toBack();
 	}
@@ -450,12 +328,10 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 		Dragboard db = n.startDragAndDrop(TransferMode.ANY);
 		p.getChildren().add(circle);
-		// Image i = new Image(circle);
-
+		
 		ClipboardContent content = new ClipboardContent();
 
 		content.putImage(((ImageView) event.getSource()).getImage());
-		// content.putImage(p);
 		db.setContent(content);
 		event.consume();
 	}
@@ -479,23 +355,9 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		boolean success = false;
 		double calcX = 0;
 		double calcY = 0;
-		// System.out.println("in dragDropped");
 
 		if (db.hasImage()) {
-			double minSize = getMinSize(plantName);
-			double maxSize = getMaxSize(plantName);
-			double minRad = getRad(minSize, model.getPropertyWidthInches(), model.getPropertyHeightInches());
-			double maxRad = getRad(maxSize, model.getPropertyWidthInches(), model.getPropertyHeightInches());
-			double rad;
-			// System.out.println("Dragging " + plantName);
-			// System.out.print("maxSize: " + maxSize);
-			if (model.getYear() == 3) {
-				rad = maxRad;
-			} else if (model.getYear() == 2) {
-				rad = (maxRad + minRad) / 2;
-			} else {
-				rad = minRad;
-			}
+			double rad = getRadiusFromYear(plantName);
 
 			calcX = model.calcX(event.getX(), rad, view.getSize(), view.getCanvasWidth());
 			calcY = model.calcY(event.getY(), rad, view.getBottomHeight(), view.getCanvasHeight());
@@ -504,7 +366,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 			Circle circle = new Circle();
 
-			view.addCircleToFlow(circle, calcX, calcY, rad, plantName, color);
+			view.addCircleToGarden(circle, calcX, calcY, rad, plantName, color);
 			model.setCurrDrawObj(circle);
 			GA.addAction(new GardenAction((Circle) model.getCurrDrawObj(), calcX, calcY, rad, plantName, color,
 					ActionEnum.ADDPLANT));
@@ -535,23 +397,14 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 */
 	public void update() {
 		view.updatePlants();
-		// System.out.println("Updating");
 	}
 
-	public double getMinSize(String plantName) {
-		double minSize = model.getPlants().get(plantName).getSpread()[0] / 2;
+	public double getSize(String plantName, int minOrMax) {
+		double minSize = model.getPlants().get(plantName).getSpread()[minOrMax] / 2;
 		if (minSize == 0) {
-			minSize = (model.getPlants().get(plantName).getHeight()[0]) / 6;
+			minSize = (model.getPlants().get(plantName).getHeight()[minOrMax]) / 6;
 		}
 		return minSize;
-	}
-
-	public double getMaxSize(String plantName) {
-		double maxSize = model.getPlants().get(plantName).getSpread()[1] / 2;
-		if (maxSize == 0) {
-			maxSize = (model.getPlants().get(plantName).getHeight()[1]) / 6;
-		}
-		return maxSize;
 	}
 
 	public double getRad(double size, double propertyWidth, double propertyHeight) {
@@ -597,7 +450,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		System.out.println("creating copy");
 		Circle oldCircle = (Circle) model.getCurrDrawObj();
 		Circle newCircle = new Circle();
-		view.addCircleToFlow(newCircle, oldCircle.getCenterX() + copyOffset, oldCircle.getCenterY() + copyOffset,
+		view.addCircleToGarden(newCircle, oldCircle.getCenterX() + copyOffset, oldCircle.getCenterY() + copyOffset,
 				oldCircle.getRadius(), (String) oldCircle.getUserData(), (Color) oldCircle.getStroke());
 		System.out.println(newCircle.getCenterX());
 		GA.addAction(new GardenAction(newCircle, 0, 0, 0, newCircle.getUserData().toString(), null, ActionEnum.COPY));
@@ -703,12 +556,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		view.displayInfoForScrollPane(plant.toString());
 	}
 
-	public void setView(GardenView view) {
-		this.view = view;
-	}
-
 	public void savePlants() {
-		ObservableList<Node> children = view.getGarden().getChildren();
 		model.getRectangles().clear();
 		model.getLabels().clear();
 		model.getEllipses().clear();
@@ -726,32 +574,33 @@ public class GardenController extends Controller<GardenView> implements Serializ
 			model.getLabels().add(new LabelDrawingObj((Label) labels.get(i)));
 		}
 		// TODO save background image
-		for (int i = 1; i < children.size(); i++) {
-			model.getGardenObjs().add(new GardenObj((Circle) children.get(i)));
+		ObservableList<Node> plants = view.getGarden().getChildren();
+		for (int i = 1; i < plants.size(); i++) {
+			model.getGardenObjs().add(new GardenObj((Circle) plants.get(i)));
 		}
 	}
 
 	public void loadPlants() {
 		for (GardenObj plant : model.getGardenObjs()) {
 			Circle circle = new Circle();
-			view.addCircleToFlow(circle, plant.getX(), plant.getY(), plant.getRadius(), plant.getPlantName(),
+			view.addCircleToGarden(circle, plant.getX(), plant.getY(), plant.getRadius(), plant.getPlantName(),
 					findCircleColor(plant.getPlantName()));
 		}
 		for (RectDrawingObj rectObj : model.getRectangles()) {
 			if (rectObj.getUserData() == StageNameEnum.DRAW) {
-				view.addRectangle(rectObj, Color.TRANSPARENT, Color.BLACK, main.getDyControl().getHandleOnPressShape(),
+				view.addRectangle(rectObj, Color.TRANSPARENT, Color.BLACK, main.getDyControl().getHandleOnPressShape(StageNameEnum.DRAW),
 						main.getDyControl().getHandleOnDragRectangle());
 			} else {
 				view.addRectangle(rectObj, main.getDyControl().getView().getRandomColor(), Color.TRANSPARENT,
-						main.getDyControl().getHandleOnPressArea(), main.getDyControl().getHandleOnDragRectangle());
+						main.getDyControl().getHandleOnPressShape(StageNameEnum.CONDITIONS), main.getDyControl().getHandleOnDragRectangle());
 			}
 		}
 		for (EllipseDrawingObj ellipseObj : model.getEllipses()) {
-			view.addEllipse(ellipseObj, main.getDyControl().getHandleOnPressShape(),
+			view.addEllipse(ellipseObj, main.getDyControl().getHandleOnPressShape(StageNameEnum.DRAW),
 					main.getDyControl().getHandleOnDragEllipse());
 		}
 		for (LabelDrawingObj labelObj : model.getLabels()) {
-			view.addLabel(labelObj, main.getDyControl().getHandleOnPressShape(),
+			view.addLabel(labelObj, main.getDyControl().getHandleOnPressShape(StageNameEnum.DRAW),
 					main.getDyControl().getHandleOnDragLabel());
 		}
 		Platform.runLater(() -> {
@@ -761,28 +610,58 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		});
 	}
 
+	/**
+	 * Returns the color a circle should be based on plant name and current season
+	 * @param name The name of the plant
+	 * @return A Color object
+	 */
 	public Color findCircleColor(String name) {
 		ArrayList<SeasonEnum> seasonList = new ArrayList<SeasonEnum>(Arrays.asList(getBloomTime(name)));
 		SeasonEnum season = model.getSeason();
-		if (season == SeasonEnum.FALL) {
-			if (seasonList.contains(season)) {
-				return getBloomColor(name);
-			}
-		} else if (season == SeasonEnum.WINTER) {
+		switch(season) {
+		case WINTER:
 			if (seasonList.contains(season)) {
 				return getBloomColor(name);
 			} else {
 				return Color.GRAY;
 			}
-		} else if (season == SeasonEnum.SPRING) {
+		case SPRING:
 			if (seasonList.contains(season)) {
 				return getBloomColor(name);
 			}
-		} else if (season == SeasonEnum.SUMMER) {
+			break;
+		case SUMMER:
+			if (seasonList.contains(season)) {
+				return getBloomColor(name);
+			}
+			break;
+		case FALL:
 			if (seasonList.contains(season)) {
 				return getBloomColor(name);
 			}
 		}
 		return Color.GREEN;
+	}
+	
+	public double getRadiusFromYear(String name) {
+		double minSize = getSize(name, minSpreadInd);
+		double maxSize = getSize(name, maxSpreadInd);
+		double minRad = getRad(minSize, model.getPropertyWidthInches(), model.getPropertyHeightInches());
+		double maxRad = getRad(maxSize, model.getPropertyWidthInches(), model.getPropertyHeightInches());
+		double rad = 0;
+		
+		switch(model.getYear()) {
+		case 3:
+			rad = maxRad;
+			break;
+		case 2:
+			rad = (maxRad + minRad) / 2;
+			break;
+		default:
+			rad = minRad;
+			break;
+		}
+		
+		return rad;
 	}
 }

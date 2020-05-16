@@ -154,7 +154,7 @@ public class GardenAction {
 		for (GardenAction ga : actionList) {
 			switch (ga.getAction()) {
 			case ADDPLANT:
-				gv.addCircleToFlow(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
+				gv.addCircleToGarden(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
 				System.out.print("ADD");
 				break;
 

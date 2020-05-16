@@ -2,7 +2,6 @@ package Views;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 
 import java.io.File;
 import java.io.Serializable;
@@ -81,11 +80,16 @@ public class GardenView extends View<GardenController> implements Serializable {
 
 	private double buttonFontSize = Math.min(12, 18 * canvasWidth / expectedWidth);
 	private final double labelFontSize = Math.min(16, 21 * canvasWidth / expectedWidth);
-	private final double treeStrokeWidth = 10;
-	private final double shrubStrokeWidth = 10;
-	private final double herbStrokeWidth = 5;
-	private final double vineStrokeWidth = 5;
 	private FileChooser fileChooser;
+
+	private final int year1Int = 1;
+	private final int year2Int = 2;
+	private final int year3Int = 3;
+	
+	private final double vBoxSpacing = 10;
+	private final double vBoxVPadding = 5;
+	private final double vBoxHPadding = 0;
+	
 
 	public GardenView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -132,11 +136,9 @@ public class GardenView extends View<GardenController> implements Serializable {
 		int numberPlants = control.getNumPlants();
 		for (PlantTypeEnum type : PlantTypeEnum.values()) {
 			Tab tab = new Tab(type.toString());
-			// tab.setText(type.toString());
-			// Label label = new Label(type.toString());
-			VBox tile = new VBox(10);
+			VBox tile = new VBox(vBoxSpacing);
 			tile.setAlignment(Pos.CENTER);
-			tile.setPadding(new Insets(5, 0, 5, 0));
+			tile.setPadding(new Insets(vBoxVPadding, vBoxHPadding, vBoxVPadding, vBoxHPadding));
 			tile.setStyle("-fx-background-color: DAE6F3;");
 			tile.setPrefWidth(SIZE);
 			for (int i = 0; i < numberPlants; i++) {
@@ -159,13 +161,9 @@ public class GardenView extends View<GardenController> implements Serializable {
 			scrollPane = new ScrollPane();
 			scrollPane.setFitToWidth(true);
 			scrollPane.setContent(tile);
-			// tab.setContent(label);
 			tab.setContent(scrollPane);
 			tabPane.getTabs().add(tab);
 		}
-
-		System.out.println("The first plant in garden View is " + control.getPlantNameAt(0));
-
 	}
 
 	/**
@@ -175,11 +173,6 @@ public class GardenView extends View<GardenController> implements Serializable {
 		garden = new Pane();
 		garden.setOnDragOver(control.getHandlerForDragOver());
 		garden.setOnDragDropped(control.getHandlerForDragDropped());
-//		ImageView background = new ImageView(new Image("/imgs/lawn.jpg"));
-//		background.fitWidthProperty().bind(garden.widthProperty()); 
-//		background.fitHeightProperty().bind(garden.heightProperty());
-
-//		garden.getChildren().add(background);
 	}
 
 	/**
@@ -191,30 +184,32 @@ public class GardenView extends View<GardenController> implements Serializable {
 
 		Region empty1 = new Region();
 		HBox.setHgrow(empty1, Priority.ALWAYS);
-		Region empty2 = new Region();
-		HBox.setHgrow(empty2, Priority.ALWAYS);
-		Region empty3 = new Region();
-		HBox.setHgrow(empty3, Priority.ALWAYS);
-
-		Label seasonLabel = new Label("Select Season");
-		seasonLabel.setFont(new Font(labelFontSize));
-		summer = createButton("Summer", control.handleOnSummerButton());
-		fall = createButton("Fall", control.handleOnFallButton());
-		winter = createButton("Winter", control.handleOnWinterButton());
-		spring = createButton("Spring", control.handleOnSpringButton());
-
-		Label yearLabel = new Label("Select Estimated Size");
-		yearLabel.setFont(new Font(labelFontSize));
-		year1 = createButton("Small", control.handleOnYear1Button());
-		year2 = createButton("Medium", control.handleOnYear2Button());
-		year3 = createButton("Large", control.handleOnYear3Button());
-
+		
 		Label toolsLabel = new Label("Tools");
 		toolsLabel.setFont(new Font(labelFontSize));
 		delete = createButton("Delete", control.handleOnDeleteButton());
 		copy = createButton("Copy", control.handleOnCopyButton());
 		undo = createButton("Undo", control.handleOnUndoButton());
 		redo = createButton("Redo", control.handleOnRedoButton());
+		
+		Region empty2 = new Region();
+		HBox.setHgrow(empty2, Priority.ALWAYS);
+
+		Label seasonLabel = new Label("Select Season");
+		seasonLabel.setFont(new Font(labelFontSize));
+		summer = createButton("Summer", control.handleOnSeasonButton(SeasonEnum.SUMMER));
+		fall = createButton("Fall", control.handleOnSeasonButton(SeasonEnum.FALL));
+		winter = createButton("Winter", control.handleOnSeasonButton(SeasonEnum.WINTER));
+		spring = createButton("Spring", control.handleOnSeasonButton(SeasonEnum.SPRING));
+		
+		Region empty3 = new Region();
+		HBox.setHgrow(empty3, Priority.ALWAYS);
+
+		Label yearLabel = new Label("Select Estimated Size");
+		yearLabel.setFont(new Font(labelFontSize));
+		year1 = createButton("Small", control.handleOnYearButton(year1Int));
+		year2 = createButton("Medium", control.handleOnYearButton(year2Int));
+		year3 = createButton("Large", control.handleOnYearButton(year3Int));
 
 		toolbar = createToolbar();
 
@@ -253,11 +248,11 @@ public class GardenView extends View<GardenController> implements Serializable {
 	 * Adds a Circle to the garden Pane when the user releases a drag over the
 	 * pane. Uses the SIZE to center images around mouse.
 	 * 
-	 * @param plant ImageView of plant from ScrollPane that was dragged by user
+	 * @param plant Circle object representing plant from ScrollPane that was dragged by user
 	 * @param x     x coordinates of mouse
 	 * @param y     y coordinates of mouse
 	 */
-	public Circle addCircleToFlow(Circle plant, double x, double y, double radius, String name, Color color) {
+	public Circle addCircleToGarden(Circle plant, double x, double y, double radius, String name, Color color) {
 		plant.setUserData(name);
 		plant.setRadius(radius);
 		plant.setCenterX(x);
@@ -292,44 +287,6 @@ public class GardenView extends View<GardenController> implements Serializable {
 		dragPlant.setCenterX(x);
 		dragPlant.setCenterY(y);
 		//System.out.println("Moving plant at x:" + x + ", y:" + y);
-	}
-
-	/**
-	 * Gets the size of the picture
-	 * 
-	 * @return size of the picture
-	 */
-	public double getPicSize() {
-		return SIZE;
-	}
-
-	/**
-	 * Sets a new x value for any of the ImageViews in garden
-	 * 
-	 * @param index the index of the ImageView in garden to be modified
-	 * @param x     the new x value of the specified imagView in garden
-	 */
-	public void setXs(int index, double x) {
-		garden.getChildren().get(index).setTranslateX(((Circle) garden.getChildren().get(index)).getCenterX() + x);
-	}
-
-	/**
-	 * Sets a new y value for any of the ImageViews in garden
-	 * 
-	 * @param index the index of the ImageView in garden to be modified
-	 * @param y     the new y value of the specified ImageView in garden
-	 */
-	public void setYs(int index, double y) {
-		garden.getChildren().get(index).setTranslateY(((Circle) garden.getChildren().get(index)).getCenterY() + y);
-	}
-
-	/**
-	 * Gets the tile pane width
-	 * 
-	 * @return width of the TilePane
-	 */
-	public double getTPWidth() {
-		return 1;
 	}
 
 	public Pane getDrawing() {
@@ -384,25 +341,8 @@ public class GardenView extends View<GardenController> implements Serializable {
 		for (Node plant : gardenList) {
 			String plantName = (String) plant.getUserData();
 			if (plantName != null) {
-				double minSize = control.getMinSize(plantName);
-				double maxSize = control.getMaxSize(plantName);
-				
-				double minRad = control.getRad(minSize, control.getPropertyWidthInches(), control.getPropertyHeightInches());
-				double maxRad = control.getRad(maxSize, control.getPropertyWidthInches(), control.getPropertyHeightInches());
-	
-				if (plantName != null) {
-					if (year == 1) {
-						((Circle) plant).setRadius(minRad);
-					}
-	
-					else if (year == 2) {
-						((Circle) plant).setRadius((maxRad + minRad) / 2);
-					}
-	
-					else if (year == 3) {
-						((Circle) plant).setRadius(maxRad);
-					}
-				}
+				double rad = control.getRadiusFromYear(plantName);
+				((Circle) plant).setRadius(rad);
 			}
 		}
 			
@@ -449,18 +389,16 @@ public class GardenView extends View<GardenController> implements Serializable {
 	}
 	
 	public void displayInfoForScrollPane(String plantString) {
-		VBox vb = new VBox();
+		info = new VBox();
 
-		vb.setStyle("-fx-background-color: DAE6F3;");
+		info.setStyle("-fx-background-color: DAE6F3;");
 
 		Label plantLabel = new Label(plantString);
 		plantLabel.setFont(new Font(14));
 
-		vb.getChildren().addAll(plantLabel);
+		info.getChildren().addAll(plantLabel);
 
-		info = vb;
-
-		this.garden.getChildren().add(vb);
+		this.garden.getChildren().add(info);
 	}
 
 	public void displayInfo(Circle e, double mouseX, double mouseY, String plantMatch) {
@@ -471,9 +409,9 @@ public class GardenView extends View<GardenController> implements Serializable {
 		plantImage.setPreserveRatio(true);
 		plantImage.setFitHeight(SIZE);
 		plantImage.setFitWidth(SIZE);
-		VBox vb = new VBox();
+		info = new VBox();
 
-		vb.setStyle("-fx-background-color: DAE6F3;");
+		info.setStyle("-fx-background-color: DAE6F3;");
 
 		Label topLabel = new Label(e.getUserData().toString());
 		topLabel.setFont(new Font(20));
@@ -481,14 +419,11 @@ public class GardenView extends View<GardenController> implements Serializable {
 		Label match = new Label(plantMatch);
 		match.setFont(new Font(20));
 
-		vb.getChildren().addAll(topLabel, plantImage, match);
-
-		info = vb;
-
-		this.garden.getChildren().add(vb);
+		info.getChildren().addAll(topLabel, plantImage, match);
+		this.garden.getChildren().add(info);
 
 		if (mouseY < garden.getHeight() / 2) {
-			vb.setLayoutY(garden.getHeight() / 2);
+			info.setLayoutY(garden.getHeight() / 2);
 		}
 
 	}
