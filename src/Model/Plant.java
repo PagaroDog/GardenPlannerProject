@@ -2,6 +2,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashSet;
 
 /**
@@ -122,11 +123,11 @@ public class Plant implements Serializable {
 	
 	@Override
 	public String toString() {
-		String commonString = Model.toCommaString(commonNames);
-		String colorString = Model.toCommaString(color);
-		String seasonString = Model.toCommaString(bloomtime);
-		String waterString = Model.toCommaString(waterLevel);
-		String lightString = Model.toCommaString(light);
+		String commonString = Arrays.toString(commonNames).replace("[", "").replace("]", "");
+		String colorString = color.toString().replace("[", "").replace("]", "");
+		String seasonString = Arrays.toString(bloomtime).replace("[", "").replace("]", "");
+		String waterString = Arrays.toString(waterLevel).replace("[", "").replace("]", "");
+		String lightString = Arrays.toString(light).replace("[", "").replace("]", "");
 		return name +
 				"\nCommon names: " + commonString +
 				"\nDuration: " + duration +
