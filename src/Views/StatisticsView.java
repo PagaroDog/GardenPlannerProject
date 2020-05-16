@@ -114,7 +114,7 @@ public class StatisticsView extends View<StatisticsController> {
 
 		vBox.setPadding(new Insets(vboxSpacing, vboxSpacing, vboxSpacing, vboxSpacing));
 		vBox.setSpacing(vboxSpacing);
-		vBox.setStyle(String.format("-fx-background-color: rgba( %d, %d, %d, %d);", vBoxRed , vBoxGreen, vBoxBlue, vBoxOpacity));
+		vBox.setStyle(String.format("-fx-background-color: rgba( %f, %f, %f, %f);", vBoxRed , vBoxGreen, vBoxBlue, vBoxOpacity));
 
 		border.setCenter(scroll);
 
