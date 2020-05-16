@@ -26,7 +26,6 @@ import javafx.scene.layout.GridPane;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
 
 /**
  * This class stores the data for this software, as well as some methods that
@@ -998,39 +997,4 @@ public class Model implements Serializable{
 		boolean inY = y <= area.getBoundsInParent().getMaxY() && y >= area.getBoundsInParent().getMinY();
 		return inX && inY;
 	}
-	/**
-	 * Takes a collection of Strings and returns a string of the elements separated by commas
-	 * @param <T> Collection 
-	 * @param arr Collection of Strings
-	 * @return string of elements from collection separated by commas
-	 */
-	public static <T> String toCommaString(Collection<T> arr) {
-		String str = "";
-		String separator = ", ";
-		for (T curr : arr) {
-			str += curr + separator;
-		}
-		if (str.length() > separator.length()) {
-			str.substring(0, str.length() - separator.length());
-		}
-		return str;
-	}
-	/**
-	 * Takes an array of Strings and returns a string of the elements sperated by commas
-	 * @param <T> Array
-	 * @param arr Array of Strings
-	 * @return string of elements from array separated by commas
-	 */
-	public static <T> String toCommaString(T[] arr) {
-		String str = "";
-		String separator = ", ";
-		for (T curr : arr) {
-			str += curr + separator;
-		}
-		if (str.length() > separator.length()) {
-			str = str.substring(0, str.length() - separator.length());
-		}
-		return str;
-	}
-
 }

@@ -13,7 +13,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -183,21 +182,6 @@ public class SuggestionsView extends View<SuggestionsController> {
 	public void inputStats(Object event,  String[] cNames, String name,PlantTypeEnum type, WaterEnum[] moisture, SunEnum[] sun) {
 		Object[] info = { cNames, name,  moisture, type, sun };
 		int cnt = 0;
-		/*for (Object s : info) {
-			Label val = new Label();
-			if(cnt % 2 == 0) {
-				val.setText(Arrays.deepToString((Object[]) s));
-			}
-			else {
-				val.setText(s.toString());
-			}
-			
-			
-			GridPane.setConstraints(val, 3, cnt);
-			cnt++;
-			stats.getChildren().add(val);
-			
-		}*/
 		
 		Label val = new Label(cNames[0]);
 		GridPane.setConstraints(val, 3, cnt);

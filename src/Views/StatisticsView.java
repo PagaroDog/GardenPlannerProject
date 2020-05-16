@@ -5,7 +5,6 @@ import java.util.HashSet;
 import Controllers.StatisticsController;
 import Model.SeasonEnum;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -63,6 +62,15 @@ public class StatisticsView extends View<StatisticsController> {
 	private final double vBoxBlue = 174;
 	private final double vBoxOpacity = 1;
 	
+	private final double smallDefaultMax = 20;
+	private final double smallSmallMax = 50;
+	private final double normDefaultMax = 30;
+	private final double normSmallMax = 60;
+	private final double normSmallerMax = 100;
+
+	private final int noPlants = 0;
+	private final int fewPlants = 3;
+	
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
 		if(canvasHeight < smallHeight || canvasWidth < smallWidth) {
@@ -114,7 +122,7 @@ public class StatisticsView extends View<StatisticsController> {
 
 		vBox.setPadding(new Insets(vboxSpacing, vboxSpacing, vboxSpacing, vboxSpacing));
 		vBox.setSpacing(vboxSpacing);
-		vBox.setStyle(String.format("-fx-background-color: rgba( %d, %d, %d, %d);", vBoxRed , vBoxGreen, vBoxBlue, vBoxOpacity));
+		vBox.setStyle(String.format("-fx-background-color: rgba( %f, %f, %f, %f);", vBoxRed , vBoxGreen, vBoxBlue, vBoxOpacity));
 
 		border.setCenter(scroll);
 
@@ -153,31 +161,19 @@ public class StatisticsView extends View<StatisticsController> {
 		this.uVines.setText("Unique Vines: " + uVines);
 		
 		
-		colors.setText("Potential Bloom Colors: ");
-		for (String color : colorSet) {
-			colors.setText(colors.getText() + color + ", ");
-		}
-		colors.setText(colors.getText().substring(0, colors.getText().length() - 2));
+		colors.setText("Potential Bloom Colors: " + colorSet.toString().replace("[", "").replace("]", ""));
 
-		bloomingSeasons.setText("Blooming seasons: ");
-		for (SeasonEnum season : seasons) {
-			bloomingSeasons.setText(bloomingSeasons.getText() + season + ", ");
-		}
-		bloomingSeasons.setText(bloomingSeasons.getText().substring(0, bloomingSeasons.getText().length() - 2));
+		bloomingSeasons.setText("Blooming seasons: " + seasons.toString().replace("[", "").replace("]", ""));
 	
 		String percent = String.format("%2.2f", gardenCoveredPercent)+ "%";
 		gardenCover.setText("Garden Covered: " + percent);
 
-		plantList.setText("List of Plants in your Garden: ");
-		for (String name : allNames) {
-			plantList.setText(plantList.getText() + name + ", ");
-		}
-		plantList.setText(plantList.getText().substring(0, plantList.getText().length() - 2));
+		plantList.setText("List of Plants in your Garden: " + allNames.toString().replace("[", "").replace("]", ""));
 		
-		if(uTotal == 0) {
+		if(uTotal == noPlants) {
 			tips.setText("Add some plants! Bring your yard to life!");
 		}
-		else if(uTotal < 3) {
+		else if(uTotal < fewPlants) {
 			tips.setText("We all have our favorite plants, but a greater variety brings more life!");
 		}
 		else {
@@ -186,10 +182,10 @@ public class StatisticsView extends View<StatisticsController> {
 		
 
 		if(smallScreen) {
-			if(uTotal < 20) {
+			if(uTotal < smallDefaultMax) {
 				plantList.setFont(new Font(defaultFontSize));
 			}
-			else if(uTotal<50) {
+			else if(uTotal < smallSmallMax) {
 				plantList.setFont(new Font(smallFontSize));
 			}
 			else {
@@ -197,13 +193,13 @@ public class StatisticsView extends View<StatisticsController> {
 			}
 		}
 		else {
-			if(uTotal < 30) {
+			if(uTotal < normDefaultMax) {
 				plantList.setFont(new Font(defaultFontSize));
 			}
-			else if(uTotal < 60) {
+			else if(uTotal < normSmallMax) {
 				plantList.setFont(new Font(smallFontSize));
 			}
-			else if(uTotal < 100){
+			else if(uTotal < normSmallerMax){
 				plantList.setFont(new Font(evenSmallerFontSize));
 			}
 			else {
