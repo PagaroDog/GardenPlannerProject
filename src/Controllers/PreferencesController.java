@@ -25,7 +25,8 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class PreferencesController extends Controller<PreferencesView> {
-
+	private final double originalTranslate = 0;
+	private final double originalScale = 1;
 	public PreferencesController(Model model, PreferencesView view, Main main) {
 		super(model, view, main);
 	}
@@ -109,14 +110,22 @@ public class PreferencesController extends Controller<PreferencesView> {
 		if (drawing != null) {
 			view.getBorder().setLeft(drawing);
 			for (Node child : drawing.getChildren()) {
-				child.setTranslateX(0);
-				child.setScaleX(1);
+				child.setTranslateX(originalTranslate);
+				child.setScaleX(originalScale);
 			}
 			double oldWidth = main.getDyControl().getViewWidth();
 			double newWidth = view.getBorder().getWidth() - view.getVBox().getWidth();
-			((Pane)drawing.getChildren().get(0)).setPrefWidth(newWidth);
+			//((Pane)drawing.getChildren().get(0)).setPrefWidth(newWidth);
+			drawing.setPrefWidth(newWidth);
 			double ratio = newWidth / oldWidth;
 			model.getGardenPreferences().clear();
+			
+			for(Node child : drawing.getChildren()) {
+				double oldX = child.getBoundsInParent().getMinX();
+				child.setScaleX(ratio);
+				double newX = child.getBoundsInParent().getMinX();
+				child.setTranslateX(oldX * ratio - newX);
+			}
 			
 			Pane draw = (Pane) drawing.getChildren().get(0);
 			for (Node child : draw.getChildren()) {
@@ -129,10 +138,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 						firstCond = false;
 					}
 				}
-				double oldX = child.getBoundsInParent().getMinX();
-				child.setScaleX(ratio);
-				double newX = child.getBoundsInParent().getMinX();
-				child.setTranslateX(oldX * ratio - newX);
+				
 			}
 			
 			

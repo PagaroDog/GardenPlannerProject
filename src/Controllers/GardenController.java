@@ -399,14 +399,13 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		}
 		double oldWidth = main.getDyControl().getViewWidth();
 		
-		double newWidth = view.getGarden().getWidth()-100;
+		double newWidth = view.getGarden().getWidth();
 		drawing.setPrefWidth(view.getGarden().getWidth());
-		System.out.println(oldWidth);
-		System.out.println(newWidth);
-		((Pane)drawing.getChildren().get(0)).setPrefWidth(newWidth);
+		
+		//((Pane)drawing.getChildren().get(0)).setPrefWidth(newWidth);
 		double ratio = newWidth / oldWidth;
-		Pane draw = (Pane) drawing.getChildren().get(0);
-		for (Node child : draw.getChildren()) {
+		//Pane draw = (Pane) drawing.getChildren().get(0);
+		for (Node child : drawing.getChildren()) {
 			System.out.println(child);
 			double oldX = child.getBoundsInParent().getMinX();
 			child.setScaleX(ratio);
