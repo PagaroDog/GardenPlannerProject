@@ -640,7 +640,9 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 
 	public void undo(MouseEvent event) {
-		GA.undo(view);
+		GA.undo(); 
+		view.iterateGardenActions(GA);
+		
 	}
 
 	public EventHandler handleOnRedoButton() {
@@ -648,7 +650,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 
 	public void redo(MouseEvent event) {
-		GA.redo(view);
+		GA.redo();
+		view.iterateGardenActions(GA);
 	}
 
 	public EventHandler handleOnMouseEntered() {

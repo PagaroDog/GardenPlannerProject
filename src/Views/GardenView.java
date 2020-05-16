@@ -12,6 +12,7 @@ import java.util.List;
 
 import Controllers.GardenController;
 import Model.EllipseDrawingObj;
+import Model.GardenAction;
 import Model.LabelDrawingObj;
 import Model.PlantTypeEnum;
 import Model.RectDrawingObj;
@@ -547,5 +548,45 @@ public class GardenView extends View<GardenController> implements Serializable {
 		lab.setOnMouseDragged(onDrag);
 		((Pane) ((Pane) ((Pane) drawing.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren().add(lab);
 	}
+	
+	
+	public void iterateGardenActions(GardenAction GA) {
+		System.out.println("Iterating over garden actions"); 
+		garden.getChildren().clear(); 
+		garden.getChildren().add(drawing); 
+		for (GardenAction ga : GA.getActionList()) {
+			switch (ga.getAction()) {
+			case ADDPLANT:
+				addCircleToFlow(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
+				System.out.print("ADD");
+				break;
+
+			case MOVEPLANT:
+				movePlant(ga.getPlant(), ga.getX(), ga.getY());
+				System.out.print("MOVE"); 
+				break;
+
+			case DELETE:
+				deleteShape(ga.getPlant());
+				System.out.print("DELETE");
+				break;
+
+			case COPY:
+				addShape(ga.getPlant());
+				System.out.print("COPY");
+			}
+			System.out.println(""); 
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

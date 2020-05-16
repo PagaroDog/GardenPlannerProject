@@ -50,13 +50,7 @@ public class GardenActionTests {
 		GardenAction actionThree = new GardenAction(testPlant, testX + testMoveX, testY , testRadius, testName, testColor, ActionEnum.MOVEPLANT);
 		test.addAction(actionThree);
 		assertEquals(test.getActionList().size(), 3);
-		
-		
-		Stage testStage = new Stage(); 
-		Images testImages = new Images("/Resources"); 
-		
-		GardenView gv = new GardenView(testStage, testImages); 
-		
+		 
 		
 		
 	}

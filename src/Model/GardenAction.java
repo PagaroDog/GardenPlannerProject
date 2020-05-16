@@ -122,28 +122,31 @@ public class GardenAction {
 		System.out.println(actionList);
 	}
 
-	public void undo(GardenView gv) {
+	public void undo() {
 		if (actionList.size() == 0) {
 			return;
 		}
 
 		redoList.push(actionList.removeLast());
 		
+		/*
 		if(actionList.size()== 0) {
 			gv.getGarden().getChildren().clear();
 			gv.getGarden().getChildren().add(gv.getDrawing()) ;
 		}
+		
 		else {
 			actionIterate(gv);
 		}
+		*/
 	}
 
-	public void redo(GardenView gv) {
+	public void redo() {
 		if (redoList.size() == 0) {
 			return;
 		} else {
 			actionList.add(redoList.pop());
-			actionIterate(gv);
+			//actionIterate(gv);
 		}
 	}
 
