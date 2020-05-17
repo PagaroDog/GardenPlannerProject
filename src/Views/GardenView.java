@@ -80,8 +80,8 @@ public class GardenView extends View<GardenController> implements Serializable {
 	private int SIZE = 200;
 	private transient Images imgs;
 
-	private double buttonFontSize = Math.min(12, 18 * canvasWidth / expectedWidth);
-	private final double labelFontSize = Math.min(16, 21 * canvasWidth / expectedWidth);
+	private double buttonFontSize = Math.min(12, 15 * canvasWidth / expectedWidth); //Modified from 18
+	private final double labelFontSize = Math.min(16, 18 * canvasWidth / expectedWidth); //Modified from 21
 	private FileChooser fileChooser;
 
 	private final int year1Int = 1;
