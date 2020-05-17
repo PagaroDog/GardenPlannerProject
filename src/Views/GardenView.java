@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import Controllers.GardenController;
-import Model.DrawModeEnum;
 import Model.EllipseDrawingObj;
 import Model.GardenAction;
 import Model.LabelDrawingObj;

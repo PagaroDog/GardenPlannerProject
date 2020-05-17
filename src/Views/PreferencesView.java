@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -68,7 +69,10 @@ public class PreferencesView extends View<PreferencesController> {
 		BorderPane bottom = addBottom();
 		vbox = addVBox();
 		border.setBottom(bottom);
-		border.setRight(vbox);
+		ScrollPane scroll = new ScrollPane(vbox);
+		scroll.setFitToHeight(true);
+		scroll.setFitToWidth(true);
+		border.setRight(scroll);
 		drawing = new Pane();
 		border.setLeft(drawing);
 

@@ -45,7 +45,7 @@ public class Main extends Application {
 		model = new Model();
 		model.importPlantsFromCSV("plantInfo.csv");
 		imgs = new Images("Resources/imgs/");
-		startView = new StartupView(stage);
+		startView = new StartupView(stage, imgs);
 		tutView = new TutorialView(stage);
 		dyView = new DrawYardView(stage);
 		statView = new StatisticsView(stage);
