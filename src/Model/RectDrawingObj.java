@@ -4,7 +4,7 @@ import javafx.scene.shape.Rectangle;
 
 public class RectDrawingObj extends DrawingObj {
 	private StageNameEnum userData;
-	
+
 	public RectDrawingObj(Rectangle rect) {
 		x = rect.getX();
 		y = rect.getY();

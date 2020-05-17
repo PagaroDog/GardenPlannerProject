@@ -98,11 +98,11 @@ public class Main extends Application {
 	public GardenController getGardenControl() {
 		return gardenControl;
 	}
-	
+
 	public void setGardenControl(GardenController gardenControl) {
 		this.gardenControl = gardenControl;
 	}
-	
+
 	public SuggestionsController getSuggestionsControl() {
 		return suggControl;
 	}
@@ -122,7 +122,7 @@ public class Main extends Application {
 		model.setStartControl(startControl);
 		model.setStatControl(statControl);
 		model.setTutControl(tutControl);
-		
+
 		dyControl.setModel(model);
 		gardenControl.setModel(model);
 		prefControl.setModel(model);

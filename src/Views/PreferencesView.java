@@ -43,7 +43,7 @@ public class PreferencesView extends View<PreferencesController> {
 	private Label zoneButtonsLabel;
 
 	private double zoneButtonsFontSize = 16;
-	
+
 	private final double vBoxSpacing = 15;
 	private final double vBoxVPadding = 15;
 	private final double vBoxHPadding = 12;
@@ -51,7 +51,7 @@ public class PreferencesView extends View<PreferencesController> {
 	private final double vBoxGreen = 255;
 	private final double vBoxBlue = 174;
 	private final double vBoxOpacity = 12;
-	
+
 	private final double colorInsets = 10;
 
 	public PreferencesView(Stage stage) {
@@ -87,7 +87,8 @@ public class PreferencesView extends View<PreferencesController> {
 		vbox = new VBox();
 		vbox.setPadding(new Insets(vBoxVPadding, vBoxHPadding, vBoxVPadding, vBoxHPadding));
 		vbox.setSpacing(vBoxSpacing);
-		vbox.setStyle(String.format("-fx-background-color: rgba(%f, %f, %f, %f);", vBoxRed, vBoxGreen, vBoxBlue, vBoxOpacity));
+		vbox.setStyle(String.format("-fx-background-color: rgba(%f, %f, %f, %f);", vBoxRed, vBoxGreen, vBoxBlue,
+				vBoxOpacity));
 
 		name = new TextField();
 		name.setPromptText("Name this Area");
@@ -109,8 +110,7 @@ public class PreferencesView extends View<PreferencesController> {
 		sun = new ComboBox<String>();
 		sun.getItems().addAll(sunlevels);
 
-
-		String[] colors = { "Red", "Blue", "Purple", "Pink", "White", "Yellow", "Black","Brown","Green","Orange" };
+		String[] colors = { "Red", "Blue", "Purple", "Pink", "White", "Yellow", "Black", "Brown", "Green", "Orange" };
 
 		color = new TilePane();
 		color.setPadding(new Insets(colorInsets, colorInsets, colorInsets, colorInsets));
@@ -151,7 +151,9 @@ public class PreferencesView extends View<PreferencesController> {
 	}
 
 	/**
-	 * Searches the color radio buttons and puts the selected colors into an array and returns it
+	 * Searches the color radio buttons and puts the selected colors into an array
+	 * and returns it
+	 * 
 	 * @return An array of strings of the selected colors
 	 */
 	public String[] getUserColor() {
@@ -172,7 +174,7 @@ public class PreferencesView extends View<PreferencesController> {
 		System.out.println(strings);
 		return strings;
 	}
-	
+
 	public TextField getName() {
 		return name;
 	}

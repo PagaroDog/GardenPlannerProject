@@ -3,7 +3,6 @@ package Model;
 import java.io.Serializable;
 import java.util.HashSet;
 
-import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -13,7 +12,7 @@ import javafx.scene.shape.Rectangle;
  * @author Brandon Wu
  *
  */
-public class GardenPref implements Serializable{
+public class GardenPref implements Serializable {
 	private String name;
 	private String userLight;
 	private String userBloom;
@@ -38,7 +37,8 @@ public class GardenPref implements Serializable{
 	 * @param height
 	 * @param width
 	 */
-	public GardenPref(String name, String userLight, String userBloom, String userSoil, HashSet<String> userColor, Rectangle area) {
+	public GardenPref(String name, String userLight, String userBloom, String userSoil, HashSet<String> userColor,
+			Rectangle area) {
 		this.name = name;
 		this.userLight = userLight;
 		this.userBloom = userBloom;
@@ -70,7 +70,7 @@ public class GardenPref implements Serializable{
 	public String getUserWater() {
 		return userWater;
 	}
-	
+
 	public Rectangle getArea() {
 		return area;
 	}

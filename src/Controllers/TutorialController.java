@@ -3,25 +3,16 @@ package Controllers;
 import Model.Model;
 import Model.StageNameEnum;
 import Views.TutorialView;
-import Views.View;
 import javafx.event.EventHandler;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 /**
- * @author Josh Stone
-* this class is the controller for the Tutorial screen
-*/
-
-	
-	
+ * @author Josh Stone this class is the controller for the Tutorial screen
+ */
 
 public class TutorialController extends Controller<TutorialView> {
-
-	//branch 'master' of https://github.com/CISC275-S2020/team-11-4
 	public TutorialController(Model model, TutorialView view, Main main) {
 		super(model, view, main);
 	}
@@ -82,47 +73,43 @@ public class TutorialController extends Controller<TutorialView> {
 	 * Goes to the next slide
 	 */
 	public void continueButton(MouseEvent event) {
-		
-		
-		if(view.getCurrentSlide()+1 < view.getTutorialSlides().size()) {
-			ImageView iv= new
-			ImageView(view.getTutorialSlides().get(view.getCurrentSlide()+1));
+
+		if (view.getCurrentSlide() + 1 < view.getTutorialSlides().size()) {
+			ImageView iv = new ImageView(view.getTutorialSlides().get(view.getCurrentSlide() + 1));
 			iv.setPreserveRatio(true);
 			iv.setFitHeight(((StackPane) view.getBorder().getCenter()).getHeight());
 			view.setBackground(iv);
-			//view.setBackground(new ImageView(view.getTutorialSlides().get(view.getCurrentSlide()+1)));
+			// view.setBackground(new
+			// ImageView(view.getTutorialSlides().get(view.getCurrentSlide()+1)));
 			view.getSlide().getChildren().add(view.getBackground());
-			
-			
+
 			view.setCurrentSlide(view.getCurrentSlide() + 1);
 			System.out.println(view.getCurrentSlide());
 		}
-		
-
 
 	}
 
-	// need to make this make sense. Either fix the numbers of currentSlide/TutorialSlide or change order of background display
-	// not sure why the last image goes back to w/ backButton, but not for the middle images. added a null image to fix.
+	// need to make this make sense. Either fix the numbers of
+	// currentSlide/TutorialSlide or change order of background display
+	// not sure why the last image goes back to w/ backButton, but not for the
+	// middle images. added a null image to fix.
 
 	/**
 	 * Goes to the previous slide
 	 */
 	public void backButton(MouseEvent event) {
-		 
+
 		if (view.getCurrentSlide() - 1 >= 0) {
-			ImageView iv=new
-			ImageView(view.getTutorialSlides().get(view.getCurrentSlide() - 1));
+			ImageView iv = new ImageView(view.getTutorialSlides().get(view.getCurrentSlide() - 1));
 			iv.setPreserveRatio(true);
 			iv.setFitHeight(((StackPane) view.getBorder().getCenter()).getHeight());
 			view.setBackground(iv);
-			//view.setBackground(new ImageView(view.getTutorialSlides().get(view.getCurrentSlide() - 1)));
+			// view.setBackground(new
+			// ImageView(view.getTutorialSlides().get(view.getCurrentSlide() - 1)));
 			view.getSlide().getChildren().add(view.getBackground());
 			view.setCurrentSlide(view.getCurrentSlide() - 1);
 			System.out.println(view.getCurrentSlide());
 		}
-			
-
 
 	}
 

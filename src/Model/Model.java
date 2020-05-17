@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -38,7 +37,7 @@ import javafx.scene.shape.Circle;
  *
  */
 
-public class Model implements Serializable{
+public class Model implements Serializable {
 	private SeasonEnum season = SeasonEnum.SUMMER;
 	private transient StageNameEnum stageName = StageNameEnum.WELCOME;
 
@@ -116,6 +115,9 @@ public class Model implements Serializable{
 	private ArrayList<LabelDrawingObj> labels = new ArrayList<LabelDrawingObj>();
 	private ArrayList<EllipseDrawingObj> ellipses = new ArrayList<EllipseDrawingObj>();
 	private String backgroundPath;
+
+	private int decToPercent = 100;
+	private int radiusExp = 2;
 
 	public SeasonEnum getSeason() {
 		return season;
@@ -280,7 +282,7 @@ public class Model implements Serializable{
 	public HashSet<String> getAllNames() {
 		return allNames;
 	}
-	
+
 	public int getUniqueShrubs() {
 		return uniqueShrubs;
 	}
@@ -360,7 +362,7 @@ public class Model implements Serializable{
 	public GardenPref getCurrPref() {
 		return currPref;
 	}
-	
+
 	public double getGardenCoveredPercent() {
 
 		return gardenCovered;
@@ -818,11 +820,11 @@ public class Model implements Serializable{
 
 				allNames.add(plantName);
 
-				plantSurfaceArea += Math.PI * Math.pow(((Circle) node).getRadius(),2);
+				plantSurfaceArea += Math.PI * Math.pow(((Circle) node).getRadius(), radiusExp);
 			}
 		}
 
-		gardenCovered = plantSurfaceArea / (propertyHeightInches * propertyWidthInches) * 100;
+		gardenCovered = plantSurfaceArea / (propertyHeightInches * propertyWidthInches) * decToPercent;
 
 	}
 
@@ -935,7 +937,7 @@ public class Model implements Serializable{
 				if (isInArea(x, y, gp.getArea())) {
 					String match = "";
 					Plant p = plants.get(plantName);
-					
+
 					if (gp.getUserLight() != null) {
 						if (userCheck(p.getLight(), gp.getUserLight())) {
 							match = "Plant matches light requirement.";
@@ -955,8 +957,7 @@ public class Model implements Serializable{
 					} else {
 						match += "\nNo soil moisture preference in this area.";
 					}
-					
-					
+
 					if (gp.getUserBloom() != null) {
 						if (userCheck(p.getBloomtime(), gp.getUserBloom())) {
 							match += "\nPlant blooms in desired season.";
@@ -969,14 +970,14 @@ public class Model implements Serializable{
 
 					HashSet<String> copy = new HashSet<String>(p.getColor());
 					Iterator<String> it = copy.iterator();
-					
+
 					if (gp.getUserColor() != null)
-					while (it.hasNext()) {
-						if (gp.getUserColor().contains(it.next())) {
-							match += "\nPlant matches desired color.";
-							break;
+						while (it.hasNext()) {
+							if (gp.getUserColor().contains(it.next())) {
+								match += "\nPlant matches desired color.";
+								break;
+							}
 						}
-					}
 					return match;
 				}
 			}

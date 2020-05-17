@@ -206,6 +206,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 */
 	public EventHandler getHandleOnKeyPressed(TextField label, TextField width, TextField height) {
 		return new EventHandler<KeyEvent>() {
+			@Override
 			public void handle(KeyEvent e) {
 				if (!(label.isFocused() || width.isFocused() || height.isFocused())) {
 					switch (e.getCode()) {
@@ -232,9 +233,10 @@ public class DrawYardController extends Controller<DrawYardView> {
 			}
 		};
 	}
-	
+
 	public EventHandler getHandleOnEnterPressed() {
 		return new EventHandler<KeyEvent>() {
+			@Override
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 				case ENTER:
@@ -426,7 +428,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 	}
 
 	/**
-	 * In select mode and the correct stage, sets model's currDrawObj to the pressed shape
+	 * In select mode and the correct stage, sets model's currDrawObj to the pressed
+	 * shape
 	 * 
 	 * @param event The MouseEvent generated when the shape was pressed
 	 */
@@ -448,8 +451,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 	public void dragRectangle(MouseEvent event) {
 		if (model.getDrawMode() == DrawModeEnum.SELECT) {
 			Rectangle rect = (Rectangle) event.getSource();
-			double[] newCoords = model.moveRectCoordinates(event.getX(), event.getY(), rect.getWidth(), rect.getHeight(),
-					view.getDrawing().getWidth(), view.getDrawing().getHeight());
+			double[] newCoords = model.moveRectCoordinates(event.getX(), event.getY(), rect.getWidth(),
+					rect.getHeight(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
 			if (rect.getUserData() == model.getStageName())
 				view.moveRectangle(rect, newCoords[xInd], newCoords[yInd]);
 		}
@@ -479,8 +482,9 @@ public class DrawYardController extends Controller<DrawYardView> {
 	public void dragLabel(MouseEvent event) {
 		if (model.getDrawMode() == DrawModeEnum.SELECT) {
 			Label label = (Label) event.getSource();
-			double[] newCoords = model.moveRectCoordinates(event.getSceneX(), event.getSceneY() - view.getToolbarHeight(), label.getWidth(),
-					label.getHeight(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
+			double[] newCoords = model.moveRectCoordinates(event.getSceneX(),
+					event.getSceneY() - view.getToolbarHeight(), label.getWidth(), label.getHeight(),
+					view.getDrawing().getWidth(), view.getDrawing().getHeight());
 			if (model.getStageName() == StageNameEnum.DRAW) {
 				view.moveLabel(label, newCoords[xInd], newCoords[yInd]);
 			}

@@ -1,6 +1,5 @@
 package Controllers;
 
-
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -27,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 public class PreferencesController extends Controller<PreferencesView> {
 	private final double originalTranslate = 0;
 	private final double originalScale = 1;
+
 	public PreferencesController(Model model, PreferencesView view, Main main) {
 		super(model, view, main);
 	}
@@ -54,7 +54,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 		view.getStage().setScene(Main.getScenes().get(StageNameEnum.DRAW));
 		model.setStageName(StageNameEnum.CONDITIONS);
 //		if (view.getDrawing() != null) {
-			main.getDyControl().setDrawing(view.getDrawing());
+		main.getDyControl().setDrawing(view.getDrawing());
 //		}
 		main.getDyControl().getView().condMode();
 	}
@@ -85,7 +85,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	public void nextButton() {
 		saveUserPref(false);
 		view.getStage().setScene(Main.getScenes().get(StageNameEnum.SUGGESTIONS));
-		
+
 		model.createSuggestions(model.getGardenPreferences().size() == 0);
 		main.getSuggestionsControl().update();
 		if (view.getCurrArea() != null) {
@@ -94,7 +94,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 		view.setCurrArea(null);
 		model.setCurrPref(null);
 		model.setStageName(StageNameEnum.SUGGESTIONS);
-		
+
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 */
 	public void setDrawing(Pane drawing) {
 		boolean firstCond = true;
-		Rectangle firstCondRect=new Rectangle();
+		Rectangle firstCondRect = new Rectangle();
 		if (drawing != null) {
 			view.getBorder().setLeft(drawing);
 			for (Node child : drawing.getChildren()) {
@@ -118,34 +118,33 @@ public class PreferencesController extends Controller<PreferencesView> {
 			drawing.setPrefWidth(newWidth);
 			double ratio = newWidth / oldWidth;
 			model.getGardenPreferences().clear();
-			
-			for(Node child : drawing.getChildren()) {
+
+			for (Node child : drawing.getChildren()) {
 				double oldX = child.getBoundsInParent().getMinX();
 				child.setScaleX(ratio);
 				double newX = child.getBoundsInParent().getMinX();
 				child.setTranslateX(oldX * ratio - newX);
 			}
-			
+
 			Pane draw = (Pane) drawing.getChildren().get(0);
 			for (Node child : draw.getChildren()) {
 				System.out.println(child);
 				if (child.getUserData() == StageNameEnum.CONDITIONS) {
-					
+
 					model.getGardenPreferences().add(new GardenPref());
-					if(firstCond) {
-						firstCondRect = (Rectangle)child;
+					if (firstCond) {
+						firstCondRect = (Rectangle) child;
 						firstCond = false;
 					}
 				}
-				
+
 			}
-			
-			
+
 			view.setDrawing(drawing);
 			view.setupZoneFlips(model.getGardenPreferences());
 			if (model.getGardenPreferences().size() > 0) {
 				model.setCurrPref(model.getGardenPreferences().get(0));
-				
+
 				model.getCurrPref().setArea(firstCondRect);
 				firstCondRect.setStroke(Color.RED);
 				view.setCurrArea(firstCondRect);
@@ -153,9 +152,10 @@ public class PreferencesController extends Controller<PreferencesView> {
 		}
 	}
 
-	
 	/**
-	 * Returns the drawing from the PreferencesView so that it can be transferred to other controllers.
+	 * Returns the drawing from the PreferencesView so that it can be transferred to
+	 * other controllers.
+	 * 
 	 * @return The drawing from view
 	 */
 	public Pane getDrawing() {
@@ -176,17 +176,17 @@ public class PreferencesController extends Controller<PreferencesView> {
 		if (view.getCurrArea() != null) {
 			view.getCurrArea().setStroke(Color.TRANSPARENT);
 		}
-		
+
 		rect.setStroke(Color.RED);
 		model.setCurrPref(gardenPref);
 		view.setCurrArea(rect);
 		view.getName().setText(gardenPref.getName());
 		view.getSun().setValue(gardenPref.getUserLight());
 		view.getBloom().setValue(gardenPref.getUserBloom());
-		//view.getSoil().setValue(gardenPref.getUserSoil());
+		// view.getSoil().setValue(gardenPref.getUserSoil());
 		view.getWater().setValue(gardenPref.getUserWater());
 		if (gardenPref.getUserColor() != null) {
-			
+
 			for (String str : gardenPref.getUserColor()) {
 				for (int i = 0; i < colorButtons.size(); i++) {
 					RadioButton button = (RadioButton) (colorButtons.get(i));
@@ -198,48 +198,42 @@ public class PreferencesController extends Controller<PreferencesView> {
 		}
 
 	}
-	
 
 	/**
-	 * Called by zoneButton and NextButton. If stay is true, then the radio buttons are reset. If stay is false, then the radio buttons
-	 * remain the same.
+	 * Called by zoneButton and NextButton. If stay is true, then the radio buttons
+	 * are reset. If stay is false, then the radio buttons remain the same.
+	 * 
 	 * @param stay true -> reset RadioButtons, false -> don't reset RadioButtons
 	 */
 	public void saveUserPref(boolean stay) {
 		ObservableList<Node> colorButtons = view.getColor().getChildren();
-		
+
 		ArrayList<String> colors = new ArrayList<String>();
 		if (model.getCurrPref() != null) {
 			System.out.println("Saving Prefs");
 			model.getCurrPref().setName(view.getName().getText());
 			model.getCurrPref().setUserLight(view.getSun().getValue());
 			model.getCurrPref().setUserBloom(view.getBloom().getValue());
-			//model.getCurrPref().setUserSoil(view.getSoil().getValue());
+			// model.getCurrPref().setUserSoil(view.getSoil().getValue());
 			model.getCurrPref().setUserWater(view.getWater().getValue());
 			model.getCurrPref().setArea(view.getCurrArea());
-			
 
 			for (int i = 0; i < colorButtons.size(); i++) {
 				RadioButton button = (RadioButton) (colorButtons.get(i));
 				if (button.isSelected()) {
 					colors.add(button.getText());
-					if(stay) {
+					if (stay) {
 						button.setSelected(false);
 					}
 				}
 			}
 			HashSet<String> strings = new HashSet<String>();
-			for(String col:colors) {
+			for (String col : colors) {
 				strings.add(col);
 			}
 			model.getCurrPref().setUserColor(strings);
 		}
-		
+
 	}
-	
-	
-
-
-	
 
 }

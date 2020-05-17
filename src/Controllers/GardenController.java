@@ -25,6 +25,7 @@ import Model.RectDrawingObj;
 import Model.StageNameEnum;
 import Model.SeasonEnum;
 import Views.GardenView;
+import Views.View;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -59,6 +60,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	private int copyOffset = 10;
 	private int minSpreadInd = 0;
 	private int maxSpreadInd = 1;
+	private int firstShapeOffset = 1;
 
 	private transient GardenAction GA = new GardenAction();
 
@@ -246,9 +248,9 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		Circle dragPlant = (Circle) event.getSource();
 		model.setCurrDrawObj(dragPlant);
 
-		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize(), view.getCanvasWidth());
+		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize(), View.getCanvasWidth());
 
-		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight(), view.getCanvasHeight());
+		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight(), View.getCanvasHeight());
 		view.movePlant(dragPlant, calcX, calcY);
 
 	}
@@ -293,7 +295,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 			child.setScaleX(originalScale);
 		}
 		double oldWidth = main.getDyControl().getViewWidth();
-		
+
 		double newWidth = view.getGarden().getWidth();
 		drawing.setPrefWidth(view.getGarden().getWidth());
 		double ratio = newWidth / oldWidth;
@@ -328,7 +330,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 		Dragboard db = n.startDragAndDrop(TransferMode.ANY);
 		p.getChildren().add(circle);
-		
+
 		ClipboardContent content = new ClipboardContent();
 
 		content.putImage(((ImageView) event.getSource()).getImage());
@@ -359,8 +361,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		if (db.hasImage()) {
 			double rad = getRadiusFromYear(plantName);
 
-			calcX = model.calcX(event.getX(), rad, view.getSize(), view.getCanvasWidth());
-			calcY = model.calcY(event.getY(), rad, view.getBottomHeight(), view.getCanvasHeight());
+			calcX = model.calcX(event.getX(), rad, view.getSize(), View.getCanvasWidth());
+			calcY = model.calcY(event.getY(), rad, view.getBottomHeight(), View.getCanvasHeight());
 
 			Color color = findCircleColor(plantName);
 
@@ -453,7 +455,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		view.addCircleToGarden(newCircle, oldCircle.getCenterX() + copyOffset, oldCircle.getCenterY() + copyOffset,
 				oldCircle.getRadius(), (String) oldCircle.getUserData(), (Color) oldCircle.getStroke());
 		System.out.println(newCircle.getCenterX());
-		GA.addAction(new GardenAction(newCircle, 0, 0, 0, newCircle.getUserData().toString(), null, ActionEnum.COPY));
+		GA.addAction(new GardenAction(newCircle, newCircle.getCenterX(), newCircle.getCenterY(), newCircle.getRadius(),
+				newCircle.getUserData().toString(), (Color) newCircle.getStroke(), ActionEnum.COPY));
 	}
 
 	/*
@@ -501,9 +504,9 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		Circle dragPlant = (Circle) event.getSource();
 		model.setCurrDrawObj(dragPlant);
 
-		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize(), view.getCanvasWidth());
+		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize(), View.getCanvasWidth());
 
-		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight(), view.getCanvasHeight());
+		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight(), View.getCanvasHeight());
 		System.out.println("Drag released at x:" + calcX + ", y:" + calcY);
 
 		GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getRadius(),
@@ -562,20 +565,20 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		model.getEllipses().clear();
 		model.getGardenObjs().clear();
 		ObservableList<Node> rectangles = ((Pane) view.getDrawing().getChildren().get(0)).getChildren();
-		for (int i = 1; i < rectangles.size(); i++) {
+		for (int i = firstShapeOffset; i < rectangles.size(); i++) {
 			model.getRectangles().add(new RectDrawingObj((Rectangle) rectangles.get(i)));
 		}
 		ObservableList<Node> ellipses = ((Pane) rectangles.get(0)).getChildren();
-		for (int i = 1; i < ellipses.size(); i++) {
+		for (int i = firstShapeOffset; i < ellipses.size(); i++) {
 			model.getEllipses().add(new EllipseDrawingObj((Ellipse) ellipses.get(i)));
 		}
 		ObservableList<Node> labels = ((Pane) ellipses.get(0)).getChildren();
-		for (int i = 1; i < labels.size(); i++) {
+		for (int i = firstShapeOffset; i < labels.size(); i++) {
 			model.getLabels().add(new LabelDrawingObj((Label) labels.get(i)));
 		}
 		// TODO save background image
 		ObservableList<Node> plants = view.getGarden().getChildren();
-		for (int i = 1; i < plants.size(); i++) {
+		for (int i = firstShapeOffset; i < plants.size(); i++) {
 			model.getGardenObjs().add(new GardenObj((Circle) plants.get(i)));
 		}
 	}
@@ -588,11 +591,13 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		}
 		for (RectDrawingObj rectObj : model.getRectangles()) {
 			if (rectObj.getUserData() == StageNameEnum.DRAW) {
-				view.addRectangle(rectObj, Color.TRANSPARENT, Color.BLACK, main.getDyControl().getHandleOnPressShape(StageNameEnum.DRAW),
+				view.addRectangle(rectObj, Color.TRANSPARENT, Color.BLACK,
+						main.getDyControl().getHandleOnPressShape(StageNameEnum.DRAW),
 						main.getDyControl().getHandleOnDragRectangle());
 			} else {
 				view.addRectangle(rectObj, main.getDyControl().getView().getRandomColor(), Color.TRANSPARENT,
-						main.getDyControl().getHandleOnPressShape(StageNameEnum.CONDITIONS), main.getDyControl().getHandleOnDragRectangle());
+						main.getDyControl().getHandleOnPressShape(StageNameEnum.CONDITIONS),
+						main.getDyControl().getHandleOnDragRectangle());
 			}
 		}
 		for (EllipseDrawingObj ellipseObj : model.getEllipses()) {
@@ -612,13 +617,14 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 	/**
 	 * Returns the color a circle should be based on plant name and current season
+	 * 
 	 * @param name The name of the plant
 	 * @return A Color object
 	 */
 	public Color findCircleColor(String name) {
 		ArrayList<SeasonEnum> seasonList = new ArrayList<SeasonEnum>(Arrays.asList(getBloomTime(name)));
 		SeasonEnum season = model.getSeason();
-		switch(season) {
+		switch (season) {
 		case WINTER:
 			if (seasonList.contains(season)) {
 				return getBloomColor(name);
@@ -642,15 +648,15 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		}
 		return Color.GREEN;
 	}
-	
+
 	public double getRadiusFromYear(String name) {
 		double minSize = getSize(name, minSpreadInd);
 		double maxSize = getSize(name, maxSpreadInd);
 		double minRad = getRad(minSize, model.getPropertyWidthInches(), model.getPropertyHeightInches());
 		double maxRad = getRad(maxSize, model.getPropertyWidthInches(), model.getPropertyHeightInches());
 		double rad = 0;
-		
-		switch(model.getYear()) {
+
+		switch (model.getYear()) {
 		case 3:
 			rad = maxRad;
 			break;
@@ -661,7 +667,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 			rad = minRad;
 			break;
 		}
-		
+
 		return rad;
 	}
 }

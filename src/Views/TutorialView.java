@@ -45,7 +45,6 @@ public class TutorialView extends View<TutorialController> {
 		tutorialSlides.add(new Image("/TutorialSlides/Slide1.PNG"));// 0
 		tutorialSlides.add(new Image("/TutorialSlides/Slide2.PNG"));// 1
 		tutorialSlides.add(new Image("/TutorialSlides/Slide3.PNG"));// 2
-		//tutorialSlides.add(null);// 3
 
 		border = new BorderPane();
 
@@ -56,17 +55,18 @@ public class TutorialView extends View<TutorialController> {
 
 		continueButton = new Button("Next Slide");
 		continueButton.setOnMouseClicked(control.getHandleOnContinueButton());
-		
+
 		Region emptyCenter = new Region();
-        HBox.setHgrow(emptyCenter, Priority.ALWAYS);
-		
+		HBox.setHgrow(emptyCenter, Priority.ALWAYS);
+
 		buttons.getChildren().addAll(backButton, emptyCenter, continueButton);
 
 		border.setTop(buttons);
 
 		slide = new StackPane();
 
-		BorderPane bottom = createNavigationBar("Main Menu", "Draw Yard", "Tutorial", control.getHandleOnPrevButton(), control.getHandleOnNextButton());
+		BorderPane bottom = createNavigationBar("Main Menu", "Draw Yard", "Tutorial", control.getHandleOnPrevButton(),
+				control.getHandleOnNextButton());
 
 		border.setBottom(bottom);
 
@@ -115,7 +115,7 @@ public class TutorialView extends View<TutorialController> {
 	public void setBorder(BorderPane border) {
 		this.border = border;
 	}
-	
+
 	public void initSlide() {
 		background.setFitHeight(((StackPane) border.getCenter()).getHeight());
 		background.setPreserveRatio(true);

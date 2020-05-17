@@ -3,7 +3,7 @@ package Model;
 import javafx.scene.shape.Ellipse;
 
 public class EllipseDrawingObj extends DrawingObj {
-	
+
 	public EllipseDrawingObj(Ellipse ellipse) {
 		x = ellipse.getCenterX();
 		y = ellipse.getCenterY();

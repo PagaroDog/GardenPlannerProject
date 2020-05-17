@@ -22,6 +22,7 @@ public class Images {
 	HashMap<String, ImageWithSourceInfo[]> plantImages;
 	private final int maxPlantPics = 5;
 	private final int numSourceFields = 2;
+
 	/**
 	 * The constructor reads the directory containing the images and source info and
 	 * creates an array of ImageWithSourceInfo objects for each plant and stores
@@ -34,19 +35,18 @@ public class Images {
 		ArrayList<ImageWithSourceInfo> arrList = new ArrayList<ImageWithSourceInfo>();
 		String[] source = new String[numSourceFields];
 		File[] files = new File(directory).listFiles();
-		
+
 		ImageWithSourceInfo[] imgArr = new ImageWithSourceInfo[numSourceFields];
-		
-		
+
 		for (File file : files) {
-		
+
 			arrList.clear();
 			if (file.isDirectory()) {
-				
+
 				String plant = file.getName();
-			
+
 				FilenameFilter pic = (File dir, String name) -> !(name.endsWith(".txt"));
-				
+
 				FilenameFilter txt = (File dir, String name) -> name.endsWith(".txt");
 				for (int i = 0; i < file.listFiles().length && i < maxPlantPics; i++) {
 					try {
@@ -54,8 +54,7 @@ public class Images {
 						File currFolder = new File(directory + plant + "/" + i);
 
 						String curr = currFolder.listFiles(pic)[0].getPath();
-						
-						
+
 						Image img = new Image(new FileInputStream(curr));
 						BufferedReader br = new BufferedReader(new FileReader(currFolder.listFiles(txt)[0]));
 						br.readLine(); // Ignore empty line
@@ -63,15 +62,15 @@ public class Images {
 							source[j] = br.readLine();
 						}
 						br.close();
-						
+
 						arrList.add(new ImageWithSourceInfo(img, source.clone()));
 					} catch (FileNotFoundException e) {
 						File currFolder = new File(directory + plant + '/' + i);
 						System.out.println("File Not Found Exception: " + currFolder);
-					} catch(IOException e) {
+					} catch (IOException e) {
 						File currFolder = new File(directory + plant + '/' + i);
 						System.out.println("IO Exception: " + currFolder);
-					} catch(NullPointerException e) {
+					} catch (NullPointerException e) {
 						File currFolder = new File(directory + plant + '/' + i);
 						System.out.println("Null Pointer Exception: " + currFolder);
 					}

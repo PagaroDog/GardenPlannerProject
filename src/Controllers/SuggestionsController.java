@@ -48,11 +48,10 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 	 * @param event
 	 */
 	public void nextButton() {
-		
-		
+
 		view.getStage().setScene(Main.getScenes().get(StageNameEnum.DESIGN));
-		model.getUserPicks(view.getGrid(),view.getRows(),view.getCols(),view.getSelectedBG());
-		
+		model.getUserPicks(view.getGrid(), view.getRows(), view.getCols(), view.getSelectedBG());
+
 		main.getGardenControl().update();
 		model.setStageName(StageNameEnum.DESIGN);
 
@@ -76,14 +75,13 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 	 * @param MouseEvent event
 	 */
 	public void MouseEnter(MouseEvent event) {
-		
-		
-		String name = (String) ((Pane)event.getSource()).getUserData();
+
+		String name = (String) ((Pane) event.getSource()).getUserData();
 
 		Plant roll = model.getPlants().get(name);
-		
+
 		view.inputStats((Node) event.getSource(), roll.toString());
-		
+
 	}
 
 	/**
@@ -126,17 +124,21 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 		view.selectImage(event);
 
 	}
+
 	/**
-	 * Gets the scientific name of the plant at position x of the suggestedPlants ArrayList in the Model
+	 * Gets the scientific name of the plant at position x of the suggestedPlants
+	 * ArrayList in the Model
+	 * 
 	 * @param x index
 	 * @return String Scientific Name of Plant
 	 */
 	public String getPlantNameAt(int x) {
 		return model.getSuggestedPlants().get(x).getName();
 	}
+
 	/**
-	 * Called by PreferencesController when the next button is hit. Calls the view to update Plants in the event the 
-	 * suggestedPlants in the Model changed.
+	 * Called by PreferencesController when the next button is hit. Calls the view
+	 * to update Plants in the event the suggestedPlants in the Model changed.
 	 */
 	public void update() {
 		view.refreshPlants();

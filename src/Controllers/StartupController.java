@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 
 /**
  * This class is the controller for the startup screen.
+ * 
  * @author matt cohen
  * @author Tommy White
  */

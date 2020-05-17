@@ -9,7 +9,7 @@ public class DrawingObj implements Serializable {
 	protected double height;
 	protected double trans;
 	protected double scale;
-	
+
 	public double getX() {
 		return x;
 	}

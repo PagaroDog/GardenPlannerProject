@@ -25,11 +25,11 @@ public class Controller<T extends View> {
 		view.setup();
 		model.setController(this);
 	}
-	
+
 	public T getView() {
 		return view;
 	}
-	
+
 	public void setModel(Model model) {
 		this.model = model;
 	}

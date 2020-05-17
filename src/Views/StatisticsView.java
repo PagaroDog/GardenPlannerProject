@@ -42,12 +42,12 @@ public class StatisticsView extends View<StatisticsController> {
 	private Label colors = new Label();
 	private Label bloomingSeasons = new Label();
 	private Label gardenCover = new Label();
-	
+
 	private Label plantList = new Label();
 	private Label tips = new Label();
 
 	private boolean smallScreen = false;
-	
+
 	private final double smallHeight = 700;
 	private final double smallWidth = 1200;
 	private final double smallDefualtFont = 15;
@@ -56,12 +56,12 @@ public class StatisticsView extends View<StatisticsController> {
 	private final double smallFontDifference = 5;
 	private final double evenSmallerFontDifference = 3;
 	private final double smallestFontDifference = 3;
-	
+
 	private final double vBoxRed = 158;
 	private final double vBoxGreen = 255;
 	private final double vBoxBlue = 174;
 	private final double vBoxOpacity = 1;
-	
+
 	private final double smallDefaultMax = 20;
 	private final double smallSmallMax = 50;
 	private final double normDefaultMax = 30;
@@ -70,18 +70,18 @@ public class StatisticsView extends View<StatisticsController> {
 
 	private final int noPlants = 0;
 	private final int fewPlants = 3;
-	
+
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
-		if(canvasHeight < smallHeight || canvasWidth < smallWidth) {
+		if (canvasHeight < smallHeight || canvasWidth < smallWidth) {
 			defaultFontSize = smallDefualtFont;
 			smallScreen = true;
-		}else {
+		} else {
 			defaultFontSize = standardDefaultFont;
 		}
-		smallFontSize = defaultFontSize - smallFontDifference;	
+		smallFontSize = defaultFontSize - smallFontDifference;
 		evenSmallerFontSize = smallFontSize - evenSmallerFontDifference;
-		smallestFontSize =  evenSmallerFontSize - smallestFontDifference;
+		smallestFontSize = evenSmallerFontSize - smallestFontDifference;
 	}
 
 	/**
@@ -100,9 +100,9 @@ public class StatisticsView extends View<StatisticsController> {
 		scroll.setFitToWidth(true);
 		scroll.setFitToHeight(true);
 
-		HBox plants = new HBox(totPlants, trees, flowers, shrubs,vines);
-		
-		HBox uPlants = new HBox(uTotPlants,uTrees,uFlowers,uShrubs,uVines);
+		HBox plants = new HBox(totPlants, trees, flowers, shrubs, vines);
+
+		HBox uPlants = new HBox(uTotPlants, uTrees, uFlowers, uShrubs, uVines);
 		plants.setSpacing(hboxSpacing);
 		uPlants.setSpacing(hboxSpacing);
 
@@ -113,7 +113,7 @@ public class StatisticsView extends View<StatisticsController> {
 			((Label) uPlants.getChildren().get(i)).setWrapText(true);
 		}
 
-		vBox.getChildren().addAll(plants,uPlants, gardenCover, colors, bloomingSeasons, plantList,tips);
+		vBox.getChildren().addAll(plants, uPlants, gardenCover, colors, bloomingSeasons, plantList, tips);
 
 		for (int i = 2; i < vBox.getChildren().size(); i++) {
 			((Label) vBox.getChildren().get(i)).setFont(new Font(defaultFontSize));
@@ -122,7 +122,8 @@ public class StatisticsView extends View<StatisticsController> {
 
 		vBox.setPadding(new Insets(vboxSpacing, vboxSpacing, vboxSpacing, vboxSpacing));
 		vBox.setSpacing(vboxSpacing);
-		vBox.setStyle(String.format("-fx-background-color: rgba( %f, %f, %f, %f);", vBoxRed , vBoxGreen, vBoxBlue, vBoxOpacity));
+		vBox.setStyle(String.format("-fx-background-color: rgba( %f, %f, %f, %f);", vBoxRed, vBoxGreen, vBoxBlue,
+				vBoxOpacity));
 
 		border.setCenter(scroll);
 
@@ -130,23 +131,28 @@ public class StatisticsView extends View<StatisticsController> {
 		styleScene();
 	}
 
-/**
- * Modifies the labels to show statistics. 
- * @param numTrees number of trees in garden
- * @param numShrubs number of shrubs in garden
- * @param numHerbs number of herbs in garden
- * @param numVines number of vine plants in garden
- * @param colorSet set of colors of plant blooms from the plants in the garden
- * @param seasons set of the seasons the plants bloom in the garden
- * @param allNames set of all scientific names of the plants in the garden
- * @param gardenCoveredPercent percent of garden covered by plants in percent form (EX. 1.23 = 1.23%)
- * @param uTrees number of unique trees in garden
- * @param uShrubs number of unique shrubs in garden
- * @param uHerbs number of unique herbs in garden
- * @param uVines number of unique vine plants in garden
- */
+	/**
+	 * Modifies the labels to show statistics.
+	 * 
+	 * @param numTrees             number of trees in garden
+	 * @param numShrubs            number of shrubs in garden
+	 * @param numHerbs             number of herbs in garden
+	 * @param numVines             number of vine plants in garden
+	 * @param colorSet             set of colors of plant blooms from the plants in
+	 *                             the garden
+	 * @param seasons              set of the seasons the plants bloom in the garden
+	 * @param allNames             set of all scientific names of the plants in the
+	 *                             garden
+	 * @param gardenCoveredPercent percent of garden covered by plants in percent
+	 *                             form (EX. 1.23 = 1.23%)
+	 * @param uTrees               number of unique trees in garden
+	 * @param uShrubs              number of unique shrubs in garden
+	 * @param uHerbs               number of unique herbs in garden
+	 * @param uVines               number of unique vine plants in garden
+	 */
 	public void updateStats(int numTrees, int numShrubs, int numHerbs, int numVines, HashSet<String> colorSet,
-		HashSet<SeasonEnum> seasons, HashSet<String> allNames, double gardenCoveredPercent,int uTrees, int uShrubs, int uHerbs, int uVines) {
+			HashSet<SeasonEnum> seasons, HashSet<String> allNames, double gardenCoveredPercent, int uTrees, int uShrubs,
+			int uHerbs, int uVines) {
 		int total = numTrees + numShrubs + numHerbs + numVines;
 		totPlants.setText("Total Plants: " + total);
 		trees.setText("Tree Count: " + numTrees);
@@ -159,50 +165,40 @@ public class StatisticsView extends View<StatisticsController> {
 		this.uShrubs.setText("Unique Shrubs: " + uShrubs);
 		this.uFlowers.setText("Unique Herbs: " + uHerbs);
 		this.uVines.setText("Unique Vines: " + uVines);
-		
-		
+
 		colors.setText("Potential Bloom Colors: " + colorSet.toString().replace("[", "").replace("]", ""));
 
 		bloomingSeasons.setText("Blooming seasons: " + seasons.toString().replace("[", "").replace("]", ""));
-	
-		String percent = String.format("%2.2f", gardenCoveredPercent)+ "%";
+
+		String percent = String.format("%2.2f", gardenCoveredPercent) + "%";
 		gardenCover.setText("Garden Covered: " + percent);
 
 		plantList.setText("List of Plants in your Garden: " + allNames.toString().replace("[", "").replace("]", ""));
-		
-		if(uTotal == noPlants) {
+
+		if (uTotal == noPlants) {
 			tips.setText("Add some plants! Bring your yard to life!");
-		}
-		else if(uTotal < fewPlants) {
+		} else if (uTotal < fewPlants) {
 			tips.setText("We all have our favorite plants, but a greater variety brings more life!");
-		}
-		else {
+		} else {
 			tips.setText("Nice work! You and nature will be pleased!");
 		}
-		
 
-		if(smallScreen) {
-			if(uTotal < smallDefaultMax) {
+		if (smallScreen) {
+			if (uTotal < smallDefaultMax) {
 				plantList.setFont(new Font(defaultFontSize));
-			}
-			else if(uTotal < smallSmallMax) {
+			} else if (uTotal < smallSmallMax) {
 				plantList.setFont(new Font(smallFontSize));
-			}
-			else {
+			} else {
 				plantList.setFont(new Font(evenSmallerFontSize));
 			}
-		}
-		else {
-			if(uTotal < normDefaultMax) {
+		} else {
+			if (uTotal < normDefaultMax) {
 				plantList.setFont(new Font(defaultFontSize));
-			}
-			else if(uTotal < normSmallMax) {
+			} else if (uTotal < normSmallMax) {
 				plantList.setFont(new Font(smallFontSize));
-			}
-			else if(uTotal < normSmallerMax){
+			} else if (uTotal < normSmallerMax) {
 				plantList.setFont(new Font(evenSmallerFontSize));
-			}
-			else {
+			} else {
 				plantList.setFont(new Font(smallestFontSize));
 			}
 		}

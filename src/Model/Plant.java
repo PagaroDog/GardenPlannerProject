@@ -128,7 +128,7 @@ public class Plant implements Serializable {
 	}
 
 	public void setMaxCommonNames(int maxCommonNames) {
-		this.maxCommonNames = maxCommonNames;
+		Plant.maxCommonNames = maxCommonNames;
 	}
 
 	@Override

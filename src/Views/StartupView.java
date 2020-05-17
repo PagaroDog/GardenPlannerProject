@@ -55,7 +55,7 @@ public class StartupView extends View<StartupController> {
 	public void setup() {
 		stage.setResizable(false);
 		stage.sizeToScene();
-		
+
 		title = new Label("MyNativeGarden");
 		title.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Dandelion.ttf"), titleFontSize));
 		iv = new ImageView(new Image(getClass().getResourceAsStream("/imgs/StartupBackground.jpg"), canvasWidth,

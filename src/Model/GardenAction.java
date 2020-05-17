@@ -96,6 +96,7 @@ public class GardenAction {
 		this.color = color;
 	}
 
+	@Override
 	public String toString() {
 		return action.toString();
 	}
@@ -117,7 +118,7 @@ public class GardenAction {
 
 	public void addAction(GardenAction ga) {
 		actionList.add(ga);
-		equalityChecker(); 
+		equalityChecker();
 		redoList.clear();
 		System.out.println(actionList);
 	}
@@ -128,12 +129,11 @@ public class GardenAction {
 		}
 
 		redoList.push(actionList.removeLast());
-		
-		if(actionList.size()== 0) {
+
+		if (actionList.size() == 0) {
 			gv.getGarden().getChildren().clear();
-			gv.getGarden().getChildren().add(gv.getDrawing()) ;
-		}
-		else {
+			gv.getGarden().getChildren().add(gv.getDrawing());
+		} else {
 			actionIterate(gv);
 		}
 	}
@@ -148,7 +148,7 @@ public class GardenAction {
 	}
 
 	public void actionIterate(GardenView gv) {
-		System.out.println("ActionIterate"); 
+		System.out.println("ActionIterate");
 		gv.getGarden().getChildren().clear();
 		gv.getGarden().getChildren().add(gv.getDrawing());
 		for (GardenAction ga : actionList) {
@@ -160,7 +160,7 @@ public class GardenAction {
 
 			case MOVEPLANT:
 				gv.movePlant(ga.getPlant(), ga.getX(), ga.getY());
-				System.out.print("MOVE"); 
+				System.out.print("MOVE");
 				break;
 
 			case DELETE:
@@ -169,18 +169,18 @@ public class GardenAction {
 				break;
 
 			case COPY:
-				gv.addShape(ga.getPlant());
+				gv.addCircleToGarden(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
 				System.out.print("COPY");
 			}
-			System.out.println(""); 
+			System.out.println("");
 		}
 	}
-	
+
 	public void equalityChecker() {
-		Iterator<GardenAction> i = actionList.iterator();  
-		while(i.hasNext()) {
-			GardenAction j = i.next(); 
-			if(i.hasNext()) {
+		Iterator<GardenAction> i = actionList.iterator();
+		while (i.hasNext()) {
+			GardenAction j = i.next();
+			if (i.hasNext()) {
 				System.out.println(j.getPlant().equals(i.next().getPlant()));
 			}
 		}

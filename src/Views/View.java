@@ -42,62 +42,71 @@ public class View<T extends Controller> {
 	private int navBlue = 255;
 	private double navOpacity = 1;
 	private double toolbarPrefHeight = 55;
-	
+
 	/**
 	 * Creates an HBox node that can act as the toolbar at the top of a View.
+	 * 
 	 * @return The toolbar HBox
 	 */
 	public HBox createToolbar() {
 		HBox toolbar = new HBox();
-		toolbar.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %f);", toolbarRed, toolbarGreen, toolbarBlue, toolbarOpacity));
+		toolbar.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %f);", toolbarRed, toolbarGreen,
+				toolbarBlue, toolbarOpacity));
 		toolbar.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
 		toolbar.setSpacing(toolbarHGap);
 		toolbar.setPrefHeight(toolbarPrefHeight);
-		
+
 		return toolbar;
 	}
-	
+
 	/**
-	 * Creates a BorderPane that can be used as a navigation bar at the bottom of a View.
-	 * Should be used when a View only has a previous View and no next View.
+	 * Creates a BorderPane that can be used as a navigation bar at the bottom of a
+	 * View. Should be used when a View only has a previous View and no next View.
+	 * 
 	 * @param prevButtonText The text to display on the Previous Button
-	 * @param CenterText The text to display at the center of the bar
-	 * @param prevHandler The EventHandler for when the Previous Button is pressed
+	 * @param CenterText     The text to display at the center of the bar
+	 * @param prevHandler    The EventHandler for when the Previous Button is
+	 *                       pressed
 	 * @return The navigation bar BorderPane
 	 */
 	public BorderPane createNavigationBar(String prevButtonText, String CenterText, EventHandler prevHandler) {
 		Button prevButton = new Button(prevButtonText);
 		prevButton.setOnMouseClicked(prevHandler);
-		
+
 		Label center = new Label(CenterText);
 		center.setFont(new Font(centerFontSize));
 
 		BorderPane navigation = new BorderPane();
-		navigation.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %f);", navRed, navGreen, navBlue, navOpacity));
+		navigation.setStyle(
+				String.format("-fx-background-color: rgba(%d, %d, %d, %f);", navRed, navGreen, navBlue, navOpacity));
 		navigation.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
 		navigation.setLeft(prevButton);
 		navigation.setCenter(center);
-		
+
 		return navigation;
 	}
-	
+
 	/**
-	 * Creates a BorderPane that can be used as a navigation bar at the bottom of a View.
-	 * Should be used when a View has a both a previous View and a next next View.
+	 * Creates a BorderPane that can be used as a navigation bar at the bottom of a
+	 * View. Should be used when a View has a both a previous View and a next next
+	 * View.
+	 * 
 	 * @param prevButtonText The text to display on the Previous Button
 	 * @param nextButtonText The text to display on the Next Button
-	 * @param CenterText The text to display at the center of the bar
-	 * @param prevHandler The EventHandler for when the Previous Button is pressed
-	 * @param nextHandler The EventHandler for when the Next Button is pressed
+	 * @param CenterText     The text to display at the center of the bar
+	 * @param prevHandler    The EventHandler for when the Previous Button is
+	 *                       pressed
+	 * @param nextHandler    The EventHandler for when the Next Button is pressed
 	 * @return The navigation bar BorderPane
 	 */
-	public BorderPane createNavigationBar(String prevButtonText, String nextButtonText, String CenterText, EventHandler prevHandler, EventHandler nextHandler) {
+	public BorderPane createNavigationBar(String prevButtonText, String nextButtonText, String CenterText,
+			EventHandler prevHandler, EventHandler nextHandler) {
 		Button nextButton = new Button(nextButtonText);
 		nextButton.setOnMouseClicked(nextHandler);
 
 		BorderPane navigation = createNavigationBar(prevButtonText, CenterText, prevHandler);
 		navigation.setRight(nextButton);
-		
+
 		return navigation;
 	}
 
@@ -117,14 +126,21 @@ public class View<T extends Controller> {
 		return expectedHeight;
 	}
 
-	public Scene getScene() {return scene;}
+	public Scene getScene() {
+		return scene;
+	}
 
-	public void setController(T controller) {control = controller;}
+	public void setController(T controller) {
+		control = controller;
+	}
 
-	public Stage getStage() {return stage;}
+	public Stage getStage() {
+		return stage;
+	}
 
-	public void setup() {}
-	
+	public void setup() {
+	}
+
 	/**
 	 * Adds the CSS stylesheet to the scene.
 	 */

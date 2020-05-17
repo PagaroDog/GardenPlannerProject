@@ -28,7 +28,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	private GridPane stats;
 	private int thumbnailWidth = 100;
 	private int thumbnailHeight = 100;
-	private final double spaceBetweenLabels = Math.min(17, 17 * canvasHeight/expectedHeight);
+	private final double spaceBetweenLabels = Math.min(17, 17 * canvasHeight / expectedHeight);
 	private int stackPanePadding = 10;
 	private int rows = canvasHeight / (thumbnailHeight * 2);
 	private int cols = (int) (canvasWidth / (thumbnailWidth * 1.75));
@@ -39,16 +39,21 @@ public class SuggestionsView extends View<SuggestionsController> {
 	private String deselectedBG = "-fx-background-color: transparent;";
 	private String selectedBG = "-fx-background-color: BLACK;";
 	private int firstImgInd = 0;
-	
+
 	private int gridRed = 255;
 	private int gridGreen = 130;
 	private int gridBlue = 203;
 	private double gridOpacity = 0.5;
-	
+
 	private int statsRed = 255;
 	private int statsGreen = 182;
 	private int statsBlue = 130;
 	private int statsOpacity = 1;
+
+	private double fullPicMultiplier = 0.8;
+
+	private int labelStartingCol = 3;
+	private int labelStartingRow = 0;
 
 	public SuggestionsView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -80,7 +85,8 @@ public class SuggestionsView extends View<SuggestionsController> {
 		GridPane pane = new GridPane();
 
 //		pane.setPrefWidth(canvasWidth);
-		pane.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %f);", gridRed, gridGreen, gridBlue, gridOpacity));
+		pane.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %f);", gridRed, gridGreen, gridBlue,
+				gridOpacity));
 
 		imgs = new ArrayList<Pane>();
 		int count = 0;
@@ -141,13 +147,9 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 * @return GridPane
 	 */
 	public GridPane stats(int rows) {
-//		int imageCols = 2;
 		GridPane stats = new GridPane();
-		stats.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %d);", statsRed, statsGreen, statsBlue, statsOpacity));
-
-//		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailWidth * imageCols));
-//		Label fill = new Label("");
-//		fill.setPrefWidth(thumbnailWidth*cols-imageCols);
+		stats.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %d);", statsRed, statsGreen, statsBlue,
+				statsOpacity));
 
 		return stats;
 	}
@@ -160,7 +162,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 */
 	public void inputStats(Node n, String plantStr) {
 		Label val = new Label(plantStr);
-		GridPane.setConstraints(val, 3, 0);
+		GridPane.setConstraints(val, labelStartingCol, labelStartingRow);
 		val.setLineSpacing(spaceBetweenLabels);
 		val.setMaxHeight(stats.getHeight());
 		stats.getChildren().add(val);
@@ -168,10 +170,9 @@ public class SuggestionsView extends View<SuggestionsController> {
 		ImageView copy = new ImageView(((ImageView) ((Pane) n).getChildren().get(0)).getImage());
 		copy.setPreserveRatio(true);
 		if (copy.getImage().getWidth() > copy.getImage().getHeight())
-			copy.setFitWidth((rows-1) * thumbnailWidth * 0.8);
+			copy.setFitWidth((rows - 1) * thumbnailWidth * fullPicMultiplier);
 		else
-			copy.setFitHeight((rows-1) * thumbnailHeight * 0.8);
-//		GridPane.setConstraints(copy, 0, 0, 1, 5);
+			copy.setFitHeight((rows - 1) * thumbnailHeight * fullPicMultiplier);
 		stats.getChildren().add(copy);
 		plantCopy = copy;
 
@@ -182,9 +183,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 */
 	public void removeStats() {
 		stats.getChildren().remove(plantCopy);
-//		for (int i = 0; i < 5; i++) {
 		stats.getChildren().remove(stats.getChildren().size() - 1);
-//		}
 	}
 
 	/**

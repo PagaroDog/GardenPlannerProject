@@ -3,9 +3,9 @@ package Model;
 import javafx.scene.control.Label;
 
 public class LabelDrawingObj extends DrawingObj {
-	
+
 	String text;
-	
+
 	public LabelDrawingObj(Label label) {
 		x = label.getLayoutX();
 		y = label.getLayoutY();
