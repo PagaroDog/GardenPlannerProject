@@ -52,7 +52,7 @@ import javafx.scene.shape.StrokeType;
  * user input.
  * 
  * @author Matt Cohen
- * 
+ * @author Ian McCabe
  */
 public class GardenController extends Controller<GardenView> implements Serializable {
 	private final int year1int = 1;
@@ -635,39 +635,74 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 	}
 
+	
+	/**
+	 * Handles when the Undo button is pressed in GardenView
+	 * @return EventHandler that calls the undo method
+	 */
 	public EventHandler handleOnUndoButton() {
 		return event -> undo((MouseEvent) event);
 	}
-
+	
+	/**
+	 * Calls GardenAction undo method to remove an action from the action stack 
+	 * and then calls iterateActions in gardenView to show the change made to the action stack
+	 * @param event Mouse event that triggered this event 
+	 */
 	public void undo(MouseEvent event) {
 		GA.undo(); 
 		view.iterateGardenActions(GA);
 		
 	}
-
+	
+	/**
+	 * Handles when the redo button is pressed in gardenView
+	 * @return EventHandler that calls the redo method 
+	 */
 	public EventHandler handleOnRedoButton() {
 		return event -> redo((MouseEvent) event);
 	}
-
+	
+	/**
+	 * Calls GardenAction redo method to add an undone action to the action stack. Calls iterateAction
+	 * so the gardenView reflects the changes made in the garden action stack. 
+	 * @param event
+	 */
 	public void redo(MouseEvent event) {
 		GA.redo();
 		view.iterateGardenActions(GA);
 	}
-
+	
+	/**
+	 * Handles when a mouse enters a circle in the gardenView
+	 * @return EventHandler that calls the displayInfo method in gardenView
+	 */
 	public EventHandler handleOnMouseEntered() {
 		return event -> displayInfo((MouseEvent) event);
 	}
-
+	
+	/**
+	 * calls displayInfo in the gardenView to show the data of the circle the mouse is currently above
+	 * @param event Event when the mouse is above a circle in the gardenView
+	 */
 	public void displayInfo(MouseEvent event) {
 		Circle plant = (Circle) event.getSource();
 		view.displayInfo(plant, event.getX(), event.getY(),
 				model.isPlantMatch(plant.getUserData().toString(), event.getX(), event.getY()));
 	}
-
+	
+	/**
+	 * Handles when a mouse leaves a circle in the gardenView
+	 * @return EventHandler that calls the removeInfo method in gardenView
+	 */
 	public EventHandler handleOnMouseExited() {
 		return event -> removeInfo((MouseEvent) event);
 	}
-
+	
+	/**
+	 * Removes the info of the circle that the users mouse was just in 
+	 * @param event Event when the user leaves a circle in gardenView
+	 */
 	public void removeInfo(MouseEvent event) {
 		view.removeInfo();
 	}
