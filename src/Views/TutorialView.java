@@ -42,20 +42,21 @@ public class TutorialView extends View<TutorialController> {
 	@Override
 	public void setup() {
 
-		tutorialSlides.add(new Image("/TutorialSlides/Slide1.PNG"));// 0
-		tutorialSlides.add(new Image("/TutorialSlides/Slide1_Outline")); //1
-		tutorialSlides.add(new Image("/TutorialSlides/Slide2_Outline_2")); //2
-		tutorialSlides.add(new Image("/TutorialSlides/Slide3_Conditions_1")); //3
-		tutorialSlides.add(new Image("/TutorialSlides/Slide4_Conditions_2")); //4
-		tutorialSlides.add(new Image("/TutorialSlides/Slide5_Conditions_3")); //5
-		tutorialSlides.add(new Image("/TutorialSlides/Slide6_Preferences_1")); //6
-		tutorialSlides.add(new Image("/TutorialSlides/Slide7_Preferences_2")); //7
-		tutorialSlides.add(new Image("/TutorialSlides/Slide8_Suggestions_2")); //8
-		tutorialSlides.add(new Image("/TutorialSlides/Slide9_Design_1")); //9
-		tutorialSlides.add(new Image("/TutorialSlides/Slide10_Design_2")); //10
-		tutorialSlides.add(new Image("/TutorialSlides/Slide11_Design_4")); //11
-		tutorialSlides.add(new Image("/TutorialSlides/Slide12_Statistics")); //12
-		
+		tutorialSlides.add(new Image("/TutorialSlides/Slide1.png"));// 0
+		/*
+		tutorialSlides.add(new Image("/TutorialSlides/Slide1_Outline.png")); //1
+		tutorialSlides.add(new Image("/TutorialSlides/Slide2_Outline_2.png")); //2
+		tutorialSlides.add(new Image("/TutorialSlides/Slide3_Conditions_1.png")); //3
+		tutorialSlides.add(new Image("/TutorialSlides/Slide4_Conditions_2.png")); //4
+		tutorialSlides.add(new Image("/TutorialSlides/Slide5_Conditions_3.png")); //5
+		tutorialSlides.add(new Image("/TutorialSlides/Slide6_Preferences_1.png")); //6
+		tutorialSlides.add(new Image("/TutorialSlides/Slide7_Preferences_2.png")); //7
+		tutorialSlides.add(new Image("/TutorialSlides/Slide8_Suggestions_2.png")); //8
+		tutorialSlides.add(new Image("/TutorialSlides/Slide9_Design_1.png")); //9
+		tutorialSlides.add(new Image("/TutorialSlides/Slide10_Design_2.png")); //10
+		tutorialSlides.add(new Image("/TutorialSlides/Slide11_Design_4.png")); //11
+		tutorialSlides.add(new Image("/TutorialSlides/Slide12_Statistics.png")); //12
+		*/
 		tutorialSlides.add(new Image("/TutorialSlides/Slide2.PNG"));// 1
 		
 
