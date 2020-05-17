@@ -6,7 +6,6 @@ import Model.StageNameEnum;
 import Views.SuggestionsView;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -83,7 +82,7 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 
 		Plant roll = model.getPlants().get(name);
 		
-		view.inputStats(event.getSource(), roll.getCommonNames(), name, roll.getType(), roll.getWaterLevel(), roll.getLight());
+		view.inputStats((Node) event.getSource(), roll.toString());
 		
 	}
 

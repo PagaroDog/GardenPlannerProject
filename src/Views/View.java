@@ -21,11 +21,11 @@ import javafx.stage.Stage;
  *
  */
 public class View<T extends Controller> {
-	private GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-	protected int canvasWidth = gd.getDisplayMode().getWidth() - 150;
-	protected int canvasHeight = gd.getDisplayMode().getHeight() - 150;
-	protected double expectedWidth = 1770;
-	protected double expectedHeight = 930;
+	private static GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+	protected static int canvasWidth = gd.getDisplayMode().getWidth() - 150;
+	protected static int canvasHeight = gd.getDisplayMode().getHeight() - 150;
+	protected static double expectedWidth = 1770;
+	protected static double expectedHeight = 930;
 	protected Scene scene;
 	protected Stage stage;
 	protected T control;
@@ -101,12 +101,20 @@ public class View<T extends Controller> {
 		return navigation;
 	}
 
-	public int getCanvasWidth() {
+	public static int getCanvasWidth() {
 		return canvasWidth;
 	}
 
-	public int getCanvasHeight() {
+	public static int getCanvasHeight() {
 		return canvasHeight;
+	}
+
+	public static double getExpectedWidth() {
+		return expectedWidth;
+	}
+
+	public static double getExpectedHeight() {
+		return expectedHeight;
 	}
 
 	public Scene getScene() {return scene;}

@@ -1,13 +1,8 @@
 package Views;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import Controllers.SuggestionsController;
-import Model.PlantTypeEnum;
-import Model.SunEnum;
-import Model.WaterEnum;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -16,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
@@ -34,7 +28,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	private GridPane stats;
 	private int thumbnailWidth = 100;
 	private int thumbnailHeight = 100;
-	private final int spaceBetweenLabelsPerRow = 17;
+	private final double spaceBetweenLabels = Math.min(17, 17 * canvasHeight/expectedHeight);
 	private int stackPanePadding = 10;
 	private int rows = canvasHeight / (thumbnailHeight * 2);
 	private int cols = (int) (canvasWidth / (thumbnailWidth * 1.75));
@@ -42,7 +36,19 @@ public class SuggestionsView extends View<SuggestionsController> {
 	BorderPane border;
 	ArrayList<Pane> imgs;
 	Images images;
+	private String deselectedBG = "-fx-background-color: transparent;";
 	private String selectedBG = "-fx-background-color: BLACK;";
+	private int firstImgInd = 0;
+	
+	private int gridRed = 255;
+	private int gridGreen = 130;
+	private int gridBlue = 203;
+	private double gridOpacity = 0.5;
+	
+	private int statsRed = 255;
+	private int statsGreen = 182;
+	private int statsBlue = 130;
+	private int statsOpacity = 1;
 
 	public SuggestionsView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -57,10 +63,8 @@ public class SuggestionsView extends View<SuggestionsController> {
 	public void setup() {
 
 		border = new BorderPane();
-		BorderPane nav = bottom();
-		GridPane cen = center();
-		border.setBottom(nav);
-		border.setCenter(cen);
+		border.setBottom(bottom());
+		border.setCenter(center());
 		scene = new Scene(border, canvasWidth, canvasHeight);
 		styleScene();
 	}
@@ -73,13 +77,11 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 */
 	public GridPane center() {
 
-		
 		GridPane pane = new GridPane();
 
-		pane.setPrefWidth(canvasWidth);
-		pane.setStyle("-fx-background-color: rgba(255, 130, 203,0.5);");
-		
-		
+//		pane.setPrefWidth(canvasWidth);
+		pane.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %f);", gridRed, gridGreen, gridBlue, gridOpacity));
+
 		imgs = new ArrayList<Pane>();
 		int count = 0;
 		String plantName;
@@ -87,7 +89,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 			for (int j = 0; j < cols; j++) {
 				StackPane p = new StackPane();
 				plantName = control.getPlantNameAt(count);
-				ImageView plant = new ImageView(images.getPlantImages().get(plantName)[0].getImg());
+				ImageView plant = new ImageView(images.getPlantImages().get(plantName)[firstImgInd].getImg());
 				plant.setPreserveRatio(true);
 				if (plant.getImage().getWidth() > plant.getImage().getHeight())
 					plant.setFitWidth(thumbnailWidth);
@@ -95,10 +97,10 @@ public class SuggestionsView extends View<SuggestionsController> {
 					plant.setFitHeight(thumbnailHeight);
 				p.setUserData(plantName);
 				p.setPadding(new Insets(stackPanePadding, stackPanePadding, stackPanePadding, stackPanePadding));
-			
+
 				p.getChildren().add(plant);
 				p.setAlignment(Pos.CENTER);
-	
+
 				imgs.add(p);
 				GridPane.setConstraints(p, j, i);
 				p.setOnMouseEntered(control.gethandleOnMouseEnter());
@@ -106,14 +108,13 @@ public class SuggestionsView extends View<SuggestionsController> {
 				p.setOnMouseClicked(control.gethandleOnMouseClick());
 				count++;
 			}
-			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight + (stackPanePadding *2)));
+			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight + (stackPanePadding * 2)));
 		}
-
 
 		this.stats = stats(rows);
 		GridPane.setConstraints(stats, 0, rows, cols, rows);
-		// Creates three rows of height 100 for the stats gridpane
-		for (int i = 0; i < rows-1; i++) {
+		// Creates (rows - 1) rows of height thumbnailHeight for the stats gridpane
+		for (int i = 0; i < rows - 1; i++) {
 			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
 		}
 
@@ -127,7 +128,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	public void selectImage(MouseEvent event) {
 		Node n = (Node) event.getSource();
 		if (n.getStyle().equals(selectedBG)) {
-			n.setStyle("-fx-background-color: transparent;");
+			n.setStyle(deselectedBG);
 		} else {
 			n.setStyle(selectedBG);
 		}
@@ -140,23 +141,13 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 * @return GridPane
 	 */
 	public GridPane stats(int rows) {
-		int imageCols = 2;
+//		int imageCols = 2;
 		GridPane stats = new GridPane();
-		stats.setStyle("-fx-background-color: rgba(255, 182, 130,1);");
-		// stats.setGridLinesVisible(true);
+		stats.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %d);", statsRed, statsGreen, statsBlue, statsOpacity));
 
-		String[] labels = { "Common Name", "Scientific Name", "Plant type", "Moisture", "Sun" };
-
-		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailWidth * imageCols));
-		for (int i = 0; i < 5; i++) {
-			stats.getRowConstraints().add(new RowConstraints(rows * spaceBetweenLabelsPerRow));
-			Label dud = new Label(labels[i] + ": ");
-			GridPane.setConstraints(dud, 1, i);
-			stats.getChildren().add(dud);
-
-		}
-		Label fill = new Label("");
-		fill.setPrefWidth(thumbnailWidth*cols-imageCols);
+//		stats.getColumnConstraints().add(new ColumnConstraints(thumbnailWidth * imageCols));
+//		Label fill = new Label("");
+//		fill.setPrefWidth(thumbnailWidth*cols-imageCols);
 
 		return stats;
 	}
@@ -167,52 +158,20 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 * 
 	 * @param event
 	 */
-	public void inputStats(Object event,  String[] cNames, String name,PlantTypeEnum type, WaterEnum[] moisture, SunEnum[] sun) {
-		Object[] info = { cNames, name,  moisture, type, sun };
-		int cnt = 0;
-		
-		Label val = new Label(cNames[0]);
-		GridPane.setConstraints(val, 3, cnt);
-		cnt++;
+	public void inputStats(Node n, String plantStr) {
+		Label val = new Label(plantStr);
+		GridPane.setConstraints(val, 3, 0);
+		val.setLineSpacing(spaceBetweenLabels);
+		val.setMaxHeight(stats.getHeight());
 		stats.getChildren().add(val);
-		
-		Label val2 = new Label(name);
-		GridPane.setConstraints(val2, 3, cnt);
-		cnt++;
-		stats.getChildren().add(val2);
-		
-		Label val3 = new Label(type.toString());
-		GridPane.setConstraints(val3, 3, cnt);
-		cnt++;
-		stats.getChildren().add(val3);
-		
-		String moistures = "";
-		moistures = Arrays.toString(moisture).replace('[', ' ');
-		moistures = moistures.replace(']', ' ');
 
-		
-		Label val4 = new Label(moistures);
-		GridPane.setConstraints(val4, 3, cnt);
-		cnt++;
-		stats.getChildren().add(val4);
-		
-		String suns = "";
-		suns = Arrays.toString(sun).replace('[', ' ');
-		suns =suns.replace(']', ' ');
-		Label val5 = new Label(suns);
-		GridPane.setConstraints(val5, 3, cnt);
-		cnt++;
-		stats.getChildren().add(val5);
-		
-		
-		
-		
-		Node n = (Node) event;
 		ImageView copy = new ImageView(((ImageView) ((Pane) n).getChildren().get(0)).getImage());
-		copy.setFitHeight(thumbnailHeight * 2);
-		copy.setFitWidth(thumbnailWidth * 2);
 		copy.setPreserveRatio(true);
-		GridPane.setConstraints(copy, 0, 0, 1, 5);
+		if (copy.getImage().getWidth() > copy.getImage().getHeight())
+			copy.setFitWidth((rows-1) * thumbnailWidth * 0.8);
+		else
+			copy.setFitHeight((rows-1) * thumbnailHeight * 0.8);
+//		GridPane.setConstraints(copy, 0, 0, 1, 5);
 		stats.getChildren().add(copy);
 		plantCopy = copy;
 
@@ -223,31 +182,35 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 */
 	public void removeStats() {
 		stats.getChildren().remove(plantCopy);
-		for (int i = 0; i < 5; i++) {
-			stats.getChildren().remove(stats.getChildren().size() - 1);
-		}
+//		for (int i = 0; i < 5; i++) {
+		stats.getChildren().remove(stats.getChildren().size() - 1);
+//		}
 	}
 
 	/**
-	 * Creates the navigation portion of BoarderPane. Assigned to the Top of the
+	 * Creates the navigation portion of BorderPane. Assigned to the Top of the
 	 * BoarderPane.
 	 * 
 	 * @return HBox
 	 */
 	public BorderPane bottom() {
-		BorderPane nav = createNavigationBar("Edit Preferences", "Design Garden", "Pick Some of Your Favorite Plants From Our Suggestions", control.gethandleOnBackButton(), control.gethandleOnNextButton());
+		BorderPane nav = createNavigationBar("Edit Preferences", "Design Garden",
+				"Pick Some of Your Favorite Plants From Our Suggestions", control.gethandleOnBackButton(),
+				control.gethandleOnNextButton());
 		return nav;
 	}
 
 	public GridPane getGrid() {
 		return (GridPane) border.getCenter();
 	}
+
 	/**
-	 * Called by SuggestionsController. Updates plant images to reflect the change in Model's plantSuggestions ArrayList
+	 * Called by SuggestionsController. Updates plant images to reflect the change
+	 * in Model's plantSuggestions ArrayList
 	 */
 	public void refreshPlants() {
 		GridPane cen = center();
-	
+
 		border.setCenter(cen);
 	}
 
@@ -258,11 +221,9 @@ public class SuggestionsView extends View<SuggestionsController> {
 	public int getCols() {
 		return cols;
 	}
+
 	public String getSelectedBG() {
 		return selectedBG;
 	}
-	
-	
-
 
 }

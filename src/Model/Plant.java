@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import Views.View;
+
 /**
  * 
  * @author IanMcCabe
@@ -22,7 +24,7 @@ public class Plant implements Serializable {
 	private WaterEnum[] waterLevel;
 	private SunEnum[] light;
 	private int[] spread;
-	
+	private static int maxCommonNames = (int) Math.min(7, 8 * View.getCanvasWidth() / View.getExpectedWidth());
 
 	public Plant(String name, String[] commonNames, String duration, PlantTypeEnum type, int[] height, String[] color,
 			SeasonEnum[] bloomtime, WaterEnum[] waterLevel, SunEnum[] light, int[] spread) {
@@ -120,20 +122,30 @@ public class Plant implements Serializable {
 	public void setSpread(int[] spread) {
 		this.spread = spread;
 	}
-	
+
+	public int getMaxCommonNames() {
+		return maxCommonNames;
+	}
+
+	public void setMaxCommonNames(int maxCommonNames) {
+		this.maxCommonNames = maxCommonNames;
+	}
+
 	@Override
 	public String toString() {
-		String commonString = Arrays.toString(commonNames).replace("[", "").replace("]", "");
+		String commonString;
+		if (commonNames.length > maxCommonNames) {
+			String[] commonCopy = Arrays.copyOf(commonNames, maxCommonNames);
+			commonString = Arrays.toString(commonCopy).replace("[", "").replace("]", "");
+		} else {
+			commonString = Arrays.toString(commonNames).replace("[", "").replace("]", "");
+		}
 		String colorString = color.toString().replace("[", "").replace("]", "");
 		String seasonString = Arrays.toString(bloomtime).replace("[", "").replace("]", "");
 		String waterString = Arrays.toString(waterLevel).replace("[", "").replace("]", "");
 		String lightString = Arrays.toString(light).replace("[", "").replace("]", "");
-		return name +
-				"\nCommon names: " + commonString +
-				"\nDuration: " + duration +
-				"\nBloom colors: " + colorString +
-				"\nBloom seasons: " + seasonString +
-				"\nWater levels: " + waterString +
-				"\nLight levels: " + lightString;
+		return name + "\nCommon names: " + commonString + "\nDuration: " + duration + "\nBloom colors: " + colorString
+				+ "\nBloom seasons: " + seasonString + "\nWater levels: " + waterString + "\nLight levels: "
+				+ lightString;
 	}
 }
