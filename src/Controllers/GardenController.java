@@ -221,8 +221,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 
 	/**
-	 * Registers a mouse drag released event, sets copied to true so a new image
-	 * will not be generated accidentally
+	 * Registers a mouse drag released event.
 	 * 
 	 * @param event
 	 */
@@ -232,7 +231,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 
 	/**
-	 * Gets the drag event handler for images in the FlowPane
+	 * Gets the drag event handler for circles in the Garden
 	 * 
 	 * @param i the milkweed image that is being dragged
 	 * @return the mouse event handler for the specific milkweed image that was
@@ -243,7 +242,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 
 	/**
-	 * Handles the dragging logic of the static milkweed image in the TilePane
+	 * Handles the dragging logic when an circle is dragged within the garden pane. 
 	 * 
 	 * @param event the drag event that occurred
 	 */
@@ -259,11 +258,19 @@ public class GardenController extends Controller<GardenView> implements Serializ
 
 		dragHappened = true;
 	}
-
+	/**
+	 * code is triggered by a press of mouse on a circle
+	 * 
+	 * @return EventHandler object for this action
+	 */
 	public EventHandler getHandlerForCirclePressed() {
 		return event -> circlePressed((MouseEvent) event);
 	}
-
+	/**
+	 * called when a circle is clicked in the garden pane. this is used to update the CurrDrawObj in model
+	 * which is used in copy, paste, and delete.
+	 * @param event
+	 */
 	public void circlePressed(MouseEvent event) {
 		model.setCurrDrawObj((Node) event.getSource());
 	}
@@ -326,6 +333,10 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		return event -> imageDrag((MouseEvent) event);
 	}
 
+	/**
+	 * called when an image in the left pane is started to be dragged
+	 * @param event
+	 */
 	public void imageDrag(MouseEvent event) {
 		System.out.println("Started To Drag");
 		Node n = (Node) event.getSource();
@@ -342,20 +353,35 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		db.setContent(content);
 		event.consume();
 	}
-
+	
+	/**
+	 * calls handler and passes in event for gardenDragOver
+	 * @return event
+	 */
 	public EventHandler getHandlerForDragOver() {
 		return event -> gardenDragOver((DragEvent) event);
 	}
-
+	
+	/**
+	 * called when the garden Pane is dragged over
+	 * @param event
+	 */
 	public void gardenDragOver(DragEvent event) {
 		event.acceptTransferModes(TransferMode.MOVE);
 		event.consume();
 	}
-
+	/**
+	 * calls gardenDragDropped handler
+	 * @return event
+	 */
 	public EventHandler getHandlerForDragDropped() {
 		return event -> gardenDragDropped((DragEvent) event);
 	}
 
+		/**
+		 * activated when a plant is dragged from the left pane, this creates the plant and drops it in the garden pane.
+		 * @param event
+		 */
 	public void gardenDragDropped(DragEvent event) {
 
 		Dragboard db = event.getDragboard();
@@ -393,7 +419,11 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public String getPlantNameAt(int x) {
 		return model.getSuggestedPlants().get(x).getName();
 	}
-
+	
+	/**
+	 * 
+	 * @return number of plants on screen
+	 */
 	public int getNumPlants() {
 		return model.getPlants().size();
 	}
@@ -405,7 +435,14 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public void update() {
 		view.updatePlants();
 	}
-
+	
+	/**
+	 * returns min or max size
+	 * used to get the size of the plant in changing size, and for initial plant creation
+	 * @param plantName
+	 * @param minOrMax
+	 * @return min or max size of plant based on size of plant and yard
+	 */
 	public double getSize(String plantName, int minOrMax) {
 		double minSize = model.getPlants().get(plantName).getSpread()[minOrMax] / 2;
 		if (minSize == 0) {
@@ -413,7 +450,15 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		}
 		return minSize;
 	}
-
+	
+	/**
+	 * this function is used to get the size of the circle based on the property size.
+	 * called in dragReleased
+	 * @param size
+	 * @param propertyWidth
+	 * @param propertyHeight
+	 * @return rad. circle size based on yard dimensions
+	 */
 	public double getRad(double size, double propertyWidth, double propertyHeight) {
 		double xRad = size / propertyWidth * (view.getGarden().getWidth());
 		double yRad = size / propertyHeight * (view.getGarden().getHeight());
@@ -430,8 +475,10 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		return event -> deleteButton((MouseEvent) event);
 	}
 
-	/*
-	 * @param MouseEvent event called by eventHandler
+	/**
+	 * called by handleOnDeleteButton
+	 * deletes object in CurrDrawObj
+	 * @param event
 	 */
 	public void deleteButton(MouseEvent event) {
 		Circle e = (Circle) model.getCurrDrawObj();
@@ -450,8 +497,10 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		return event -> copyButton((MouseEvent) event);
 	}
 
-	/*
-	 * @param MouseEvent event called by eventHandler
+	/**
+	 * triggered by handleOnCopyButton
+	 * creates new circle object with addCircleToGarden and adds to GA
+	 * @param event
 	 */
 	public void copyButton(MouseEvent event) {
 		System.out.println("creating copy");
@@ -466,15 +515,17 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		}
 	}
 
-	/*
-	 * returns the width of the property.
+	/**
+	 * returns the width of the property
+	 * @return int PropertyWidthInches
 	 */
 	public int getPropertyWidthInches() {
 		return model.getPropertyWidthInches();
 	}
 
-	/*
-	 * returns the width of the property
+	/**
+	 * returns the height of the property
+	 * @return int PropertyHeightInches
 	 */
 	public int getPropertyHeightInches() {
 		return model.getPropertyHeightInches();
@@ -483,7 +534,13 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public SeasonEnum[] getBloomTime(String plantName) {
 		return model.getPlants().get(plantName).getBloomtime();
 	}
-
+	
+	/**
+	 * returns the color of the plant for the season specified in model
+	 * called in changeSeason, and placing of plants
+	 * @param plantName
+	 * @return
+	 */
 	public Color getBloomColor(String plantName) {
 		HashSet<String> hashset = model.getPlants().get(plantName).getColor();
 		int size = hashset.size();
@@ -498,15 +555,29 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		return Color.BLACK;
 
 	}
-
+	
+	/**
+	 * used in categories for the left pane
+	 * 
+	 * @param name
+	 * @return PlantTypeEnum of current plant
+	 */
 	public PlantTypeEnum getPlantType(String name) {
 		return model.getPlants().get(name).getType();
 	}
-
+	
+	/**
+	 * calls mouseReleased, triggered when mouse is released
+	 * @return event handler
+	 */
 	public EventHandler handleOnMouseReleased() {
 		return event -> mouseReleased((MouseEvent) event);
 	}
-
+	
+	/**
+	 * triggered by handleOnMouseReleased, adds garden Action based on modification, sets CurrDrawObj for copy paste delete
+	 * @param event
+	 */
 	public void mouseReleased(MouseEvent event) {
 		Circle dragPlant = (Circle) event.getSource();
 		model.setCurrDrawObj(dragPlant);
@@ -523,52 +594,88 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		}
 
 	}
-
+	/**
+	 * triggered by undo button pressed, calls undo
+	 * @return event handler
+	 */
 	public EventHandler handleOnUndoButton() {
 		return event -> undo((MouseEvent) event);
 	}
-
+	
+	/**
+	 * calls undo logic in GardenAction, triggered by handleOnUndoButton
+	 * @param event
+	 */
 	public void undo(MouseEvent event) {
 		GA.undo(view);
 	}
-
+	
+	/**
+	 * calls redo logic, triggered by redo button pressed.
+	 * @return event handler
+	 */
 	public EventHandler handleOnRedoButton() {
 		return event -> redo((MouseEvent) event);
 	}
-
+	
+	/**
+	 * calls the redo function in GardenAction
+	 * @param event
+	 */
 	public void redo(MouseEvent event) {
 		GA.redo(view);
 	}
-
+	/**
+	 * called when mouse goes into image/circle, triggers displayInfo
+	 * @return
+	 */
 	public EventHandler handleOnMouseEntered() {
 		return event -> displayInfo((MouseEvent) event);
 	}
-
+	/**
+	 * displays plant into on mouse over.
+	 * @param event
+	 */
 	public void displayInfo(MouseEvent event) {
 		Circle plant = (Circle) event.getSource();
 		view.displayInfo(plant, event.getX(), event.getY(),
 				model.isPlantMatch(plant.getUserData().toString(), event.getX(), event.getY()));
 	}
-
+	/**
+	 * triggered when mouse exits. calls removeInfo event
+	 * @return eventhandler
+	 */
 	public EventHandler handleOnMouseExited() {
 		return event -> removeInfo((MouseEvent) event);
 	}
-
+	/**
+	 * removes the info pane when the mouse exits.
+	 * @param event
+	 */
 	public void removeInfo(MouseEvent event) {
 		view.removeInfo();
 	}
-
+	
+	/**
+	 * triggered when mouse is in an image.
+	 * @return event handler
+	 */
 	public EventHandler handleOnMouseEnteredImage() {
 		return event -> displayInfoForScrollPane((MouseEvent) event);
 	}
-
+	/**
+	 * displays the info of plant that is moused over. triggered by handleOnMouseEnteredImage
+	 * @param event
+	 */
 	public void displayInfoForScrollPane(MouseEvent event) {
 		ImageView plantImage = (ImageView) event.getSource();
 		String plantName = (String) plantImage.getUserData();
 		Plant plant = model.getPlants().get(plantName);
 		view.displayInfoForScrollPane(plant.toString());
 	}
-
+	/**
+	 * saves plants currently in garden frame and creates file
+	 */
 	public void savePlants() {
 		model.getRectangles().clear();
 		model.getLabels().clear();
@@ -604,7 +711,10 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		model.setWidthOnSave(View.getCanvasWidth());
 		model.setHeightOnSave(View.getCanvasHeight());
 	}
-
+	
+	/**
+	 * loads plants into the garden frame based on a previous save file.
+	 */
 	public void loadPlants() {
 		for (GardenObj plant : model.getGardenObjs()) {
 			Circle circle = new Circle();
@@ -682,7 +792,11 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		}
 		return Color.GREEN;
 	}
-
+	/**
+	 * returns the radius of the plant based on season. Used for resizing based on size buttons and initial circle creation
+	 * @param name
+	 * @return rad
+	 */
 	public double getRadiusFromYear(String name) {
 		double minSize = getSize(name, minSpreadInd);
 		double maxSize = getSize(name, maxSpreadInd);
