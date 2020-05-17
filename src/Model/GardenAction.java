@@ -8,6 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 /**
+ * Handles the list of actions the user enters into the program as they modify the garden. 
+ * 
  * 
  * @author IanMcCabe
  *
@@ -114,21 +116,30 @@ public class GardenAction {
 		this.name = name;
 		this.action = action;
 	}
-
+	
+	/**
+	 * This method adds an action to the actionList 
+	 * @param ga The garden action being added to the actionList
+	 */
 	public void addAction(GardenAction ga) {
 		actionList.add(ga);
-		//equalityChecker(); 
 		redoList.clear();
-		System.out.println(actionList);
 	}
 
+	/**
+	 * Removes an action from the actionList by popping off the end of the actionList and adding it 
+	 * to the head of the redoList. 
+	 */
 	public void undo() {
 		if (actionList.size() == 0) {
 			return;
 		}
 		redoList.push(actionList.removeLast());
 	}
-
+	
+	/**
+	 * Removes an item from the head of the redoList and adds it to the tail of the actionList. 
+	 */
 	public void redo() {
 		if (redoList.size() == 0) {
 			return;
@@ -137,6 +148,7 @@ public class GardenAction {
 			actionList.add(redoList.pop());
 		}
 	}
+	
 	
 	public void equalityChecker() {
 		Iterator<GardenAction> i = actionList.iterator();  
