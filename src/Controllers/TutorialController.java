@@ -81,6 +81,8 @@ public class TutorialController extends Controller<TutorialView> {
 			view.setBackground(iv);
 			// view.setBackground(new
 			// ImageView(view.getTutorialSlides().get(view.getCurrentSlide()+1)));
+			
+			view.getSlide().getChildren().clear(); 
 			view.getSlide().getChildren().add(view.getBackground());
 
 			view.setCurrentSlide(view.getCurrentSlide() + 1);

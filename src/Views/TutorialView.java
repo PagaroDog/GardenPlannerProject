@@ -43,10 +43,10 @@ public class TutorialView extends View<TutorialController> {
 	public void setup() {
 
 		tutorialSlides.add(new Image("/TutorialSlides/Slide1.png"));// 0
-		/*
-		tutorialSlides.add(new Image("/TutorialSlides/Slide1_Outline.png")); //1
-		tutorialSlides.add(new Image("/TutorialSlides/Slide2_Outline_2.png")); //2
-		tutorialSlides.add(new Image("/TutorialSlides/Slide3_Conditions_1.png")); //3
+		
+		tutorialSlides.add(new Image("/TutorialSlides/Slide1_Outline.PNG")); //1
+		tutorialSlides.add(new Image("/TutorialSlides/Slide2_Outline_2.PNG")); //2
+		tutorialSlides.add(new Image("/TutorialSlides/Slide3_Conditions_1.PNG")); //3
 		tutorialSlides.add(new Image("/TutorialSlides/Slide4_Conditions_2.png")); //4
 		tutorialSlides.add(new Image("/TutorialSlides/Slide5_Conditions_3.png")); //5
 		tutorialSlides.add(new Image("/TutorialSlides/Slide6_Preferences_1.png")); //6
@@ -56,7 +56,7 @@ public class TutorialView extends View<TutorialController> {
 		tutorialSlides.add(new Image("/TutorialSlides/Slide10_Design_2.png")); //10
 		tutorialSlides.add(new Image("/TutorialSlides/Slide11_Design_4.png")); //11
 		tutorialSlides.add(new Image("/TutorialSlides/Slide12_Statistics.png")); //12
-		*/
+		
 		tutorialSlides.add(new Image("/TutorialSlides/Slide2.PNG"));// 1
 		
 
