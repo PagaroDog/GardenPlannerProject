@@ -8,6 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 /**
+ * Handles the list of actions the user enters into the program as they modify the garden. 
+ * 
  * 
  * @author IanMcCabe
  *
@@ -115,66 +117,40 @@ public class GardenAction {
 		this.name = name;
 		this.action = action;
 	}
-
+	
+	/**
+	 * This method adds an action to the actionList 
+	 * @param ga The garden action being added to the actionList
+	 */
 	public void addAction(GardenAction ga) {
 		actionList.add(ga);
-		equalityChecker();
 		redoList.clear();
-		System.out.println(actionList);
 	}
 
-	public void undo(GardenView gv) {
+	/**
+	 * Removes an action from the actionList by popping off the end of the actionList and adding it 
+	 * to the head of the redoList. 
+	 */
+	public void undo() {
 		if (actionList.size() == 0) {
 			return;
 		}
-
 		redoList.push(actionList.removeLast());
-
-		if (actionList.size() == 0) {
-			gv.getGarden().getChildren().clear();
-			gv.getGarden().getChildren().add(gv.getDrawing());
-		} else {
-			actionIterate(gv);
-		}
 	}
-
-	public void redo(GardenView gv) {
+	
+	/**
+	 * Removes an item from the head of the redoList and adds it to the tail of the actionList. 
+	 */
+	public void redo() {
 		if (redoList.size() == 0) {
 			return;
-		} else {
+		}
+		else {
 			actionList.add(redoList.pop());
-			actionIterate(gv);
 		}
 	}
-
-	public void actionIterate(GardenView gv) {
-		System.out.println("ActionIterate");
-		gv.getGarden().getChildren().clear();
-		gv.getGarden().getChildren().add(gv.getDrawing());
-		for (GardenAction ga : actionList) {
-			switch (ga.getAction()) {
-			case ADDPLANT:
-				gv.addCircleToGarden(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
-				System.out.print("ADD");
-				break;
-
-			case MOVEPLANT:
-				gv.movePlant(ga.getPlant(), ga.getX(), ga.getY());
-				System.out.print("MOVE");
-				break;
-
-			case DELETE:
-				gv.deleteShape(ga.getPlant());
-				System.out.print("DELETE");
-				break;
-
-			case COPY:
-				gv.addCircleToGarden(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
-				System.out.print("COPY");
-			}
-			System.out.println("");
-		}
-	}
+	
+	
 
 	public void equalityChecker() {
 		Iterator<GardenAction> i = actionList.iterator();

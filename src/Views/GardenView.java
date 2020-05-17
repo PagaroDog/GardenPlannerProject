@@ -12,6 +12,7 @@ import java.util.List;
 import Controllers.GardenController;
 import Model.DrawModeEnum;
 import Model.EllipseDrawingObj;
+import Model.GardenAction;
 import Model.LabelDrawingObj;
 import Model.PlantTypeEnum;
 import Model.RectDrawingObj;
@@ -48,7 +49,7 @@ import javafx.stage.Stage;
  * graphical logic.
  * 
  * @author Matt Cohen
- *
+ * @author IanMcCabe
  */
 public class GardenView extends View<GardenController> implements Serializable {
 	private HashMap<String, Image> plantImages = new HashMap<String, Image>();
@@ -409,7 +410,17 @@ public class GardenView extends View<GardenController> implements Serializable {
 
 		this.garden.getChildren().add(info);
 	}
-
+	
+	
+	/**
+	 * This method displays the info of the current plant that the mouse is over 
+	 * 
+	 * 
+	 * @param e The circle the user is currently over 
+	 * @param mouseX The X coordinate of the mouse 
+	 * @param mouseY The Y coordinate of the mouse 
+	 * @param plantMatch The name of the plant being displayed
+	 */
 	public void displayInfo(Circle e, double mouseX, double mouseY, String plantMatch) {
 		Image i = imgs.getPlantImages().get(e.getUserData())[firstImgInd].getImg();
 
@@ -435,7 +446,10 @@ public class GardenView extends View<GardenController> implements Serializable {
 		}
 
 	}
-
+	
+	/**
+	 * Removes the info of a plant when the user's mouse has left the plant object 
+	 */
 	public void removeInfo() {
 		this.garden.getChildren().remove(info);
 	}
@@ -525,5 +539,51 @@ public class GardenView extends View<GardenController> implements Serializable {
 			break;
 		}
 	}
+	
+	
+	/**
+	 * This method iterates over a list of garden actions drawing all of the users inputs to the gardenView.
+	 * The list of GardenActions is modified by the GardenAction class to remove/add actions the user has done
+	 * to undo/redo objects from the screen. 
+	 * @param GA The list of GardenActions the method goes through to draw the users inputs back on the screen. 
+	 */
+	public void iterateGardenActions(GardenAction GA) {
+		System.out.println("Iterating over garden actions"); 
+		garden.getChildren().clear(); 
+		garden.getChildren().add(drawing); 
+		for (GardenAction ga : GA.getActionList()) {
+			switch (ga.getAction()) {
+			case ADDPLANT:
+				addCircleToGarden(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
+				System.out.print("ADD");
+				break;
+
+			case MOVEPLANT:
+				movePlant(ga.getPlant(), ga.getX(), ga.getY());
+				System.out.print("MOVE"); 
+				break;
+
+			case DELETE:
+				deleteShape(ga.getPlant());
+				System.out.print("DELETE");
+				break;
+
+			case COPY:
+				addCircleToGarden(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
+				System.out.print("COPY");
+			}
+			System.out.println(""); 
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
