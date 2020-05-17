@@ -87,6 +87,11 @@ public class PreferencesView extends View<PreferencesController> {
 		styleScene();
 	}
 
+	/**
+	 * Generates the VBox that allows users to choose preferences
+	 * 
+	 * @return The generated VBox
+	 */
 	public VBox addVBox() {
 		vbox = new VBox();
 		vbox.setPadding(new Insets(vBoxVPadding, vBoxHPadding, vBoxVPadding, vBoxHPadding));
@@ -127,6 +132,11 @@ public class PreferencesView extends View<PreferencesController> {
 		return vbox;
 	}
 
+	/**
+	 * Generates the bottom navigation bar.
+	 * 
+	 * @return The BorderPane representing the bar.
+	 */
 	public BorderPane addBottom() {
 		BorderPane bottom = createNavigationBar("Edit Areas", "See Suggestions", "Choose Your Preferences",
 				control.gethandleOnBackButton(), control.gethandleOnNextButton());
@@ -175,7 +185,6 @@ public class PreferencesView extends View<PreferencesController> {
 		for (int i = 0; i < buttons.length; i++) {
 			strings[i] = buttons[i].toString();
 		}
-		System.out.println(strings);
 		return strings;
 	}
 

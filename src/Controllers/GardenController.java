@@ -227,7 +227,6 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 */
 	public void dragReleased(MouseEvent event) {
 		ImageView dragPlant = (ImageView) event.getSource();
-		System.out.println(dragPlant.getX());
 	}
 
 	/**
@@ -295,7 +294,6 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 */
 	public void press(MouseEvent event) {
 		model.setCurrDrawObj((Node) event.getSource());
-		// int index = view.addIVToFlow(new ImageView(((ImageView) click).getImage()));
 	}
 
 	/**
@@ -315,7 +313,6 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		drawing.setPrefWidth(view.getGarden().getWidth());
 		double ratio = newWidth / oldWidth;
 		for (Node child : drawing.getChildren()) {
-			System.out.println(child);
 			double oldX = child.getBoundsInParent().getMinX();
 			child.setScaleX(ratio);
 			double newX = child.getBoundsInParent().getMinX();
@@ -342,7 +339,6 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param event
 	 */
 	public void imageDrag(MouseEvent event) {
-		System.out.println("Started To Drag");
 		Node n = (Node) event.getSource();
 		Circle circle = new Circle();
 		Pane p = new Pane();
@@ -516,13 +512,11 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @param event
 	 */
 	public void copyButton(MouseEvent event) {
-		System.out.println("creating copy");
 		Circle oldCircle = (Circle) model.getCurrDrawObj();
 		if (oldCircle != null) {
 			Circle newCircle = new Circle();
 			view.addCircleToGarden(newCircle, oldCircle.getCenterX() + copyOffset, oldCircle.getCenterY() + copyOffset,
 					oldCircle.getRadius(), (String) oldCircle.getUserData(), (Color) oldCircle.getStroke());
-			System.out.println(newCircle.getCenterX());
 			GA.addAction(
 					new GardenAction(newCircle, newCircle.getCenterX(), newCircle.getCenterY(), newCircle.getRadius(),
 							newCircle.getUserData().toString(), (Color) newCircle.getStroke(), ActionEnum.COPY));
@@ -547,6 +541,12 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		return model.getPropertyHeightInches();
 	}
 
+	/**
+	 * returns the seasons that a specific plant blooms
+	 * 
+	 * @param plantName The scientific name of the plant
+	 * @return An array of SeasonEnums representing the plant's blooming seasons
+	 */
 	public SeasonEnum[] getBloomTime(String plantName) {
 		return model.getPlants().get(plantName).getBloomtime();
 	}
@@ -568,7 +568,6 @@ public class GardenController extends Controller<GardenView> implements Serializ
 				return Color.web(colorName);
 			i++;
 		}
-		System.out.println("setting as BLACK");
 		return Color.BLACK;
 
 	}
@@ -605,7 +604,6 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		double calcX = model.calcX(event.getX(), dragPlant.getRadius(), view.getSize(), View.getCanvasWidth());
 
 		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight(), View.getCanvasHeight());
-		System.out.println("Drag released at x:" + calcX + ", y:" + calcY);
 
 		if (dragHappened) {
 			GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getRadius(),
@@ -640,21 +638,18 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	}
 
 	/**
-	 * <<<<<<< HEAD Handles when the redo button is pressed in gardenView
+	 * Handles when the redo button is pressed in gardenView
 	 * 
-	 * @return EventHandler that calls the redo method ======= calls redo logic,
-	 *         triggered by redo button pressed.
-	 * @return event handler >>>>>>> javadoc
+	 * @return EventHandler that calls the redo method
 	 */
 	public EventHandler handleOnRedoButton() {
 		return event -> redo((MouseEvent) event);
 	}
 
 	/**
-	 * <<<<<<< HEAD Calls GardenAction redo method to add an undone action to the
-	 * action stack. Calls iterateAction so the gardenView reflects the changes made
-	 * in the garden action stack. ======= calls the redo function in GardenAction
-	 * >>>>>>> javadoc
+	 * Calls GardenAction redo method to add an undone action to the action stack.
+	 * Calls iterateAction so the gardenView reflects the changes made in the garden
+	 * action stack.
 	 * 
 	 * @param event
 	 */
@@ -794,7 +789,6 @@ public class GardenController extends Controller<GardenView> implements Serializ
 					main.getDyControl().getHandleOnDragLabel(), main.getDyControl().getView().getLabels());
 		}
 		if (model.getBackgroundPath() != null) {
-			System.out.println("Loading img");
 			try {
 				Image img = SwingFXUtils.toFXImage(ImageIO.read(new File(model.getBackgroundPath())), null);
 				main.getDyControl().getView().setBackground(new ImageView(img));

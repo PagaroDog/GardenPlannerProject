@@ -9,11 +9,9 @@ import java.io.ObjectInputStream;
 
 import Model.Model;
 import Model.StageNameEnum;
-import Views.ImageWithSourceInfo;
 import Views.StartupView;
 import Views.View;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 
 /**
  * This class is the controller for the startup screen.
@@ -36,6 +34,9 @@ public class StartupController extends Controller<StartupView> {
 		return event -> newButton();
 	}
 
+	/**
+	 * Brings the user to the DrawYard Screen
+	 */
 	public void newButton() {
 		view.getStage().setScene(Main.getScenes().get(StageNameEnum.DRAW));
 		model.setStageName(StageNameEnum.DRAW);
@@ -47,10 +48,14 @@ public class StartupController extends Controller<StartupView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler handleOnLoadButton() {
-		return event -> loadButton((MouseEvent) event);
+		return event -> loadButton();
 	}
 
-	public void loadButton(MouseEvent event) {
+	/**
+	 * Loads the model from a previously saved garden and updates the program
+	 * accordingly, bringing the user to the Garden screen.
+	 */
+	public void loadButton() {
 		File file = view.getFileChooser().showOpenDialog(view.getStage());
 		try {
 			FileInputStream fileIn = new FileInputStream(file.getPath());
@@ -88,23 +93,33 @@ public class StartupController extends Controller<StartupView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler handleOnTutorialButton() {
-		return event -> tutorialButton((MouseEvent) event);
+		return event -> tutorialButton();
 	}
 
-	public void tutorialButton(MouseEvent event) {
+	/**
+	 * Brings the user to the Tutorial screen.
+	 */
+	public void tutorialButton() {
 		view.getStage().setScene(Main.getScenes().get(StageNameEnum.TUTORIAL));
 		model.setStageName(StageNameEnum.TUTORIAL);
 		main.getTutControl().getView().initSlide();
 	}
 
+	/**
+	 * Handles the event when the user presses the credits button.
+	 * 
+	 * @return An EventHandler for this action
+	 */
 	public EventHandler handleOnCreditsButton() {
-		return event -> creditsButton();
+		return event -> view.credits();
 	}
 
-	private void creditsButton() {
-		view.credits();
-	}
-
+	/**
+	 * Generates credits for the software, including the developers' names and the
+	 * authors of and links to the plants images used.
+	 * 
+	 * @return A String containing the credits.
+	 */
 	public String generateCredits() {
 		String credits = "Developers:" + "\nMatt Cohen" + "\nIan McCabe" + "\nJosh Stone" + "\nTommy White"
 				+ "\nBrandon Wu";

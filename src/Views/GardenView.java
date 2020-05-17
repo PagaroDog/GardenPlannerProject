@@ -142,8 +142,6 @@ public class GardenView extends View<GardenController> implements Serializable {
 	 * Creates a ScrollPane of suggested plants for the left part of the BorderPane
 	 */
 	public void left() {
-		System.out.println("Number of plants: " + control.getNumPlants());
-
 		tabPane = new TabPane();
 		tabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		plants.clear();
@@ -249,7 +247,6 @@ public class GardenView extends View<GardenController> implements Serializable {
 	 */
 	public void addImageFromFile(String myDirectoryPath) {
 		File dir = new File(myDirectoryPath);
-		System.out.println(dir.isDirectory());
 		File[] directoryListing = dir.listFiles();
 		for (File child : directoryListing) {
 			String name = child.getName();
@@ -299,39 +296,6 @@ public class GardenView extends View<GardenController> implements Serializable {
 	public void movePlant(Circle dragPlant, double x, double y) {
 		dragPlant.setCenterX(x);
 		dragPlant.setCenterY(y);
-		// System.out.println("Moving plant at x:" + x + ", y:" + y);
-	}
-
-	public Pane getDrawing() {
-		return drawing;
-	}
-
-	public void setDrawing(Pane drawing) {
-		this.drawing = drawing;
-	}
-
-	public Pane getGarden() {
-		return garden;
-	}
-
-	public ScrollPane getScrollPane() {
-		return scrollPane;
-	}
-
-	public BorderPane getBorder() {
-		return border;
-	}
-
-	public int getSize() {
-		return SIZE;
-	}
-
-	public double getBottomHeight() {
-		return border.getBottom().getLayoutBounds().getHeight();
-	}
-
-	public FileChooser getFileChooser() {
-		return fileChooser;
 	}
 
 	/**
@@ -464,14 +428,14 @@ public class GardenView extends View<GardenController> implements Serializable {
 	}
 
 	/**
-	 * adds rectanlge to garden view to denote the user defined ares.
+	 * Adds a rectangle to the drawing based on a previously saved RectDrawingObj.
 	 * 
-	 * @param rectObj
-	 * @param fill
-	 * @param stroke
-	 * @param onPress
-	 * @param onDrag
-	 * @param rects
+	 * @param rectObj The saved representation of the rectangle
+	 * @param fill    The color that fills the rectangle
+	 * @param stroke  The color that borders the rectangle
+	 * @param onPress The EventHandler for when the rectangle is pressed
+	 * @param onDrag  The EventHandler for when the rectangle is dragged
+	 * @param rects   The pane to which the rectangle is added
 	 */
 	public void addRectangle(RectDrawingObj rectObj, Color fill, Color stroke, EventHandler onPress,
 			EventHandler onDrag, Pane rects) {
@@ -489,12 +453,12 @@ public class GardenView extends View<GardenController> implements Serializable {
 	}
 
 	/**
-	 * adds elipse to ells
+	 * Adds an ellipse to the drawing based on a previously saved EllipseDrawingObj.
 	 * 
-	 * @param ellipseObj
-	 * @param onPress
-	 * @param onDrag
-	 * @param ells
+	 * @param ellipseObj The saved representation of the ellipse
+	 * @param onPress    The EventHandler for when the ellipse is pressed
+	 * @param onDrag     The EventHandler for when the ellipse is dragged
+	 * @param ells       The pane to which the ellipse is added
 	 */
 	public void addEllipse(EllipseDrawingObj ellipseObj, EventHandler onPress, EventHandler onDrag, Pane ells) {
 		Ellipse e = new Ellipse();
@@ -510,12 +474,12 @@ public class GardenView extends View<GardenController> implements Serializable {
 	}
 
 	/**
-	 * labels areas of garden
+	 * Adds a label to the drawing based on a previously saved LabelDrawingObj.
 	 * 
-	 * @param labelObj
-	 * @param onPress
-	 * @param onDrag
-	 * @param labs
+	 * @param labelObj The saved representation of the label
+	 * @param onPress  The EventHandler for when the label is pressed
+	 * @param onDrag   The EventHandler for when the label is dragged
+	 * @param labs     The pane to which the label is added
 	 */
 	public void addLabel(LabelDrawingObj labelObj, EventHandler onPress, EventHandler onDrag, Pane labs) {
 		Label lab = new Label();
@@ -526,10 +490,6 @@ public class GardenView extends View<GardenController> implements Serializable {
 		lab.setOnMousePressed(onPress);
 		lab.setOnMouseDragged(onDrag);
 		labs.getChildren().add(lab);
-	}
-
-	public TabPane getTabPane() {
-		return tabPane;
 	}
 
 	/**
@@ -609,9 +569,45 @@ public class GardenView extends View<GardenController> implements Serializable {
 				addCircleToGarden(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
 				System.out.print("COPY");
 			}
-			System.out.println("");
+			System.out.println();
 		}
 
+	}
+
+	public Pane getDrawing() {
+		return drawing;
+	}
+
+	public void setDrawing(Pane drawing) {
+		this.drawing = drawing;
+	}
+
+	public Pane getGarden() {
+		return garden;
+	}
+
+	public ScrollPane getScrollPane() {
+		return scrollPane;
+	}
+
+	public BorderPane getBorder() {
+		return border;
+	}
+
+	public int getSize() {
+		return SIZE;
+	}
+
+	public double getBottomHeight() {
+		return border.getBottom().getLayoutBounds().getHeight();
+	}
+
+	public FileChooser getFileChooser() {
+		return fileChooser;
+	}
+
+	public TabPane getTabPane() {
+		return tabPane;
 	}
 
 }

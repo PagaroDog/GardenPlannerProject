@@ -4,6 +4,13 @@ import java.io.Serializable;
 
 import javafx.scene.shape.Circle;
 
+/**
+ * This class represents the plants that make up the garden and is only used if
+ * the garden is saved.
+ * 
+ * @author Tommy White
+ *
+ */
 public class GardenObj implements Serializable {
 	private double x;
 	private double y;

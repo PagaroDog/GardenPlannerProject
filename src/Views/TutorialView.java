@@ -76,6 +76,15 @@ public class TutorialView extends View<TutorialController> {
 		styleScene();
 	}
 
+	/**
+	 * Initializes the slideshow
+	 */
+	public void initSlide() {
+		background.setFitHeight(((StackPane) border.getCenter()).getHeight());
+		background.setPreserveRatio(true);
+		slide.getChildren().add(background);
+	}
+
 	public StackPane getSlide() {
 		return slide;
 	}
@@ -114,12 +123,6 @@ public class TutorialView extends View<TutorialController> {
 
 	public void setBorder(BorderPane border) {
 		this.border = border;
-	}
-
-	public void initSlide() {
-		background.setFitHeight(((StackPane) border.getCenter()).getHeight());
-		background.setPreserveRatio(true);
-		slide.getChildren().add(background);
 	}
 
 }

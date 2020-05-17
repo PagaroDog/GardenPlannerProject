@@ -2,6 +2,13 @@ package Model;
 
 import java.io.Serializable;
 
+/**
+ * This class represents the objects that make up the drawing of the property
+ * and is only used if the garden is saved.
+ * 
+ * @author Tommy White
+ *
+ */
 public class DrawingObj implements Serializable {
 	protected double x;
 	protected double y;

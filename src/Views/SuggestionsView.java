@@ -131,6 +131,12 @@ public class SuggestionsView extends View<SuggestionsController> {
 		return pane;
 	}
 
+	/**
+	 * Updates the pane containing a plant image to show that it has been selected
+	 * or deselected.
+	 * 
+	 * @param event The event that caused this method to be called.
+	 */
 	public void selectImage(MouseEvent event) {
 		Node n = (Node) event.getSource();
 		if (n.getStyle().equals(selectedBG)) {
@@ -199,10 +205,6 @@ public class SuggestionsView extends View<SuggestionsController> {
 		return nav;
 	}
 
-	public GridPane getGrid() {
-		return (GridPane) border.getCenter();
-	}
-
 	/**
 	 * Called by SuggestionsController. Updates plant images to reflect the change
 	 * in Model's plantSuggestions ArrayList
@@ -223,6 +225,10 @@ public class SuggestionsView extends View<SuggestionsController> {
 
 	public String getSelectedBG() {
 		return selectedBG;
+	}
+
+	public GridPane getGrid() {
+		return (GridPane) border.getCenter();
 	}
 
 }

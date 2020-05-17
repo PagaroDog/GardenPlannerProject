@@ -2,6 +2,12 @@ package Model;
 
 import javafx.scene.shape.Rectangle;
 
+/**
+ * This DrawingObj class represents rectangles in particular.
+ * 
+ * @author Tommy White
+ *
+ */
 public class RectDrawingObj extends DrawingObj {
 	private StageNameEnum userData;
 

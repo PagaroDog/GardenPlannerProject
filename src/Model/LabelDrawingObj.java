@@ -2,6 +2,12 @@ package Model;
 
 import javafx.scene.control.Label;
 
+/**
+ * This DrawingObj class represents labels in particular.
+ * 
+ * @author Tommy White
+ *
+ */
 public class LabelDrawingObj extends DrawingObj {
 
 	String text;

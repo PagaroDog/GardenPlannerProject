@@ -4,7 +4,6 @@ import Model.Model;
 import Model.StageNameEnum;
 import Views.StatisticsView;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 
 /**
  * @author Tommy White
@@ -22,10 +21,13 @@ public class StatisticsController extends Controller<StatisticsView> {
 	 * @return EventHandler object for this action
 	 */
 	public EventHandler handleOnBackButton() {
-		return event -> backButton((MouseEvent) event);
+		return event -> backButton();
 	}
 
-	public void backButton(MouseEvent event) {
+	/**
+	 * Brings the user back to the Garden screen.
+	 */
+	public void backButton() {
 		view.getStage().setScene(Main.getScenes().get(StageNameEnum.DESIGN));
 		model.setStageName(StageNameEnum.DESIGN);
 	}

@@ -396,6 +396,10 @@ public class Model implements Serializable {
 		this.heightOnSave = heightOnSave;
 	}
 
+	public ArrayList<Plant> getSuggestedPlants() {
+		return suggestedPlants;
+	}
+
 	/**
 	 * Calculate the x position of where the user is dropping the image from the
 	 * scroll pane
@@ -411,11 +415,9 @@ public class Model implements Serializable {
 		double ret = x;
 
 		if (ret < leftBorder) {
-			// System.out.println("Returning 0");
 			return leftBorder;
 		}
 		if (ret > rightBorder) {
-			// System.out.println("Returning rightBorder");
 			return rightBorder;
 		}
 
@@ -434,7 +436,6 @@ public class Model implements Serializable {
 	public double calcY(double y, double size, double bottom, double canvasHeight) {
 
 		double bottomBorder = canvasHeight - size - bottom * 2;
-		System.out.println(size);
 		double topBorder = size;
 		double ret = y;
 		if (ret < topBorder) {
@@ -646,19 +647,12 @@ public class Model implements Serializable {
 		if (startup) {
 			Iterator<Entry<String, Plant>> it = plants.entrySet().iterator();
 			while (it.hasNext()) {
-
-				// System.out.println(it.next().getValue().getName());
 				suggestedPlants.add(it.next().getValue());
-
 			}
 		} else {
 			generateRelevantPlants();
 		}
 
-	}
-
-	public ArrayList<Plant> getSuggestedPlants() {
-		return suggestedPlants;
 	}
 
 	/**
@@ -754,12 +748,7 @@ public class Model implements Serializable {
 		ArrayList<Plant> selected = new ArrayList<Plant>();
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-
-				// System.out.println(index +" has style of " +
-				// grid.getChildren().get(index).getStyle());
 				if (grid.getChildren().get(index).getStyle().equals(bg)) {
-					// System.out.println(grid.getChildren().get(index).getStyle());
-					System.out.println(suggestedPlants.get((index - 1)).getName() + " selected at index " + (index));
 					Plant copy = suggestedPlants.get(index - 1);
 					selected.add(copy);
 

@@ -21,11 +21,19 @@ public class SuggestionsController extends Controller<SuggestionsView> {
 		super(model, view, main);
 	}
 
+	/**
+	 * Handles the event when the user presses the back button
+	 * 
+	 * @return The EventHandler for this action
+	 */
 	public EventHandler gethandleOnBackButton() {
-		return event -> backButton((MouseEvent) event);
+		return event -> backButton();
 	}
 
-	public void backButton(MouseEvent event) {
+	/**
+	 * Brings the user to the Preferences screen
+	 */
+	public void backButton() {
 		view.getStage().setScene(Main.getScenes().get(StageNameEnum.PREFERENCES));
 		model.setStageName(StageNameEnum.PREFERENCES);
 	}

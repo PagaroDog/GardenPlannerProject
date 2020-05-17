@@ -9,7 +9,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 /**
- * @author Josh Stone this class is the controller for the Tutorial screen
+ * This class is the controller for the Tutorial screen
+ * 
+ * @author Josh Stone
  */
 
 public class TutorialController extends Controller<TutorialView> {
@@ -84,15 +86,9 @@ public class TutorialController extends Controller<TutorialView> {
 			view.getSlide().getChildren().add(view.getBackground());
 
 			view.setCurrentSlide(view.getCurrentSlide() + 1);
-			System.out.println(view.getCurrentSlide());
 		}
 
 	}
-
-	// need to make this make sense. Either fix the numbers of
-	// currentSlide/TutorialSlide or change order of background display
-	// not sure why the last image goes back to w/ backButton, but not for the
-	// middle images. added a null image to fix.
 
 	/**
 	 * Goes to the previous slide
@@ -108,7 +104,6 @@ public class TutorialController extends Controller<TutorialView> {
 			// ImageView(view.getTutorialSlides().get(view.getCurrentSlide() - 1)));
 			view.getSlide().getChildren().add(view.getBackground());
 			view.setCurrentSlide(view.getCurrentSlide() - 1);
-			System.out.println(view.getCurrentSlide());
 		}
 
 	}

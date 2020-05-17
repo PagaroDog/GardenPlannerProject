@@ -53,9 +53,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	public void BackButton(MouseEvent event) {
 		view.getStage().setScene(Main.getScenes().get(StageNameEnum.DRAW));
 		model.setStageName(StageNameEnum.CONDITIONS);
-//		if (view.getDrawing() != null) {
 		main.getDyControl().setDrawing(view.getDrawing());
-//		}
 		main.getDyControl().getView().condMode();
 	}
 
@@ -70,6 +68,14 @@ public class PreferencesController extends Controller<PreferencesView> {
 		return event -> nextButton();
 	}
 
+	/**
+	 * Returns an EventHandler for when a zone button is pressed on the Preferences
+	 * scene.
+	 * 
+	 * @param rect       The rectangle associated with the zone
+	 * @param gardenPref The gardenPref associated with the zone
+	 * @return An EventHandler object for this action.
+	 */
 	public EventHandler getHandleOnZoneButton(Rectangle rect, GardenPref gardenPref) {
 		return event -> zoneButton((MouseEvent) event, rect, gardenPref);
 	}
@@ -128,7 +134,6 @@ public class PreferencesController extends Controller<PreferencesView> {
 
 			Pane draw = (Pane) drawing.getChildren().get(0);
 			for (Node child : draw.getChildren()) {
-				System.out.println(child);
 				if (child.getUserData() == StageNameEnum.CONDITIONS) {
 
 					model.getGardenPreferences().add(new GardenPref());
@@ -210,7 +215,6 @@ public class PreferencesController extends Controller<PreferencesView> {
 
 		ArrayList<String> colors = new ArrayList<String>();
 		if (model.getCurrPref() != null) {
-			System.out.println("Saving Prefs");
 			model.getCurrPref().setName(view.getName().getText());
 			model.getCurrPref().setUserLight(view.getSun().getValue());
 			model.getCurrPref().setUserBloom(view.getBloom().getValue());

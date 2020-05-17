@@ -12,7 +12,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 /**
@@ -128,10 +127,9 @@ public class StartupView extends View<StartupController> {
 		root.getChildren().remove(credits);
 	}
 
-	public FileChooser getFileChooser() {
-		return fileChooser;
-	}
-
+	/**
+	 * Shows or hides the credits based on their current state.
+	 */
 	public void credits() {
 		if (root.getChildren().contains(credits)) {
 			root.getChildren().remove(credits);
@@ -140,6 +138,10 @@ public class StartupView extends View<StartupController> {
 			root.getChildren().add(credits);
 			creditsButton.setText("Hide Credits");
 		}
+	}
+
+	public FileChooser getFileChooser() {
+		return fileChooser;
 	}
 
 	public Images getImgs() {

@@ -8,6 +8,7 @@ import java.util.HashSet;
 import Views.View;
 
 /**
+ * This class represents plants. It contains their attributes.
  * 
  * @author IanMcCabe
  * @author Tommy White

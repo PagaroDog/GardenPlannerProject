@@ -3,7 +3,6 @@ package Model;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import Views.GardenView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 

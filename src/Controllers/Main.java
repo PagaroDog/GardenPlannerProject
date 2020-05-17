@@ -115,6 +115,12 @@ public class Main extends Application {
 		this.model = model;
 	}
 
+	/**
+	 * Called when the user loads a .garden file, which essentially loads a new
+	 * Model. The new model sets all of its controllers to this instance of the
+	 * software's controllers and all the controllers set their models to the new
+	 * model.
+	 */
 	public void updateModel() {
 		model.setDyControl(dyControl);
 		model.setGardenControl(gardenControl);

@@ -42,7 +42,6 @@ public class View<T extends Controller> {
 	private int navBlue = 255;
 	private double navOpacity = 1;
 	private double toolbarPrefHeight = 55;
-	private double centerSpacing = 10;
 
 	/**
 	 * Creates an HBox node that can act as the toolbar at the top of a View.

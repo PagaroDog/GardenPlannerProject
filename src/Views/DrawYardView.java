@@ -2,7 +2,6 @@ package Views;
 
 import javafx.scene.control.Button;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -384,6 +383,12 @@ public class DrawYardView extends View<DrawYardController> {
 		ellipse.setCenterY(y);
 	}
 
+	/**
+	 * Called when user clicks on the Add Label button. Creates a new label object
+	 * and adds it to the center of the drawing Pane
+	 * 
+	 * @return The Node representation of the label
+	 */
 	public Node addLabel() {
 		if (labeltxt.getText().length() > minLabelLength) {
 			Label txt = new Label(labeltxt.getText());
@@ -506,6 +511,9 @@ public class DrawYardView extends View<DrawYardController> {
 		}
 	}
 
+	/**
+	 * Removes the background image from the drawing
+	 */
 	public void removeBackground() {
 		back.getChildren().remove(background);
 	}
@@ -575,6 +583,12 @@ public class DrawYardView extends View<DrawYardController> {
 				(int) (Math.random() * randRGB) + minRGB, opacity);
 	}
 
+	/**
+	 * Removes the help prompt based on the current stageName
+	 * 
+	 * @param stageName The current stageName
+	 * @return A boolean: true if a prompt was removed, false otherwise
+	 */
 	public boolean removePrompts(StageNameEnum stageName) {
 		if (stageName == StageNameEnum.DRAW)
 			return drawing.getChildren().remove(helpText);
@@ -582,6 +596,9 @@ public class DrawYardView extends View<DrawYardController> {
 			return drawing.getChildren().remove(helpTextCond);
 	}
 
+	/**
+	 * Adds the help prompt for the Conditions screen to the drawing
+	 */
 	public void showCondPrompt() {
 		drawing.getChildren().add(helpTextCond);
 	}

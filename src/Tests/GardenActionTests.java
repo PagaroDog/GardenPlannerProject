@@ -6,11 +6,8 @@ import static org.junit.Assert.assertEquals;
 
 import Model.ActionEnum;
 import Model.GardenAction;
-import Views.GardenView;
-import Views.Images;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 
 /**
  * 

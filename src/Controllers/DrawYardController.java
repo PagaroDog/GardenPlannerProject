@@ -9,7 +9,6 @@ import Model.StageNameEnum;
 import Views.DrawYardView;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -203,7 +202,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 	}
 
 	/**
-	 * Handles event when user presses a key
+	 * Handles event when user presses a key, changing the drawing mode or the label
+	 * size
 	 * 
 	 * @return EventHandler object for this action
 	 */
@@ -237,6 +237,12 @@ public class DrawYardController extends Controller<DrawYardView> {
 		};
 	}
 
+	/**
+	 * Handles event when the user presses a key while in the label text field. If
+	 * Enter is pressed, it is the same as pressing the add label button.
+	 * 
+	 * @return EventHandler object for this action
+	 */
 	public EventHandler getHandleOnEnterPressed() {
 		return new EventHandler<KeyEvent>() {
 			@Override
@@ -338,7 +344,6 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the Pane was dragged
 	 */
 	public void dragPane(MouseEvent event) {
-		System.out.println("Drag");
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case RECTANGLE:
