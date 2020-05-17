@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import Model.Model;
 import Model.StageNameEnum;
 import Views.StartupView;
+import Views.View;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -53,14 +54,19 @@ public class StartupController extends Controller<StartupView> {
 		try {
 			FileInputStream fileIn = new FileInputStream(file.getPath());
 			ObjectInputStream input = new ObjectInputStream(fileIn);
-			main.setModel((Model) input.readObject());
-			main.updateModel();
-			newButton();
-			main.getDyControl().nextButton();
-			main.getDyControl().nextButton();
-			main.getPrefControl().nextButton();
-			main.getSuggestionsControl().nextButton();
-			main.getGardenControl().loadPlants();
+			Model loadedModel = (Model) input.readObject();
+			if (loadedModel.getWidthOnSave() == View.getCanvasWidth() && loadedModel.getHeightOnSave() == View.getCanvasHeight()) {
+				main.setModel(loadedModel);
+				main.updateModel();
+				newButton();
+				main.getDyControl().nextButton();
+				main.getDyControl().nextButton();
+				main.getPrefControl().nextButton();
+				main.getSuggestionsControl().nextButton();
+				main.getGardenControl().loadPlants();
+			} else {
+				System.out.println("Cannot load garden - screen size mismatch.");
+			}
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found.");
 		} catch (InvalidClassException e) {

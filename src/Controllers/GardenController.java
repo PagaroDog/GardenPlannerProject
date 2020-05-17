@@ -32,6 +32,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
@@ -61,6 +62,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	private int minSpreadInd = 0;
 	private int maxSpreadInd = 1;
 	private int firstShapeOffset = 1;
+	private boolean dragHappened = false;
 
 	private transient GardenAction GA = new GardenAction();
 
@@ -85,6 +87,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public void seasonButton(SeasonEnum season) {
 		model.setSeason(season);
 		view.changeSeason(season);
+		view.updateMode(season, model.getYear());
 	}
 
 	/**
@@ -125,6 +128,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public void yearButton(int yearInt) {
 		model.setYear(yearInt);
 		view.setYear(yearInt);
+		view.updateMode(model.getSeason(), yearInt);
 	}
 
 	/**
@@ -253,6 +257,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight(), View.getCanvasHeight());
 		view.movePlant(dragPlant, calcX, calcY);
 
+		dragHappened = true;
 	}
 
 	public EventHandler getHandlerForCirclePressed() {
@@ -451,12 +456,14 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public void copyButton(MouseEvent event) {
 		System.out.println("creating copy");
 		Circle oldCircle = (Circle) model.getCurrDrawObj();
-		Circle newCircle = new Circle();
-		view.addCircleToGarden(newCircle, oldCircle.getCenterX() + copyOffset, oldCircle.getCenterY() + copyOffset,
-				oldCircle.getRadius(), (String) oldCircle.getUserData(), (Color) oldCircle.getStroke());
-		System.out.println(newCircle.getCenterX());
-		GA.addAction(new GardenAction(newCircle, newCircle.getCenterX(), newCircle.getCenterY(), newCircle.getRadius(),
-				newCircle.getUserData().toString(), (Color) newCircle.getStroke(), ActionEnum.COPY));
+		if (oldCircle != null) {
+			Circle newCircle = new Circle();
+			view.addCircleToGarden(newCircle, oldCircle.getCenterX() + copyOffset, oldCircle.getCenterY() + copyOffset,
+					oldCircle.getRadius(), (String) oldCircle.getUserData(), (Color) oldCircle.getStroke());
+			System.out.println(newCircle.getCenterX());
+			GA.addAction(new GardenAction(newCircle, newCircle.getCenterX(), newCircle.getCenterY(), newCircle.getRadius(),
+					newCircle.getUserData().toString(), (Color) newCircle.getStroke(), ActionEnum.COPY));
+		}
 	}
 
 	/*
@@ -509,8 +516,11 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		double calcY = model.calcY(event.getY(), dragPlant.getRadius(), view.getBottomHeight(), View.getCanvasHeight());
 		System.out.println("Drag released at x:" + calcX + ", y:" + calcY);
 
-		GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getRadius(),
-				dragPlant.getUserData().toString(), (Color) dragPlant.getStroke(), ActionEnum.MOVEPLANT));
+		if (dragHappened) {
+			GA.addAction(new GardenAction(dragPlant, calcX, calcY, dragPlant.getRadius(),
+					dragPlant.getUserData().toString(), (Color) dragPlant.getStroke(), ActionEnum.MOVEPLANT));
+			dragHappened = false;
+		}
 
 	}
 
@@ -564,49 +574,73 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		model.getLabels().clear();
 		model.getEllipses().clear();
 		model.getGardenObjs().clear();
-		ObservableList<Node> rectangles = ((Pane) view.getDrawing().getChildren().get(0)).getChildren();
+		ObservableList<Node> rectangles = main.getDyControl().getView().getRectangles().getChildren();
 		for (int i = firstShapeOffset; i < rectangles.size(); i++) {
 			model.getRectangles().add(new RectDrawingObj((Rectangle) rectangles.get(i)));
 		}
-		ObservableList<Node> ellipses = ((Pane) rectangles.get(0)).getChildren();
+		ObservableList<Node> ellipses = main.getDyControl().getView().getEllipses().getChildren();
 		for (int i = firstShapeOffset; i < ellipses.size(); i++) {
 			model.getEllipses().add(new EllipseDrawingObj((Ellipse) ellipses.get(i)));
 		}
-		ObservableList<Node> labels = ((Pane) ellipses.get(0)).getChildren();
+		ObservableList<Node> labels = main.getDyControl().getView().getLabels().getChildren();
 		for (int i = firstShapeOffset; i < labels.size(); i++) {
 			model.getLabels().add(new LabelDrawingObj((Label) labels.get(i)));
 		}
-		// TODO save background image
+		ObservableList<Node> back = main.getDyControl().getView().getBack().getChildren();
+		if (back.size() > 0) {
+			Image img = ((ImageView) back.get(0)).getImage();
+			String imgPath = "" + img.hashCode() + ".png";
+			try {
+				ImageIO.write(SwingFXUtils.fromFXImage(img, null), "png", new File(imgPath));
+				model.setBackgroundPath(imgPath);
+			} catch (IOException e) {
+				System.out.println("Imported image not saved.");
+			}
+		}
 		ObservableList<Node> plants = view.getGarden().getChildren();
 		for (int i = firstShapeOffset; i < plants.size(); i++) {
 			model.getGardenObjs().add(new GardenObj((Circle) plants.get(i)));
 		}
+		model.setWidthOnSave(View.getCanvasWidth());
+		model.setHeightOnSave(View.getCanvasHeight());
 	}
 
 	public void loadPlants() {
 		for (GardenObj plant : model.getGardenObjs()) {
 			Circle circle = new Circle();
-			view.addCircleToGarden(circle, plant.getX(), plant.getY(), plant.getRadius(), plant.getPlantName(),
-					findCircleColor(plant.getPlantName()));
+			Color color = findCircleColor(plant.getPlantName());
+			view.addCircleToGarden(circle, plant.getX(), plant.getY(), plant.getRadius(), plant.getPlantName(), color);
+			GA.addAction(new GardenAction(circle, plant.getX(), plant.getY(), plant.getRadius(), plant.getPlantName(), color,
+					ActionEnum.ADDPLANT));
 		}
 		for (RectDrawingObj rectObj : model.getRectangles()) {
 			if (rectObj.getUserData() == StageNameEnum.DRAW) {
 				view.addRectangle(rectObj, Color.TRANSPARENT, Color.BLACK,
 						main.getDyControl().getHandleOnPressShape(StageNameEnum.DRAW),
-						main.getDyControl().getHandleOnDragRectangle());
+						main.getDyControl().getHandleOnDragRectangle(), main.getDyControl().getView().getRectangles());
 			} else {
 				view.addRectangle(rectObj, main.getDyControl().getView().getRandomColor(), Color.TRANSPARENT,
 						main.getDyControl().getHandleOnPressShape(StageNameEnum.CONDITIONS),
-						main.getDyControl().getHandleOnDragRectangle());
+						main.getDyControl().getHandleOnDragRectangle(), main.getDyControl().getView().getRectangles());
 			}
 		}
 		for (EllipseDrawingObj ellipseObj : model.getEllipses()) {
 			view.addEllipse(ellipseObj, main.getDyControl().getHandleOnPressShape(StageNameEnum.DRAW),
-					main.getDyControl().getHandleOnDragEllipse());
+					main.getDyControl().getHandleOnDragEllipse(), main.getDyControl().getView().getEllipses());
 		}
 		for (LabelDrawingObj labelObj : model.getLabels()) {
 			view.addLabel(labelObj, main.getDyControl().getHandleOnPressShape(StageNameEnum.DRAW),
-					main.getDyControl().getHandleOnDragLabel());
+					main.getDyControl().getHandleOnDragLabel(), main.getDyControl().getView().getLabels());
+		}
+		if (model.getBackgroundPath() != null) {
+			System.out.println("Loading img");
+			try {
+				Image img = SwingFXUtils.toFXImage(ImageIO.read(new File(model.getBackgroundPath())), null);
+				main.getDyControl().getView().setBackground(new ImageView(img));
+				main.getDyControl().getView().getBack().getChildren().add(main.getDyControl().getView().getBackground());
+			} catch (IOException e) {
+				System.out.println("Unable to load previously imported image.");
+			}
 		}
 		Platform.runLater(() -> {
 			prefButton();

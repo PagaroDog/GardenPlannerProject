@@ -61,12 +61,12 @@ public class Model implements Serializable {
 	private int year;
 	private int prefCategoriesCnt = 4;
 
-	private StartupController startControl;
-	private TutorialController tutControl;
-	private DrawYardController dyControl;
-	private StatisticsController statControl;
-	private GardenController gardenControl;
-	private PreferencesController prefControl;
+	private transient StartupController startControl;
+	private transient TutorialController tutControl;
+	private transient DrawYardController dyControl;
+	private transient StatisticsController statControl;
+	private transient GardenController gardenControl;
+	private transient PreferencesController prefControl;
 
 	private char nameInd = 0;
 	private char commonNamesInd = 1;
@@ -118,6 +118,9 @@ public class Model implements Serializable {
 
 	private int decToPercent = 100;
 	private int radiusExp = 2;
+	
+	private double widthOnSave;
+	private double heightOnSave;
 
 	public SeasonEnum getSeason() {
 		return season;
@@ -375,6 +378,22 @@ public class Model implements Serializable {
 
 	public int getUniqueTrees() {
 		return uniqueTrees;
+	}
+
+	public double getWidthOnSave() {
+		return widthOnSave;
+	}
+
+	public void setWidthOnSave(double widthOnSave) {
+		this.widthOnSave = widthOnSave;
+	}
+
+	public double getHeightOnSave() {
+		return heightOnSave;
+	}
+
+	public void setHeightOnSave(double heightOnSave) {
+		this.heightOnSave = heightOnSave;
 	}
 
 	/**

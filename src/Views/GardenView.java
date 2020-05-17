@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import Controllers.GardenController;
+import Model.DrawModeEnum;
 import Model.EllipseDrawingObj;
 import Model.LabelDrawingObj;
 import Model.PlantTypeEnum;
@@ -279,7 +280,6 @@ public class GardenView extends View<GardenController> implements Serializable {
 		plant.setFill(new ImagePattern(img));
 		plant.setStrokeType(StrokeType.INSIDE);
 		plant.setStroke(color);
-		plant.setStroke(control.findCircleColor(name));
 		PlantTypeEnum pT = control.getPlantType(name);
 		plant.setStrokeWidth(pT.getStrokeSize());
 
@@ -441,7 +441,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 	}
 
 	public void addRectangle(RectDrawingObj rectObj, Color fill, Color stroke, EventHandler onPress,
-			EventHandler onDrag) {
+			EventHandler onDrag, Pane rects) {
 		Rectangle rect = new Rectangle();
 		rect.setFill(fill);
 		rect.setStroke(stroke);
@@ -452,10 +452,10 @@ public class GardenView extends View<GardenController> implements Serializable {
 		rect.setOnMousePressed(onPress);
 		rect.setOnMouseDragged(onDrag);
 		rect.setUserData(rectObj.getUserData());
-		((Pane) drawing.getChildren().get(0)).getChildren().add(rect);
+		rects.getChildren().add(rect);
 	}
 
-	public void addEllipse(EllipseDrawingObj ellipseObj, EventHandler onPress, EventHandler onDrag) {
+	public void addEllipse(EllipseDrawingObj ellipseObj, EventHandler onPress, EventHandler onDrag, Pane ells) {
 		Ellipse e = new Ellipse();
 		e.setFill(Color.TRANSPARENT);
 		e.setStroke(Color.BLACK);
@@ -465,10 +465,10 @@ public class GardenView extends View<GardenController> implements Serializable {
 		e.setRadiusY(ellipseObj.getHeight());
 		e.setOnMousePressed(onPress);
 		e.setOnMouseDragged(onDrag);
-		((Pane) ((Pane) drawing.getChildren().get(0)).getChildren().get(0)).getChildren().add(e);
+		ells.getChildren().add(e);
 	}
 
-	public void addLabel(LabelDrawingObj labelObj, EventHandler onPress, EventHandler onDrag) {
+	public void addLabel(LabelDrawingObj labelObj, EventHandler onPress, EventHandler onDrag, Pane labs) {
 		Label lab = new Label();
 		lab.setText(labelObj.getText());
 		lab.setLayoutX(labelObj.getX());
@@ -476,12 +476,54 @@ public class GardenView extends View<GardenController> implements Serializable {
 		lab.setFont(new Font(labelObj.getWidth()));
 		lab.setOnMousePressed(onPress);
 		lab.setOnMouseDragged(onDrag);
-		((Pane) ((Pane) ((Pane) drawing.getChildren().get(0)).getChildren().get(0)).getChildren().get(0)).getChildren()
-				.add(lab);
+		labs.getChildren().add(lab);
 	}
 
 	public TabPane getTabPane() {
 		return tabPane;
+	}
+
+	/**
+	 * Changes the id of the buttons of the current season and year, so that the
+	 * button changes appearance.
+	 * 
+	 * @param newMode The newly update drawing mode
+	 */
+	public void updateMode(SeasonEnum season, int year) {
+		year1.setId("");
+		year2.setId("");
+		year3.setId("");
+		winter.setId("");
+		spring.setId("");
+		summer.setId("");
+		fall.setId("");
+		if (season != null) {
+			switch (season) {
+			case WINTER:
+				winter.setId("selected-button");
+				break;
+			case SPRING:
+				spring.setId("selected-button");
+				break;
+			case SUMMER:
+				summer.setId("selected-button");
+				break;
+			case FALL:
+				fall.setId("selected-button");
+				break;
+			}
+		}
+		switch (year) {
+		case 3:
+			year3.setId("selected-button");
+			break;
+		case 2:
+			year2.setId("selected-button");
+			break;
+		default:
+			year1.setId("selected-button");
+			break;
+		}
 	}
 
 }

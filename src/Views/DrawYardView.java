@@ -220,6 +220,46 @@ public class DrawYardView extends View<DrawYardController> {
 	public double getFontIncrement() {
 		return fontIncrement;
 	}
+	
+	public ImageView getBackground() {
+		return background;
+	}
+	
+	public void setBackground(ImageView background) {
+		this.background = background;
+	}
+
+	public Pane getRectangles() {
+		return rectangles;
+	}
+
+	public void setRectangles(Pane rectangles) {
+		this.rectangles = rectangles;
+	}
+
+	public Pane getEllipses() {
+		return ellipses;
+	}
+
+	public void setEllipses(Pane ellipses) {
+		this.ellipses = ellipses;
+	}
+
+	public Pane getLabels() {
+		return labels;
+	}
+
+	public void setLabels(Pane labels) {
+		this.labels = labels;
+	}
+
+	public Pane getBack() {
+		return back;
+	}
+
+	public void setBack(Pane back) {
+		this.back = back;
+	}
 
 	/**
 	 * Called when user clicks on the drawing Pane in RECTANGLE mode. Creates a new
