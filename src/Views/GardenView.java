@@ -361,7 +361,11 @@ public class GardenView extends View<GardenController> implements Serializable {
 		}
 
 	}
-
+	
+	/**
+	 * called by controller when season buttons are pressed. updates color of plants based on season
+	 * @param season
+	 */
 	public void changeSeason(SeasonEnum season) {
 		List<Node> gardenList = garden.getChildren();
 		for (Node plant : gardenList) {
@@ -398,6 +402,10 @@ public class GardenView extends View<GardenController> implements Serializable {
 		return newButton;
 	}
 
+	/**
+	 * displays info of plant moused over in the scroll pane.
+	 * @param plantString
+	 */
 	public void displayInfoForScrollPane(String plantString) {
 		info = new VBox();
 
@@ -454,6 +462,15 @@ public class GardenView extends View<GardenController> implements Serializable {
 		this.garden.getChildren().remove(info);
 	}
 
+	/**
+	 * adds rectanlge to garden view to denote the user defined ares.
+	 * @param rectObj
+	 * @param fill
+	 * @param stroke
+	 * @param onPress
+	 * @param onDrag
+	 * @param rects
+	 */
 	public void addRectangle(RectDrawingObj rectObj, Color fill, Color stroke, EventHandler onPress,
 			EventHandler onDrag, Pane rects) {
 		Rectangle rect = new Rectangle();
@@ -468,7 +485,14 @@ public class GardenView extends View<GardenController> implements Serializable {
 		rect.setUserData(rectObj.getUserData());
 		rects.getChildren().add(rect);
 	}
-
+	
+	/**
+	 * adds elipse to ells
+	 * @param ellipseObj
+	 * @param onPress
+	 * @param onDrag
+	 * @param ells
+	 */
 	public void addEllipse(EllipseDrawingObj ellipseObj, EventHandler onPress, EventHandler onDrag, Pane ells) {
 		Ellipse e = new Ellipse();
 		e.setFill(Color.TRANSPARENT);
@@ -481,7 +505,14 @@ public class GardenView extends View<GardenController> implements Serializable {
 		e.setOnMouseDragged(onDrag);
 		ells.getChildren().add(e);
 	}
-
+	
+	/**
+	 * labels areas of garden
+	 * @param labelObj
+	 * @param onPress
+	 * @param onDrag
+	 * @param labs
+	 */
 	public void addLabel(LabelDrawingObj labelObj, EventHandler onPress, EventHandler onDrag, Pane labs) {
 		Label lab = new Label();
 		lab.setText(labelObj.getText());
