@@ -9,6 +9,7 @@ import Model.StageNameEnum;
 import Views.DrawYardView;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -31,6 +32,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 	private final int yInd = 1;
 	private final int widthInd = 2;
 	private final int heightInd = 3;
+	private boolean dismissed = false;
+	private boolean initialPress = true;
 
 	public DrawYardController(Model model, DrawYardView dyv, Main main) {
 		super(model, dyv, main);
@@ -275,6 +278,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * Sets drawing mode to label
 	 */
 	public void labelButton() {
+		view.removePrompts(model.getStageName());
 		Node newLabel = view.addLabel();
 		if (newLabel != null) {
 			view.deselect(model.getCurrDrawObj());
@@ -303,6 +307,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 */
 	public void deleteButton() {
 		view.deleteShape(model.getCurrDrawObj());
+		model.setCurrDrawObj(null);
 	}
 
 	/**
@@ -314,6 +319,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 		File file = view.getFileChooser().showOpenDialog(view.getStage());
 		if (file != null) {
 			view.setBackground(file.getPath());
+			view.removePrompts(model.getStageName());
 		}
 	}
 
@@ -332,6 +338,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the Pane was dragged
 	 */
 	public void dragPane(MouseEvent event) {
+		System.out.println("Drag");
 		if (model.getDrawMode() != null) {
 			switch (model.getDrawMode()) {
 			case RECTANGLE:
@@ -356,23 +363,28 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the Pane was pressed
 	 */
 	public void pressPane(MouseEvent event) {
-		view.getDrawing().requestFocus();
-		model.setDrawPressX(event.getX());
-		model.setDrawPressY(event.getY());
-		if (model.getCurrDrawObj() != null) {
-			view.deselect(model.getCurrDrawObj());
-		}
-		if (model.getDrawMode() != null) {
-			switch (model.getDrawMode()) {
-			case RECTANGLE:
-				model.setCurrDrawObj(view.addRectangle(model.getStageName(), event.getX(), event.getY()));
-				break;
-			case ELLIPSE:
-				model.setCurrDrawObj(view.addEllipse(event.getX(), event.getY()));
-				break;
+		if (!view.removePrompts(model.getStageName())) {
+			if (model.getStageName() == StageNameEnum.CONDITIONS) {
+				dismissed = true;
 			}
+			view.getDrawing().requestFocus();
+			model.setDrawPressX(event.getX());
+			model.setDrawPressY(event.getY());
+			if (model.getCurrDrawObj() != null) {
+				view.deselect(model.getCurrDrawObj());
+			}
+			if (model.getDrawMode() != null) {
+				switch (model.getDrawMode()) {
+				case RECTANGLE:
+					model.setCurrDrawObj(view.addRectangle(model.getStageName(), event.getX(), event.getY()));
+					break;
+				case ELLIPSE:
+					model.setCurrDrawObj(view.addEllipse(event.getX(), event.getY()));
+					break;
+				}
+			}
+			view.select(model.getCurrDrawObj());
 		}
-		view.select(model.getCurrDrawObj());
 	}
 
 	/**
@@ -383,6 +395,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the button was pressed
 	 */
 	public void nextButton() {
+		view.removePrompts(model.getStageName());
 		view.deselect(model.getCurrDrawObj());
 		model.setCurrDrawObj(null);
 		model.setDrawMode(null);
@@ -399,10 +412,14 @@ public class DrawYardController extends Controller<DrawYardView> {
 				model.setPropertyHeightInches(Integer.valueOf(heightStr) * model.getInchesPerFoot());
 			}
 		} else {
+			dismissed = true;
 			view.getStage().setScene(Main.getScenes().get(StageNameEnum.PREFERENCES));
 			model.setStageName(StageNameEnum.PREFERENCES);
 			model.setDrawMode(null);
 			main.getPrefControl().setDrawing(view.getDrawing());
+		}
+		if (!dismissed) {
+			view.showCondPrompt();
 		}
 	}
 
@@ -422,6 +439,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 			view.getStage().setScene(Main.getScenes().get(StageNameEnum.WELCOME));
 			model.setStageName(StageNameEnum.WELCOME);
 		} else {
+			view.removePrompts(model.getStageName());
 			model.setStageName(StageNameEnum.DRAW);
 			view.drawMode();
 		}

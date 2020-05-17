@@ -6,6 +6,7 @@ import java.awt.GraphicsEnvironment;
 import Controllers.Controller;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,6 +43,7 @@ public class View<T extends Controller> {
 	private int navBlue = 255;
 	private double navOpacity = 1;
 	private double toolbarPrefHeight = 55;
+	private double centerSpacing = 10;
 
 	/**
 	 * Creates an HBox node that can act as the toolbar at the top of a View.
@@ -73,22 +75,22 @@ public class View<T extends Controller> {
 		Button prevButton = new Button(prevButtonText);
 		prevButton.setOnMouseClicked(prevHandler);
 
-		Label center = new Label(CenterText);
-		center.setFont(new Font(centerFontSize));
+		Label centerLabel = new Label(CenterText);
+		centerLabel.setFont(new Font(centerFontSize));
 
 		BorderPane navigation = new BorderPane();
 		navigation.setStyle(
 				String.format("-fx-background-color: rgba(%d, %d, %d, %f);", navRed, navGreen, navBlue, navOpacity));
 		navigation.setPadding(new Insets(toolbarVPadding, toolbarHPadding, toolbarVPadding, toolbarHPadding));
 		navigation.setLeft(prevButton);
-		navigation.setCenter(center);
+		navigation.setCenter(centerLabel);
 
 		return navigation;
 	}
 
 	/**
 	 * Creates a BorderPane that can be used as a navigation bar at the bottom of a
-	 * View. Should be used when a View has a both a previous View and a next next
+	 * View. Should be used when a View has a both a previous View and a next
 	 * View.
 	 * 
 	 * @param prevButtonText The text to display on the Previous Button

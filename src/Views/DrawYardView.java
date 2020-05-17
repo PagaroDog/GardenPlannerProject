@@ -2,6 +2,7 @@ package Views;
 
 import javafx.scene.control.Button;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -52,6 +54,8 @@ public class DrawYardView extends View<DrawYardController> {
 	private Label widthTxt;
 	private Label heightTxt;
 	private Label heightUnit;
+	private Label helpText;
+	private Label helpTextCond;
 
 	private Button selectButton;
 	private Button deleteButton;
@@ -89,6 +93,7 @@ public class DrawYardView extends View<DrawYardController> {
 	private final double maxFont = 50;
 	private final double fontDecrement = 1;
 	private final double fontIncrement = 1;
+	private final double promptSize = Math.min(50, 60 * canvasWidth/expectedWidth);
 
 	private final String selectedRGB = "rgba(255, 0, 0, 1)";
 	private final String deselectedRGB = "rgba(0, 0, 0, 1)";
@@ -148,13 +153,27 @@ public class DrawYardView extends View<DrawYardController> {
 		navigationCond = createNavigationBar("Draw Yard", "Set Preferences",
 				"Mark Different Areas with Different Conditions", control.getHandlePrevButton(),
 				control.getHandleNextButton());
-
+		
+		helpText = new Label("Use rectangles, ellipses, and labels\n"
+				+ "to draw an outline of your yard.\n"
+				+ "Then enter the dimensions of your yard above and\n"
+				+ "press \"Create Areas\" below to go to the next step.");
+		helpText.setFont(new Font(promptSize));
+		helpText.setTextAlignment(TextAlignment.CENTER);
+		
+		helpTextCond = new Label("Use the \"New Conditions Area\" button\n"
+				+ "to mark different areas of your garden that have\n"
+				+ "different conditions (light, soil moisture, etc).\n"
+				+ "Then press the \"Set Preferences\" button below.");
+		helpTextCond.setFont(new Font(promptSize));
+		helpTextCond.setTextAlignment(TextAlignment.CENTER);
+		
 		drawing = new Pane();
 		rectangles = new Pane();
 		ellipses = new Pane();
 		labels = new Pane();
 		back = new Pane();
-		drawing.getChildren().add(rectangles);
+		drawing.getChildren().addAll(rectangles, helpText);
 		rectangles.getChildren().add(ellipses);
 		ellipses.getChildren().add(labels);
 		labels.getChildren().add(back);
@@ -170,6 +189,12 @@ public class DrawYardView extends View<DrawYardController> {
 		scene = new Scene(root, canvasWidth, canvasHeight);
 		scene.setOnKeyPressed(control.getHandleOnKeyPressed(labeltxt, widthField, heightField));
 		styleScene();
+
+		helpText.layoutXProperty().bind(drawing.widthProperty().subtract(helpText.widthProperty()).divide(2));
+		helpText.layoutYProperty().bind(drawing.heightProperty().subtract(helpText.heightProperty()).divide(2));
+
+		helpTextCond.layoutXProperty().bind(drawing.widthProperty().subtract(helpTextCond.widthProperty()).divide(2));
+		helpTextCond.layoutYProperty().bind(drawing.heightProperty().subtract(helpTextCond.heightProperty()).divide(2));
 	}
 
 	public double getLabelSize() {
@@ -397,7 +422,9 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @param node The shape to be deleted.
 	 */
 	public void deleteShape(Node node) {
-		((Pane) node.getParent()).getChildren().remove(node);
+		if (node != null) {
+			((Pane) node.getParent()).getChildren().remove(node);
+		}
 	}
 
 	/**
@@ -448,7 +475,9 @@ public class DrawYardView extends View<DrawYardController> {
 	public void condMode() {
 		toolbar.getChildren().remove(0, toolbar.getChildren().size());
 		toolbar.getChildren().addAll(selectButton, deleteButton, newAreaButton);
-		rectangles.getChildren().addAll(areas);
+		for (int i = areas.size() - 1; i >= 0; i--) {
+			rectangles.getChildren().add(areas.get(i));
+		}
 		areas.clear();
 		root.setBottom(navigationCond);
 	}
@@ -545,6 +574,18 @@ public class DrawYardView extends View<DrawYardController> {
 	public Color getRandomColor() {
 		return Color.rgb((int) (Math.random() * randRGB) + minRGB, (int) (Math.random() * randRGB) + minRGB,
 				(int) (Math.random() * randRGB) + minRGB, opacity);
+	}
+
+	
+	public boolean removePrompts(StageNameEnum stageName) {
+		if (stageName == StageNameEnum.DRAW)
+			return drawing.getChildren().remove(helpText);
+		else
+			return drawing.getChildren().remove(helpTextCond);
+	}
+
+	public void showCondPrompt() {
+		drawing.getChildren().add(helpTextCond);
 	}
 
 }

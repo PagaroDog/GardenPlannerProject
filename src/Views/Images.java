@@ -20,7 +20,7 @@ import javafx.scene.image.Image;
  */
 public class Images {
 	HashMap<String, ImageWithSourceInfo[]> plantImages;
-	private final int maxPlantPics = 3;
+	private final int maxPlantPics = 2;
 	private final int numSourceFields = 2;
 
 	/**
