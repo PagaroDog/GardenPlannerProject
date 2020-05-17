@@ -360,9 +360,11 @@ public class GardenView extends View<GardenController> implements Serializable {
 		}
 
 	}
-	
+
 	/**
-	 * called by controller when season buttons are pressed. updates color of plants based on season
+	 * called by controller when season buttons are pressed. updates color of plants
+	 * based on season
+	 * 
 	 * @param season
 	 */
 	public void changeSeason(SeasonEnum season) {
@@ -403,6 +405,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 
 	/**
 	 * displays info of plant moused over in the scroll pane.
+	 * 
 	 * @param plantString
 	 */
 	public void displayInfoForScrollPane(String plantString) {
@@ -417,15 +420,14 @@ public class GardenView extends View<GardenController> implements Serializable {
 
 		this.garden.getChildren().add(info);
 	}
-	
-	
+
 	/**
-	 * This method displays the info of the current plant that the mouse is over 
+	 * This method displays the info of the current plant that the mouse is over
 	 * 
 	 * 
-	 * @param e The circle the user is currently over 
-	 * @param mouseX The X coordinate of the mouse 
-	 * @param mouseY The Y coordinate of the mouse 
+	 * @param e          The circle the user is currently over
+	 * @param mouseX     The X coordinate of the mouse
+	 * @param mouseY     The Y coordinate of the mouse
 	 * @param plantMatch The name of the plant being displayed
 	 */
 	public void displayInfo(Circle e, double mouseX, double mouseY, String plantMatch) {
@@ -453,9 +455,9 @@ public class GardenView extends View<GardenController> implements Serializable {
 		}
 
 	}
-	
+
 	/**
-	 * Removes the info of a plant when the user's mouse has left the plant object 
+	 * Removes the info of a plant when the user's mouse has left the plant object
 	 */
 	public void removeInfo() {
 		this.garden.getChildren().remove(info);
@@ -463,6 +465,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 
 	/**
 	 * adds rectanlge to garden view to denote the user defined ares.
+	 * 
 	 * @param rectObj
 	 * @param fill
 	 * @param stroke
@@ -484,9 +487,10 @@ public class GardenView extends View<GardenController> implements Serializable {
 		rect.setUserData(rectObj.getUserData());
 		rects.getChildren().add(rect);
 	}
-	
+
 	/**
 	 * adds elipse to ells
+	 * 
 	 * @param ellipseObj
 	 * @param onPress
 	 * @param onDrag
@@ -504,9 +508,10 @@ public class GardenView extends View<GardenController> implements Serializable {
 		e.setOnMouseDragged(onDrag);
 		ells.getChildren().add(e);
 	}
-	
+
 	/**
 	 * labels areas of garden
+	 * 
 	 * @param labelObj
 	 * @param onPress
 	 * @param onDrag
@@ -569,18 +574,20 @@ public class GardenView extends View<GardenController> implements Serializable {
 			break;
 		}
 	}
-	
-	
+
 	/**
-	 * This method iterates over a list of garden actions drawing all of the users inputs to the gardenView.
-	 * The list of GardenActions is modified by the GardenAction class to remove/add actions the user has done
-	 * to undo/redo objects from the screen. 
-	 * @param GA The list of GardenActions the method goes through to draw the users inputs back on the screen. 
+	 * This method iterates over a list of garden actions drawing all of the users
+	 * inputs to the gardenView. The list of GardenActions is modified by the
+	 * GardenAction class to remove/add actions the user has done to undo/redo
+	 * objects from the screen.
+	 * 
+	 * @param GA The list of GardenActions the method goes through to draw the users
+	 *           inputs back on the screen.
 	 */
 	public void iterateGardenActions(GardenAction GA) {
-		System.out.println("Iterating over garden actions"); 
-		garden.getChildren().clear(); 
-		garden.getChildren().add(drawing); 
+		System.out.println("Iterating over garden actions");
+		garden.getChildren().clear();
+		garden.getChildren().add(drawing);
 		for (GardenAction ga : GA.getActionList()) {
 			switch (ga.getAction()) {
 			case ADDPLANT:
@@ -590,7 +597,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 
 			case MOVEPLANT:
 				movePlant(ga.getPlant(), ga.getX(), ga.getY());
-				System.out.print("MOVE"); 
+				System.out.print("MOVE");
 				break;
 
 			case DELETE:
@@ -602,18 +609,9 @@ public class GardenView extends View<GardenController> implements Serializable {
 				addCircleToGarden(ga.getPlant(), ga.getX(), ga.getY(), ga.getRadius(), ga.getName(), ga.getColor());
 				System.out.print("COPY");
 			}
-			System.out.println(""); 
+			System.out.println("");
 		}
-		
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

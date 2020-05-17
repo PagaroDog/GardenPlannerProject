@@ -93,7 +93,7 @@ public class DrawYardView extends View<DrawYardController> {
 	private final double maxFont = 50;
 	private final double fontDecrement = 1;
 	private final double fontIncrement = 1;
-	private final double promptSize = Math.min(50, 60 * canvasWidth/expectedWidth);
+	private final double promptSize = Math.min(50, 60 * canvasWidth / expectedWidth);
 
 	private final String selectedRGB = "rgba(255, 0, 0, 1)";
 	private final String deselectedRGB = "rgba(0, 0, 0, 1)";
@@ -153,21 +153,20 @@ public class DrawYardView extends View<DrawYardController> {
 		navigationCond = createNavigationBar("Draw Yard", "Set Preferences",
 				"Mark Different Areas with Different Conditions", control.getHandlePrevButton(),
 				control.getHandleNextButton());
-		
-		helpText = new Label("Use rectangles, ellipses, and labels\n"
-				+ "to draw an outline of your yard.\n"
+
+		helpText = new Label("Use rectangles, ellipses, and labels\n" + "to draw an outline of your yard.\n"
 				+ "Then enter the dimensions of your yard above and\n"
 				+ "press \"Create Areas\" below to go to the next step.");
 		helpText.setFont(new Font(promptSize));
 		helpText.setTextAlignment(TextAlignment.CENTER);
-		
-		helpTextCond = new Label("Use the \"New Conditions Area\" button\n"
-				+ "to mark different areas of your garden that have\n"
-				+ "different conditions (light, soil moisture, etc).\n"
-				+ "Then press the \"Set Preferences\" button below.");
+
+		helpTextCond = new Label(
+				"Use the \"New Conditions Area\" button\n" + "to mark different areas of your garden that have\n"
+						+ "different conditions (light, soil moisture, etc).\n"
+						+ "Then press the \"Set Preferences\" button below.");
 		helpTextCond.setFont(new Font(promptSize));
 		helpTextCond.setTextAlignment(TextAlignment.CENTER);
-		
+
 		drawing = new Pane();
 		rectangles = new Pane();
 		ellipses = new Pane();
@@ -245,11 +244,11 @@ public class DrawYardView extends View<DrawYardController> {
 	public double getFontIncrement() {
 		return fontIncrement;
 	}
-	
+
 	public ImageView getBackground() {
 		return background;
 	}
-	
+
 	public void setBackground(ImageView background) {
 		this.background = background;
 	}
@@ -576,7 +575,6 @@ public class DrawYardView extends View<DrawYardController> {
 				(int) (Math.random() * randRGB) + minRGB, opacity);
 	}
 
-	
 	public boolean removePrompts(StageNameEnum stageName) {
 		if (stageName == StageNameEnum.DRAW)
 			return drawing.getChildren().remove(helpText);

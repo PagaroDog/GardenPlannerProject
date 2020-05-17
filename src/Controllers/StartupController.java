@@ -56,7 +56,8 @@ public class StartupController extends Controller<StartupView> {
 			FileInputStream fileIn = new FileInputStream(file.getPath());
 			ObjectInputStream input = new ObjectInputStream(fileIn);
 			Model loadedModel = (Model) input.readObject();
-			if (loadedModel.getWidthOnSave() == View.getCanvasWidth() && loadedModel.getHeightOnSave() == View.getCanvasHeight()) {
+			if (loadedModel.getWidthOnSave() == View.getCanvasWidth()
+					&& loadedModel.getHeightOnSave() == View.getCanvasHeight()) {
 				main.setModel(loadedModel);
 				main.updateModel();
 				newButton();
@@ -95,7 +96,7 @@ public class StartupController extends Controller<StartupView> {
 		model.setStageName(StageNameEnum.TUTORIAL);
 		main.getTutControl().getView().initSlide();
 	}
-	
+
 	public EventHandler handleOnCreditsButton() {
 		return event -> creditsButton();
 	}
@@ -105,13 +106,9 @@ public class StartupController extends Controller<StartupView> {
 	}
 
 	public String generateCredits() {
-		String credits = "Developers:"
-				+ "\nMatt Cohen"
-				+ "\nIan McCabe"
-				+ "\nJosh Stone"
-				+ "\nTommy White"
+		String credits = "Developers:" + "\nMatt Cohen" + "\nIan McCabe" + "\nJosh Stone" + "\nTommy White"
 				+ "\nBrandon Wu";
-		for (String plantName: view.getImgs().getPlantImages().keySet()) {
+		for (String plantName : view.getImgs().getPlantImages().keySet()) {
 			credits += "\n\n" + plantName + " image:";
 			String[] src = view.getImgs().getPlantImages().get(plantName)[0].getSourceInfo();
 			credits += "\nAuthor: " + src[0];

@@ -79,16 +79,16 @@ public class StartupView extends View<StartupController> {
 		loadButton = new Button("Load");
 		loadButton.setOnMouseClicked(control.handleOnLoadButton());
 		buttons.getChildren().addAll(newButton, loadButton, tutorialButton);
-		
+
 		creditsButton = new Button("Show Credits");
 		creditsButton.setOnMouseClicked(control.handleOnCreditsButton());
-		
+
 		Label creditText = new Label(control.generateCredits());
 
 		credits = new ScrollPane(creditText);
 		credits.setMaxWidth(creditWidth);
 		credits.setMaxHeight(creditHeight);
-		
+
 		root = new Pane();
 		root.getChildren().addAll(iv, title, buttons, creditsButton, credits);
 
@@ -115,16 +115,16 @@ public class StartupView extends View<StartupController> {
 
 		title.setLayoutX(titleXPos - title.getWidth() / 2);
 		title.setLayoutY(titleYPos);
-		
+
 		creditsButton.setLayoutX(canvasWidth - creditsButton.getWidth() - creditsPadding);
 		creditsButton.setLayoutY(canvasHeight - creditsButton.getHeight() - creditsPadding);
-		
+
 		creditsButton.setPrefWidth(creditsButton.getWidth());
 		creditsButton.setPrefHeight(creditsButton.getHeight());
-		
+
 		credits.setLayoutX(canvasWidth - credits.getWidth() - creditsPadding);
 		credits.setLayoutY(creditsButton.getLayoutY() - credits.getHeight() - creditsPadding);
-		
+
 		root.getChildren().remove(credits);
 	}
 

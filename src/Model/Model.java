@@ -118,7 +118,7 @@ public class Model implements Serializable {
 
 	private int decToPercent = 100;
 	private int radiusExp = 2;
-	
+
 	private double widthOnSave;
 	private double heightOnSave;
 

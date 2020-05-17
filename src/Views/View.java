@@ -6,7 +6,6 @@ import java.awt.GraphicsEnvironment;
 import Controllers.Controller;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -90,8 +89,7 @@ public class View<T extends Controller> {
 
 	/**
 	 * Creates a BorderPane that can be used as a navigation bar at the bottom of a
-	 * View. Should be used when a View has a both a previous View and a next
-	 * View.
+	 * View. Should be used when a View has a both a previous View and a next View.
 	 * 
 	 * @param prevButtonText The text to display on the Previous Button
 	 * @param nextButtonText The text to display on the Next Button
