@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 
 import Model.Model;
 import Model.StageNameEnum;
+import Views.ImageWithSourceInfo;
 import Views.StartupView;
 import Views.View;
 import javafx.event.EventHandler;
@@ -93,6 +94,30 @@ public class StartupController extends Controller<StartupView> {
 		view.getStage().setScene(Main.getScenes().get(StageNameEnum.TUTORIAL));
 		model.setStageName(StageNameEnum.TUTORIAL);
 		main.getTutControl().getView().initSlide();
+	}
+	
+	public EventHandler handleOnCreditsButton() {
+		return event -> creditsButton();
+	}
+
+	private void creditsButton() {
+		view.credits();
+	}
+
+	public String generateCredits() {
+		String credits = "Developers:"
+				+ "\nMatt Cohen"
+				+ "\nIan McCabe"
+				+ "\nJosh Stone"
+				+ "\nTommy White"
+				+ "\nBrandon Wu";
+		for (String plantName: view.getImgs().getPlantImages().keySet()) {
+			credits += "\n\n" + plantName + " image:";
+			String[] src = view.getImgs().getPlantImages().get(plantName)[0].getSourceInfo();
+			credits += "\nAuthor: " + src[0];
+			credits += "\nLink: " + src[1];
+		}
+		return credits;
 	}
 
 }

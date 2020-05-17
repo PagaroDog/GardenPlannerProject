@@ -5,12 +5,14 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 /**
@@ -27,10 +29,12 @@ public class StartupView extends View<StartupController> {
 	private Button newButton;
 	private Button loadButton;
 	private Button tutorialButton;
+	private Button creditsButton;
 	private ImageView iv;
 	private Pane root;
 	private TilePane buttons;
 	private FileChooser fileChooser;
+	private ScrollPane credits;
 	private int numButtons = 3;
 	private double titleFontSize = 125;
 	private double buttonFont = 35;
@@ -39,9 +43,14 @@ public class StartupView extends View<StartupController> {
 	private double buttonXPos = canvasWidth / 2;
 	private double buttonYPos = canvasHeight * 2 / 3;
 	private double buttonGap = 50;
+	private double creditsPadding = 5;
+	private Images imgs;
+	private double creditWidth = 300;
+	private double creditHeight = 400;
 
-	public StartupView(Stage stage) {
+	public StartupView(Stage stage, Images imgs) {
 		this.stage = stage;
+		this.imgs = imgs;
 		fileChooser = new FileChooser();
 		FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Garden Files (*.garden)", "*.garden");
 		fileChooser.getExtensionFilters().add(filter);
@@ -70,9 +79,18 @@ public class StartupView extends View<StartupController> {
 		loadButton = new Button("Load");
 		loadButton.setOnMouseClicked(control.handleOnLoadButton());
 		buttons.getChildren().addAll(newButton, loadButton, tutorialButton);
+		
+		creditsButton = new Button("Show Credits");
+		creditsButton.setOnMouseClicked(control.handleOnCreditsButton());
+		
+		Label creditText = new Label(control.generateCredits());
 
+		credits = new ScrollPane(creditText);
+		credits.setMaxWidth(creditWidth);
+		credits.setMaxHeight(creditHeight);
+		
 		root = new Pane();
-		root.getChildren().addAll(iv, title, buttons);
+		root.getChildren().addAll(iv, title, buttons, creditsButton, credits);
 
 		for (Node button : buttons.getChildren()) {
 			((Button) button).setFont(new Font(buttonFont));
@@ -80,7 +98,6 @@ public class StartupView extends View<StartupController> {
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
 		styleScene();
-
 	}
 
 	/**
@@ -98,9 +115,34 @@ public class StartupView extends View<StartupController> {
 
 		title.setLayoutX(titleXPos - title.getWidth() / 2);
 		title.setLayoutY(titleYPos);
+		
+		creditsButton.setLayoutX(canvasWidth - creditsButton.getWidth() - creditsPadding);
+		creditsButton.setLayoutY(canvasHeight - creditsButton.getHeight() - creditsPadding);
+		
+		creditsButton.setPrefWidth(creditsButton.getWidth());
+		creditsButton.setPrefHeight(creditsButton.getHeight());
+		
+		credits.setLayoutX(canvasWidth - credits.getWidth() - creditsPadding);
+		credits.setLayoutY(creditsButton.getLayoutY() - credits.getHeight() - creditsPadding);
+		
+		root.getChildren().remove(credits);
 	}
 
 	public FileChooser getFileChooser() {
 		return fileChooser;
+	}
+
+	public void credits() {
+		if (root.getChildren().contains(credits)) {
+			root.getChildren().remove(credits);
+			creditsButton.setText("Show Credits");
+		} else {
+			root.getChildren().add(credits);
+			creditsButton.setText("Hide Credits");
+		}
+	}
+
+	public Images getImgs() {
+		return imgs;
 	}
 }
