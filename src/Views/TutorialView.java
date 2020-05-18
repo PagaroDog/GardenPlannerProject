@@ -42,9 +42,23 @@ public class TutorialView extends View<TutorialController> {
 	@Override
 	public void setup() {
 
-		tutorialSlides.add(new Image("/TutorialSlides/Slide1.PNG"));// 0
+		tutorialSlides.add(new Image("/TutorialSlides/Slide1.png"));// 0
+		
+		tutorialSlides.add(new Image("/TutorialSlides/Slide1_Outline_1.PNG")); //1
+		tutorialSlides.add(new Image("/TutorialSlides/Slide2_Outline_2.PNG")); //2
+		tutorialSlides.add(new Image("/TutorialSlides/Slide3_Conditions_1.PNG")); //3
+		tutorialSlides.add(new Image("/TutorialSlides/Slide4_Conditions_2.PNG")); //4
+		tutorialSlides.add(new Image("/TutorialSlides/Slide5_Conditions_3.PNG")); //5
+		tutorialSlides.add(new Image("/TutorialSlides/Slide6_Preferences_1.PNG")); //6
+		tutorialSlides.add(new Image("/TutorialSlides/Slide7_Preferences_2.PNG")); //7
+		tutorialSlides.add(new Image("/TutorialSlides/Slide8_Suggestions_2.PNG")); //8
+		tutorialSlides.add(new Image("/TutorialSlides/Slide9_Design_1.PNG")); //9
+		tutorialSlides.add(new Image("/TutorialSlides/Slide10_Design_2.PNG")); //10
+		tutorialSlides.add(new Image("/TutorialSlides/Slide11_Design_4.PNG")); //11
+		tutorialSlides.add(new Image("/TutorialSlides/Slide12_Statistics.PNG")); //12
+		
 		tutorialSlides.add(new Image("/TutorialSlides/Slide2.PNG"));// 1
-		//tutorialSlides.add(new Image("/TutorialSlides/Slide3.PNG"));// 2
+
 
 		border = new BorderPane();
 
