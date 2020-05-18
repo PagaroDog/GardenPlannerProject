@@ -368,10 +368,11 @@ public class DrawYardController extends Controller<DrawYardView> {
 	 * @param event The MouseEvent generated when the Pane was pressed
 	 */
 	public void pressPane(MouseEvent event) {
-		if (!view.removePrompts(model.getStageName())) {
+		if (view.removePrompts(model.getStageName())) {
 			if (model.getStageName() == StageNameEnum.CONDITIONS) {
 				dismissed = true;
 			}
+		}
 			view.getDrawing().requestFocus();
 			model.setDrawPressX(event.getX());
 			model.setDrawPressY(event.getY());
@@ -389,7 +390,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 				}
 			}
 			view.select(model.getCurrDrawObj());
-		}
+		
 	}
 
 	/**
