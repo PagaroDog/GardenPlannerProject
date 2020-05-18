@@ -111,8 +111,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 * @param drawing The drawing Pane from DrawYard
 	 */
 	public void setDrawing(Pane drawing) {
-		boolean firstCond = true;
-		Rectangle firstCondRect = new Rectangle();
+		
 		if (drawing != null) {
 			view.getBorder().setLeft(drawing);
 			for (Node child : drawing.getChildren()) {
@@ -123,7 +122,6 @@ public class PreferencesController extends Controller<PreferencesView> {
 			double newWidth = view.getBorder().getWidth() - view.getVBox().getWidth();
 			drawing.setPrefWidth(newWidth);
 			double ratio = newWidth / oldWidth;
-			model.getGardenPreferences().clear();
 
 			for (Node child : drawing.getChildren()) {
 				double oldX = child.getBoundsInParent().getMinX();
@@ -132,28 +130,36 @@ public class PreferencesController extends Controller<PreferencesView> {
 				child.setTranslateX(oldX * ratio - newX);
 			}
 
-			Pane draw = (Pane) drawing.getChildren().get(0);
-			for (Node child : draw.getChildren()) {
-				if (child.getUserData() == StageNameEnum.CONDITIONS) {
-
-					model.getGardenPreferences().add(new GardenPref());
-					if (firstCond) {
-						firstCondRect = (Rectangle) child;
-						firstCond = false;
-					}
-				}
-
-			}
-
 			view.setDrawing(drawing);
-			view.setupZoneFlips(model.getGardenPreferences());
-			if (model.getGardenPreferences().size() > 0) {
-				model.setCurrPref(model.getGardenPreferences().get(0));
-
-				model.getCurrPref().setArea(firstCondRect);
-				firstCondRect.setStroke(Color.RED);
-				view.setCurrArea(firstCondRect);
+			
+			
+		}
+	}
+	
+	public void setupPrefs(Pane drawing) {
+		boolean firstCond = true;
+		Rectangle firstCondRect = new Rectangle();
+		
+		Pane rects = (Pane) drawing.getChildren().get(0);
+		for (Node child : rects.getChildren()) {
+			if (child.getUserData() == StageNameEnum.CONDITIONS) {
+	
+				model.getGardenPreferences().add(new GardenPref());
+				if (firstCond) {
+					firstCondRect = (Rectangle) child;
+					firstCond = false;
+				}
 			}
+		}
+		
+		view.setupZoneFlips(model.getGardenPreferences());
+		
+		if (model.getGardenPreferences().size() > 0) {
+			model.setCurrPref(model.getGardenPreferences().get(0));
+
+			model.getCurrPref().setArea(firstCondRect);
+			firstCondRect.setStroke(Color.RED);
+			view.setCurrArea(firstCondRect);
 		}
 	}
 

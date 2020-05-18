@@ -424,6 +424,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 			model.setStageName(StageNameEnum.PREFERENCES);
 			model.setDrawMode(null);
 			main.getPrefControl().setDrawing(view.getDrawing());
+			main.getPrefControl().setupPrefs(view.getDrawing());
 		}
 		if (!dismissed) {
 			view.showCondPrompt();
