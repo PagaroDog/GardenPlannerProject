@@ -44,7 +44,7 @@ public class TutorialView extends View<TutorialController> {
 
 		tutorialSlides.add(new Image("/TutorialSlides/Slide1.png"));// 0
 		
-		tutorialSlides.add(new Image("/TutorialSlides/Slide1_Outline.PNG")); //1
+		tutorialSlides.add(new Image("/TutorialSlides/Slide1_Outline_1.PNG")); //1
 		tutorialSlides.add(new Image("/TutorialSlides/Slide2_Outline_2.PNG")); //2
 		tutorialSlides.add(new Image("/TutorialSlides/Slide3_Conditions_1.PNG")); //3
 		tutorialSlides.add(new Image("/TutorialSlides/Slide4_Conditions_2.PNG")); //4
