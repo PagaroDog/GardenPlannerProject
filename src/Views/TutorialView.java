@@ -44,7 +44,7 @@ public class TutorialView extends View<TutorialController> {
 
 		tutorialSlides.add(new Image("/TutorialSlides/Slide1.PNG"));// 0
 		tutorialSlides.add(new Image("/TutorialSlides/Slide2.PNG"));// 1
-		tutorialSlides.add(new Image("/TutorialSlides/Slide3.PNG"));// 2
+		//tutorialSlides.add(new Image("/TutorialSlides/Slide3.PNG"));// 2
 
 		border = new BorderPane();
 
