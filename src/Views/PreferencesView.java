@@ -151,6 +151,13 @@ public class PreferencesView extends View<PreferencesController> {
 	 * @param gardenPrefs The ArrayList of GardenPrefs
 	 */
 	public void setupZoneFlips(ArrayList<GardenPref> gardenPrefs) {
+		name.setText("");
+		bloom.setValue(null);
+		water.setValue(null);
+		sun.setValue(null);
+		for (Node c : color.getChildren()) {
+			((RadioButton) c).setSelected(false);
+		}
 		zoneButtons.getChildren().clear();
 		zoneButtons.getChildren().add(zoneButtonsLabel);
 		Pane rectangles = (Pane) drawing.getChildren().get(0);

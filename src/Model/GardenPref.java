@@ -21,7 +21,10 @@ public class GardenPref implements Serializable {
 	private String userWater;
 	private transient Rectangle area;
 
-	public GardenPref() {
+	public GardenPref() {}
+	
+	public GardenPref(Rectangle area) {
+		this.area = area;
 	}
 
 	/**

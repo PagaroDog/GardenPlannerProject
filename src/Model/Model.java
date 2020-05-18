@@ -20,9 +20,10 @@ import Controllers.StartupController;
 import Controllers.StatisticsController;
 import Controllers.TutorialController;
 import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
-
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 
@@ -939,10 +940,10 @@ public class Model implements Serializable {
 	 * @param y         The y-coordinate of the mouse
 	 * @return A string that describes how well the plant matches
 	 */
-	public String isPlantMatch(String plantName, double x, double y) {
+	public String isPlantMatch(String plantName, double x, double y, Pane garden) {
 		for (GardenPref gp : gardenPreferences) {
 			if (gp.getArea() != null) {
-				if (isInArea(x, y, gp.getArea())) {
+				if (isInArea(x, y, gp.getArea(), garden)) {
 					String match = "";
 					Plant p = plants.get(plantName);
 
@@ -1001,9 +1002,10 @@ public class Model implements Serializable {
 	 * @param area The rectangle to check if the mouse is inside
 	 * @return true if the mouse is in the rectangle, false otherwise
 	 */
-	public boolean isInArea(double x, double y, Rectangle area) {
-		boolean inX = x <= area.getBoundsInParent().getMaxX() && x >= area.getBoundsInParent().getMinX();
-		boolean inY = y <= area.getBoundsInParent().getMaxY() && y >= area.getBoundsInParent().getMinY();
+	public boolean isInArea(double x, double y, Rectangle area, Pane garden) {
+		Bounds bounds = garden.sceneToLocal(area.localToScene(area.getBoundsInLocal()));
+		boolean inX = x <= bounds.getMaxX() && x >= bounds.getMinX();
+		boolean inY = y <= bounds.getMaxY() && y >= bounds.getMinY();
 		return inX && inY;
 	}
 }

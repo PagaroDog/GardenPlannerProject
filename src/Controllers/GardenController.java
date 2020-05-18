@@ -676,7 +676,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	public void displayInfo(MouseEvent event) {
 		Circle plant = (Circle) event.getSource();
 		view.displayInfo(plant, event.getX(), event.getY(),
-				model.isPlantMatch(plant.getUserData().toString(), event.getX(), event.getY()));
+				model.isPlantMatch(plant.getUserData().toString(), event.getX(), event.getY(), view.getGarden()));
 	}
 
 	/**

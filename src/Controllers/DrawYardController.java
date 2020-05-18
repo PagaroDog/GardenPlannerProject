@@ -32,7 +32,6 @@ public class DrawYardController extends Controller<DrawYardView> {
 	private final int widthInd = 2;
 	private final int heightInd = 3;
 	private boolean dismissed = false;
-	private boolean initialPress = true;
 
 	public DrawYardController(Model model, DrawYardView dyv, Main main) {
 		super(model, dyv, main);
@@ -424,7 +423,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 			model.setStageName(StageNameEnum.PREFERENCES);
 			model.setDrawMode(null);
 			main.getPrefControl().setDrawing(view.getDrawing());
-			main.getPrefControl().setupPrefs(view.getDrawing());
+			main.getPrefControl().setupPrefs(view.getRectangles());
 		}
 		if (!dismissed) {
 			view.showCondPrompt();

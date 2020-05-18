@@ -532,23 +532,25 @@ public class ModelTests {
 		prefs.add(pref3);
 
 		test.setGardenPreferences(prefs);
+		
+		Pane testPane = new Pane();
 
-		String result = test.isPlantMatch("Acer negundo", 50, 50);
+		String result = test.isPlantMatch("Acer negundo", 50, 50, testPane);
 		assertEquals(
 				"Plant matches light requirement.\nPlant matches soil moisture.\nPlant blooms in desired season.\nPlant matches desired color.",
 				result);
 
-		result = test.isPlantMatch("Acer negundo", 550, 50);
+		result = test.isPlantMatch("Acer negundo", 550, 50, testPane);
 		assertEquals(
 				"Plant does not match light requirement.\nPlant matches soil moisture.\nPlant does not bloom in desired season.",
 				result);
 
-		result = test.isPlantMatch("Amelanchier arborea", 50, 550);
+		result = test.isPlantMatch("Amelanchier arborea", 50, 550, testPane);
 		assertEquals(
 				"Plant matches light requirement.\nPlant does not match soil moisture.\nPlant does not bloom in desired season.\nPlant matches desired color.",
 				result);
 
-		result = test.isPlantMatch("Helianthus angustifolius", 550, 550);
+		result = test.isPlantMatch("Helianthus angustifolius", 550, 550, testPane);
 		assertEquals(
 				"Plant does not match light requirement.\nPlant matches soil moisture.\nPlant blooms in desired season.",
 				result);
@@ -565,13 +567,15 @@ public class ModelTests {
 
 		area.setWidth(499);
 		area.setHeight(499);
+		
+		Pane testPane = new Pane();
 
-		assertEquals(false, test.isInArea(-1, -1, area));
-		assertEquals(false, test.isInArea(500, 500, area));
-		assertEquals(false, test.isInArea(500, 250, area));
-		assertEquals(false, test.isInArea(250, 500, area));
-		assertEquals(true, test.isInArea(250, 250, area));
-		assertEquals(true, test.isInArea(0, 0, area));
-		assertEquals(true, test.isInArea(499, 499, area));
+		assertEquals(false, test.isInArea(-1, -1, area, testPane));
+		assertEquals(false, test.isInArea(500, 500, area, testPane));
+		assertEquals(false, test.isInArea(500, 250, area, testPane));
+		assertEquals(false, test.isInArea(250, 500, area, testPane));
+		assertEquals(true, test.isInArea(250, 250, area, testPane));
+		assertEquals(true, test.isInArea(0, 0, area, testPane));
+		assertEquals(true, test.isInArea(499, 499, area, testPane));
 	}
 }

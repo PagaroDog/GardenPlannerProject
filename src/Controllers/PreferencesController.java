@@ -7,6 +7,7 @@ import Model.GardenPref;
 import Model.Model;
 import Model.StageNameEnum;
 import Views.PreferencesView;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -77,7 +78,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 * @return An EventHandler object for this action.
 	 */
 	public EventHandler getHandleOnZoneButton(Rectangle rect, GardenPref gardenPref) {
-		return event -> zoneButton((MouseEvent) event, rect, gardenPref);
+		return event -> zoneButton(rect, gardenPref);
 	}
 
 	/**
@@ -136,19 +137,17 @@ public class PreferencesController extends Controller<PreferencesView> {
 		}
 	}
 	
-	public void setupPrefs(Pane drawing) {
-		boolean firstCond = true;
-		Rectangle firstCondRect = new Rectangle();
+	/**
+	 * Sets up the garden preferences based on the areas specified by the user.
+	 * 
+	 * @param rectangles The Pane containing the rectangle objects
+	 */
+	public void setupPrefs(Pane rectangles) {
+		model.getGardenPreferences().clear();
 		
-		Pane rects = (Pane) drawing.getChildren().get(0);
-		for (Node child : rects.getChildren()) {
+		for (Node child : rectangles.getChildren()) {
 			if (child.getUserData() == StageNameEnum.CONDITIONS) {
-	
-				model.getGardenPreferences().add(new GardenPref());
-				if (firstCond) {
-					firstCondRect = (Rectangle) child;
-					firstCond = false;
-				}
+				model.getGardenPreferences().add(new GardenPref((Rectangle) child));
 			}
 		}
 		
@@ -156,10 +155,10 @@ public class PreferencesController extends Controller<PreferencesView> {
 		
 		if (model.getGardenPreferences().size() > 0) {
 			model.setCurrPref(model.getGardenPreferences().get(0));
-
-			model.getCurrPref().setArea(firstCondRect);
-			firstCondRect.setStroke(Color.RED);
-			view.setCurrArea(firstCondRect);
+			
+			Platform.runLater(() -> {
+				zoneButton(model.getCurrPref().getArea(), model.getCurrPref());
+			});
 		}
 	}
 
@@ -180,7 +179,7 @@ public class PreferencesController extends Controller<PreferencesView> {
 	 * @param event The MouseEvent generated when the button was pressed
 	 * @param rect  The rectangle area associated with the button
 	 */
-	public void zoneButton(MouseEvent event, Rectangle rect, GardenPref gardenPref) {
+	public void zoneButton(Rectangle rect, GardenPref gardenPref) {
 		ObservableList<Node> colorButtons = view.getColor().getChildren();
 
 		saveUserPref(true);
