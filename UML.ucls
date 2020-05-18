@@ -1,0 +1,1427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="Views.SuggestionsView" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Views/SuggestionsView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="731" width="200" x="626" y="6464"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="2" language="java" name="Model.SunEnum" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/SunEnum.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="209" width="176" x="3711" y="5765"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="3" language="java" name="Model.RectDrawingObj" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/RectDrawingObj.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="221" x="2611" y="7847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="Views.DrawYardView" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Views/DrawYardView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1811" width="333" x="1249" y="8869"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="Controllers.Main" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Controllers/Main.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="317" width="277" x="1305" y="686"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="Controllers.TutorialController" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Controllers/TutorialController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="227" width="264" x="1192" y="3791"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="Controllers.SuggestionsController" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Controllers/SuggestionsController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="299" width="309" x="1727" y="7847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="8" language="java" name="Model.DrawModeEnum" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/DrawModeEnum.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="195" x="1143" y="11707"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="9" language="java" name="Views.PreferencesView" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Views/PreferencesView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="767" width="265" x="1212" y="6464"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="Controllers.StartupController" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Controllers/StartupController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="227" width="254" x="667" y="3524"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="Views.View" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Views/View.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="659" width="463" x="667" y="5765"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="12" language="java" name="Model.SeasonEnum" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/SeasonEnum.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="159" x="3430" y="7847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="13" language="java" name="Views.StartupView" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Views/StartupView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="551" width="184" x="402" y="6464"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="Views.Images" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Views/Images.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="155" width="365" x="381" y="7847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="Model.EllipseDrawingObj" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/EllipseDrawingObj.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="83" width="168" x="2984" y="7847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="Model.DrawingObj" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/DrawingObj.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="407" width="147" x="3075" y="6464"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="Controllers.PreferencesController" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Controllers/PreferencesController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="299" width="363" x="1603" y="8530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="Views.StatisticsView" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Views/StatisticsView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="839" width="613" x="2401" y="6464"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="19" language="java" name="Model.WaterEnum" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/WaterEnum.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="209" width="149" x="3927" y="5765"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="20" language="java" name="Model.Plant" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/Plant.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="623" width="562" x="3472" y="5102"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="Model.LabelDrawingObj" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/LabelDrawingObj.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="156" x="3192" y="7847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="22" language="java" name="Model.PlantTypeEnum" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/PlantTypeEnum.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="245" width="190" x="3965" y="7847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <enumeration id="23" language="java" name="Model.StageNameEnum" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/StageNameEnum.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="245" width="218" x="2029" y="11707"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="24" language="java" name="Controllers.Controller" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Controllers/Controller.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="119" width="158" x="1305" y="527"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <enumeration id="25" language="java" name="Model.ActionEnum" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/ActionEnum.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="170" x="2139" y="8530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="26" language="java" name="Model.GardenPref" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/GardenPref.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="479" width="384" x="3006" y="8869"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="Controllers.GardenController" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Controllers/GardenController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1271" width="310" x="1999" y="3791"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="Views.ImageWithSourceInfo" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Views/ImageWithSourceInfo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="191" width="225" x="767" y="8530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="Views.TutorialView" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Views/TutorialView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="443" width="243" x="866" y="6464"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="Model.Model" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/Model.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="2441" width="450" x="3390" y="1043"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="Model.GardenObj" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/GardenObj.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="299" width="167" x="1706" y="5102"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="Controllers.StatisticsController" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Controllers/StatisticsController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="137" width="273" x="3629" y="7847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="Model.GardenAction" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Model/GardenAction.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="623" width="391" x="2139" y="7847"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="Views.GardenView" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Views/GardenView.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="1343" width="466" x="1832" y="6464"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="Controllers.DrawYardController" project="GardenDesignSoftware" 
+    file="/GardenDesignSoftware/src/Controllers/DrawYardController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="947" width="397" x="1143" y="10720"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="36">    
+    <bendpoint x="2339" y="8530"/>    
+    <bendpoint x="2339" y="8869"/>    
+    <bendpoint x="2339" y="10720"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="37" name="userData"/>      
+      <multiplicity id="38" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="39">    
+    <end type="SOURCE" refId="21"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="40">    
+    <bendpoint x="413" y="1043"/>    
+    <bendpoint x="413" y="3524"/>    
+    <bendpoint x="413" y="3791"/>    
+    <bendpoint x="434" y="5102"/>    
+    <bendpoint x="434" y="5765"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="41" name="suggView"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="43">    
+    <bendpoint x="3168" y="5102"/>    
+    <bendpoint x="3231" y="5765"/>    
+    <bendpoint x="3315" y="6464"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <association id="44">    
+    <bendpoint x="1633" y="1043"/>    
+    <bendpoint x="1675" y="3524"/>    
+    <bendpoint x="1794" y="3791"/>    
+    <bendpoint x="1924" y="5102"/>    
+    <bendpoint x="1924" y="5765"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="45" name="gardenView"/>      
+      <multiplicity id="46" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="47">    
+    <bendpoint x="594" y="3791"/>    
+    <bendpoint x="573" y="5102"/>    
+    <bendpoint x="568" y="5765"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="48">    
+    <bendpoint x="2108" y="7847"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="25"/>  
+  </dependency>  
+  <dependency id="49">    
+    <bendpoint x="1654" y="7847"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="28"/>  
+  </dependency>  
+  <dependency id="50">    
+    <bendpoint x="2038" y="8530"/>    
+    <bendpoint x="2038" y="8869"/>    
+    <bendpoint x="2038" y="10720"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="51">    
+    <bendpoint x="2318" y="3524"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="52" name="gardenControl"/>      
+      <multiplicity id="53" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="54">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="55" name="imgs"/>      
+      <multiplicity id="56" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="57">    
+    <bendpoint x="895" y="3791"/>    
+    <bendpoint x="895" y="5102"/>    
+    <bendpoint x="1160" y="5765"/>    
+    <bendpoint x="1160" y="6464"/>    
+    <bendpoint x="1160" y="7847"/>    
+    <bendpoint x="1160" y="8530"/>    
+    <bendpoint x="1218" y="8869"/>    
+    <bendpoint x="1591" y="10720"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="58">    
+    <bendpoint x="434" y="3791"/>    
+    <bendpoint x="392" y="5102"/>    
+    <bendpoint x="350" y="5765"/>    
+    <bendpoint x="308" y="6464"/>    
+    <bendpoint x="308" y="7847"/>    
+    <bendpoint x="308" y="8530"/>    
+    <bendpoint x="308" y="8869"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <dependency id="59">    
+    <bendpoint x="3252" y="5102"/>    
+    <bendpoint x="3315" y="5765"/>    
+    <bendpoint x="3399" y="6464"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <association id="60">    
+    <bendpoint x="3359" y="1043"/>    
+    <bendpoint x="3378" y="3524"/>    
+    <bendpoint x="3399" y="3791"/>    
+    <bendpoint x="3420" y="5102"/>    
+    <bendpoint x="3483" y="5765"/>    
+    <bendpoint x="3483" y="6464"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="61" name="statControl"/>      
+      <multiplicity id="62" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="63">    
+    <bendpoint x="3441" y="3524"/>    
+    <bendpoint x="3441" y="3791"/>    
+    <bendpoint x="3441" y="5102"/>    
+    <bendpoint x="3462" y="5765"/>    
+    <bendpoint x="3462" y="6464"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="64" name="allSeasons"/>      
+      <multiplicity id="65" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="66">    
+    <bendpoint x="776" y="7847"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="28"/>  
+  </dependency>  
+  <dependency id="67">    
+    <bendpoint x="1612" y="10720"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="68">    
+    <bendpoint x="916" y="5102"/>    
+    <bendpoint x="636" y="5765"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <dependency id="69">    
+    <bendpoint x="1486" y="7847"/>    
+    <bendpoint x="1572" y="8530"/>    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="26"/>  
+  </dependency>  
+  <association id="70">    
+    <bendpoint x="3420" y="3524"/>    
+    <bendpoint x="3420" y="3791"/>    
+    <bendpoint x="3399" y="5102"/>    
+    <bendpoint x="3420" y="5765"/>    
+    <bendpoint x="3441" y="6464"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="71" name="season"/>      
+      <multiplicity id="72" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="73">    
+    <bendpoint x="455" y="3791"/>    
+    <bendpoint x="413" y="5102"/>    
+    <bendpoint x="371" y="5765"/>    
+    <bendpoint x="350" y="6464"/>    
+    <bendpoint x="350" y="7847"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="28"/>  
+  </dependency>  
+  <association id="74">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="75" name="waterLevel"/>      
+      <multiplicity id="76" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="77">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="78" name="action"/>      
+      <multiplicity id="79" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="80">    
+    <end type="SOURCE" refId="29"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <dependency id="81">    
+    <bendpoint x="1903" y="5102"/>    
+    <bendpoint x="1717" y="5765"/>    
+    <bendpoint x="1633" y="6464"/>    
+    <bendpoint x="1591" y="7847"/>    
+    <bendpoint x="1551" y="8530"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="82">    
+    <bendpoint x="1140" y="3791"/>    
+    <bendpoint x="1313" y="5102"/>    
+    <bendpoint x="1486" y="5765"/>    
+    <bendpoint x="1528" y="6464"/>    
+    <bendpoint x="1528" y="7847"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <association id="83">    
+    <bendpoint x="4106" y="3524"/>    
+    <bendpoint x="4106" y="3791"/>    
+    <bendpoint x="4106" y="5102"/>    
+    <bendpoint x="4106" y="5765"/>    
+    <bendpoint x="3932" y="6464"/>    
+    <bendpoint x="3932" y="7847"/>    
+    <bendpoint x="3399" y="8530"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="84" name="currPref"/>      
+      <multiplicity id="85" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="86">    
+    <bendpoint x="1161" y="3791"/>    
+    <bendpoint x="1486" y="5102"/>    
+    <bendpoint x="1549" y="5765"/>    
+    <bendpoint x="1654" y="6464"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="87">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="88">    
+    <bendpoint x="2008" y="5102"/>    
+    <bendpoint x="2008" y="5765"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="34"/>  
+  </dependency>  
+  <generalization id="89">    
+    <bendpoint x="245" y="8869"/>    
+    <bendpoint x="245" y="8530"/>    
+    <bendpoint x="245" y="7847"/>    
+    <bendpoint x="245" y="6464"/>    
+    <bendpoint x="245" y="5765"/>    
+    <bendpoint x="245" y="5102"/>    
+    <bendpoint x="245" y="3791"/>    
+    <bendpoint x="245" y="3524"/>    
+    <bendpoint x="245" y="1043"/>    
+    <bendpoint x="245" y="686"/>    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <association id="90">    
+    <bendpoint x="3504" y="5765"/>    
+    <bendpoint x="3504" y="6464"/>    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="91" name="bloomtime"/>      
+      <multiplicity id="92" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="93">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="94" name="images"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="96">    
+    <bendpoint x="676" y="3791"/>    
+    <bendpoint x="676" y="5102"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="97">    
+    <bendpoint x="308" y="1043"/>    
+    <bendpoint x="303" y="3524"/>    
+    <bendpoint x="299" y="3791"/>    
+    <bendpoint x="295" y="5102"/>    
+    <bendpoint x="291" y="5765"/>    
+    <bendpoint x="287" y="6464"/>    
+    <bendpoint x="329" y="7847"/>    
+    <bendpoint x="329" y="8530"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="98" name="dyView"/>      
+      <multiplicity id="99" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="100">    
+    <bendpoint x="1717" y="1043"/>    
+    <bendpoint x="1717" y="3524"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="101" name="gardenControl"/>      
+      <multiplicity id="102" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="103">    
+    <bendpoint x="1591" y="1043"/>    
+    <bendpoint x="1591" y="3524"/>    
+    <bendpoint x="1591" y="3791"/>    
+    <bendpoint x="1591" y="5102"/>    
+    <bendpoint x="1643" y="5765"/>    
+    <bendpoint x="1696" y="6464"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="104" name="suggControl"/>      
+      <multiplicity id="105" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="106">    
+    <bendpoint x="1780" y="6464"/>    
+    <bendpoint x="1966" y="5765"/>    
+    <bendpoint x="2152" y="5102"/>    
+    <bendpoint x="2339" y="3791"/>    
+    <bendpoint x="2339" y="3524"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="30"/>  
+  </dependency>  
+  <association id="107">    
+    <bendpoint x="1696" y="3524"/>    
+    <bendpoint x="1633" y="3791"/>    
+    <bendpoint x="1549" y="5102"/>    
+    <bendpoint x="1507" y="5765"/>    
+    <bendpoint x="1507" y="6464"/>    
+    <bendpoint x="1317" y="7847"/>    
+    <bendpoint x="1139" y="8530"/>    
+    <bendpoint x="1125" y="8869"/>    
+    <bendpoint x="1112" y="10720"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="108" name="drawMode"/>      
+      <multiplicity id="109" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="110">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="111" name="light"/>      
+      <multiplicity id="112" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="113">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="114" name="model"/>      
+      <multiplicity id="115" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="116">    
+    <bendpoint x="1612" y="8869"/>    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <dependency id="117">    
+    <bendpoint x="3336" y="5102"/>    
+    <bendpoint x="3441" y="5765"/>    
+    <bendpoint x="3525" y="6464"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <association id="118">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="119" name="main"/>      
+      <multiplicity id="120" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="121">    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="122" name="startControl"/>      
+      <multiplicity id="123" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="124">    
+    <bendpoint x="3315" y="3524"/>    
+    <bendpoint x="3315" y="3791"/>    
+    <bendpoint x="3315" y="5102"/>    
+    <bendpoint x="3294" y="5765"/>    
+    <bendpoint x="3273" y="6464"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="125" name="rectangles"/>      
+      <multiplicity id="126" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="127">    
+    <bendpoint x="3399" y="3524"/>    
+    <bendpoint x="3378" y="3791"/>    
+    <bendpoint x="3378" y="5102"/>    
+    <bendpoint x="3399" y="5765"/>    
+    <bendpoint x="3378" y="6464"/>    
+    <bendpoint x="3378" y="7847"/>    
+    <bendpoint x="3378" y="8530"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="128" name="gardenPreferences"/>      
+      <multiplicity id="129" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="130">    
+    <bendpoint x="1968" y="3524"/>    
+    <bendpoint x="1968" y="3791"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="131" name="gardenObjs"/>      
+      <multiplicity id="132" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="133">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="31"/>  
+  </dependency>  
+  <association id="134">    
+    <bendpoint x="1486" y="1043"/>    
+    <bendpoint x="1486" y="3524"/>    
+    <bendpoint x="1486" y="3791"/>    
+    <bendpoint x="1465" y="5102"/>    
+    <bendpoint x="1465" y="5765"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="135" name="prefView"/>      
+      <multiplicity id="136" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="137">    
+    <bendpoint x="4085" y="3524"/>    
+    <bendpoint x="4085" y="3791"/>    
+    <bendpoint x="4085" y="5102"/>    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <dependency id="138">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="139">    
+    <bendpoint x="552" y="1043"/>    
+    <bendpoint x="552" y="3524"/>    
+    <bendpoint x="552" y="3791"/>    
+    <bendpoint x="552" y="5102"/>    
+    <bendpoint x="589" y="5765"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="140" name="tutView"/>      
+      <multiplicity id="141" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="29" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="142">    
+    <bendpoint x="3231" y="5102"/>    
+    <bendpoint x="3252" y="5765"/>    
+    <bendpoint x="3336" y="6464"/>    
+    <bendpoint x="3399" y="7847"/>    
+    <bendpoint x="3420" y="8530"/>    
+    <bendpoint x="3420" y="8869"/>    
+    <bendpoint x="3420" y="10720"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <generalization id="143">    
+    <bendpoint x="531" y="1043"/>    
+    <bendpoint x="531" y="686"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <association id="144">    
+    <bendpoint x="1257" y="1043"/>    
+    <bendpoint x="1257" y="3524"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="145" name="tutControl"/>      
+      <multiplicity id="146" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="147">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <dependency id="148">    
+    <bendpoint x="2349" y="5102"/>    
+    <bendpoint x="2349" y="5765"/>    
+    <bendpoint x="2349" y="6464"/>    
+    <bendpoint x="2580" y="7847"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="25"/>  
+  </dependency>  
+  <association id="149">    
+    <bendpoint x="1633" y="3524"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="150" name="tutControl"/>      
+      <multiplicity id="151" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="152">    
+    <bendpoint x="350" y="1043"/>    
+    <bendpoint x="347" y="3524"/>    
+    <bendpoint x="341" y="3791"/>    
+    <bendpoint x="335" y="5102"/>    
+    <bendpoint x="329" y="5765"/>    
+    <bendpoint x="329" y="6464"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="153" name="imgs"/>      
+      <multiplicity id="154" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="155">    
+    <bendpoint x="594" y="5102"/>    
+    <bendpoint x="573" y="3791"/>    
+    <bendpoint x="451" y="3524"/>    
+    <bendpoint x="329" y="1043"/>    
+    <bendpoint x="329" y="686"/>    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="156" name="control"/>      
+      <multiplicity id="157" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="158">    
+    <bendpoint x="476" y="3791"/>    
+    <bendpoint x="455" y="5102"/>    
+    <bendpoint x="413" y="5765"/>    
+    <bendpoint x="371" y="6464"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <generalization id="159">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <dependency id="160">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="33"/>  
+  </dependency>  
+  <dependency id="161">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <association id="162">    
+    <bendpoint x="266" y="686"/>    
+    <bendpoint x="266" y="1043"/>    
+    <bendpoint x="326" y="3524"/>    
+    <bendpoint x="392" y="3791"/>    
+    <bendpoint x="476" y="5102"/>    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="163" name="view"/>      
+      <multiplicity id="164" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="165">    
+    <bendpoint x="1909" y="8869"/>    
+    <bendpoint x="1909" y="10720"/>    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="166">    
+    <bendpoint x="2087" y="7847"/>    
+    <bendpoint x="2087" y="8530"/>    
+    <bendpoint x="2087" y="8869"/>    
+    <bendpoint x="2087" y="10720"/>    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="167">    
+    <bendpoint x="1528" y="1043"/>    
+    <bendpoint x="1528" y="3524"/>    
+    <bendpoint x="1528" y="3791"/>    
+    <bendpoint x="1528" y="5102"/>    
+    <bendpoint x="1570" y="5765"/>    
+    <bendpoint x="1591" y="6464"/>    
+    <bendpoint x="1633" y="7847"/>    
+    <bendpoint x="1996" y="8530"/>    
+    <bendpoint x="1930" y="8869"/>    
+    <bendpoint x="1930" y="10720"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="168">    
+    <bendpoint x="1759" y="6464"/>    
+    <bendpoint x="1862" y="5765"/>    
+    <bendpoint x="1966" y="5102"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <dependency id="169">    
+    <bendpoint x="2370" y="5102"/>    
+    <bendpoint x="2370" y="5765"/>    
+    <bendpoint x="2370" y="6464"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="170">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="20"/>  
+  </dependency>  
+  <generalization id="171">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <generalization id="172">    
+    <bendpoint x="1116" y="3524"/>    
+    <bendpoint x="1116" y="1043"/>    
+    <bendpoint x="1116" y="686"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <generalization id="173">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="174">    
+    <bendpoint x="3273" y="3524"/>    
+    <bendpoint x="3273" y="3791"/>    
+    <bendpoint x="3273" y="5102"/>    
+    <bendpoint x="3273" y="5765"/>    
+    <bendpoint x="3294" y="6464"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="175" name="ellipses"/>      
+      <multiplicity id="176" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="177">    
+    <bendpoint x="4127" y="3524"/>    
+    <bendpoint x="4127" y="3791"/>    
+    <bendpoint x="4127" y="5102"/>    
+    <bendpoint x="4127" y="5765"/>    
+    <bendpoint x="3953" y="6464"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="178" name="statControl"/>      
+      <multiplicity id="179" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="32" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="180">    
+    <end type="SOURCE" refId="34" navigable="false">      
+      <attribute id="181" name="imgs"/>      
+      <multiplicity id="182" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="183">    
+    <bendpoint x="1947" y="3524"/>    
+    <bendpoint x="1815" y="3791"/>    
+    <bendpoint x="1675" y="5102"/>    
+    <bendpoint x="1675" y="5765"/>    
+    <bendpoint x="1675" y="6464"/>    
+    <bendpoint x="1675" y="7847"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="184" name="prefControl"/>      
+      <multiplicity id="185" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="186">    
+    <bendpoint x="3294" y="5102"/>    
+    <bendpoint x="3378" y="5765"/>    
+    <bendpoint x="3420" y="6464"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="32"/>  
+  </dependency>  
+  <generalization id="187">    
+    <bendpoint x="1926" y="3524"/>    
+    <bendpoint x="1926" y="1043"/>    
+    <bendpoint x="1926" y="686"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <association id="188">    
+    <bendpoint x="1137" y="1043"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="189" name="startControl"/>      
+      <multiplicity id="190" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="191">    
+    <bendpoint x="1570" y="5102"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="192">    
+    <bendpoint x="2328" y="5102"/>    
+    <bendpoint x="2328" y="5765"/>    
+    <bendpoint x="2328" y="6464"/>    
+    <end type="SOURCE" refId="27" navigable="false">      
+      <attribute id="193" name="GA"/>      
+      <multiplicity id="194" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="195">    
+    <bendpoint x="3462" y="3524"/>    
+    <bendpoint x="3462" y="3791"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="196" name="plants"/>      
+      <multiplicity id="197" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="198">    
+    <bendpoint x="3044" y="6464"/>    
+    <bendpoint x="3336" y="5765"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="20"/>  
+  </dependency>  
+  <association id="199">    
+    <bendpoint x="3483" y="3524"/>    
+    <bendpoint x="3483" y="3791"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="200" name="suggestedPlants"/>      
+      <multiplicity id="201" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="202">    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="203">    
+    <bendpoint x="4148" y="3524"/>    
+    <bendpoint x="4148" y="3791"/>    
+    <bendpoint x="4148" y="5102"/>    
+    <bendpoint x="4148" y="5765"/>    
+    <bendpoint x="4148" y="6464"/>    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <association id="204">    
+    <bendpoint x="1507" y="1043"/>    
+    <bendpoint x="1507" y="3524"/>    
+    <bendpoint x="1507" y="3791"/>    
+    <bendpoint x="1507" y="5102"/>    
+    <bendpoint x="1528" y="5765"/>    
+    <bendpoint x="1570" y="6464"/>    
+    <bendpoint x="1570" y="7847"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="205" name="prefControl"/>      
+      <multiplicity id="206" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="207">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="208">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <dependency id="209">    
+    <bendpoint x="3147" y="5102"/>    
+    <bendpoint x="3210" y="5765"/>    
+    <bendpoint x="3252" y="6464"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <generalization id="210">    
+    <bendpoint x="1612" y="7847"/>    
+    <bendpoint x="1612" y="6464"/>    
+    <bendpoint x="1612" y="5765"/>    
+    <bendpoint x="1612" y="5102"/>    
+    <bendpoint x="1612" y="3791"/>    
+    <bendpoint x="1612" y="3524"/>    
+    <bendpoint x="1612" y="1043"/>    
+    <bendpoint x="1612" y="686"/>    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <dependency id="211">    
+    <bendpoint x="1945" y="5102"/>    
+    <bendpoint x="1831" y="5765"/>    
+    <bendpoint x="1717" y="6464"/>    
+    <bendpoint x="1696" y="7847"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <association id="212">    
+    <bendpoint x="1905" y="1043"/>    
+    <bendpoint x="2297" y="3524"/>    
+    <bendpoint x="2743" y="3791"/>    
+    <bendpoint x="3189" y="5102"/>    
+    <bendpoint x="3189" y="5765"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="213" name="statView"/>      
+      <multiplicity id="214" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="215">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="216" name="redoList"/>      
+      <multiplicity id="217" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="218">    
+    <bendpoint x="4064" y="3524"/>    
+    <bendpoint x="4064" y="3791"/>    
+    <bendpoint x="4064" y="5102"/>    
+    <end type="SOURCE" refId="30"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <association id="219">    
+    <bendpoint x="2356" y="686"/>    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="220" name="model"/>      
+      <multiplicity id="221" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="222">    
+    <bendpoint x="1507" y="7847"/>    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <dependency id="223">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="32"/>  
+  </dependency>  
+  <dependency id="224">    
+    <bendpoint x="1181" y="5102"/>    
+    <bendpoint x="1181" y="5765"/>    
+    <bendpoint x="1181" y="6464"/>    
+    <bendpoint x="1338" y="7847"/>    
+    <bendpoint x="1485" y="8530"/>    
+    <bendpoint x="1633" y="8869"/>    
+    <bendpoint x="1633" y="10720"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="225">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="226" name="plantImages"/>      
+      <multiplicity id="227" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="228">    
+    <end type="SOURCE" refId="35"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="229">    
+    <bendpoint x="1987" y="5102"/>    
+    <bendpoint x="1945" y="5765"/>    
+    <bendpoint x="1801" y="6464"/>    
+    <bendpoint x="2066" y="7847"/>    
+    <bendpoint x="2017" y="8530"/>    
+    <bendpoint x="1888" y="8869"/>    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <dependency id="230">    
+    <bendpoint x="615" y="3791"/>    
+    <bendpoint x="615" y="5102"/>    
+    <bendpoint x="615" y="5765"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="29"/>  
+  </dependency>  
+  <dependency id="231">    
+    <bendpoint x="1570" y="10720"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="232">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="233">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="234">    
+    <bendpoint x="3441" y="8530"/>    
+    <bendpoint x="3441" y="8869"/>    
+    <bendpoint x="3441" y="10720"/>    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="235">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="236">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <association id="237">    
+    <bendpoint x="287" y="1043"/>    
+    <bendpoint x="282" y="3524"/>    
+    <bendpoint x="277" y="3791"/>    
+    <bendpoint x="273" y="5102"/>    
+    <bendpoint x="269" y="5765"/>    
+    <bendpoint x="266" y="6464"/>    
+    <bendpoint x="266" y="7847"/>    
+    <bendpoint x="266" y="8530"/>    
+    <bendpoint x="266" y="8869"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="238" name="dyControl"/>      
+      <multiplicity id="239" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="240">    
+    <bendpoint x="4127" y="6464"/>    
+    <bendpoint x="4169" y="5765"/>    
+    <bendpoint x="4190" y="5102"/>    
+    <bendpoint x="4190" y="3791"/>    
+    <bendpoint x="4190" y="3524"/>    
+    <bendpoint x="4190" y="1043"/>    
+    <bendpoint x="4190" y="686"/>    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <generalization id="241">    
+    <bendpoint x="1738" y="6464"/>    
+    <bendpoint x="1738" y="5765"/>    
+    <bendpoint x="1654" y="5102"/>    
+    <bendpoint x="1654" y="3791"/>    
+    <bendpoint x="1654" y="3524"/>    
+    <bendpoint x="1654" y="1043"/>    
+    <bendpoint x="1654" y="686"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <association id="242">    
+    <bendpoint x="3680" y="5765"/>    
+    <bendpoint x="3974" y="6464"/>    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="243" name="type"/>      
+      <multiplicity id="244" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="22" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="245">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <association id="246">    
+    <bendpoint x="371" y="1043"/>    
+    <bendpoint x="371" y="3524"/>    
+    <bendpoint x="371" y="3791"/>    
+    <bendpoint x="371" y="5102"/>    
+    <bendpoint x="392" y="5765"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="247" name="startView"/>      
+      <multiplicity id="248" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="249">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <dependency id="250">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <generalization id="251">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <generalization id="252">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <dependency id="253">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="26"/>  
+  </dependency>  
+  <dependency id="254">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <association id="255">    
+    <end type="SOURCE" refId="33" navigable="false">      
+      <attribute id="256" name="actionList"/>      
+      <multiplicity id="257" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="258">    
+    <bendpoint x="1181" y="8530"/>    
+    <bendpoint x="1139" y="7847"/>    
+    <bendpoint x="1139" y="6464"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="11"/>  
+  </generalization>  
+  <association id="259">    
+    <bendpoint x="3357" y="3524"/>    
+    <bendpoint x="3357" y="3791"/>    
+    <bendpoint x="3357" y="5102"/>    
+    <bendpoint x="3357" y="5765"/>    
+    <bendpoint x="3357" y="6464"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="260" name="labels"/>      
+      <multiplicity id="261" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="262">    
+    <bendpoint x="1738" y="3524"/>    
+    <bendpoint x="1685" y="3791"/>    
+    <bendpoint x="1633" y="5102"/>    
+    <bendpoint x="1591" y="5765"/>    
+    <bendpoint x="1549" y="6464"/>    
+    <bendpoint x="1432" y="7847"/>    
+    <bendpoint x="1315" y="8530"/>    
+    <bendpoint x="1197" y="8869"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="263" name="dyControl"/>      
+      <multiplicity id="264" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="265">    
+    <bendpoint x="4169" y="3524"/>    
+    <bendpoint x="4169" y="3791"/>    
+    <bendpoint x="4169" y="5102"/>    
+    <bendpoint x="4190" y="5765"/>    
+    <bendpoint x="4190" y="6464"/>    
+    <bendpoint x="4190" y="7847"/>    
+    <bendpoint x="4190" y="8530"/>    
+    <bendpoint x="4190" y="8869"/>    
+    <bendpoint x="4190" y="10720"/>    
+    <end type="SOURCE" refId="30" navigable="false">      
+      <attribute id="266" name="stageName"/>      
+      <multiplicity id="267" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="23" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="268">    
+    <end type="SOURCE" refId="34"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
