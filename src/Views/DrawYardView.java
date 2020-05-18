@@ -165,7 +165,7 @@ public class DrawYardView extends View<DrawYardController> {
 						+ "Then press the \"Set Preferences\" button below.");
 		helpTextCond.setFont(new Font(promptSize));
 		helpTextCond.setTextAlignment(TextAlignment.CENTER);
-
+		
 		drawing = new Pane();
 		rectangles = new Pane();
 		ellipses = new Pane();
