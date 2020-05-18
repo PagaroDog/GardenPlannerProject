@@ -346,6 +346,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 		if (view.removePrompts(model.getStageName())) {
 			if (model.getStageName() == StageNameEnum.CONDITIONS) {
 				dismissed = true;
+				view.getDrawing().getChildren().add(view.getRectangles());
 			}
 		}
 		if (model.getDrawMode() != null) {
@@ -418,6 +419,9 @@ public class DrawYardController extends Controller<DrawYardView> {
 				model.setPropertyHeightInches(Integer.valueOf(heightStr) * model.getInchesPerFoot());
 			}
 		} else {
+			if (!dismissed) {
+				view.getDrawing().getChildren().add(view.getRectangles());
+			}
 			dismissed = true;
 			view.getStage().setScene(Main.getScenes().get(StageNameEnum.PREFERENCES));
 			model.setStageName(StageNameEnum.PREFERENCES);
@@ -427,6 +431,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 		}
 		if (!dismissed) {
 			view.showCondPrompt();
+			view.getDrawing().getChildren().remove(view.getRectangles());
 		}
 	}
 
