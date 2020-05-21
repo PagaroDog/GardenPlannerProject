@@ -25,8 +25,8 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class PreferencesController extends Controller<PreferencesView> {
-	private final double originalTranslate = 0;
-	private final double originalScale = 1;
+	private final double ORIGINAL_TRANSLATE = 0;
+	private final double ORIGINAL_SCALE = 1;
 
 	public PreferencesController(Model model, PreferencesView view, Main main) {
 		super(model, view, main);
@@ -116,8 +116,8 @@ public class PreferencesController extends Controller<PreferencesView> {
 		if (drawing != null) {
 			view.getBorder().setLeft(drawing);
 			for (Node child : drawing.getChildren()) {
-				child.setTranslateX(originalTranslate);
-				child.setScaleX(originalScale);
+				child.setTranslateX(ORIGINAL_TRANSLATE);
+				child.setScaleX(ORIGINAL_SCALE);
 			}
 			double oldWidth = main.getDyControl().getViewWidth();
 			double newWidth = view.getBorder().getWidth() - view.getVBox().getWidth();

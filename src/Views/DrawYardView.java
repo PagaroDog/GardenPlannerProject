@@ -81,22 +81,22 @@ public class DrawYardView extends View<DrawYardController> {
 	private double buttonFontSize = Math.min(12, 14 * canvasWidth / expectedWidth);
 	private double fieldWidth = Math.min(139, 139 * canvasWidth / expectedWidth);
 	private double fieldHeight = Math.min(25, 25 * canvasHeight / expectedHeight);
-	private final double labelFontSize = Math.min(16, 18 * canvasWidth / expectedWidth);
-	private final double initShapeSize = 10;
-	private final int minRGB = 30;
-	private final int maxRGB = 190;
-	private final double randRGB = maxRGB - minRGB;
-	private final double opacity = 0.3;
-	private final double minLabelLength = 0;
-	private final double minFont = 4;
-	private final double maxFont = 50;
-	private final double fontDecrement = 1;
-	private final double fontIncrement = 1;
-	private final double promptSize = Math.min(50, 60 * canvasWidth / expectedWidth);
+	private final double LABEL_FONT_SIZE = Math.min(16, 18 * canvasWidth / expectedWidth);
+	private final double INIT_SHAPE_SIZE = 10;
+	private final int MIN_RGB = 30;
+	private final int MAX_RGB = 190;
+	private final double RAND_RGB = MAX_RGB - MIN_RGB;
+	private final double OPACITY = 0.3;
+	private final double MIN_LABEL_LENGTH = 0;
+	private final double MIN_FONT = 4;
+	private final double MAX_FONT = 50;
+	private final double FONT_DECREMENT = 1;
+	private final double FONT_INCREMENT = 1;
+	private final double PROMPT_SIZE = Math.min(50, 60 * canvasWidth / expectedWidth);
 
-	private final String selectedRGB = "rgba(255, 0, 0, 1)";
-	private final String deselectedRGB = "rgba(0, 0, 0, 1)";
-	private final String deselectedAreaRGB = "rgba(0, 0, 0, 0)";
+	private final String SELECTED_RGB = "rgba(255, 0, 0, 1)";
+	private final String DESELECTED_RGB = "rgba(0, 0, 0, 1)";
+	private final String DESELECTED_AREA_RGB = "rgba(0, 0, 0, 0)";
 
 	private ArrayList<Node> areas = new ArrayList<Node>();
 
@@ -124,21 +124,21 @@ public class DrawYardView extends View<DrawYardController> {
 		minusButton = createButton("-", control.getHandleOnMinusButton());
 		plusButton = createButton("+", control.getHandleOnPlusButton());
 		labelSizetxt = new Label("Label Size: " + (int) labelSize);
-		labelSizetxt.setFont(new Font(labelFontSize));
+		labelSizetxt.setFont(new Font(LABEL_FONT_SIZE));
 		importButton = createButton("Import Drawing", control.getHandleOnImportButton());
 		removeImportButton = createButton("Remove Imported Drawing", control.getHandleOnRemoveImportButton());
 		emptyCenter = new Region();
 		HBox.setHgrow(emptyCenter, Priority.ALWAYS);
 		widthTxt = new Label("Width: ");
-		widthTxt.setFont(new Font(labelFontSize));
+		widthTxt.setFont(new Font(LABEL_FONT_SIZE));
 		widthField = createField();
 		widthField.setPromptText("v Left to Right v");
 		heightTxt = new Label("ft.   Height: ");
-		heightTxt.setFont(new Font(labelFontSize));
+		heightTxt.setFont(new Font(LABEL_FONT_SIZE));
 		heightField = createField();
 		heightField.setPromptText("v Top to Bottom v");
 		heightUnit = new Label("ft.");
-		heightUnit.setFont(new Font(labelFontSize));
+		heightUnit.setFont(new Font(LABEL_FONT_SIZE));
 
 		newAreaButton = createButton("New Conditions Area", control.getHandleOnNewAreaButton());
 
@@ -156,14 +156,14 @@ public class DrawYardView extends View<DrawYardController> {
 		helpText = new Label("Use rectangles, ellipses, and labels\n" + "to draw an outline of your yard.\n"
 				+ "Then enter the dimensions of your yard above and\n"
 				+ "press \"Create Areas\" below to go to the next step.");
-		helpText.setFont(new Font(promptSize));
+		helpText.setFont(new Font(PROMPT_SIZE));
 		helpText.setTextAlignment(TextAlignment.CENTER);
 
 		helpTextCond = new Label(
 				"Use the \"New Conditions Area\" button\n" + "to mark different areas of your garden that have\n"
 						+ "different conditions (light, soil moisture, etc).\n"
 						+ "Then press the \"Set Preferences\" button below.");
-		helpTextCond.setFont(new Font(promptSize));
+		helpTextCond.setFont(new Font(PROMPT_SIZE));
 		helpTextCond.setTextAlignment(TextAlignment.CENTER);
 		
 		drawing = new Pane();
@@ -229,19 +229,19 @@ public class DrawYardView extends View<DrawYardController> {
 	}
 
 	public double getMinFont() {
-		return minFont;
+		return MIN_FONT;
 	}
 
 	public double getMaxFont() {
-		return maxFont;
+		return MAX_FONT;
 	}
 
 	public double getFontDecrement() {
-		return fontDecrement;
+		return FONT_DECREMENT;
 	}
 
 	public double getFontIncrement() {
-		return fontIncrement;
+		return FONT_INCREMENT;
 	}
 
 	public ImageView getBackground() {
@@ -293,7 +293,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @return The newly created rectangle
 	 */
 	public Node addRectangle(StageNameEnum mode, double x, double y) {
-		Rectangle rect = new Rectangle(x, y, initShapeSize, initShapeSize);
+		Rectangle rect = new Rectangle(x, y, INIT_SHAPE_SIZE, INIT_SHAPE_SIZE);
 		if (mode == StageNameEnum.DRAW) {
 			rect.setFill(Color.TRANSPARENT);
 			rect.setStroke(Color.BLACK);
@@ -348,7 +348,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @return The newly created ellipse
 	 */
 	public Node addEllipse(double x, double y) {
-		Ellipse ellipse = new Ellipse(x, y, initShapeSize, initShapeSize);
+		Ellipse ellipse = new Ellipse(x, y, INIT_SHAPE_SIZE, INIT_SHAPE_SIZE);
 		ellipse.setFill(Color.TRANSPARENT);
 		ellipse.setStroke(Color.BLACK);
 		ellipse.setOnMousePressed(control.getHandleOnPressShape(StageNameEnum.DRAW));
@@ -390,7 +390,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @return The Node representation of the label
 	 */
 	public Node addLabel() {
-		if (labeltxt.getText().length() > minLabelLength) {
+		if (labeltxt.getText().length() > MIN_LABEL_LENGTH) {
 			Label txt = new Label(labeltxt.getText());
 			labels.getChildren().add(txt);
 			txt.setFont(new Font(labelSize));
@@ -438,7 +438,7 @@ public class DrawYardView extends View<DrawYardController> {
 	 */
 	public void select(Node node) {
 		if (node != null) {
-			node.setStyle("-fx-stroke: " + selectedRGB + ";" + "-fx-text-fill: " + selectedRGB + ";");
+			node.setStyle("-fx-stroke: " + SELECTED_RGB + ";" + "-fx-text-fill: " + SELECTED_RGB + ";");
 		}
 	}
 
@@ -450,9 +450,9 @@ public class DrawYardView extends View<DrawYardController> {
 	public void deselect(Node node) {
 		if (node != null) {
 			if (node.getUserData() != StageNameEnum.CONDITIONS) {
-				node.setStyle("-fx-stroke: " + deselectedRGB + ";" + "-fx-text-fill: " + deselectedRGB + ";");
+				node.setStyle("-fx-stroke: " + DESELECTED_RGB + ";" + "-fx-text-fill: " + DESELECTED_RGB + ";");
 			} else {
-				node.setStyle("-fx-stroke: " + deselectedAreaRGB + ";");
+				node.setStyle("-fx-stroke: " + DESELECTED_AREA_RGB + ";");
 			}
 		}
 	}
@@ -579,8 +579,8 @@ public class DrawYardView extends View<DrawYardController> {
 	 * @return A Color object
 	 */
 	public Color getRandomColor() {
-		return Color.rgb((int) (Math.random() * randRGB) + minRGB, (int) (Math.random() * randRGB) + minRGB,
-				(int) (Math.random() * randRGB) + minRGB, opacity);
+		return Color.rgb((int) (Math.random() * RAND_RGB) + MIN_RGB, (int) (Math.random() * RAND_RGB) + MIN_RGB,
+				(int) (Math.random() * RAND_RGB) + MIN_RGB, OPACITY);
 	}
 
 	/**

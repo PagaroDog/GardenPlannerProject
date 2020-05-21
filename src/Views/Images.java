@@ -20,8 +20,8 @@ import javafx.scene.image.Image;
  */
 public class Images {
 	HashMap<String, ImageWithSourceInfo[]> plantImages;
-	private final int maxPlantPics = 2;
-	private final int numSourceFields = 2;
+	private final int MAX_PLANT_PICS = 2;
+	private final int NUM_SOURCE_FIELDS = 2;
 
 	/**
 	 * The constructor reads the directory containing the images and source info and
@@ -33,10 +33,10 @@ public class Images {
 	public Images(String directory) {
 		plantImages = new HashMap<String, ImageWithSourceInfo[]>();
 		ArrayList<ImageWithSourceInfo> arrList = new ArrayList<ImageWithSourceInfo>();
-		String[] source = new String[numSourceFields];
+		String[] source = new String[NUM_SOURCE_FIELDS];
 		File[] files = new File(directory).listFiles();
 
-		ImageWithSourceInfo[] imgArr = new ImageWithSourceInfo[numSourceFields];
+		ImageWithSourceInfo[] imgArr = new ImageWithSourceInfo[NUM_SOURCE_FIELDS];
 
 		for (File file : files) {
 
@@ -48,7 +48,7 @@ public class Images {
 				FilenameFilter pic = (File dir, String name) -> !(name.endsWith(".txt"));
 
 				FilenameFilter txt = (File dir, String name) -> name.endsWith(".txt");
-				for (int i = 0; i < file.listFiles().length && i < maxPlantPics; i++) {
+				for (int i = 0; i < file.listFiles().length && i < MAX_PLANT_PICS; i++) {
 					try {
 
 						File currFolder = new File(directory + plant + "/" + i);
@@ -58,7 +58,7 @@ public class Images {
 						Image img = new Image(new FileInputStream(curr));
 						BufferedReader br = new BufferedReader(new FileReader(currFolder.listFiles(txt)[0]));
 						br.readLine(); // Ignore empty line
-						for (int j = 0; j < numSourceFields; j++) {
+						for (int j = 0; j < NUM_SOURCE_FIELDS; j++) {
 							source[j] = br.readLine();
 						}
 						br.close();

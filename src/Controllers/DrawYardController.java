@@ -25,12 +25,12 @@ import javafx.scene.shape.Rectangle;
  */
 public class DrawYardController extends Controller<DrawYardView> {
 
-	private final double originalTranslate = 0;
-	private final double originalScale = 1;
-	private final int xInd = 0;
-	private final int yInd = 1;
-	private final int widthInd = 2;
-	private final int heightInd = 3;
+	private final double ORIGINAL_TRANSLATE = 0;
+	private final double ORIGINAL_SCALE = 1;
+	private final int X_IND = 0;
+	private final int Y_IND = 1;
+	private final int WIDTH_IND = 2;
+	private final int HEIGHT_IND = 3;
 	private boolean dismissed = false;
 
 	public DrawYardController(Model model, DrawYardView dyv, Main main) {
@@ -354,14 +354,14 @@ public class DrawYardController extends Controller<DrawYardView> {
 			case RECTANGLE:
 				double[] newCoords = model.updateRectCoordinates(model.getDrawPressX(), model.getDrawPressY(),
 						event.getX(), event.getY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
-				view.updateRect((Rectangle) model.getCurrDrawObj(), newCoords[xInd], newCoords[yInd],
-						newCoords[widthInd], newCoords[heightInd]);
+				view.updateRect((Rectangle) model.getCurrDrawObj(), newCoords[X_IND], newCoords[Y_IND],
+						newCoords[WIDTH_IND], newCoords[HEIGHT_IND]);
 				break;
 			case ELLIPSE:
 				Ellipse ellipse = (Ellipse) model.getCurrDrawObj();
 				double[] newRadii = model.updateEllipseCoordinates(event.getX(), event.getY(), ellipse.getCenterX(),
 						ellipse.getCenterY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
-				view.updateEllipse(ellipse, newRadii[xInd], newRadii[yInd]);
+				view.updateEllipse(ellipse, newRadii[X_IND], newRadii[Y_IND]);
 			}
 		}
 	}
@@ -484,7 +484,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 			double[] newCoords = model.moveRectCoordinates(event.getX(), event.getY(), rect.getWidth(),
 					rect.getHeight(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
 			if (rect.getUserData() == model.getStageName())
-				view.moveRectangle(rect, newCoords[xInd], newCoords[yInd]);
+				view.moveRectangle(rect, newCoords[X_IND], newCoords[Y_IND]);
 		}
 	}
 
@@ -499,7 +499,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 				Ellipse ellipse = (Ellipse) event.getSource();
 				double[] newCenters = model.moveEllipseCoordinates(event.getX(), event.getY(), ellipse.getRadiusX(),
 						ellipse.getRadiusY(), view.getDrawing().getWidth(), view.getDrawing().getHeight());
-				view.moveEllipse(ellipse, newCenters[xInd], newCenters[yInd]);
+				view.moveEllipse(ellipse, newCenters[X_IND], newCenters[Y_IND]);
 			}
 		}
 	}
@@ -516,7 +516,7 @@ public class DrawYardController extends Controller<DrawYardView> {
 					event.getSceneY() - view.getToolbarHeight(), label.getWidth(), label.getHeight(),
 					view.getDrawing().getWidth(), view.getDrawing().getHeight());
 			if (model.getStageName() == StageNameEnum.DRAW) {
-				view.moveLabel(label, newCoords[xInd], newCoords[yInd]);
+				view.moveLabel(label, newCoords[X_IND], newCoords[Y_IND]);
 			}
 		}
 	}
@@ -533,8 +533,8 @@ public class DrawYardController extends Controller<DrawYardView> {
 		view.getRoot().setCenter(drawing);
 		drawing.setPrefWidth(view.getRoot().getWidth());
 		for (Node child : drawing.getChildren()) {
-			child.setTranslateX(originalTranslate);
-			child.setScaleX(originalScale);
+			child.setTranslateX(ORIGINAL_TRANSLATE);
+			child.setScaleX(ORIGINAL_SCALE);
 		}
 	}
 

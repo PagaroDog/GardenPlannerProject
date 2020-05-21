@@ -54,14 +54,14 @@ import javafx.scene.shape.Rectangle;
  * @author Ian McCabe
  */
 public class GardenController extends Controller<GardenView> implements Serializable {
-	private final double originalTranslate = 0;
-	private final double originalScale = 1;
-	private final double newLayoutY = 0;
+	private final double ORIGINAL_TRANSLATE = 0;
+	private final double ORIGINAL_SCALE = 1;
+	private final double NEW_LAYOUT_Y = 0;
 	private String plantName = "";
-	private int copyOffset = 10;
-	private int minSpreadInd = 0;
-	private int maxSpreadInd = 1;
-	private int firstShapeOffset = 1;
+	private final int COPY_OFFSET = 10;
+	private final int MIN_SPREAD_IND = 0;
+	private final int MAX_SPREAD_IND = 1;
+	private final int FIRST_SHAPE_OFFSET = 1;
 	private boolean dragHappened = false;
 
 	private transient GardenAction GA = new GardenAction();
@@ -304,8 +304,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 */
 	public void setDrawing(Pane drawing) {
 		for (Node child : drawing.getChildren()) {
-			child.setTranslateX(originalTranslate);
-			child.setScaleX(originalScale);
+			child.setTranslateX(ORIGINAL_TRANSLATE);
+			child.setScaleX(ORIGINAL_SCALE);
 		}
 		double oldWidth = main.getDyControl().getViewWidth();
 
@@ -320,7 +320,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		}
 		view.setDrawing(drawing);
 		view.getGarden().getChildren().add(drawing);
-		drawing.setLayoutY(newLayoutY);
+		drawing.setLayoutY(NEW_LAYOUT_Y);
 		drawing.toBack();
 	}
 
@@ -515,7 +515,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		Circle oldCircle = (Circle) model.getCurrDrawObj();
 		if (oldCircle != null) {
 			Circle newCircle = new Circle();
-			view.addCircleToGarden(newCircle, oldCircle.getCenterX() + copyOffset, oldCircle.getCenterY() + copyOffset,
+			view.addCircleToGarden(newCircle, oldCircle.getCenterX() + COPY_OFFSET, oldCircle.getCenterY() + COPY_OFFSET,
 					oldCircle.getRadius(), (String) oldCircle.getUserData(), (Color) oldCircle.getStroke());
 			GA.addAction(
 					new GardenAction(newCircle, newCircle.getCenterX(), newCircle.getCenterY(), newCircle.getRadius(),
@@ -728,15 +728,15 @@ public class GardenController extends Controller<GardenView> implements Serializ
 		model.getEllipses().clear();
 		model.getGardenObjs().clear();
 		ObservableList<Node> rectangles = main.getDyControl().getView().getRectangles().getChildren();
-		for (int i = firstShapeOffset; i < rectangles.size(); i++) {
+		for (int i = FIRST_SHAPE_OFFSET; i < rectangles.size(); i++) {
 			model.getRectangles().add(new RectDrawingObj((Rectangle) rectangles.get(i)));
 		}
 		ObservableList<Node> ellipses = main.getDyControl().getView().getEllipses().getChildren();
-		for (int i = firstShapeOffset; i < ellipses.size(); i++) {
+		for (int i = FIRST_SHAPE_OFFSET; i < ellipses.size(); i++) {
 			model.getEllipses().add(new EllipseDrawingObj((Ellipse) ellipses.get(i)));
 		}
 		ObservableList<Node> labels = main.getDyControl().getView().getLabels().getChildren();
-		for (int i = firstShapeOffset; i < labels.size(); i++) {
+		for (int i = FIRST_SHAPE_OFFSET; i < labels.size(); i++) {
 			model.getLabels().add(new LabelDrawingObj((Label) labels.get(i)));
 		}
 		ObservableList<Node> back = main.getDyControl().getView().getBack().getChildren();
@@ -751,7 +751,7 @@ public class GardenController extends Controller<GardenView> implements Serializ
 			}
 		}
 		ObservableList<Node> plants = view.getGarden().getChildren();
-		for (int i = firstShapeOffset; i < plants.size(); i++) {
+		for (int i = FIRST_SHAPE_OFFSET; i < plants.size(); i++) {
 			model.getGardenObjs().add(new GardenObj((Circle) plants.get(i)));
 		}
 		model.setWidthOnSave(View.getCanvasWidth());
@@ -847,8 +847,8 @@ public class GardenController extends Controller<GardenView> implements Serializ
 	 * @return rad
 	 */
 	public double getRadiusFromYear(String name) {
-		double minSize = getSize(name, minSpreadInd);
-		double maxSize = getSize(name, maxSpreadInd);
+		double minSize = getSize(name, MIN_SPREAD_IND);
+		double maxSize = getSize(name, MAX_SPREAD_IND);
 		double minRad = getRad(minSize, model.getPropertyWidthInches(), model.getPropertyHeightInches());
 		double maxRad = getRad(maxSize, model.getPropertyWidthInches(), model.getPropertyHeightInches());
 		double rad = 0;

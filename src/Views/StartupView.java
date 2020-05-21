@@ -34,18 +34,18 @@ public class StartupView extends View<StartupController> {
 	private TilePane buttons;
 	private FileChooser fileChooser;
 	private ScrollPane credits;
-	private int numButtons = 3;
-	private double titleFontSize = 125;
-	private double buttonFont = 35;
+	private Images imgs;
+	private final int NUM_BUTTONS = 3;
+	private final double TITLE_FONT_SIZE = 125;
+	private final double BUTTON_FONT = 35;
 	private double titleXPos = canvasWidth / 2;
 	private double titleYPos = canvasHeight / 3;
 	private double buttonXPos = canvasWidth / 2;
 	private double buttonYPos = canvasHeight * 2 / 3;
-	private double buttonGap = 50;
-	private double creditsPadding = 5;
-	private Images imgs;
-	private double creditWidth = 300;
-	private double creditHeight = 400;
+	private final double BUTTON_GAP = 50;
+	private final double CREDITS_PADDING = 5;
+	private final double CREDITS_WIDTH = 300;
+	private final double CREDITS_HEIGHT = 400;
 
 	public StartupView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -65,7 +65,7 @@ public class StartupView extends View<StartupController> {
 		stage.sizeToScene();
 
 		title = new Label("MyNativeGarden");
-		title.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Dandelion.ttf"), titleFontSize));
+		title.setFont(Font.loadFont(getClass().getResourceAsStream("/fonts/Dandelion.ttf"), TITLE_FONT_SIZE));
 		iv = new ImageView(new Image(getClass().getResourceAsStream("/imgs/StartupBackground.jpg"), canvasWidth,
 				canvasHeight, false, false));
 		buttons = new TilePane();
@@ -85,14 +85,14 @@ public class StartupView extends View<StartupController> {
 		Label creditText = new Label(control.generateCredits());
 
 		credits = new ScrollPane(creditText);
-		credits.setMaxWidth(creditWidth);
-		credits.setMaxHeight(creditHeight);
+		credits.setMaxWidth(CREDITS_WIDTH);
+		credits.setMaxHeight(CREDITS_HEIGHT);
 
 		root = new Pane();
 		root.getChildren().addAll(iv, title, buttons, creditsButton, credits);
 
 		for (Node button : buttons.getChildren()) {
-			((Button) button).setFont(new Font(buttonFont));
+			((Button) button).setFont(new Font(BUTTON_FONT));
 		}
 
 		scene = new Scene(root, canvasWidth, canvasHeight);
@@ -104,25 +104,25 @@ public class StartupView extends View<StartupController> {
 	 * been set by the initial showing of this screen.
 	 */
 	public void start() {
-		buttons.setHgap(buttonGap);
+		buttons.setHgap(BUTTON_GAP);
 		double buttonWidth = tutorialButton.getWidth();
 		newButton.setPrefWidth(buttonWidth);
 		loadButton.setPrefWidth(buttonWidth);
-		double tileWidth = buttonWidth * numButtons + buttonGap * (numButtons - 1);
+		double tileWidth = buttonWidth * NUM_BUTTONS + BUTTON_GAP * (NUM_BUTTONS - 1);
 		buttons.setLayoutX(buttonXPos - tileWidth / 2);
 		buttons.setLayoutY(buttonYPos);
 
 		title.setLayoutX(titleXPos - title.getWidth() / 2);
 		title.setLayoutY(titleYPos);
 
-		creditsButton.setLayoutX(canvasWidth - creditsButton.getWidth() - creditsPadding);
-		creditsButton.setLayoutY(canvasHeight - creditsButton.getHeight() - creditsPadding);
+		creditsButton.setLayoutX(canvasWidth - creditsButton.getWidth() - CREDITS_PADDING);
+		creditsButton.setLayoutY(canvasHeight - creditsButton.getHeight() - CREDITS_PADDING);
 
 		creditsButton.setPrefWidth(creditsButton.getWidth());
 		creditsButton.setPrefHeight(creditsButton.getHeight());
 
-		credits.setLayoutX(canvasWidth - credits.getWidth() - creditsPadding);
-		credits.setLayoutY(creditsButton.getLayoutY() - credits.getHeight() - creditsPadding);
+		credits.setLayoutX(canvasWidth - credits.getWidth() - CREDITS_PADDING);
+		credits.setLayoutY(creditsButton.getLayoutY() - credits.getHeight() - CREDITS_PADDING);
 
 		root.getChildren().remove(credits);
 	}

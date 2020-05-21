@@ -43,17 +43,17 @@ public class PreferencesView extends View<PreferencesController> {
 	private Rectangle currArea;
 	private Label zoneButtonsLabel;
 
-	private double zoneButtonsFontSize = 16;
+	private final double ZONE_BUTTONS_FONT_SIZE = 16;
 
-	private final double vBoxSpacing = 15;
-	private final double vBoxVPadding = 15;
-	private final double vBoxHPadding = 12;
-	private final double vBoxRed = 158;
-	private final double vBoxGreen = 255;
-	private final double vBoxBlue = 174;
-	private final double vBoxOpacity = 12;
+	private final double VBOX_SPACING = 15;
+	private final double VBOX_V_PADDING = 15;
+	private final double VBOX_H_PADDING = 12;
+	private final double VBOX_RED = 158;
+	private final double VBOX_GREEN = 255;
+	private final double VBOX_BLUE = 174;
+	private final double VBOX_OPACITY = 12;
 
-	private final double colorInsets = 10;
+	private final double COLOR_INSETS = 10;
 
 	public PreferencesView(Stage stage) {
 		this.stage = stage;
@@ -78,7 +78,7 @@ public class PreferencesView extends View<PreferencesController> {
 
 		zoneButtons = createToolbar();
 		zoneButtonsLabel = new Label("Garden Area: ");
-		zoneButtonsLabel.setFont(new Font(zoneButtonsFontSize));
+		zoneButtonsLabel.setFont(new Font(ZONE_BUTTONS_FONT_SIZE));
 		zoneButtons.getChildren().add(zoneButtonsLabel);
 
 		border.setTop(zoneButtons);
@@ -94,10 +94,10 @@ public class PreferencesView extends View<PreferencesController> {
 	 */
 	public VBox addVBox() {
 		vbox = new VBox();
-		vbox.setPadding(new Insets(vBoxVPadding, vBoxHPadding, vBoxVPadding, vBoxHPadding));
-		vbox.setSpacing(vBoxSpacing);
-		vbox.setStyle(String.format("-fx-background-color: rgba(%f, %f, %f, %f);", vBoxRed, vBoxGreen, vBoxBlue,
-				vBoxOpacity));
+		vbox.setPadding(new Insets(VBOX_V_PADDING, VBOX_H_PADDING, VBOX_V_PADDING, VBOX_H_PADDING));
+		vbox.setSpacing(VBOX_SPACING);
+		vbox.setStyle(String.format("-fx-background-color: rgba(%f, %f, %f, %f);", VBOX_RED, VBOX_GREEN, VBOX_BLUE,
+				VBOX_OPACITY));
 
 		name = new TextField();
 		name.setPromptText("Name this Area");
@@ -122,7 +122,7 @@ public class PreferencesView extends View<PreferencesController> {
 		String[] colors = { "Red", "Blue", "Purple", "Pink", "White", "Yellow", "Brown", "Green", "Orange" };
 
 		color = new TilePane();
-		color.setPadding(new Insets(colorInsets, colorInsets, colorInsets, colorInsets));
+		color.setPadding(new Insets(COLOR_INSETS, COLOR_INSETS, COLOR_INSETS, COLOR_INSETS));
 		Label labcolor = new Label("What color of the bloom?");
 		for (String c : colors) {
 			color.getChildren().add(new RadioButton(c));

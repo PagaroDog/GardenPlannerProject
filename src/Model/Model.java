@@ -69,27 +69,27 @@ public class Model implements Serializable {
 	private transient GardenController gardenControl;
 	private transient PreferencesController prefControl;
 
-	private char nameInd = 0;
-	private char commonNamesInd = 1;
-	private char durationInd = 2;
-	private char typeInd = 3;
-	private char heightInd = 5;
-	private char colorInd = 6;
-	private char bloomtimeInd = 7;
-	private char waterInd = 8;
-	private char lightInd = 9;
-	private char spreadInd = 10;
+	private final char NAME_IND = 0;
+	private final char COMMON_NAMES_IND = 1;
+	private final char DURATION_IND = 2;
+	private final char TYPE_IND = 3;
+	private final char HEIGHT_IND = 5;
+	private final char COLOR_IND = 6;
+	private final char BLOOM_TIME_IND = 7;
+	private final char WATER_IND = 8;
+	private final char LIGHT_IND = 9;
+	private final char SPREAD_IND = 10;
 
-	private char minHeightInd = 0;
-	private char maxHeightInd = 1;
+	private final char MIN_HEIGHT_IND = 0;
+	private final char MAX_HEIGHT_IND = 1;
 
-	private char minSpreadInd = 0;
-	private char maxSpreadInd = 1;
-	private char failedSpreadNum = 0;
+	private final char MIN_SPREAD_IND = 0;
+	private final char MAX_SPREAD_IND = 1;
+	private final char FAILED_SPREAD_NUM = 0;
 
-	private int inchesPerFoot = 12;
-	private int heightArrLen = 2;
-	private int spreadArrLen = 2;
+	private final int INCHES_PER_FOOT = 12;
+	private final int HEIGHT_ARR_LEN = 2;
+	private final int SPREAD_ARR_LEN = 2;
 
 	private int numTrees = 0;
 	private int numShrubs = 0;
@@ -108,8 +108,8 @@ public class Model implements Serializable {
 	private HashSet<String> allNames = new HashSet<String>();
 	private HashSet<String> uniquePlant = new HashSet<String>();
 
-	private final double rectMinX = 0;
-	private final double rectMinY = 0;
+	private final double RECT_MIN_X = 0;
+	private final double RECT_MIN_Y = 0;
 
 	private ArrayList<GardenObj> gardenObjs = new ArrayList<GardenObj>();
 	private ArrayList<RectDrawingObj> rectangles = new ArrayList<RectDrawingObj>();
@@ -248,7 +248,7 @@ public class Model implements Serializable {
 	}
 
 	public int getInchesPerFoot() {
-		return inchesPerFoot;
+		return INCHES_PER_FOOT;
 	}
 
 	public int getNumTrees() {
@@ -460,8 +460,8 @@ public class Model implements Serializable {
 		String duration;
 		String typeStr;
 		PlantTypeEnum type;
-		String[] heightStr = new String[heightArrLen];
-		int[] height = new int[heightArrLen];
+		String[] heightStr = new String[HEIGHT_ARR_LEN];
+		int[] height = new int[HEIGHT_ARR_LEN];
 		String[] color;
 		String[] bloomtimeStr;
 		LinkedHashSet<SeasonEnum> bloomSet = new LinkedHashSet<SeasonEnum>();
@@ -472,8 +472,8 @@ public class Model implements Serializable {
 		String[] lightStr;
 		LinkedHashSet<SunEnum> lightSet = new LinkedHashSet<SunEnum>();
 		SunEnum[] light;
-		String[] spreadStr = new String[spreadArrLen];
-		int[] spread = new int[spreadArrLen];
+		String[] spreadStr = new String[SPREAD_ARR_LEN];
+		int[] spread = new int[SPREAD_ARR_LEN];
 
 		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 			line = br.readLine(); // ignore header
@@ -481,13 +481,13 @@ public class Model implements Serializable {
 
 				parsedLine = parseLine(line);
 
-				name = parsedLine.get(nameInd);
-				commonNames = parsedLine.get(commonNamesInd).split(",");
+				name = parsedLine.get(NAME_IND);
+				commonNames = parsedLine.get(COMMON_NAMES_IND).split(",");
 				for (int i = 0; i < commonNames.length; i++) {
 					commonNames[i] = commonNames[i].trim();
 				}
-				duration = parsedLine.get(durationInd);
-				typeStr = parsedLine.get(typeInd).trim();
+				duration = parsedLine.get(DURATION_IND);
+				typeStr = parsedLine.get(TYPE_IND).trim();
 				if (typeStr.equals("Herb")) {
 					type = PlantTypeEnum.HERB;
 				} else if (typeStr.equals("Shrub")) {
@@ -497,21 +497,21 @@ public class Model implements Serializable {
 				} else {
 					type = PlantTypeEnum.VINE;
 				}
-				heightStr = parsedLine.get(heightInd).replaceAll(" ", "").split("-");
+				heightStr = parsedLine.get(HEIGHT_IND).replaceAll(" ", "").split("-");
 				if (heightStr.length == 1) {
-					height[minHeightInd] = height[maxHeightInd] = Integer
-							.valueOf(heightStr[minHeightInd].replaceAll("[^0-9]", ""));
+					height[MIN_HEIGHT_IND] = height[MAX_HEIGHT_IND] = Integer
+							.valueOf(heightStr[MIN_HEIGHT_IND].replaceAll("[^0-9]", ""));
 				} else {
-					height[minHeightInd] = Integer.valueOf(heightStr[minHeightInd]);
-					height[maxHeightInd] = Integer.valueOf(heightStr[maxHeightInd].replaceAll("[^0-9]", ""));
+					height[MIN_HEIGHT_IND] = Integer.valueOf(heightStr[MIN_HEIGHT_IND]);
+					height[MAX_HEIGHT_IND] = Integer.valueOf(heightStr[MAX_HEIGHT_IND].replaceAll("[^0-9]", ""));
 				}
-				if (parsedLine.get(heightInd).contains("ft")) {
-					height[minHeightInd] *= inchesPerFoot;
-					height[maxHeightInd] *= inchesPerFoot;
+				if (parsedLine.get(HEIGHT_IND).contains("ft")) {
+					height[MIN_HEIGHT_IND] *= INCHES_PER_FOOT;
+					height[MAX_HEIGHT_IND] *= INCHES_PER_FOOT;
 				}
-				color = parsedLine.get(colorInd).replaceAll(" ", "").split(",");
+				color = parsedLine.get(COLOR_IND).replaceAll(" ", "").split(",");
 
-				bloomtimeStr = parsedLine.get(bloomtimeInd).replaceAll(" ", "")
+				bloomtimeStr = parsedLine.get(BLOOM_TIME_IND).replaceAll(" ", "")
 						.replaceAll("Dec|Jan|Feb", String.format("%d", SeasonEnum.WINTER.ordinal()))
 						.replaceAll("Mar|Apr|May", String.format("%d", SeasonEnum.SPRING.ordinal()))
 						.replaceAll("Jun|Jul|Aug|Sep", String.format("%d", SeasonEnum.SUMMER.ordinal()))
@@ -524,7 +524,7 @@ public class Model implements Serializable {
 
 				bloomtime = bloomSet.toArray(new SeasonEnum[0]);
 
-				waterStr = parsedLine.get(waterInd).replaceAll(" ", "")
+				waterStr = parsedLine.get(WATER_IND).replaceAll(" ", "")
 						.replace("WetMesic", String.format("%d", WaterEnum.WETMES.ordinal()))
 						.replace("DryMesic", String.format("%d", WaterEnum.DRYMES.ordinal()))
 						.replace("Wet", String.format("%d", WaterEnum.WET.ordinal()))
@@ -534,7 +534,7 @@ public class Model implements Serializable {
 					waterSet.add(WaterEnum.values()[Integer.valueOf(num)]);
 				}
 				waterLevel = waterSet.toArray(new WaterEnum[0]);
-				lightStr = parsedLine.get(lightInd).replaceAll(" ", "")
+				lightStr = parsedLine.get(LIGHT_IND).replaceAll(" ", "")
 						.replace("FullSuntoPartialShade", String.format("%d", SunEnum.FULL_PARTIAL.ordinal()))
 						.replace("PartialShadetoFullShade", String.format("%d", SunEnum.PARTIAL_NONE.ordinal()))
 						.replace("FullSun", String.format("%d", SunEnum.FULL.ordinal()))
@@ -544,21 +544,21 @@ public class Model implements Serializable {
 					lightSet.add(SunEnum.values()[Integer.valueOf(num)]);
 				}
 				light = lightSet.toArray(new SunEnum[0]);
-				if (parsedLine.get(spreadInd).equals("fail")) {
-					spread[minSpreadInd] = failedSpreadNum;
-					spread[maxSpreadInd] = failedSpreadNum;
+				if (parsedLine.get(SPREAD_IND).equals("fail")) {
+					spread[MIN_SPREAD_IND] = FAILED_SPREAD_NUM;
+					spread[MAX_SPREAD_IND] = FAILED_SPREAD_NUM;
 				} else {
-					spreadStr = parsedLine.get(spreadInd).replaceAll(" ", "").split("-");
+					spreadStr = parsedLine.get(SPREAD_IND).replaceAll(" ", "").split("-");
 					if (spreadStr.length == 1) {
-						spread[minSpreadInd] = spread[maxSpreadInd] = Integer
-								.valueOf(spreadStr[minSpreadInd].replaceAll("[^0-9]", ""));
+						spread[MIN_SPREAD_IND] = spread[MAX_SPREAD_IND] = Integer
+								.valueOf(spreadStr[MIN_SPREAD_IND].replaceAll("[^0-9]", ""));
 					} else {
-						spread[minSpreadInd] = Integer.valueOf(spreadStr[minSpreadInd]);
-						spread[maxSpreadInd] = Integer.valueOf(spreadStr[maxSpreadInd].replaceAll("[^0-9]", ""));
+						spread[MIN_SPREAD_IND] = Integer.valueOf(spreadStr[MIN_SPREAD_IND]);
+						spread[MAX_SPREAD_IND] = Integer.valueOf(spreadStr[MAX_SPREAD_IND].replaceAll("[^0-9]", ""));
 					}
-					if (parsedLine.get(spreadInd).contains("feet")) {
-						spread[minSpreadInd] *= inchesPerFoot;
-						spread[maxSpreadInd] *= inchesPerFoot;
+					if (parsedLine.get(SPREAD_IND).contains("feet")) {
+						spread[MIN_SPREAD_IND] *= INCHES_PER_FOOT;
+						spread[MAX_SPREAD_IND] *= INCHES_PER_FOOT;
 					}
 				}
 
@@ -854,8 +854,8 @@ public class Model implements Serializable {
 	 */
 	public double[] updateRectCoordinates(double x0, double y0, double x1, double y1, double drawingWidth,
 			double drawingHeight) {
-		double topLeftX = Math.max(rectMinX, Math.min(x0, x1));
-		double topLeftY = Math.max(rectMinY, Math.min(y0, y1));
+		double topLeftX = Math.max(RECT_MIN_X, Math.min(x0, x1));
+		double topLeftY = Math.max(RECT_MIN_Y, Math.min(y0, y1));
 		double width = Math.min(drawingWidth - topLeftX, Math.max(x0, x1) - topLeftX);
 		double height = Math.min(drawingHeight - topLeftY, Math.max(y0, y1) - topLeftY);
 		double[] coords = { topLeftX, topLeftY, width, height };
@@ -880,8 +880,8 @@ public class Model implements Serializable {
 			double drawingHeight) {
 		double newX = shapeX + (x - drawPressX);
 		double newY = shapeY + (y - drawPressY);
-		newX = Math.max(rectMinX, Math.min(drawingWidth - rectWidth, newX));
-		newY = Math.max(rectMinY, Math.min(drawingHeight - rectHeight, newY));
+		newX = Math.max(RECT_MIN_X, Math.min(drawingWidth - rectWidth, newX));
+		newY = Math.max(RECT_MIN_Y, Math.min(drawingHeight - rectHeight, newY));
 		double[] coords = { newX, newY };
 		return coords;
 	}

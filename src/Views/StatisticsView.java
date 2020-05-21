@@ -23,8 +23,8 @@ import javafx.stage.Stage;
  * @author Brandon Wu
  */
 public class StatisticsView extends View<StatisticsController> {
-	private double hboxSpacing = 70;
-	private double vboxSpacing = 50;
+	private final double HBOX_SPACING = 70;
+	private final double VBOX_SPACING = 50;
 	private double defaultFontSize;
 	private double smallFontSize;
 	private double evenSmallerFontSize;
@@ -48,40 +48,40 @@ public class StatisticsView extends View<StatisticsController> {
 
 	private boolean smallScreen = false;
 
-	private final double smallHeight = 700;
-	private final double smallWidth = 1200;
-	private final double smallDefualtFont = 15;
-	private final double standardDefaultFont = 20;
+	private final double SMALL_HEIGHT = 700;
+	private final double SMALL_WIDTH = 1200;
+	private final double SMALL_DEFAULT_FONT = 15;
+	private final double STANDARD_DEFAULT_FONT = 20;
 
-	private final double smallFontDifference = 5;
-	private final double evenSmallerFontDifference = 3;
-	private final double smallestFontDifference = 3;
+	private final double SMALL_FONT_DIFFERENCE = 5;
+	private final double SMALLER_FONT_DIFFERENCE = 3;
+	private final double SMALLEST_FONT_DIFFERENCE = 3;
 
-	private final double vBoxRed = 158;
-	private final double vBoxGreen = 255;
-	private final double vBoxBlue = 174;
-	private final double vBoxOpacity = 1;
+	private final double VBOX_RED = 158;
+	private final double VBOX_GREEN = 255;
+	private final double VBOX_BLUE = 174;
+	private final double VBOX_OPACITY = 1;
 
-	private final double smallDefaultMax = 20;
-	private final double smallSmallMax = 50;
-	private final double normDefaultMax = 30;
-	private final double normSmallMax = 60;
-	private final double normSmallerMax = 100;
+	private final double SMALL_DEFAULT_MAX = 20;
+	private final double SMALL_SMALL_MAX = 50;
+	private final double NORM_DEFAULT_MAX = 30;
+	private final double NORM_SMALL_MAX = 60;
+	private final double NORM_SMALLER_MAX = 100;
 
-	private final int noPlants = 0;
-	private final int fewPlants = 3;
+	private final int ZERO = 0;
+	private final int FEW_PLANTS = 3;
 
 	public StatisticsView(Stage stage) {
 		this.stage = stage;
-		if (canvasHeight < smallHeight || canvasWidth < smallWidth) {
-			defaultFontSize = smallDefualtFont;
+		if (canvasHeight < SMALL_HEIGHT || canvasWidth < SMALL_WIDTH) {
+			defaultFontSize = SMALL_DEFAULT_FONT;
 			smallScreen = true;
 		} else {
-			defaultFontSize = standardDefaultFont;
+			defaultFontSize = STANDARD_DEFAULT_FONT;
 		}
-		smallFontSize = defaultFontSize - smallFontDifference;
-		evenSmallerFontSize = smallFontSize - evenSmallerFontDifference;
-		smallestFontSize = evenSmallerFontSize - smallestFontDifference;
+		smallFontSize = defaultFontSize - SMALL_FONT_DIFFERENCE;
+		evenSmallerFontSize = smallFontSize - SMALLER_FONT_DIFFERENCE;
+		smallestFontSize = evenSmallerFontSize - SMALLEST_FONT_DIFFERENCE;
 	}
 
 	/**
@@ -103,8 +103,8 @@ public class StatisticsView extends View<StatisticsController> {
 		HBox plants = new HBox(totPlants, trees, flowers, shrubs, vines);
 
 		HBox uPlants = new HBox(uTotPlants, uTrees, uFlowers, uShrubs, uVines);
-		plants.setSpacing(hboxSpacing);
-		uPlants.setSpacing(hboxSpacing);
+		plants.setSpacing(HBOX_SPACING);
+		uPlants.setSpacing(HBOX_SPACING);
 
 		for (int i = 0; i < plants.getChildren().size(); i++) {
 			((Label) plants.getChildren().get(i)).setFont(new Font(defaultFontSize));
@@ -120,10 +120,10 @@ public class StatisticsView extends View<StatisticsController> {
 			((Label) vBox.getChildren().get(i)).setWrapText(true);
 		}
 
-		vBox.setPadding(new Insets(vboxSpacing, vboxSpacing, vboxSpacing, vboxSpacing));
-		vBox.setSpacing(vboxSpacing);
-		vBox.setStyle(String.format("-fx-background-color: rgba( %f, %f, %f, %f);", vBoxRed, vBoxGreen, vBoxBlue,
-				vBoxOpacity));
+		vBox.setPadding(new Insets(VBOX_SPACING, VBOX_SPACING, VBOX_SPACING, VBOX_SPACING));
+		vBox.setSpacing(VBOX_SPACING);
+		vBox.setStyle(String.format("-fx-background-color: rgba( %f, %f, %f, %f);", VBOX_RED, VBOX_GREEN, VBOX_BLUE,
+				VBOX_OPACITY));
 
 		border.setCenter(scroll);
 
@@ -175,28 +175,28 @@ public class StatisticsView extends View<StatisticsController> {
 
 		plantList.setText("List of Plants in your Garden: " + allNames.toString().replace("[", "").replace("]", ""));
 
-		if (uTotal == noPlants) {
+		if (uTotal == ZERO) {
 			tips.setText("Add some plants! Bring your yard to life!");
-		} else if (uTotal < fewPlants) {
+		} else if (uTotal < FEW_PLANTS) {
 			tips.setText("We all have our favorite plants, but a greater variety brings more life!");
 		} else {
 			tips.setText("Nice work! You and nature will be pleased!");
 		}
 
 		if (smallScreen) {
-			if (uTotal < smallDefaultMax) {
+			if (uTotal < SMALL_DEFAULT_MAX) {
 				plantList.setFont(new Font(defaultFontSize));
-			} else if (uTotal < smallSmallMax) {
+			} else if (uTotal < SMALL_SMALL_MAX) {
 				plantList.setFont(new Font(smallFontSize));
 			} else {
 				plantList.setFont(new Font(evenSmallerFontSize));
 			}
 		} else {
-			if (uTotal < normDefaultMax) {
+			if (uTotal < NORM_DEFAULT_MAX) {
 				plantList.setFont(new Font(defaultFontSize));
-			} else if (uTotal < normSmallMax) {
+			} else if (uTotal < NORM_SMALL_MAX) {
 				plantList.setFont(new Font(smallFontSize));
-			} else if (uTotal < normSmallerMax) {
+			} else if (uTotal < NORM_SMALLER_MAX) {
 				plantList.setFont(new Font(evenSmallerFontSize));
 			} else {
 				plantList.setFont(new Font(smallestFontSize));

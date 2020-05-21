@@ -26,34 +26,34 @@ import javafx.stage.Stage;
  */
 public class SuggestionsView extends View<SuggestionsController> {
 	private GridPane stats;
-	private int thumbnailWidth = 100;
-	private int thumbnailHeight = 100;
-	private final double spaceBetweenLabels = Math.min(17, 17 * canvasHeight / expectedHeight);
-	private int stackPanePadding = 10;
-	private int rows = canvasHeight / (thumbnailHeight * 2);
-	private int cols = (int) (canvasWidth / (thumbnailWidth * 1.75));
+	private final int THUMBNAIL_WIDTH = 100;
+	private final int THUMBANIL_HEIGHT = 100;
+	private final double SPACE_BETWEEN_LABELS = Math.min(17, 17 * canvasHeight / expectedHeight);
+	private final int STACK_PANE_PADDING = 10;
+	private int rows = canvasHeight / (THUMBANIL_HEIGHT * 2);
+	private int cols = (int) (canvasWidth / (THUMBNAIL_WIDTH * 1.75));
 	private ImageView plantCopy;
 	BorderPane border;
 	ArrayList<Pane> imgs;
 	Images images;
-	private String deselectedBG = "-fx-background-color: transparent;";
-	private String selectedBG = "-fx-background-color: BLACK;";
-	private int firstImgInd = 0;
+	private final String DESELECTED_BG = "-fx-background-color: transparent;";
+	private final String SELECTED_BG = "-fx-background-color: BLACK;";
+	private final int FIRST_IMG_IND = 0;
 
-	private int gridRed = 255;
-	private int gridGreen = 130;
-	private int gridBlue = 203;
-	private double gridOpacity = 0.5;
+	private final int GRID_RED = 255;
+	private final int GRID_GREEN = 130;
+	private final int GRID_BLUE = 203;
+	private final double GRID_OPACITY = 0.5;
 
-	private int statsRed = 255;
-	private int statsGreen = 182;
-	private int statsBlue = 130;
-	private int statsOpacity = 1;
+	private final int STATS_RED = 255;
+	private final int STATS_GREEN = 182;
+	private final int STATS_BLUE = 130;
+	private final int STATS_OPACITY = 1;
 
-	private double fullPicMultiplier = 0.8;
+	private final double FULL_PIC_MULTIPLIER = 0.8;
 
-	private int labelStartingCol = 3;
-	private int labelStartingRow = 0;
+	private final int LABEL_STARTING_COL = 3;
+	private final int LABEL_STARTING_ROW = 0;
 
 	public SuggestionsView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -85,8 +85,8 @@ public class SuggestionsView extends View<SuggestionsController> {
 		GridPane pane = new GridPane();
 
 //		pane.setPrefWidth(canvasWidth);
-		pane.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %f);", gridRed, gridGreen, gridBlue,
-				gridOpacity));
+		pane.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %f);", GRID_RED, GRID_GREEN, GRID_BLUE,
+				GRID_OPACITY));
 
 		imgs = new ArrayList<Pane>();
 		int count = 0;
@@ -95,14 +95,14 @@ public class SuggestionsView extends View<SuggestionsController> {
 			for (int j = 0; j < cols; j++) {
 				StackPane p = new StackPane();
 				plantName = control.getPlantNameAt(count);
-				ImageView plant = new ImageView(images.getPlantImages().get(plantName)[firstImgInd].getImg());
+				ImageView plant = new ImageView(images.getPlantImages().get(plantName)[FIRST_IMG_IND].getImg());
 				plant.setPreserveRatio(true);
 				if (plant.getImage().getWidth() > plant.getImage().getHeight())
-					plant.setFitWidth(thumbnailWidth);
+					plant.setFitWidth(THUMBNAIL_WIDTH);
 				else
-					plant.setFitHeight(thumbnailHeight);
+					plant.setFitHeight(THUMBANIL_HEIGHT);
 				p.setUserData(plantName);
-				p.setPadding(new Insets(stackPanePadding, stackPanePadding, stackPanePadding, stackPanePadding));
+				p.setPadding(new Insets(STACK_PANE_PADDING, STACK_PANE_PADDING, STACK_PANE_PADDING, STACK_PANE_PADDING));
 
 				p.getChildren().add(plant);
 				p.setAlignment(Pos.CENTER);
@@ -114,14 +114,14 @@ public class SuggestionsView extends View<SuggestionsController> {
 				p.setOnMouseClicked(control.gethandleOnMouseClick());
 				count++;
 			}
-			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight + (stackPanePadding * 2)));
+			pane.getRowConstraints().add(new RowConstraints(THUMBANIL_HEIGHT + (STACK_PANE_PADDING * 2)));
 		}
 
 		this.stats = stats(rows);
 		GridPane.setConstraints(stats, 0, rows, cols, rows);
 		// Creates (rows - 1) rows of height thumbnailHeight for the stats gridpane
 		for (int i = 0; i < rows - 1; i++) {
-			pane.getRowConstraints().add(new RowConstraints(thumbnailHeight));
+			pane.getRowConstraints().add(new RowConstraints(THUMBANIL_HEIGHT));
 		}
 
 		pane.setGridLinesVisible(true);
@@ -139,10 +139,10 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 */
 	public void selectImage(MouseEvent event) {
 		Node n = (Node) event.getSource();
-		if (n.getStyle().equals(selectedBG)) {
-			n.setStyle(deselectedBG);
+		if (n.getStyle().equals(SELECTED_BG)) {
+			n.setStyle(DESELECTED_BG);
 		} else {
-			n.setStyle(selectedBG);
+			n.setStyle(SELECTED_BG);
 		}
 
 	}
@@ -154,8 +154,8 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 */
 	public GridPane stats(int rows) {
 		GridPane stats = new GridPane();
-		stats.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %d);", statsRed, statsGreen, statsBlue,
-				statsOpacity));
+		stats.setStyle(String.format("-fx-background-color: rgba(%d, %d, %d, %d);", STATS_RED, STATS_GREEN, STATS_BLUE,
+				STATS_OPACITY));
 
 		return stats;
 	}
@@ -168,17 +168,17 @@ public class SuggestionsView extends View<SuggestionsController> {
 	 */
 	public void inputStats(Node n, String plantStr) {
 		Label val = new Label(plantStr);
-		GridPane.setConstraints(val, labelStartingCol, labelStartingRow);
-		val.setLineSpacing(spaceBetweenLabels);
+		GridPane.setConstraints(val, LABEL_STARTING_COL, LABEL_STARTING_ROW);
+		val.setLineSpacing(SPACE_BETWEEN_LABELS);
 		val.setMaxHeight(stats.getHeight());
 		stats.getChildren().add(val);
 
 		ImageView copy = new ImageView(((ImageView) ((Pane) n).getChildren().get(0)).getImage());
 		copy.setPreserveRatio(true);
 		if (copy.getImage().getWidth() > copy.getImage().getHeight())
-			copy.setFitWidth((rows - 1) * thumbnailWidth * fullPicMultiplier);
+			copy.setFitWidth((rows - 1) * THUMBNAIL_WIDTH * FULL_PIC_MULTIPLIER);
 		else
-			copy.setFitHeight((rows - 1) * thumbnailHeight * fullPicMultiplier);
+			copy.setFitHeight((rows - 1) * THUMBANIL_HEIGHT * FULL_PIC_MULTIPLIER);
 		stats.getChildren().add(copy);
 		plantCopy = copy;
 
@@ -224,7 +224,7 @@ public class SuggestionsView extends View<SuggestionsController> {
 	}
 
 	public String getSelectedBG() {
-		return selectedBG;
+		return SELECTED_BG;
 	}
 
 	public GridPane getGrid() {

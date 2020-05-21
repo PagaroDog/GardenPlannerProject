@@ -76,33 +76,33 @@ public class GardenView extends View<GardenController> implements Serializable {
 	private BorderPane border;
 	private BorderPane navigation;
 	private TabPane tabPane;
-	private int SIZE = 200;
+	private final int SIZE = 200;
 	private transient Images imgs;
 
-	private double buttonFontSize = Math.min(12, 15 * canvasWidth / expectedWidth); //Modified from 18
-	private final double labelFontSize = Math.min(16, 18 * canvasWidth / expectedWidth); //Modified from 21
+	private final double BUTTON_FONT_SIZE = Math.min(12, 15 * canvasWidth / expectedWidth); //Modified from 18
+	private final double LABEL_FONT_SIZE = Math.min(16, 18 * canvasWidth / expectedWidth); //Modified from 21
 	private FileChooser fileChooser;
 
-	private final int year1Int = 1;
-	private final int year2Int = 2;
-	private final int year3Int = 3;
+	private final int YEAR_1 = 1;
+	private final int YEAR_2 = 2;
+	private final int YEAR_3 = 3;
 
-	private final double vBoxSpacing = 10;
-	private final double vBoxVPadding = 5;
-	private final double vBoxHPadding = 0;
+	private final double VBOX_SPACING = 10;
+	private final double VBOX_V_PADDING = 5;
+	private final double VBOX_H_PADDING = 0;
 
 	private int overCircleFont = 20;
 	private int overIVFont = 14;
 
-	private int infoBoxRed = 218;
-	private int infoBoxGreen = 230;
-	private int infoBoxBlue = 243;
-	private int infoBoxOpacity = 1;
+	private final int INFO_BOX_RED = 218;
+	private final int INFO_BOX_GREEN = 230;
+	private final int INFO_BOX_BLUE = 243;
+	private final int INFO_BOX_OPACITY = 1;
 
-	private int firstImgInd = 0;
+	private final int FIRST_IMG_IND = 0;
 
-	private String infoBoxStyle = String.format("-fx-background-color: rgba(%d, %d, %d, %d);", infoBoxRed, infoBoxGreen,
-			infoBoxBlue, infoBoxOpacity);
+	private String infoBoxStyle = String.format("-fx-background-color: rgba(%d, %d, %d, %d);", INFO_BOX_RED, INFO_BOX_GREEN,
+			INFO_BOX_BLUE, INFO_BOX_OPACITY);
 
 	public GardenView(Stage stage, Images imgs) {
 		this.stage = stage;
@@ -148,15 +148,15 @@ public class GardenView extends View<GardenController> implements Serializable {
 		int numberPlants = control.getNumPlants();
 		for (PlantTypeEnum type : PlantTypeEnum.values()) {
 			Tab tab = new Tab(type.toString());
-			VBox tile = new VBox(vBoxSpacing);
+			VBox tile = new VBox(VBOX_SPACING);
 			tile.setAlignment(Pos.CENTER);
-			tile.setPadding(new Insets(vBoxVPadding, vBoxHPadding, vBoxVPadding, vBoxHPadding));
+			tile.setPadding(new Insets(VBOX_V_PADDING, VBOX_H_PADDING, VBOX_V_PADDING, VBOX_H_PADDING));
 			tile.setStyle(infoBoxStyle);
 			tile.setPrefWidth(SIZE);
 			for (int i = 0; i < numberPlants; i++) {
 
 				if (control.getPlantType(control.getPlantNameAt(i)) == type) {
-					Image img = imgs.getPlantImages().get(control.getPlantNameAt(i))[firstImgInd].getImg();
+					Image img = imgs.getPlantImages().get(control.getPlantNameAt(i))[FIRST_IMG_IND].getImg();
 					ImageView imageview = new ImageView(img);
 					imageview.setPreserveRatio(true);
 					imageview.setFitHeight(SIZE);
@@ -198,7 +198,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 		HBox.setHgrow(empty1, Priority.ALWAYS);
 
 		Label toolsLabel = new Label("Tools");
-		toolsLabel.setFont(new Font(labelFontSize));
+		toolsLabel.setFont(new Font(LABEL_FONT_SIZE));
 		delete = createButton("Delete", control.handleOnDeleteButton());
 		copy = createButton("Copy", control.handleOnCopyButton());
 		undo = createButton("Undo", control.handleOnUndoButton());
@@ -208,7 +208,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 		HBox.setHgrow(empty2, Priority.ALWAYS);
 
 		Label seasonLabel = new Label("Select Season");
-		seasonLabel.setFont(new Font(labelFontSize));
+		seasonLabel.setFont(new Font(LABEL_FONT_SIZE));
 		summer = createButton("Summer", control.handleOnSeasonButton(SeasonEnum.SUMMER));
 		fall = createButton("Fall", control.handleOnSeasonButton(SeasonEnum.FALL));
 		winter = createButton("Winter", control.handleOnSeasonButton(SeasonEnum.WINTER));
@@ -218,10 +218,10 @@ public class GardenView extends View<GardenController> implements Serializable {
 		HBox.setHgrow(empty3, Priority.ALWAYS);
 
 		Label yearLabel = new Label("Select Estimated Size");
-		yearLabel.setFont(new Font(labelFontSize));
-		year1 = createButton("Small", control.handleOnYearButton(year1Int));
-		year2 = createButton("Medium", control.handleOnYearButton(year2Int));
-		year3 = createButton("Large", control.handleOnYearButton(year3Int));
+		yearLabel.setFont(new Font(LABEL_FONT_SIZE));
+		year1 = createButton("Small", control.handleOnYearButton(YEAR_1));
+		year2 = createButton("Medium", control.handleOnYearButton(YEAR_2));
+		year3 = createButton("Large", control.handleOnYearButton(YEAR_3));
 
 		toolbar = createToolbar();
 
@@ -273,7 +273,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 		plant.setOnMouseReleased(control.handleOnMouseReleased());
 		plant.setOnMouseEntered(control.handleOnMouseEntered());
 		plant.setOnMouseExited(control.handleOnMouseExited());
-		Image img = imgs.getPlantImages().get(name)[firstImgInd].getImg();
+		Image img = imgs.getPlantImages().get(name)[FIRST_IMG_IND].getImg();
 		plant.setFill(new ImagePattern(img));
 		plant.setStrokeType(StrokeType.INSIDE);
 		plant.setStroke(color);
@@ -363,7 +363,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 	public Button createButton(String text, EventHandler eh) {
 		Button newButton = new Button(text);
 		newButton.setOnMouseClicked(eh);
-		newButton.setFont(new Font(buttonFontSize));
+		newButton.setFont(new Font(BUTTON_FONT_SIZE));
 		return newButton;
 	}
 
@@ -395,7 +395,7 @@ public class GardenView extends View<GardenController> implements Serializable {
 	 * @param plantMatch The name of the plant being displayed
 	 */
 	public void displayInfo(Circle e, double mouseX, double mouseY, String plantMatch) {
-		Image i = imgs.getPlantImages().get(e.getUserData())[firstImgInd].getImg();
+		Image i = imgs.getPlantImages().get(e.getUserData())[FIRST_IMG_IND].getImg();
 
 		ImageView plantImage = new ImageView(i);
 		plantImage.setPreserveRatio(true);
